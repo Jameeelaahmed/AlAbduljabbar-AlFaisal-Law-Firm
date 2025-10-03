@@ -1,7 +1,14 @@
 @import "tailwindcss";
-* {
-  padding: 0;
+
+body {
   margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+*,
+*::before,
+*::after {
   box-sizing: border-box;
 }
 
@@ -9,4 +16,20 @@
   --color-primary: #003a42;
   --color-secondary: #7a5a21;
   --color-bg: #e1c784;
+}
+
+/* Remove default browser password reveal buttons */
+input[type="password"]::-ms-reveal,
+input[type="password"]::-ms-clear {
+  display: none;
+}
+
+input[type="password"]::-webkit-credentials-auto-fill-button,
+input[type="password"]::-webkit-strong-password-auto-fill-button {
+  display: none !important;
+}
+
+/* Hide Safari's password suggestion eye */
+input[type="password"]::-webkit-textfield-decoration-container {
+  display: none;
 }
