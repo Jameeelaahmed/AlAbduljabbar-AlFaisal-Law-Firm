@@ -3,11 +3,11 @@ import logo1 from '../../assets/Logos/Logo1.png'
 import logo2 from '../../assets/Logos/Logo2.png'
 function HeaderPresentational() {
     return (
-        <div className="p-2 fixed bg-white w-full flex justify-between items-center z-15">
+        <div className="pt-2 pb-2 pr-3.5 pl-3.5 fixed bg-white w-full flex justify-between items-center z-15">
             <div className="flex items-center">
                 <img className='w-[50px]' src={logo1} alt="logo1" />
                 <img className='w-[50px]' src={logo2} alt="logo2" />
-                <p className='font-bold'>العبد الجبار و الفيصل</p>
+                <p className='font-bold text-lg text-primary'>العبد الجبار و الفيصل</p>
             </div>
             <ul className='flex justify-around'>
                 <li className='p-2'>
@@ -41,7 +41,7 @@ function HeaderPresentational() {
                     </Link>
                 </li>
             </ul>
-            <div>
+            <div className='font-bold text-primary'>
                 <Link to='login'>
                     تسجيل دخول
                 </Link>
