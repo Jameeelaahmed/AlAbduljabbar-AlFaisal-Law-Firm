@@ -1,13 +1,13 @@
-import { Outlet } from "react-router-dom"
-import SideBarContainer from './SideBar/SideBarContainer'
+import { Outlet } from "react-router-dom";
+import SideBarContainer from "./SideBar/SideBarContainer";
 
-function AdminLayout() {
+export default function AdminLayout() {
     return (
-        <>
+        <div className="flex min-h-screen bg-gray-100">
             <SideBarContainer />
-            <Outlet />
-        </>
-    )
+            <main className="flex-1 p-6">
+                <Outlet />
+            </main>
+        </div>
+    );
 }
-
-export default AdminLayout
