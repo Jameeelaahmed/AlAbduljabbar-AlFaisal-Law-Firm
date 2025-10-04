@@ -17,16 +17,23 @@ export const MenuBar = ({ editor }) => {
     const addLink = () => {
         const url = window.prompt("Enter URL:");
         if (url) {
-            editor.chain().focus().setLink({ href: url }).run();
+            let formattedUrl = url;
+            if (!/^https?:\/\//i.test(url)) {
+                formattedUrl = 'https://' + url;
+            }
+            editor.chain().focus().setLink({ href: formattedUrl }).run();
         }
     };
 
     const buttonClass = (isActive) =>
-        `p-2.5 rounded-lg hover:bg-gray-100 transition-all duration-200 ${isActive ? "bg-blue-100 text-blue-600" : "text-gray-600 hover:text-gray-900"
+        `p-2.5 rounded-lg hover:bg-gray-100 transition-all duration-200 ${isActive
+            ? "bg-blue-100 text-blue-600"
+            : "text-gray-600 hover:text-gray-900"
         }`;
 
     return (
         <div className="flex flex-wrap items-center gap-1 p-3 bg-gradient-to-r from-gray-50 to-gray-100">
+            {/* Text formatting */}
             <button
                 onClick={() => editor.chain().focus().toggleBold().run()}
                 className={buttonClass(editor.isActive("bold"))}
@@ -54,6 +61,7 @@ export const MenuBar = ({ editor }) => {
 
             <div className="w-px h-6 bg-gray-300 mx-1" />
 
+            {/* Lists */}
             <button
                 onClick={() => editor.chain().focus().toggleBulletList().run()}
                 className={buttonClass(editor.isActive("bulletList"))}
@@ -73,13 +81,14 @@ export const MenuBar = ({ editor }) => {
 
             <div className="w-px h-6 bg-gray-300 mx-1" />
 
+            {/* Alignment */}
             <button
-                onClick={() => editor.chain().focus().setTextAlign("left").run()}
-                className={buttonClass(editor.isActive({ textAlign: "left" }))}
-                title="Align Left"
+                onClick={() => editor.chain().focus().setTextAlign("right").run()}
+                className={buttonClass(editor.isActive({ textAlign: "right" }))}
+                title="Align Right"
                 type="button"
             >
-                <AlignLeft size={18} />
+                <AlignRight size={18} />
             </button>
             <button
                 onClick={() => editor.chain().focus().setTextAlign("center").run()}
@@ -90,16 +99,17 @@ export const MenuBar = ({ editor }) => {
                 <AlignCenter size={18} />
             </button>
             <button
-                onClick={() => editor.chain().focus().setTextAlign("right").run()}
-                className={buttonClass(editor.isActive({ textAlign: "right" }))}
-                title="Align Right"
+                onClick={() => editor.chain().focus().setTextAlign("left").run()}
+                className={buttonClass(editor.isActive({ textAlign: "left" }))}
+                title="Align Left"
                 type="button"
             >
-                <AlignRight size={18} />
+                <AlignLeft size={18} />
             </button>
 
-            <div className="w-px h-6 bg-gray-300 mx-1" />
 
+            <div className="w-px h-6 bg-gray-300 mx-1" />
+            {/* Links */}
             <button
                 onClick={addLink}
                 className={buttonClass(editor.isActive("link"))}
@@ -111,6 +121,7 @@ export const MenuBar = ({ editor }) => {
 
             <div className="w-px h-6 bg-gray-300 mx-1" />
 
+            {/* Undo/Redo */}
             <button
                 onClick={() => editor.chain().focus().undo().run()}
                 disabled={!editor.can().undo()}
@@ -129,6 +140,26 @@ export const MenuBar = ({ editor }) => {
             >
                 <Redo size={18} />
             </button>
+
+            {/* ───────── FONT SIZE DROPDOWN ───────── */}
+            <div className="ml-auto flex items-center gap-1">
+                <select
+                    onChange={(e) =>
+                        editor.chain().focus().setFontSize(e.target.value).run()
+                    }
+                    value={editor.getAttributes("textStyle").fontSize || "16px"}
+                    className="p-1 bg-tranparent text-gray-700"
+                    title="Font Size"
+                >
+                    <option value="12px">12</option>
+                    <option value="14px">14</option>
+                    <option value="16px">16</option>
+                    <option value="18px">18</option>
+                    <option value="20px">20</option>
+                    <option value="24px">24</option>
+                    <option value="28px">28</option>
+                </select>
+            </div>
         </div>
     );
 };

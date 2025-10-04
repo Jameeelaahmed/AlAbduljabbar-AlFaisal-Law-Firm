@@ -6,6 +6,7 @@ import Link from "@tiptap/extension-link";
 import CharacterCount from "@tiptap/extension-character-count";
 import { useEffect } from "react";
 import { MenuBar } from "./MenuBar";
+import { FontSize, TextStyle } from "@tiptap/extension-text-style";
 
 export const TiptapEditor = ({ content, onChange, placeholder, dir = "ltr" }) => {
     const editor = useEditor({
@@ -19,6 +20,8 @@ export const TiptapEditor = ({ content, onChange, placeholder, dir = "ltr" }) =>
                 openOnClick: false,
             }),
             CharacterCount,
+            TextStyle,
+            FontSize
         ],
         content: content || "<p></p>",
         onUpdate: ({ editor }) => {
