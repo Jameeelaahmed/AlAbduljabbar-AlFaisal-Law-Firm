@@ -10,32 +10,27 @@ function HeaderPresentational() {
                 <p className='font-bold text-lg text-primary'>العبد الجبار و الفيصل</p>
             </div>
             <ul className='flex justify-around'>
-                <li className='p-2'>
+                <li className='pt-2 pb-2 pr-4 pl-4 rounded hover:bg-secondary hover:text-primary transition-all'>
                     <Link>
                         <p>الرئيسية</p>
                     </Link>
                 </li>
-                <li className='p-2'>
+                <li className='pt-2 pb-2 pr-4 pl-4 rounded hover:bg-secondary hover:text-primary transition-all'>
                     <Link>
                         <p>من نحن</p>
                     </Link>
                 </li>
-                <li className='p-2'>
-                    <Link>
-                        <p>من نحن</p>
-                    </Link>
-                </li >
-                <li className='p-2'>
+                <li className='pt-2 pb-2 pr-4 pl-4 rounded hover:bg-secondary hover:text-primary transition-all'>
                     <Link>
                         <p>خدماتنا</p>
                     </Link>
                 </li>
-                <li className='p-2'>
+                <li className='pt-2 pb-2 pr-4 pl-4 rounded hover:bg-secondary hover:text-primary transition-all'>
                     <Link>
                         <p>الأسأله الشائعة</p>
                     </Link>
                 </li>
-                <li className='p-2'>
+                <li className='pt-2 pb-2 pr-4 pl-4 rounded hover:bg-secondary hover:text-primary transition-all'>
                     <Link>
                         <p>اتصل بنا</p>
                     </Link>
