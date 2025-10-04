@@ -7,6 +7,8 @@ import {
     X,
     ArrowLeft,
     Settings,
+    Scale,
+    CalendarCheck
 } from "lucide-react";
 import { NavLink } from "react-router-dom";
 
@@ -57,6 +59,26 @@ export default function SideBarPresentational({ isSidebarOpen, handletoggleSideb
                         </NavLink>
                     </li>
 
+                    <li>
+                        <NavLink
+                            to=""
+                            className={`flex items-center gap-3 p-2 rounded-xl hover:bg-white/20 transition cursor-pointer ${!isSidebarOpen ? "justify-center" : ""
+                                }`}
+                        >
+                            <Scale className="w-5 h-5" />
+                            {isSidebarOpen && <span>الخدمات</span>}
+                        </NavLink>
+                    </li>
+                    <li>
+                        <NavLink
+                            to="/admin/requests"
+                            className={`flex items-center gap-3 p-2 rounded-xl hover:bg-white/20 transition cursor-pointer ${!isSidebarOpen ? "justify-center" : ""
+                                }`}
+                        >
+                            <CalendarCheck className="w-5 h-5" />
+                            {isSidebarOpen && <span>الطلبات</span>}
+                        </NavLink>
+                    </li>
                     <li>
                         <NavLink
                             to=""
