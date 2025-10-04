@@ -1,4 +1,4 @@
-import HeroContainer from "../../../components/HeroSection/HeroContainer"
+import HeroContainer from "../../../components/ClientsComponent/HeroSection/HeroContainer"
 
 function LandingPresentational() {
     return (
