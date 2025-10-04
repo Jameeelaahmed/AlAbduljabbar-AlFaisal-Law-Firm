@@ -1,11 +1,11 @@
 
 // components
-import LoginFormPresentation from "./LoginFormPresentation"
+import LoginFormPresentational from "./LoginFormPresentational"
 
 function LoginFormContainer() {
     return (
         <>
-            <LoginFormPresentation />
+            <LoginFormPresentational />
         </>
     )
 }

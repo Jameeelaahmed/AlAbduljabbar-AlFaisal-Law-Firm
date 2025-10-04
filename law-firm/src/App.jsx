@@ -1,10 +1,15 @@
 import './App.css'
+
+// components
+
 import LoginRegisterContainer from './pages/AuthPages/LoginRegisterPage/LoginRegisterContainer'
+import RoutesPages from './routes/routes'
 
 function App() {
   return (
     <>
-      <LoginRegisterContainer />
+      <RoutesPages />
+      {/* <LoginRegisterContainer /> */}
     </>
   )
 }

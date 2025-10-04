@@ -4,10 +4,11 @@ import { useState } from "react"
 import LoginRegisterPresentational from "./LoginRegisterPresentational"
 
 function LoginRegisterContainer() {
-    const [useAuthToggle, setUseAuthToggle] = useState(false);
+    const [useAuthToggle, setUseAuthToggle] = useState('login');
 
-    function handleAuthToggle() {
-        setUseAuthToggle(!useAuthToggle);
+    function handleAuthToggle(state) {
+        if (state === 'login') { setUseAuthToggle('login') }
+        else { setUseAuthToggle('signUp') }
     }
     return (
         <>
