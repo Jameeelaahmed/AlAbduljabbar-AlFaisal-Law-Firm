@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom'
-import logo1 from '../../assets/Logos/Logo1.png'
-import logo2 from '../../assets/Logos/Logo2.png'
+import logo1 from '../../../assets/Logos/Logo1.png'
+import logo2 from '../../../assets/Logos/Logo2.png'
 function HeaderPresentational() {
     return (
         <div className="pt-2 pb-2 pr-3.5 pl-3.5 fixed bg-white w-full flex justify-between items-center z-15">

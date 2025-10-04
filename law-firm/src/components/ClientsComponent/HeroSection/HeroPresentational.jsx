@@ -1,4 +1,4 @@
-import Hero from '../../assets/LandingPics/Hero.jpg'
+import Hero from '../../../assets/LandingPics/Hero.jpg'
 function HeroPresentational() {
     return (
         <div
