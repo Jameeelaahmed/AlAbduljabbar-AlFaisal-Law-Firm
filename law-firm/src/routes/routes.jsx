@@ -10,6 +10,8 @@ import ClientLayout from "../layouts/ClientLayout";
 const LoginRegisterContainer = lazy(() => import("../pages/AuthPages/LoginRegisterPage/LoginRegisterContainer"));
 const LandingContainer = lazy(() => import("../pages/ClientPages/Landing/LandingContainer"));
 
+const AdminSettings = lazy(() => import("../pages/AdminPages/settings/SettingsPageContainer"));
+
 const routes = createBrowserRouter([
     {
         path: "/login",
@@ -19,7 +21,14 @@ const routes = createBrowserRouter([
         path: '/admin',
         element: <AdminLayout />,
         children: [
-
+            {
+                path: "settings",
+                element: (
+                    <Suspense fallback={<div>Loading Settings...</div>}>
+                        <AdminSettings />
+                    </Suspense>
+                ),
+            },
         ]
     },
     {
