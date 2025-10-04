@@ -1,0 +1,100 @@
+{
+  "data": [
+    {
+      "id": "REQ001",
+      "customer": "عمر الموسى",
+      "branch": "الرياض",
+      "status": "قيد الانتظار"
+    },
+    {
+      "id": "REQ002",
+      "customer": "سارة علي",
+      "branch": "جدة",
+      "status": "تم الحل"
+    },
+    {
+      "id": "REQ003",
+      "customer": "محمد حسن",
+      "branch": "الدمام",
+      "status": "قيد الانتظار"
+    },
+    {
+      "id": "REQ004",
+      "customer": "ليلى خالد",
+      "branch": "مكة",
+      "status": "تم الحل"
+    },
+    {
+      "id": "REQ005",
+      "customer": "أحمد سعيد",
+      "branch": "الرياض",
+      "status": "قيد الانتظار"
+    },
+    {
+      "id": "REQ006",
+      "customer": "نورهان سامي",
+      "branch": "جدة",
+      "status": "تم الحل"
+    },
+    {
+      "id": "REQ007",
+      "customer": "هاني يوسف",
+      "branch": "الدمام",
+      "status": "قيد الانتظار"
+    },
+    {
+      "id": "REQ008",
+      "customer": "فاطمة محمود",
+      "branch": "مكة",
+      "status": "تم الحل"
+    },
+    {
+      "id": "REQ009",
+      "customer": "عبدالله علي",
+      "branch": "الرياض",
+      "status": "قيد الانتظار"
+    },
+    {
+      "id": "REQ010",
+      "customer": "منة الله سعيد",
+      "branch": "جدة",
+      "status": "تم الحل"
+    },
+    {
+      "id": "REQ011",
+      "customer": "رامي سامي",
+      "branch": "الدمام",
+      "status": "قيد الانتظار"
+    },
+    {
+      "id": "REQ012",
+      "customer": "سناء خالد",
+      "branch": "مكة",
+      "status": "تم الحل"
+    },
+    {
+      "id": "REQ013",
+      "customer": "خالد عبدالعزيز",
+      "branch": "الرياض",
+      "status": "قيد الانتظار"
+    },
+    {
+      "id": "REQ014",
+      "customer": "هالة يوسف",
+      "branch": "جدة",
+      "status": "تم الحل"
+    },
+    {
+      "id": "REQ015",
+      "customer": "يوسف محمود",
+      "branch": "الدمام",
+      "status": "قيد الانتظار"
+    }
+  ],
+  "meta": {
+    "current_page": 1,
+    "per_page": 5,
+    "total_records": 15,
+    "total_pages": 3
+  }
+}
