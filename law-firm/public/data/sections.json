@@ -1,0 +1,32 @@
+{
+  "hero": {
+    "title": {
+      "en": "Welcome",
+      "ar": "مرحبا"
+    },
+    "content": {
+      "en": "Best Law Firm in KSA & Egypt",
+      "ar": "أفضل مكتب محاماة في السعودية ومصر"
+    }
+  },
+  "about": {
+    "title": {
+      "en": "About Us",
+      "ar": "من نحن"
+    },
+    "content": {
+      "en": "Providing legal excellence across regions",
+      "ar": "نقدم التميز القانوني عبر المناطق"
+    }
+  },
+  "contact": {
+    "title": {
+      "en": "Contact Us",
+      "ar": "اتصل بنا"
+    },
+    "content": {
+      "en": "Reach us anytime",
+      "ar": "تواصل معنا في أي وقت"
+    }
+  }
+}
