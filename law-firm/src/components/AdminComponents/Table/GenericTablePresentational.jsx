@@ -1,4 +1,4 @@
-import React from "react";
+import { useNavigate } from "react-router-dom";
 
 export default function GenericTablePresentational({
     items,
@@ -12,6 +12,8 @@ export default function GenericTablePresentational({
 }) {
     const indexOfFirstRecord = (currentPage - 1) * perPage;
     const indexOfLastRecord = indexOfFirstRecord + items.length;
+
+    const navigate = useNavigate();
 
     if (loading) {
         return <div className="text-center py-10">جاري التحميل...</div>;
@@ -35,6 +37,7 @@ export default function GenericTablePresentational({
                         <tr
                             key={item.id || index}
                             className="border-b border-gray-300 hover:bg-gray-50 transition"
+                            onClick={() => navigate(`/admin/requests/${item.id}`)}
                         >
                             {columns.map((column) => (
                                 <td key={column.key} className="p-3">
@@ -85,8 +88,8 @@ export default function GenericTablePresentational({
                                 key={page}
                                 onClick={() => handlePageChange(page)}
                                 className={`px-3 py-1 rounded-lg border ${currentPage === page
-                                        ? "bg-primary text-white"
-                                        : "bg-white text-gray-700 hover:bg-gray-100"
+                                    ? "bg-primary text-white"
+                                    : "bg-white text-gray-700 hover:bg-gray-100"
                                     }`}
                             >
                                 {page}
