@@ -1,4 +1,3 @@
-import React from "react";
 import GenericTableContainer from "../../../components/AdminComponents/Table/GenericTableContainer";
 import { useRequests } from "../../../hooks/useRequests";
 

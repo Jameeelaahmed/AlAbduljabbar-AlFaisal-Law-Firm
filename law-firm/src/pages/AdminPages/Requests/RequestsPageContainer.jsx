@@ -23,13 +23,13 @@ export default function RequestsPageContainer() {
             render: (status) => (
                 <span
                     className={`px-3 py-1 rounded-full text-sm font-medium ${status === "تم الحل"
-                        ? "bg-green-200 text-green-700"
+                        ? "bg-succeededBg text-succeeded"
                         : status === "قيد الانتظار"
-                            ? "bg-yellow-100 text-yellow-700"
+                            ? "bg-pendingBg text-pending"
                             : status === "قيد المراجعة"
-                                ? "bg-blue-500 text-white"
+                                ? "bg-inProgressBg text-inProgress"
                                 : status === "مرفوض"
-                                    ? "bg-red-500 text-white"
+                                    ? "bg-deniedBg text-denied"
                                     : "bg-gray-400 text-white"
                         }`}
                 >

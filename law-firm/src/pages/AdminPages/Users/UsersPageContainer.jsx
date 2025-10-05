@@ -34,8 +34,8 @@ export default function UsersPageContainer() {
             render: (status) => (
                 <span
                     className={`px-3 py-1 rounded-full text-sm font-medium ${status === "نشط" || status === "active"
-                        ? "bg-green-200 text-green-700 dark:bg-green-700 dark:text-white"
-                        : "bg-red-200 text-red-700 dark:bg-red-700 dark:text-white"
+                        ? "bg-succeededBg text-succeeded dark:bg-succeededBg dark:text-succeeded"
+                        : "bg-deniedBg text-denied dark:bg-deniedBg dark:text-denied"
                         }`}
                 >
                     {status}

@@ -19,6 +19,15 @@ body {
   --color-primary: #003a42;
   --color-secondary: #7a5a21;
   --color-bg: #e1c784;
+
+  --color-succeeded: #1cbb8c;
+  --color-succeededBg: #1cbb8c2e;
+  --color-pending: #fcb92c;
+  --color-pendingBg: rgb(252 185 44 / 18%);
+  --color-denied: #ff3d60;
+  --color-deniedBg: rgba(255, 61, 96, 0.18);
+  --color-inProgress: #1795ce;
+  --color-inProgressBg: rgba(61, 96, 255, 0.18);
 }
 
 /* Remove default browser password reveal buttons */

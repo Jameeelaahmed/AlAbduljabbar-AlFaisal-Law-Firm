@@ -6,31 +6,32 @@ export default function SettingsSectionPersetnational({ section, contentAr, cont
             <h2 className="text-2xl font-bold mb-6 text-secondary flex items-center gap-2">
                 {section?.title?.ar}
             </h2>
-
-            {/* Arabic Editor */}
-            <div className="mb-6">
-                <div className="flex items-center gap-2 mb-3">
-                    <label className="font-semibold text-secondary text-lg">Arabic Content</label>
+            <div className="flex gap-4">
+                {/* Arabic Editor */}
+                <div className="mb-6">
+                    <div className="flex items-center gap-2 mb-3">
+                        <label className="font-semibold text-secondary text-lg">Arabic Content</label>
+                    </div>
+                    <TiptapEditor
+                        content={contentAr}
+                        onChange={handleArChange}
+                        placeholder="اكتب المحتوى هنا..."
+                        dir="rtl"
+                    />
                 </div>
-                <TiptapEditor
-                    content={contentAr}
-                    onChange={handleArChange}
-                    placeholder="اكتب المحتوى هنا..."
-                    dir="rtl"
-                />
-            </div>
 
-            {/* English Editor */}
-            <div>
-                <div className="flex items-center gap-2 mb-3">
-                    <label className="font-semibold text-secondary text-lg">English Content</label>
+                {/* English Editor */}
+                <div>
+                    <div className="flex items-center gap-2 mb-3">
+                        <label className="font-semibold text-secondary text-lg">English Content</label>
+                    </div>
+                    <TiptapEditor
+                        content={contentEn}
+                        onChange={handleEnChange}
+                        placeholder="Write content here..."
+                        dir="ltr"
+                    />
                 </div>
-                <TiptapEditor
-                    content={contentEn}
-                    onChange={handleEnChange}
-                    placeholder="Write content here..."
-                    dir="ltr"
-                />
             </div>
         </div>
     )
