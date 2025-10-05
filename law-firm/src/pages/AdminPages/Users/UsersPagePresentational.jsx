@@ -1,6 +1,7 @@
 import React from "react";
 import GenericTableContainer from "../../../components/AdminComponents/Table/GenericTableContainer";
 import { useUsers } from "../../../hooks/useUsers";
+import HeadlineContainer from "../../../components/AdminComponents/Headline/HeadlineContainer";
 
 export default function UsersPagePresentational({
     setRoleFilter,
@@ -15,14 +16,9 @@ export default function UsersPagePresentational({
 
 
     return (
-        <div className="p-6">
+        <div className="p-6 bg-gray-50 shadow-lg">
             {/* Header */}
-            <div className="flex justify-between items-center mb-6">
-                <h1 className="text-2xl font-bold">إدارة المستخدمين</h1>
-                <button className="bg-primary text-white px-4 py-2 rounded-lg flex items-center gap-2 hover:bg-primary/80 cursor-pointer">
-                    <span>إضافة مستخدم</span> <span className="text-xl">+</span>
-                </button>
-            </div>
+            <HeadlineContainer headlineLabel="إدارة المستخدمين" buttonLabel="إضافة مستخدم" buttonIcon="+" />
 
             {/* Filters & Search */}
             <div className="flex flex-wrap gap-4 mb-4 items-center">

@@ -15,6 +15,7 @@ const AdminSettings = lazy(() => import("../pages/AdminPages/settings/SettingsPa
 const AdminRequests = lazy(() => import("../pages/AdminPages/Requests/RequestsPageContainer"));
 const AdminRequestDetails = lazy(() => import("../pages/AdminPages/Requests/RequestsDetailsContainer"));
 const AdminUsers = lazy(() => import("../pages/AdminPages/Users/UsersPageContainer"));
+const AdminServices = lazy(() => import("../pages/AdminPages/Services/ServicesContainer"));
 const routes = createBrowserRouter([
     {
         path: "/login",
@@ -24,6 +25,14 @@ const routes = createBrowserRouter([
         path: '/admin',
         element: <AdminLayout />,
         children: [
+            {
+                path: "services",
+                element: (
+                    <Suspense fallback={<div>Loading Serivices...</div>}>
+                        <AdminServices />
+                    </Suspense>
+                ),
+            },
             {
                 path: "settings",
                 element: (
