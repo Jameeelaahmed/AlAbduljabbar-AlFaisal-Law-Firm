@@ -1,71 +1,13 @@
 import React from "react";
-import GenericTablePresentational from "../../../components/AdminComponents/Table/GenericTablePresentational";
+import GenericTableContainer from "../../../components/AdminComponents/Table/GenericTableContainer";
+import { useRequests } from "../../../hooks/useRequests";
 
 export default function RequestsPagePresentational({
-    requests,
-    meta,
-    currentPage,
-    perPage,
-    handlePageChange,
-    isLoading,
     statusFilter,
     setStatusFilter,
+    columns,
+    actions
 }) {
-    // Define columns for requests table
-    const columns = [
-        {
-            key: "id",
-            header: "رقم الطلب",
-        },
-        {
-            key: "customer",
-            header: "اسم العميل",
-        },
-        {
-            key: "branch",
-            header: "الفرع",
-        },
-        {
-            key: "status",
-            header: "الحالة",
-            render: (status) => (
-                <span
-                    className={`px-3 py-1 rounded-full text-sm font-medium ${status === "تم الحل"
-                        ? "bg-green-200 text-green-700 "
-                        : status === "قيد الانتظار"
-                            ? "bg-yellow-100 text-yellow-700 d"
-                            : status === "قيد المراجعة"
-                                ? "bg-blue-500 text-white"
-                                : status === "مرفوض"
-                                    ? "bg-red-500 text-whit"
-                                    : "bg-gray-400 text-white"
-                        }`}
-                >
-                    {status}
-                </span>
-            ),
-        },
-    ];
-
-    // Define actions for requests table
-    const actions = [
-        {
-            label: "تحديث الحالة",
-            onClick: (request) => {
-                console.log("Update status for:", request);
-                // Add your status update logic here
-            },
-            className: "text-gray-500 hover:bg-gray-50",
-        },
-        {
-            label: "إضافة ملاحظة",
-            onClick: (request) => {
-                console.log("Add note for:", request);
-                // Add your note logic here
-            },
-            className: "text-gray-500 hover:bg-gray-50",
-        },
-    ];
 
     return (
         <div className="p-6 bg-gray-50 min-h-screen">
@@ -111,16 +53,15 @@ export default function RequestsPagePresentational({
                 </button>
             </div>
 
-            {/* Table using Generic Component */}
-            <GenericTablePresentational
-                items={requests}
+            {/* Table using GenericTableContainer */}
+            <GenericTableContainer
+                useDataHook={useRequests}
                 columns={columns}
                 actions={actions}
-                meta={meta}
-                currentPage={currentPage}
-                perPage={perPage}
-                handlePageChange={handlePageChange}
-                loading={isLoading}
+                perPage={5}
+                filters={{
+                    statusFilter,
+                }}
             />
         </div>
     );
