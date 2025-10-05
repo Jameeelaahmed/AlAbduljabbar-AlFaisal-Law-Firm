@@ -13,7 +13,7 @@ const LandingContainer = lazy(() => import("../pages/ClientPages/Landing/Landing
 // Admin Components
 const AdminSettings = lazy(() => import("../pages/AdminPages/settings/SettingsPageContainer"));
 const AdminRequests = lazy(() => import("../pages/AdminPages/Requests/RequestsPageContainer"));
-
+const AdminUsers = lazy(() => import("../pages/AdminPages/Users/UsersPageContainer"));
 const routes = createBrowserRouter([
     {
         path: "/login",
@@ -36,6 +36,14 @@ const routes = createBrowserRouter([
                 element: (
                     <Suspense fallback={<div>Loading Settings...</div>}>
                         <AdminRequests />
+                    </Suspense>
+                ),
+            },
+            {
+                path: "users",
+                element: (
+                    <Suspense fallback={<div>Loading Settings...</div>}>
+                        <AdminUsers />
                     </Suspense>
                 ),
             },
