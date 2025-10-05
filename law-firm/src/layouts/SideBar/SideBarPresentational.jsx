@@ -81,7 +81,7 @@ export default function SideBarPresentational({ isSidebarOpen, handletoggleSideb
                     </li>
                     <li>
                         <NavLink
-                            to=""
+                            to="/admin/users"
                             className={`flex items-center gap-3 p-2 rounded-xl hover:bg-white/20 transition cursor-pointer ${!isSidebarOpen ? "justify-center" : ""
                                 }`}
                         >

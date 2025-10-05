@@ -1,40 +1,46 @@
+// ========================================
+// 1. RequestsPageContainer.jsx
+// ========================================
 import React, { useState } from "react";
 import RequestsPagePresentational from "./RequestsPagePresentational";
-import TableComponentContainer from "../../../components/AdminComponents/Table/TableComponentContainer";
+import { useRequests } from "../../../hooks/useRequests";
 
 export default function RequestsPageContainer() {
-    // Example data
-    const [requests, setRequests] = useState([
-        {
-            id: "REQ12345",
-            customer: "عمر الموسى",
-            branch: "الرياض",
-            status: "قيد الانتظار",
-        },
-        {
-            id: "REQ67890",
-            customer: "سارة الخالد",
-            branch: "جدة",
-            status: "تم الحل",
-        },
-        {
-            id: "REQ24680",
-            customer: "فيصل آل سعود",
-            branch: "الدمام",
-            status: "قيد الانتظار",
-        },
-        {
-            id: "REQ13579",
-            customer: "نورة الفهد",
-            branch: "الرياض",
-            status: "تم الحل",
-        },
-        {
-            id: "REQ98765",
-            customer: "عبدالله العتيبي",
-            branch: "جدة",
-            status: "قيد الانتظار",
-        },
-    ]);
-    return <RequestsPagePresentational requests={requests} />;
+    const [currentPage, setCurrentPage] = useState(1);
+    const [statusFilter, setStatusFilter] = useState("");
+    const perPage = 5;
+
+    const { data, isLoading } = useRequests({ page: currentPage, perPage });
+
+    const requests = data?.data || [];
+    const meta = data?.meta || {
+        current_page: 1,
+        total_pages: 1,
+        per_page: perPage,
+        total_records: 0,
+    };
+
+    // Filter requests by status
+    const filteredRequests = statusFilter
+        ? requests.filter((req) => req.status === statusFilter)
+        : requests;
+
+    const handlePageChange = (page) => {
+        if (page >= 1 && page <= meta.total_pages) {
+            setCurrentPage(page);
+        }
+    };
+
+    return (
+        <RequestsPagePresentational
+            requests={filteredRequests}
+            meta={meta}
+            currentPage={currentPage}
+            perPage={perPage}
+            handlePageChange={handlePageChange}
+            isLoading={isLoading}
+            statusFilter={statusFilter}
+            setStatusFilter={setStatusFilter}
+        />
+    );
 }

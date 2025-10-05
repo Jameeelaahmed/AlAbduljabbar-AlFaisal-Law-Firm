@@ -1,0 +1,130 @@
+{
+  "data": [
+    {
+      "id": "USR001",
+      "name": "عمر الموسى",
+      "email": "omar.mousa@example.com",
+      "role": "Lawyer",
+      "branch": "الرياض",
+      "status": "نشط"
+    },
+    {
+      "id": "USR002",
+      "name": "سارة علي",
+      "email": "sara.ali@example.com",
+      "role": "Admin",
+      "branch": "جدة",
+      "status": "نشط"
+    },
+    {
+      "id": "USR003",
+      "name": "محمد حسن",
+      "email": "mohamed.hassan@example.com",
+      "role": "Client",
+      "branch": "الدمام",
+      "status": "Inactive"
+    },
+    {
+      "id": "USR004",
+      "name": "ليلى خالد",
+      "email": "laila.khaled@example.com",
+      "role": "Lawyer",
+      "branch": "مكة",
+      "status": "نشط"
+    },
+    {
+      "id": "USR005",
+      "name": "أحمد سعيد",
+      "email": "ahmed.saeed@example.com",
+      "role": "Client",
+      "branch": "الرياض",
+      "status": "Inactive"
+    },
+    {
+      "id": "USR006",
+      "name": "نورهان سامي",
+      "email": "noorhan.sami@example.com",
+      "role": "Admin",
+      "branch": "جدة",
+      "status": "نشط"
+    },
+    {
+      "id": "USR007",
+      "name": "هاني يوسف",
+      "email": "hani.youssef@example.com",
+      "role": "Lawyer",
+      "branch": "الدمام",
+      "status": "Inactive"
+    },
+    {
+      "id": "USR008",
+      "name": "فاطمة محمود",
+      "email": "fatma.mahmoud@example.com",
+      "role": "Client",
+      "branch": "مكة",
+      "status": "Active"
+    },
+    {
+      "id": "USR009",
+      "name": "عبدالله علي",
+      "email": "abdullah.ali@example.com",
+      "role": "Lawyer",
+      "branch": "الرياض",
+      "status": "Inactive"
+    },
+    {
+      "id": "USR010",
+      "name": "منة الله سعيد",
+      "email": "mona.saeed@example.com",
+      "role": "Client",
+      "branch": "جدة",
+      "status": "نشط"
+    },
+    {
+      "id": "USR011",
+      "name": "رامي سامي",
+      "email": "rami.sami@example.com",
+      "role": "Lawyer",
+      "branch": "الدمام",
+      "status": "Inactive"
+    },
+    {
+      "id": "USR012",
+      "name": "سناء خالد",
+      "email": "sanaa.khaled@example.com",
+      "role": "Admin",
+      "branch": "مكة",
+      "status": "نشط"
+    },
+    {
+      "id": "USR013",
+      "name": "خالد عبدالعزيز",
+      "email": "khaled.abdulaziz@example.com",
+      "role": "Lawyer",
+      "branch": "الرياض",
+      "status": "نشط"
+    },
+    {
+      "id": "USR014",
+      "name": "هالة يوسف",
+      "email": "hala.youssef@example.com",
+      "role": "Client",
+      "branch": "جدة",
+      "status": "نشط"
+    },
+    {
+      "id": "USR015",
+      "name": "يوسف محمود",
+      "email": "youssef.mahmoud@example.com",
+      "role": "Lawyer",
+      "branch": "الدمام",
+      "status": "نشط"
+    }
+  ],
+  "meta": {
+    "current_page": 1,
+    "per_page": 5,
+    "total_records": 15,
+    "total_pages": 3
+  }
+}
