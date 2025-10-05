@@ -1,40 +1,69 @@
 import React, { useState } from "react";
 import RequestsPagePresentational from "./RequestsPagePresentational";
-import TableComponentContainer from "../../../components/AdminComponents/Table/TableComponentContainer";
 
 export default function RequestsPageContainer() {
-    // Example data
-    const [requests, setRequests] = useState([
+    const [statusFilter, setStatusFilter] = useState("");
+
+    const tableColumns = [
         {
-            id: "REQ12345",
-            customer: "عمر الموسى",
-            branch: "الرياض",
-            status: "قيد الانتظار",
+            key: "id",
+            header: "رقم الطلب",
         },
         {
-            id: "REQ67890",
-            customer: "سارة الخالد",
-            branch: "جدة",
-            status: "تم الحل",
+            key: "customer",
+            header: "اسم العميل",
         },
         {
-            id: "REQ24680",
-            customer: "فيصل آل سعود",
-            branch: "الدمام",
-            status: "قيد الانتظار",
+            key: "branch",
+            header: "الفرع",
         },
         {
-            id: "REQ13579",
-            customer: "نورة الفهد",
-            branch: "الرياض",
-            status: "تم الحل",
+            key: "status",
+            header: "الحالة",
+            render: (status) => (
+                <span
+                    className={`px-3 py-1 rounded-full text-sm font-medium ${status === "تم الحل"
+                        ? "bg-green-200 text-green-700"
+                        : status === "قيد الانتظار"
+                            ? "bg-yellow-100 text-yellow-700"
+                            : status === "قيد المراجعة"
+                                ? "bg-blue-500 text-white"
+                                : status === "مرفوض"
+                                    ? "bg-red-500 text-white"
+                                    : "bg-gray-400 text-white"
+                        }`}
+                >
+                    {status}
+                </span>
+            ),
+        },
+    ];
+
+    const tableActions = [
+        {
+            label: "تحديث الحالة",
+            onClick: (request) => {
+                console.log("Update status for:", request);
+                // Add your status update logic here
+            },
+            className: "text-gray-500 hover:bg-gray-50",
         },
         {
-            id: "REQ98765",
-            customer: "عبدالله العتيبي",
-            branch: "جدة",
-            status: "قيد الانتظار",
+            label: "إضافة ملاحظة",
+            onClick: (request) => {
+                console.log("Add note for:", request);
+                // Add your note logic here
+            },
+            className: "text-gray-500 hover:bg-gray-50",
         },
-    ]);
-    return <RequestsPagePresentational requests={requests} />;
+    ];
+
+    return (
+        <RequestsPagePresentational
+            statusFilter={statusFilter}
+            setStatusFilter={setStatusFilter}
+            columns={tableColumns}
+            actions={tableActions}
+        />
+    );
 }
