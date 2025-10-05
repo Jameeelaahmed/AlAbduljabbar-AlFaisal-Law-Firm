@@ -1,6 +1,8 @@
-import GenericTableContainer from "../../../components/AdminComponents/Table/GenericTableContainer";
+// libs
 import { useRequests } from "../../../hooks/useRequests";
-
+// components
+import GenericTableContainer from "../../../components/AdminComponents/Table/GenericTableContainer";
+import HeadlineContainer from "../../../components/AdminComponents/Headline/HeadlineContainer";
 export default function RequestsPagePresentational({
     statusFilter,
     setStatusFilter,
@@ -9,9 +11,8 @@ export default function RequestsPagePresentational({
 }) {
 
     return (
-        <div className="p-6 bg-gray-50 min-h-screen">
-            <h1 className="text-primary text-2xl font-bold mb-4">إدارة الطلبات</h1>
-
+        <div className="p-6 bg-gray-50 shadow-lg">
+            <HeadlineContainer headlineLabel="إدارة الطلبات" />
             {/* Filter buttons */}
             <div className="flex gap-2 mb-4">
                 <button

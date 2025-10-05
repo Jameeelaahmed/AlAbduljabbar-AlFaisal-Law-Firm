@@ -61,12 +61,12 @@ export default function SideBarPresentational({ isSidebarOpen, handletoggleSideb
 
                     <li>
                         <NavLink
-                            to=""
+                            to="services"
                             className={`flex items-center gap-3 p-2 rounded-xl hover:bg-white/20 transition cursor-pointer ${!isSidebarOpen ? "justify-center" : ""
                                 }`}
                         >
                             <Scale className="w-5 h-5" />
-                            {isSidebarOpen && <span>الخدمات</span>}
+                            {isSidebarOpen && <span> الخدمات القانونية</span>}
                         </NavLink>
                     </li>
                     <li>

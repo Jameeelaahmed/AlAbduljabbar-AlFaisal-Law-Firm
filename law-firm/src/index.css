@@ -16,10 +16,13 @@ body {
 }
 
 @theme {
-  --color-primary: #003a42;
-  --color-secondary: #7a5a21;
-  --color-bg: #e1c784;
+  --color-primary: #003a42; /*? Main buttons - nav bg/key header elements - active states - links/ key icons*/
+  --color-secondary: #7a5a21; /*? secondary buttons/ oultline buttons - highlights or callouts - hover states for teal elements - dividers / borders - subtle bgs blocks for contrast*/
+  --color-accent: #006b63; /*? for attention grabbing elements not used everywhere --> small highlights (icons - underlines- links on hover) - notfications or status indicators - progress bars or charts */
+  --color-bg: #f4f5f3;
+  --color-text: #1f1f1f;
 
+  --spacing-main: 12px;
   --color-succeeded: #1cbb8c;
   --color-succeededBg: #1cbb8c2e;
   --color-pending: #fcb92c;
