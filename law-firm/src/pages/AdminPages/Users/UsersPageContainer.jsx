@@ -1,42 +1,77 @@
-import { useState } from 'react'
-import UsersPagePresentational from './UsersPagePresentational'
-import { useUsers } from '../../../hooks/useUsers';
+import { useState } from 'react';
+import UsersPagePresentational from './UsersPagePresentational';
 
 export default function UsersPageContainer() {
-    const [currentPage, setCurrentPage] = useState(1);
     const [search, setSearch] = useState("");
     const [branchFilter, setBranchFilter] = useState("");
     const [roleFilter, setRoleFilter] = useState("");
 
-    const perPage = 5;
+    const tableColumns = [
+        {
+            key: "name",
+            header: "اسم المستخدم",
+        },
+        {
+            key: "email",
+            header: "البريد الإلكتروني",
+        },
+        {
+            key: "role",
+            header: "الدور",
+            render: (role) => (
+                <span className="px-3 py-1 rounded-full text-sm font-medium bg-secondary/10 text-secondary dark:bg-blue-900 dark:text-blue-200">
+                    {role}
+                </span>
+            ),
+        },
+        {
+            key: "branch",
+            header: "الفرع",
+        },
+        {
+            key: "status",
+            header: "الحالة",
+            render: (status) => (
+                <span
+                    className={`px-3 py-1 rounded-full text-sm font-medium ${status === "نشط" || status === "active"
+                        ? "bg-green-200 text-green-700 dark:bg-green-700 dark:text-white"
+                        : "bg-red-200 text-red-700 dark:bg-red-700 dark:text-white"
+                        }`}
+                >
+                    {status}
+                </span>
+            ),
+        },
+    ];
 
-    const { data, isLoading } = useUsers({
-        page: currentPage,
-        perPage,
-        search,
-        branch: branchFilter,
-        role: roleFilter,
-    });
-
-    const users = data?.data || [];
-    const meta = data?.meta || { current_page: 1, total_pages: 1, total_records: 0 };
-
-    const handlePageChange = (page) => {
-        if (page >= 1 && page <= meta.total_pages) setCurrentPage(page);
-    };
-    console.log({ users, meta });
+    const tableActions = [
+        {
+            label: "تعديل",
+            onClick: (user) => {
+                console.log("Edit user:", user);
+                // Add your edit logic here
+            },
+            className: "text-gray-500 hover:bg-blue-50",
+        },
+        {
+            label: "حذف",
+            onClick: (user) => {
+                console.log("Delete user:", user);
+                // Add your delete logic here
+            },
+            className: "text-gray-500 hover:bg-red-50",
+        },
+    ];
     return (
         <UsersPagePresentational
-            users={users}
             setBranchFilter={setBranchFilter}
             setRoleFilter={setRoleFilter}
             setSearch={setSearch}
             search={search}
-            meta={meta}
-            currentPage={currentPage}
-            handlePageChange={handlePageChange}
-            perPage={perPage}
-            isLoading={isLoading}
+            branchFilter={branchFilter}
+            roleFilter={roleFilter}
+            columns={tableColumns}
+            actions={tableActions}
         />
-    )
+    );
 }

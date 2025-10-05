@@ -7,10 +7,15 @@ export default function GenericTableContainer({
     actions,
     perPage = 5,
     initialPage = 1,
+    filters = {},
 }) {
     const [currentPage, setCurrentPage] = useState(initialPage);
 
-    const { data, isLoading } = useDataHook({ page: currentPage, perPage });
+    const { data, isLoading } = useDataHook({
+        page: currentPage,
+        perPage,
+        ...filters
+    });
 
     const items = data?.data || [];
     const meta = data?.meta || {
@@ -25,6 +30,11 @@ export default function GenericTableContainer({
             setCurrentPage(page);
         }
     };
+
+    // Reset to page 1 when filters change
+    React.useEffect(() => {
+        setCurrentPage(1);
+    }, [filters.roleFilter, filters.branchFilter, filters.search]);
 
     return (
         <GenericTablePresentational
