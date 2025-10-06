@@ -1,0 +1,18 @@
+{
+  "sidebar": {
+    "title": "Abdul Jabbar & Al-Faisal",
+    "subtitle": "Control Panel",
+    "dashboard": "Dashboard",
+    "legalServices": "Legal Services",
+    "requests": "Requests",
+    "users": "Users",
+    "reports": "Reports",
+    "settings": "Settings",
+    "logout": "Logout"
+  },
+  "header": {
+    "changeLanguage": "Change language",
+    "notifications": "View notifications",
+    "profile": "Profile"
+  }
+}

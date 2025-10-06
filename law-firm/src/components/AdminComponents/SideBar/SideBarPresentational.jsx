@@ -12,7 +12,7 @@ import {
 } from "lucide-react";
 import { NavLink } from "react-router-dom";
 
-export default function SideBarPresentational({ isSidebarOpen, handletoggleSidebar }) {
+export default function SideBarPresentational({ isSidebarOpen, handletoggleSidebar, t }) {
     return (
         <>
             {/* Overlay for medium screens only */}
@@ -41,7 +41,7 @@ export default function SideBarPresentational({ isSidebarOpen, handletoggleSideb
                     >
                         <div>
                             {isSidebarOpen && <p className="text-lg font-bold">عبد الجبار والفيصل</p>}
-                            {isSidebarOpen && <small className="text-gray-400">لوحة التحكم</small>}
+                            {isSidebarOpen && <small className="text-gray-400">{t('sidebar.subtitle')}</small>}
                         </div>
 
                         {isSidebarOpen ? (
