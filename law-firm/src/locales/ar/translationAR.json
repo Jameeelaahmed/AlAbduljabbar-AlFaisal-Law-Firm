@@ -1,0 +1,18 @@
+{
+  "sidebar": {
+    "title": "عبد الجبار والفيصل",
+    "subtitle": "لوحة التحكم",
+    "dashboard": "لوحة القيادة",
+    "legalServices": "الخدمات القانونية",
+    "requests": "الطلبات",
+    "users": "المستخدمين",
+    "reports": "التقارير",
+    "settings": "الإعدادات",
+    "logout": "تسجيل الخروج"
+  },
+  "header": {
+    "changeLanguage": "تغيير اللغة",
+    "notifications": "عرض الإشعارات",
+    "profile": "الملف الشخصي"
+  }
+}
