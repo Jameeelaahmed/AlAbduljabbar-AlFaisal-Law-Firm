@@ -12,14 +12,44 @@ function HeaderContainer() {
     const { t } = useTranslation();
     const { isAuthenticated, role, name, logout } = useAuthUser();
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-    const toggleMobileMenu = () => {
-        setIsMobileMenuOpen(!isMobileMenuOpen);
-    };
-
     const [currentLang, setCurrentLang] = useState(() => {
         const savedLang = localStorage.getItem("selectedLanguage");
         return savedLang || i18n.language;
     });
+
+    const [isDesktopDropdownOpen, setIsDesktopDropdownOpen] = useState(false)
+    const [isLogo1DropDown, setIsLogo1DropDown] = useState(false)
+    const [isLogo2DropDown, setIsLogo2DropDown] = useState(false)
+
+    // desptop dropdown
+    const toggleDesktopDropdown = () => {
+        setIsDesktopDropdownOpen(!isDesktopDropdownOpen)
+    }
+
+    const closeDesktopDropdown = () => {
+        setIsDesktopDropdownOpen(false)
+    }
+
+    //logo1 drop down 
+    const openLogo1DropDown = () => {
+        setIsLogo1DropDown(!isDesktopDropdownOpen)
+    }
+
+    const closeLogo1DropDown = () => {
+        setIsLogo1DropDown(false)
+    }
+    //logo2 drop down 
+    const openLogo2DropDown = () => {
+        setIsLogo2DropDown(!isDesktopDropdownOpen)
+    }
+
+    const closeLogo2DropDown = () => {
+        setIsLogo2DropDown(false)
+    }
+    const toggleMobileMenu = () => {
+        setIsMobileMenuOpen(!isMobileMenuOpen);
+    };
+
 
     const handleLanguageChange = (lang) => {
         i18n
@@ -52,6 +82,15 @@ function HeaderContainer() {
                 toggleMobileMenu={toggleMobileMenu}
                 handleLanguageChange={handleLanguageChange}
                 currentLang={currentLang}
+                isDesktopDropdownOpen={isDesktopDropdownOpen}
+                toggleDesktopDropdown={toggleDesktopDropdown}
+                closeDesktopDropdown={closeDesktopDropdown}
+                openLogo1DropDown={openLogo1DropDown}
+                closeLogo1DropDown={closeLogo1DropDown}
+                isLogo1DropDown={isLogo1DropDown}
+                openLogo2DropDown={openLogo2DropDown}
+                closeLogo2DropDown={closeLogo2DropDown}
+                isLogo2DropDown={isLogo2DropDown}
             />
         </>
     )

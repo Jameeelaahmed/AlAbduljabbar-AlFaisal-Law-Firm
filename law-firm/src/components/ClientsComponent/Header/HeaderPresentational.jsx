@@ -1,56 +1,100 @@
 // icons
-import { LogOut, Menu, X, User, ChevronDown, Globe, UserCircle } from 'lucide-react'
+import { LogOut, Menu, X, User, ChevronDown, Globe, UserCircle, MapPin, Phone, Mail } from 'lucide-react'
 // libs
 import { Link } from 'react-router-dom'
-import { useState } from 'react'
 // imgs
 import logo1 from '../../../assets/Logos/Logo1.png'
 import logo2 from '../../../assets/Logos/Logo2.png'
 
-function HeaderPresentational({ t, isAuthenticated, role, username, handleLogout, isMobileMenuOpen, toggleMobileMenu, toggleLanguage, currentLanguage, handleLanguageChange, currentLang }) {
-    const [isDesktopDropdownOpen, setIsDesktopDropdownOpen] = useState(false)
+function HeaderPresentational({
+    t,
+    isAuthenticated,
+    role,
+    username,
+    handleLogout,
+    isMobileMenuOpen,
+    toggleMobileMenu,
+    toggleLanguage,
+    currentLanguage,
+    handleLanguageChange,
+    currentLang,
+    isDesktopDropdownOpen,
+    toggleDesktopDropdown,
+    closeDesktopDropdown,
+    openLogo1DropDown,
+    closeLogo1DropDown,
+    isLogo1DropDown,
+    openLogo2DropDown,
+    closeLogo2DropDown,
+    isLogo2DropDown
+}) {
 
-    const toggleDesktopDropdown = () => {
-        setIsDesktopDropdownOpen(!isDesktopDropdownOpen)
-    }
-
-    const closeDesktopDropdown = () => {
-        setIsDesktopDropdownOpen(false)
-    }
 
     return (
         <>
             {/* Main Header */}
             <div className=" fixed w-full flex justify-between items-center z-50">
                 {/* Logo Section */}
-                <div className='flex flex-col justify-center items-center p-4 backdrop-blur-xl shadow-2xl rtl:rounded-tl-3xl rtl:rounded-bl-3xl ltr:rounded-tr-3xl ltr:rounded-br-3xl  border-primary border-3'>
-                    <img className='w-[55px]' src={logo2} alt="logo2" />
-                    <p className='font-bold text-lg text-white'>العبد الجبار و الفيصل </p>
-                </div>
+                <>
+                    <div className='relative cursor-pointer hover:scale-105 transition-transform duration-300'>
+                        <div className='flex flex-col justify-center items-center p-4 backdrop-blur-xl shadow-2xl rtl:rounded-tl-3xl rtl:rounded-bl-3xl ltr:rounded-tr-3xl ltr:rounded-br-3xl  border-primary border-3'
+                            onClick={openLogo1DropDown}>
+                            <img className='w-[55px]' src={logo1} alt="logo1" />
+                            <p className='font-bold text-lg text-white'>العبد الجبار </p>
+                            <span className='text-white'>محامون و مستشاورن</span>
+                            <span className='text-accents text-sm font-bold'>اضغط لرؤية بيانات الشركه</span>
+                        </div>
+                        <div className={`absolute rtl:right-2 ltr:left-2 mt-5 w-66 backdrop-blur-xl shadow-2xl rounded-lg border border-primary p-2 z-60 text-white
+                    transform transition-transform duration-300 ease-in-out origin-top
+                    ${isLogo1DropDown ? 'scale-y-100 opacity-100' : 'scale-y-0 opacity-0'}
+                    flex flex-col
+                    `}>
+                            <p className='font-bold text-center text-xl text-secondary mb-2'>المكتب الرئيسي</p>
+                            <div className="flex items-start gap-2">
+                                <MapPin size={16} className="text-secondary mt-1 flex-shrink-0" />
+                                <p>السعوديه - الرياض - حي المروج - مركز الحياة سنتر - مبني B- الدور الاول - مكتب 5 </p>
+                            </div>
+                            <div className="flex items-center gap-2">
+                                <Phone size={16} className="text-secondary flex-shrink-0" />
+                                <span>+0996 505 120 293</span>
+                            </div>
+                            <div className="flex items-center gap-2 hover:text-secondary transition-all">
+                                <Mail size={16} className="text-secondary flex-shrink-0" />
+                                <Link to='mailto:khedaib@malathegypt.com'>khedaib@malathegypt.com</Link>
+                            </div>
+                        </div>
+                    </div>
+                    {isLogo1DropDown && (
+                        <div
+                            className="fixed inset-0 z-50"
+                            onClick={closeLogo1DropDown}
+                        ></div>
+                    )}
+                </>
 
                 {/* Desktop Navigation */}
                 <ul className='hidden lg:flex justify-around bg-white rounded-full pr-2 pl-2 pt-2 pb-2'>
-                    <li className='pt-3 pb-3 pr-6 pl-6 rounded text-secondary hover:bg-primary hover:text-white transition-all'>
+                    <li className='pt-3 pb-3 pr-6 pl-6 rounded-full text-secondary hover:bg-primary hover:text-white transition-all'>
                         <Link>
                             <p>{t("landing.Home")}</p>
                         </Link>
                     </li>
-                    <li className='pt-3 pb-3 pr-6 pl-6 rounded text-secondary hover:bg-primary hover:text-white transition-all'>
+                    <li className='pt-3 pb-3 pr-6 pl-6 rounded-full text-secondary hover:bg-primary hover:text-white transition-all'>
                         <Link>
                             <p>{t("landing.OurLawServices")}</p>
                         </Link>
                     </li>
-                    <li className='pt-3 pb-3 pr-6 pl-6 rounded text-secondary hover:bg-primary hover:text-white transition-all'>
+                    <li className='pt-3 pb-3 pr-6 pl-6 rounded-full text-secondary hover:bg-primary hover:text-white transition-all'>
                         <Link>
                             <p>{t("landing.FAQ")}</p>
                         </Link>
                     </li>
-                    <li className='pt-3 pb-3 pr-6 pl-6 rounded text-secondary hover:bg-primary hover:text-white transition-all'>
+                    <li className='pt-3 pb-3 pr-6 pl-6 rounded-full text-secondary hover:bg-primary hover:text-white transition-all'>
                         <Link>
                             <p>{t("landing.AboutUs")}</p>
                         </Link>
                     </li>
-                    <li className='pt-3 pb-3 pr-6 pl-6 rounded text-secondary hover:bg-primary hover:text-white transition-all'>
+                    <li className='pt-3 pb-3 pr-6 pl-6 rounded-full text-secondary hover:bg-primary hover:text-white transition-all'>
                         <Link>
                             <p>{t("landing.ContactUs")}</p>
                         </Link>
@@ -140,7 +184,7 @@ function HeaderPresentational({ t, isAuthenticated, role, username, handleLogout
                                 )}
                             </>
                         ) : (
-                            <div className='font-bold text-primary rtl:pl-3 ltr:pr-3'>
+                            <div className='font-bold text-primary mr-3 ml-3'>
                                 <Link to='login'>
                                     {t("landing.Login")}
                                 </Link>
@@ -148,11 +192,51 @@ function HeaderPresentational({ t, isAuthenticated, role, username, handleLogout
                         )}
                     </div>
                 </ul>
-                <div className='flex flex-col p-4 justify-center items-center backdrop-blur-xl shadow-2xl rtl:rounded-tr-3xl rtl:rounded-br-3xl ltr:rounded-tl-3xl ltr:rounded-bl-3xl border-primary border-3'>
-                    <img className='w-[50px]' src={logo1} alt="logo1" />
-                    <p className='font-bold text-lg text-white'>العبد الجبار </p>
-                </div>
 
+                {/* The other Logo */}
+
+
+                <>
+                    <div className='relative cursor-pointer hover:scale-105 transition-transform duration-300'>
+                        <div className='flex flex-col justify-center items-center p-4 backdrop-blur-xl shadow-2xl rtl:rounded-tr-3xl rtl:rounded-br-3xl ltr:rounded-tl-3xl ltr:rounded-bl-3xl  border-primary border-3'
+                            onClick={openLogo2DropDown}>
+                            <img className='w-[55px]' src={logo2} alt="logo2" />
+                            <p className='font-bold text-lg text-white'>العبد الجبار و الفيصل </p>
+                            <span className='text-white'>محامون و مستشاورن</span>
+                            <span className='text-text text-sm font-bold'>اضغط لرؤية بيانات الشركه</span>
+                        </div>
+                        <div className={`absolute ltr:right-2 rtl:left-2 mt-5 w-66 backdrop-blur-xl shadow-2xl rounded-lg border border-primary p-2 z-60 text-white
+                    transform transition-transform duration-300 ease-in-out origin-top
+                    ${isLogo2DropDown ? 'scale-y-100 opacity-100' : 'scale-y-0 opacity-0'}
+                    flex flex-col
+                    `}>
+                            <div className="flex items-start gap-2">
+                                <MapPin size={16} className="text-secondary mt-1 flex-shrink-0" />
+                                <p>مصر - القاهره 20 شاراع الطيران - الدور الاول - شقه 2</p>
+                            </div>
+                            <div className="flex items-center gap-2">
+                                <svg width={16} height={16} viewBox="0 0 24 24" fill="currentColor" className="text-secondary">
+                                    <path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z" />
+                                </svg>
+                                <span>0222604857</span>
+                            </div>
+                            <div className="flex items-center gap-2">
+                                <Phone size={16} className="text-secondary flex-shrink-0" />
+                                <span>01044947784 - 01005842307</span>
+                            </div>
+                            <div className="flex items-center gap-2 hover:text-secondary transition-all">
+                                <Mail size={16} className="text-secondary flex-shrink-0" />
+                                <Link to='mailto:aziz.nasr11@gmail.com'>aziz.nasr11@gmail.com</Link>
+                            </div>
+                        </div>
+                    </div>
+                    {isLogo2DropDown && (
+                        <div
+                            className="fixed inset-0 z-50"
+                            onClick={closeLogo2DropDown}
+                        ></div>
+                    )}
+                </>
                 {/* Mobile Menu Button */}
                 <div className='lg:hidden'>
                     <button
@@ -162,17 +246,17 @@ function HeaderPresentational({ t, isAuthenticated, role, username, handleLogout
                         {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
                     </button>
                 </div>
-            </div>
+            </div >
 
             {/* Mobile Slide Menu */}
-            <div className={`
+            < div className={`
                 fixed top-0 left-0 w-full bg-white z-50 shadow-lg transform transition-transform duration-300 ease-in-out lg:hidden
                 ${isMobileMenuOpen ? 'translate-y-0' : '-translate-y-full'}
             `}>
                 {/* Mobile menu content with top padding to account for fixed header */}
-                <div className="pt-20 pb-6 px-6">
+                < div className="pt-20 pb-6 px-6" >
                     {/* Mobile Navigation */}
-                    <ul className='flex flex-col space-y-2'>
+                    <ul ul className='flex flex-col space-y-2' >
                         <li className='py-3 px-4 rounded text-secondary hover:bg-primary hover:text-white transition-all'>
                             <Link onClick={toggleMobileMenu}>
                                 <p>{t("landing.Home")}</p>
@@ -198,10 +282,10 @@ function HeaderPresentational({ t, isAuthenticated, role, username, handleLogout
                                 <p>{t("landing.ContactUs")}</p>
                             </Link>
                         </li>
-                    </ul>
+                    </ul >
 
                     {/* Mobile Auth Section */}
-                    <div className='mt-6 pt-4 border-t border-gray-200'>
+                    <div div className='mt-6 pt-4 border-t border-gray-200' >
                         {(isAuthenticated && role == 'User') ? (
                             <div className='flex flex-col space-y-3'>
                                 <p className='text-center text-secondary'>{t("landing.Hello")} {username}</p>
@@ -248,17 +332,19 @@ function HeaderPresentational({ t, isAuthenticated, role, username, handleLogout
                                 </Link>
                             </div>
                         )}
-                    </div>
-                </div>
-            </div>
+                    </div >
+                </div >
+            </div >
 
             {/* Backdrop overlay for mobile menu */}
-            {isMobileMenuOpen && (
-                <div
-                    className="fixed inset-0 bg-[#0A1F2C]/50 bg-opacity-50 z-40 lg:hidden"
-                    onClick={toggleMobileMenu}
-                ></div>
-            )}
+            {
+                isMobileMenuOpen && (
+                    <div
+                        className="fixed inset-0 bg-[#0A1F2C]/50 bg-opacity-50 z-40 lg:hidden"
+                        onClick={toggleMobileMenu}
+                    ></div>
+                )
+            }
         </>
     )
 }
