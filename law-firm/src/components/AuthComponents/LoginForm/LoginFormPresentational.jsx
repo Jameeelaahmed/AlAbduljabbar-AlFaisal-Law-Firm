@@ -10,9 +10,9 @@ function LoginFormPresentation({ loginMutation }) {
         <div className="flex items-center justify-center p-4">
             <div className="w-full max-w-md">
                 <Formik
-                    initialValues={{ username: '', password: '' }}
+                    initialValues={{ email: '', password: '' }}
                     validationSchema={Yup.object({
-                        username: Yup.string()
+                        email: Yup.string()
                             .email('عنوان البريد الإلكتروني غير صحيح')
                             .required('البريد الإلكتروني مطلوب'),
                         password: Yup.string()
@@ -24,16 +24,16 @@ function LoginFormPresentation({ loginMutation }) {
                         <Form className="space-y-3">
                             {/* Email */}
                             <div className="space-y-2">
-                                <label htmlFor="username" className="flex items-center gap-2 text-sm font-semibold text-primary">
+                                <label htmlFor="email" className="flex items-center gap-2 text-sm font-semibold text-primary">
                                     <Mail className="w-4 h-4 text-secondary" />
                                     البريد الإلكتروني
                                 </label>
-                                <Field name="username">
+                                <Field name="email">
                                     {({ field }) => (
                                         <input
                                             {...field}
                                             type="string"
-                                            className={`w-full px-4 py-3 border rounded-lg focus:outline-none focus:ring-2 transition-all duration-300 ${errors.username && touched.username
+                                            className={`w-full px-4 py-3 border rounded-lg focus:outline-none focus:ring-2 transition-all duration-300 ${errors.email && touched.email
                                                 ? 'border-red-300 focus:ring-red-200 bg-red-50'
                                                 : 'border-gray-300 focus:ring-primary focus:border-primary'
                                                 }`}
@@ -42,7 +42,7 @@ function LoginFormPresentation({ loginMutation }) {
                                         />
                                     )}
                                 </Field>
-                                <ErrorMessage name="username" component="div" className="text-red-500 text-xs mt-1 font-medium" />
+                                <ErrorMessage name="email" component="div" className="text-red-500 text-xs mt-1 font-medium" />
                             </div>
 
                             {/* Password */}
@@ -91,7 +91,6 @@ function LoginFormPresentation({ loginMutation }) {
                             {/* Submit Button */}
                             <button
                                 type="submit"
-                                disabled={isSubmitting}
                                 className={`w-full py-3 px-4 rounded-lg font-semibold text-white transition-all duration-300 transform ${isSubmitting
                                     ? 'bg-primary cursor-not-allowed'
                                     : 'bg-primary hover:scale-[1.02] active:scale-[0.98] shadow-lg hover:shadow-xl'
