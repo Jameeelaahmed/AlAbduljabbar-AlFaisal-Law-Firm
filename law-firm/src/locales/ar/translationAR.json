@@ -14,5 +14,16 @@
     "changeLanguage": "تغيير اللغة",
     "notifications": "عرض الإشعارات",
     "profile": "الملف الشخصي"
+  },
+  "landing": {
+    "Home": "الرئيسية",
+    "AboutUs": "من نحن",
+    "OurLawServices": "خدماتنا القانونية",
+    "ContactUs": "اتصل بنا",
+    "FAQ": "الأسئلة الشائعة",
+    "Login": "تسجيل الدخول",
+    "Hello": "مرحبا، ",
+    "Profile": "الملف الشخصي",
+    "Logout": "تسجيل الخروج"
   }
 }

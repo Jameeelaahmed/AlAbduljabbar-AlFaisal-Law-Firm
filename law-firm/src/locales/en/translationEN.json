@@ -14,5 +14,16 @@
     "changeLanguage": "Change language",
     "notifications": "View notifications",
     "profile": "Profile"
+  },
+  "landing": {
+    "Home": "Home",
+    "OurLawServices": "Our Law Services",
+    "AboutUs": "About Us",
+    "ContactUs": "Contact Us",
+    "FAQ": "Frequently Asked Questions",
+    "Login": "Login",
+    "Hello": "Hello, ",
+    "Profile": "Profile",
+    "Logout": "Logout"
   }
 }
