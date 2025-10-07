@@ -1,3 +1,5 @@
+
+// components
 import RegisterFormContainer from "../../../components/AuthComponents/RegisterForm/RegisterFormContainer";
 import authImg from '../../../assets/AuthPics/auth.jpg'
 // import auth1 from '../../../assets/auth1.jpg'
@@ -5,7 +7,7 @@ import LoginFormContainer from "../../../components/AuthComponents/LoginForm/Log
 function LoginRegisterPresentational({ useAuthToggle, handleAuthToggle }) {
     return (
         <div
-            className="min-h-screen flex justify-center items-center bg-cover bg-center bg-no-repeat relative p-8"
+            className="min-h-screen flex justify-center items-center bg-cover bg-center bg-no-repeat relative"
             style={{ backgroundImage: `url(${authImg})` }
             }
         >

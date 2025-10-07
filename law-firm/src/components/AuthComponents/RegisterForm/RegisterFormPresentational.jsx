@@ -1,31 +1,27 @@
 // libs
 import { Formik, Field, Form, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
-import { Eye, EyeOff, User, Mail, Lock, Shield } from 'lucide-react';
-import { useState } from 'react';
-
-function RegisterFormPresentational() {
-    const [showPassword, setShowPassword] = useState(false);
-    const [showConfirmPassword, setShowConfirmPassword] = useState(false);
-
+import { Eye, EyeOff, User, Mail, Lock } from 'lucide-react';
+import { registerUser } from '../../../api/auth';
+import { useNavigate } from 'react-router-dom';
+function RegisterFormPresentational({ showPassword, setShowPassword, showConfirmPassword, setShowConfirmPassword, serverMessage, setServerMessage }) {
+    const navigate = useNavigate();
     return (
         <div className="flex items-center justify-center p-4">
             <div className="w-full max-w-md">
                 <Formik
-                    initialValues={{ firstName: '', lastName: '', email: '', phoneNum: '', whatsNum: '', password: '', confirmPassword: '' }}
+                    initialValues={{ fullNameEn: '', fullNameAr: '', email: '', mobileNumber: '', whatsAppNumber: '', password: '', confirmPassword: '' }}
                     validationSchema={Yup.object({
-                        firstName: Yup.string()
+                        fullNameEn: Yup.string()
                             .min(2, 'يجب أن يكون الاسم الأول على الأقل حرفين')
-                            .max(15, 'يجب أن يكون الاسم الأول أقل من 15 حرف')
                             .required('الاسم الأول مطلوب'),
-                        lastName: Yup.string()
+                        fullNameAr: Yup.string()
                             .min(2, 'يجب أن يكون الاسم الأخير على الأقل حرفين')
-                            .max(15, 'يجب أن يكون الاسم الأخير أقل من 15 حرف')
                             .required('الاسم الأخير مطلوب'),
                         email: Yup.string()
                             .email('عنوان البريد الإلكتروني غير صحيح')
                             .required('البريد الإلكتروني مطلوب'),
-                        phoneNum: Yup.string()
+                        mobileNumber: Yup.string()
                             .required('رقم الهاتف المحمول مطلوب'),
                         password: Yup.string()
                             .min(8, 'كلمة المرور يجب أن تكون على الأقل 8 أحرف')
@@ -38,11 +34,22 @@ function RegisterFormPresentational() {
                             .oneOf([Yup.ref('password'), null], 'كلمات المرور غير متطابقة')
                             .required('تأكيد كلمة المرور مطلوب')
                     })}
-                    onSubmit={(values, { setSubmitting }) => {
-                        setTimeout(() => {
-                            console.log('Registration data:', values);
+                    onSubmit={async (values, { setSubmitting, resetForm }) => {
+                        try {
+                            const res = await registerUser(values);
+                            alert("Registered Successfully");
+                            navigate('login')
+                            resetForm();
+                            console.log("Response", res);
+                        }
+                        catch (err) {
+                            setServerMessage(
+                                err.description
+                            )
+                            console.log(err.message);
+                        } finally {
                             setSubmitting(false);
-                        }, 400);
+                        }
                     }}
                 >
                     {({ isSubmitting, errors, touched }) => (
@@ -50,63 +57,63 @@ function RegisterFormPresentational() {
                             {/* First Name and Last Name Row */}
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                                 <div className="space-y-2">
-                                    <label htmlFor="firstName" className="flex items-center gap-2 text-sm font-semibold text-primary">
+                                    <label htmlFor="fullNameEn" className="flex items-center gap-2 text-sm font-semibold text-primary">
                                         <User className="w-4 h-4 text-secondary" />
-                                        الاسم الأول
+                                        الاسم بالكامل باللغة الانجليزيه
                                     </label>
-                                    <Field name="firstName">
+                                    <Field name="fullNameEn">
                                         {({ field }) => (
                                             <input
                                                 {...field}
                                                 type="text"
-                                                className={`w-full px-4 py-3 border rounded-lg focus:outline-none focus:ring-2 transition-all duration-300 ${errors.firstName && touched.firstName
+                                                className={`w-full px-4 py-3 border rounded-lg focus:outline-none focus:ring-2 transition-all duration-300 ${errors.fullNameEn && touched.fullNameEn
                                                     ? 'border-red-300 focus:ring-red-200 bg-red-50'
                                                     : 'border-gray-300 focus:ring-primary focus:border-primary'
                                                     }`}
-                                                placeholder="أدخل اسمك الأول"
+                                                placeholder="أدخل اسمك الكامل باللغه الانجليزيه"
                                                 dir="auto"
                                             />
                                         )}
                                     </Field>
-                                    <ErrorMessage name="firstName" component="div" className="text-red-500 text-xs mt-1 font-medium" />
+                                    <ErrorMessage name="fullNameAr" component="div" className="text-red-500 text-xs mt-1 font-medium" />
                                 </div>
 
                                 <div className="space-y-2">
-                                    <label htmlFor="lastName" className="flex items-center gap-2 text-sm font-semibold text-primary">
+                                    <label htmlFor="fullNameAr" className="flex items-center gap-2 text-sm font-semibold text-primary">
                                         <User className="w-4 h-4 text-secondary" />
-                                        الاسم الأخير
+                                        الاسم بالكامل باللغة العربيه
                                     </label>
-                                    <Field name="lastName">
+                                    <Field name="fullNameAr">
                                         {({ field }) => (
                                             <input
                                                 {...field}
                                                 type="text"
-                                                className={`w-full px-4 py-3 border rounded-lg focus:outline-none focus:ring-2 transition-all duration-300 ${errors.lastName && touched.lastName
+                                                className={`w-full px-4 py-3 border rounded-lg focus:outline-none focus:ring-2 transition-all duration-300 ${errors.fullNameAr && touched.fullNameAr
                                                     ? 'border-red-300 focus:ring-red-200 bg-red-50'
                                                     : 'border-gray-300 focus:ring-primary focus:border-primary'
                                                     }`}
-                                                placeholder="أدخل اسمك الأخير"
+                                                placeholder="أدخل اسمك بالكامل باللغة العربيه"
                                                 dir="auto"
                                             />
                                         )}
                                     </Field>
-                                    <ErrorMessage name="lastName" component="div" className="text-red-500 text-xs mt-1 font-medium" />
+                                    <ErrorMessage name="fullNameAr" component="div" className="text-red-500 text-xs mt-1 font-medium" />
                                 </div>
                             </div>
 
                             {/* Phone number Row */}
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                                 <div className="space-y-2">
-                                    <label htmlFor="phoneNum" className="flex items-center gap-2 text-sm font-semibold text-primary">
+                                    <label htmlFor="mobileNumber" className="flex items-center gap-2 text-sm font-semibold text-primary">
                                         <User className="w-4 h-4 text-secondary" />
                                         رقم الهاتف المحمول
                                     </label>
-                                    <Field name="phoneNum">
+                                    <Field name="mobileNumber">
                                         {({ field }) => (
                                             <input
                                                 {...field}
-                                                type="number"
-                                                className={`w-full px-4 py-3 border rounded-lg focus:outline-none focus:ring-2 transition-all duration-300 ${errors.phoneNum && touched.phoneNum
+                                                type="text"
+                                                className={`w-full px-4 py-3 border rounded-lg focus:outline-none focus:ring-2 transition-all duration-300 ${errors.mobileNumber && touched.mobileNumber
                                                     ? 'border-red-300 focus:ring-red-200 bg-red-50'
                                                     : 'border-gray-300 focus:ring-primary focus:border-primary'
                                                     }`}
@@ -115,26 +122,26 @@ function RegisterFormPresentational() {
                                             />
                                         )}
                                     </Field>
-                                    <ErrorMessage name="phoneNum" component="div" className="text-red-500 text-xs mt-1 font-medium" />
+                                    <ErrorMessage name="mobileNumber" component="div" className="text-red-500 text-xs mt-1 font-medium" />
                                 </div>
 
                                 <div className="space-y-2">
-                                    <label htmlFor="whatsNum" className="flex items-center gap-2 text-sm font-semibold text-primary">
+                                    <label htmlFor="whatsAppNumber" className="flex items-center gap-2 text-sm font-semibold text-primary">
                                         <User className="w-4 h-4 text-secondary" />
                                         رقم الواتس اب
                                     </label>
-                                    <Field name="whatsNum">
+                                    <Field name="whatsAppNumber">
                                         {({ field }) => (
                                             <input
                                                 {...field}
-                                                type="number"
+                                                type="text"
                                                 className={`w-full px-4 py-3 border rounded-lg focus:outline-none focus:ring-2 transition-all duration-300 border-gray-300 focus:ring-primary focus:border-primary `}
                                                 placeholder="أدخل رقم الواتس اب"
                                                 dir="auto"
                                             />
                                         )}
                                     </Field>
-                                    <ErrorMessage name="whatsNum" component="div" className="text-red-500 text-xs mt-1 font-medium" />
+                                    <ErrorMessage name="whatsAppNumber" component="div" className="text-red-500 text-xs mt-1 font-medium" />
                                 </div>
                             </div>
 
@@ -252,7 +259,15 @@ function RegisterFormPresentational() {
                     )}
                 </Formik>
             </div>
-        </div>
+
+            {
+                serverMessage && (
+                    <p className="text-center mt-3 text-sm font-medium text-[#7a5a21]">
+                        {serverMessage}
+                    </p>
+                )
+            }
+        </div >
     )
 }
 

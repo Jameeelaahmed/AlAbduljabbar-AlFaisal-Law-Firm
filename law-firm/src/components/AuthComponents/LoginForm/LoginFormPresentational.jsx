@@ -3,42 +3,37 @@ import { Formik, Field, Form, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 import { Eye, EyeOff, Mail, Lock } from 'lucide-react';
 import { useState } from 'react';
-function LoginFormPresentation() {
+function LoginFormPresentation({ loginMutation }) {
     const [showPassword, setShowPassword] = useState(false);
 
     return (
         <div className="flex items-center justify-center p-4">
             <div className="w-full max-w-md">
                 <Formik
-                    initialValues={{ email: '', password: '' }}
+                    initialValues={{ username: '', password: '' }}
                     validationSchema={Yup.object({
-                        email: Yup.string()
+                        username: Yup.string()
                             .email('عنوان البريد الإلكتروني غير صحيح')
                             .required('البريد الإلكتروني مطلوب'),
                         password: Yup.string()
                             .required('كلمة المرور مطلوبة'),
                     })}
-                    onSubmit={(values, { setSubmitting }) => {
-                        setTimeout(() => {
-                            console.log('Registration data:', values);
-                            setSubmitting(false);
-                        }, 400);
-                    }}
+                    onSubmit={(values) => loginMutation.mutate(values)}
                 >
                     {({ isSubmitting, errors, touched }) => (
                         <Form className="space-y-3">
                             {/* Email */}
                             <div className="space-y-2">
-                                <label htmlFor="email" className="flex items-center gap-2 text-sm font-semibold text-primary">
+                                <label htmlFor="username" className="flex items-center gap-2 text-sm font-semibold text-primary">
                                     <Mail className="w-4 h-4 text-secondary" />
                                     البريد الإلكتروني
                                 </label>
-                                <Field name="email">
+                                <Field name="username">
                                     {({ field }) => (
                                         <input
                                             {...field}
-                                            type="email"
-                                            className={`w-full px-4 py-3 border rounded-lg focus:outline-none focus:ring-2 transition-all duration-300 ${errors.email && touched.email
+                                            type="string"
+                                            className={`w-full px-4 py-3 border rounded-lg focus:outline-none focus:ring-2 transition-all duration-300 ${errors.username && touched.username
                                                 ? 'border-red-300 focus:ring-red-200 bg-red-50'
                                                 : 'border-gray-300 focus:ring-primary focus:border-primary'
                                                 }`}
@@ -47,7 +42,7 @@ function LoginFormPresentation() {
                                         />
                                     )}
                                 </Field>
-                                <ErrorMessage name="email" component="div" className="text-red-500 text-xs mt-1 font-medium" />
+                                <ErrorMessage name="username" component="div" className="text-red-500 text-xs mt-1 font-medium" />
                             </div>
 
                             {/* Password */}
@@ -102,7 +97,7 @@ function LoginFormPresentation() {
                                     : 'bg-primary hover:scale-[1.02] active:scale-[0.98] shadow-lg hover:shadow-xl'
                                     }`}
                             >
-                                {isSubmitting ? (
+                                {loginMutation.isPending ? (
                                     <div className="flex items-center justify-center gap-2">
                                         <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
                                         جاري تسجيل الدخول...
