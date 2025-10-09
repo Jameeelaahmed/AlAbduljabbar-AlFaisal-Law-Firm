@@ -25,3 +25,11 @@ export const loginUser = async (userData) => {
         throw error;
     }
 }
+
+export const logoutUser = async () => {
+    try {
+        await api.post("/api/Auth/Logout");
+    } catch (e) {
+        console.warn("Logout request failed:", e);
+    }
+};
