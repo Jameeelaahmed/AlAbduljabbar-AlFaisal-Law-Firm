@@ -256,7 +256,7 @@ function HeaderPresentational({
                 {/* Mobile menu content with top padding to account for fixed header */}
                 < div className="pt-20 pb-6 px-6" >
                     {/* Mobile Navigation */}
-                    <ul ul className='flex flex-col space-y-2' >
+                    <ul className='flex flex-col space-y-2' >
                         <li className='py-3 px-4 rounded text-secondary hover:bg-primary hover:text-white transition-all'>
                             <Link onClick={toggleMobileMenu}>
                                 <p>{t("landing.Home")}</p>
@@ -285,7 +285,7 @@ function HeaderPresentational({
                     </ul >
 
                     {/* Mobile Auth Section */}
-                    <div div className='mt-6 pt-4 border-t border-gray-200' >
+                    <div className='mt-6 pt-4 border-t border-gray-200' >
                         {(isAuthenticated && role == 'User') ? (
                             <div className='flex flex-col space-y-3'>
                                 <p className='text-center text-secondary'>{t("landing.Hello")} {username}</p>
