@@ -1,4 +1,3 @@
-import React from "react";
 import {
     LayoutDashboard,
     Users,
@@ -15,10 +14,10 @@ import { NavLink } from "react-router-dom";
 export default function SideBarPresentational({ isSidebarOpen, handletoggleSidebar, t }) {
     return (
         <>
-            {/* Overlay for medium screens only */}
+            {/* Overlay for small and medium screens */}
             {isSidebarOpen && (
                 <div
-                    className="fixed inset-0 bg-black/50 z-30 hidden md:block lg:hidden"
+                    className="fixed inset-0 bg-black/50 z-30 block lg:hidden"
                     onClick={handletoggleSidebar}
                 />
             )}
@@ -26,17 +25,17 @@ export default function SideBarPresentational({ isSidebarOpen, handletoggleSideb
             {/* Sidebar */}
             <div
                 className={`
-                    bg-primary text-gray-200 min-h-screen p-6 flex flex-col justify-between 
+                    bg-primary text-gray-200 min-h-screen flex flex-col
                     transition-all duration-300
                     ${isSidebarOpen ? "w-64" : "w-20"}
-                    ${isSidebarOpen ? "md:fixed md:top-0 md:right-0 md:h-screen md:z-40" : "md:w-20"}
-                    lg:relative lg:z-auto
+                    ${isSidebarOpen ? "fixed top-0 ltr:left-0 rtl:right-0 h-screen z-40 lg:sticky lg:top-0" : "sticky top-0"}
                 `}
             >
-                {/* Header */}
-                <div>
+                {/* Header and Navigation Container */}
+                <div className="p-6 flex-1 flex flex-col overflow-hidden">
+                    {/* Header */}
                     <div
-                        className={`flex border-b border-white/20 pb-2 ${!isSidebarOpen ? "justify-center" : "space-x-10"
+                        className={`flex border-b border-white/20 pb-2 mb-6 ${!isSidebarOpen ? "justify-center" : "justify-between items-center"
                             }`}
                     >
                         <div>
@@ -47,97 +46,136 @@ export default function SideBarPresentational({ isSidebarOpen, handletoggleSideb
                         {isSidebarOpen ? (
                             <span
                                 onClick={handletoggleSidebar}
-                                className="flex justify-center items-center w-6 h-6 cursor-pointer"
+                                className="flex justify-center items-center w-6 h-6 cursor-pointer hover:bg-white/20 rounded transition-colors"
                             >
                                 <X />
                             </span>
                         ) : (
                             <span
                                 onClick={handletoggleSidebar}
-                                className="flex justify-center items-center w-6 h-6 cursor-pointer"
+                                className="flex justify-center items-center w-6 h-6 cursor-pointer hover:bg-white/20 rounded transition-colors"
                             >
                                 <ArrowLeft />
                             </span>
                         )}
                     </div>
 
-                    {/* Navigation */}
-                    <ul className="mt-6 space-y-4">
-                        <li>
-                            <NavLink
-                                to=""
-                                className={`flex items-center gap-3 p-2 rounded-xl hover:bg-white/20 transition cursor-pointer ${!isSidebarOpen ? "justify-center" : ""
-                                    }`}
-                            >
-                                <LayoutDashboard className="w-5 h-5" />
-                                {isSidebarOpen && <span className="text-lg transition-all duration-300">لوحة القيادة</span>}
-                            </NavLink>
-                        </li>
+                    {/* Navigation - Scrollable if content overflows */}
+                    <div className="flex-1 overflow-y-auto scrollbar-thin scrollbar-thumb-white/20 scrollbar-track-transparent">
+                        <ul className="space-y-2">
+                            <li>
+                                <NavLink
+                                    to=""
+                                    end
+                                    className={({ isActive }) =>
+                                        `flex items-center gap-3 p-3 rounded-xl transition-all cursor-pointer ${!isSidebarOpen ? "justify-center" : ""
+                                        } ${isActive
+                                            ? "bg-white/30 text-white shadow-lg"
+                                            : "hover:bg-white/20"
+                                        }`
+                                    }
+                                >
+                                    <LayoutDashboard className="w-5 h-5 flex-shrink-0" />
+                                    {isSidebarOpen && <span className="text-sm font-medium transition-all duration-300">لوحة القيادة</span>}
+                                </NavLink>
+                            </li>
 
-                        <li>
-                            <NavLink
-                                to="services"
-                                className={`flex items-center gap-3 p-2 rounded-xl hover:bg-white/20 transition cursor-pointer ${!isSidebarOpen ? "justify-center" : ""
-                                    }`}
-                            >
-                                <Scale className="w-5 h-5" />
-                                {isSidebarOpen && <span> الخدمات القانونية</span>}
-                            </NavLink>
-                        </li>
-                        <li>
-                            <NavLink
-                                to="/admin/requests"
-                                className={`flex items-center gap-3 p-2 rounded-xl hover:bg-white/20 transition cursor-pointer ${!isSidebarOpen ? "justify-center" : ""
-                                    }`}
-                            >
-                                <CalendarCheck className="w-5 h-5" />
-                                {isSidebarOpen && <span>الطلبات</span>}
-                            </NavLink>
-                        </li>
-                        <li>
-                            <NavLink
-                                to="/admin/users"
-                                className={`flex items-center gap-3 p-2 rounded-xl hover:bg-white/20 transition cursor-pointer ${!isSidebarOpen ? "justify-center" : ""
-                                    }`}
-                            >
-                                <Users className="w-5 h-5" />
-                                {isSidebarOpen && <span>المستخدمين</span>}
-                            </NavLink>
-                        </li>
+                            <li>
+                                <NavLink
+                                    to="services"
+                                    className={({ isActive }) =>
+                                        `flex items-center gap-3 p-3 rounded-xl transition-all cursor-pointer ${!isSidebarOpen ? "justify-center" : ""
+                                        } ${isActive
+                                            ? "bg-white/30 text-white shadow-lg"
+                                            : "hover:bg-white/20"
+                                        }`
+                                    }
+                                >
+                                    <Scale className="w-5 h-5 flex-shrink-0" />
+                                    {isSidebarOpen && <span className="text-sm font-medium">الخدمات القانونية</span>}
+                                </NavLink>
+                            </li>
 
-                        <li>
-                            <NavLink
-                                to=""
-                                className={`flex items-center gap-3 p-2 rounded-xl hover:bg-white/20 transition cursor-pointer ${!isSidebarOpen ? "justify-center" : ""
-                                    }`}
-                            >
-                                <FileText className="w-5 h-5" />
-                                {isSidebarOpen && <span>التقارير</span>}
-                            </NavLink>
-                        </li>
+                            <li>
+                                <NavLink
+                                    to="/admin/requests"
+                                    className={({ isActive }) =>
+                                        `flex items-center gap-3 p-3 rounded-xl transition-all cursor-pointer ${!isSidebarOpen ? "justify-center" : ""
+                                        } ${isActive
+                                            ? "bg-white/30 text-white shadow-lg"
+                                            : "hover:bg-white/20"
+                                        }`
+                                    }
+                                >
+                                    <CalendarCheck className="w-5 h-5 flex-shrink-0" />
+                                    {isSidebarOpen && <span className="text-sm font-medium">الطلبات</span>}
+                                </NavLink>
+                            </li>
 
-                        <li>
-                            <NavLink
-                                to="/admin/settings"
-                                className={`flex items-center gap-3 p-2 rounded-xl hover:bg-white/20 transition cursor-pointer ${!isSidebarOpen ? "justify-center" : ""
-                                    }`}
-                            >
-                                <Settings className="w-5 h-5" />
-                                {isSidebarOpen && <span>الإعدادات</span>}
-                            </NavLink>
-                        </li>
-                    </ul>
+                            <li>
+                                <NavLink
+                                    to="/admin/users"
+                                    className={({ isActive }) =>
+                                        `flex items-center gap-3 p-3 rounded-xl transition-all cursor-pointer ${!isSidebarOpen ? "justify-center" : ""
+                                        } ${isActive
+                                            ? "bg-white/30 text-white shadow-lg"
+                                            : "hover:bg-white/20"
+                                        }`
+                                    }
+                                >
+                                    <Users className="w-5 h-5 flex-shrink-0" />
+                                    {isSidebarOpen && <span className="text-sm font-medium">المستخدمين</span>}
+                                </NavLink>
+                            </li>
+
+                            <li>
+                                <NavLink
+                                    to="reports"
+                                    className={({ isActive }) =>
+                                        `flex items-center gap-3 p-3 rounded-xl transition-all cursor-pointer ${!isSidebarOpen ? "justify-center" : ""
+                                        } ${isActive
+                                            ? "bg-white/30 text-white shadow-lg"
+                                            : "hover:bg-white/20"
+                                        }`
+                                    }
+                                >
+                                    <FileText className="w-5 h-5 flex-shrink-0" />
+                                    {isSidebarOpen && <span className="text-sm font-medium">التقارير</span>}
+                                </NavLink>
+                            </li>
+
+                            <li>
+                                <NavLink
+                                    to="/admin/settings"
+                                    className={({ isActive }) =>
+                                        `flex items-center gap-3 p-3 rounded-xl transition-all cursor-pointer ${!isSidebarOpen ? "justify-center" : ""
+                                        } ${isActive
+                                            ? "bg-white/30 text-white shadow-lg"
+                                            : "hover:bg-white/20"
+                                        }`
+                                    }
+                                >
+                                    <Settings className="w-5 h-5 flex-shrink-0" />
+                                    {isSidebarOpen && <span className="text-sm font-medium">الإعدادات</span>}
+                                </NavLink>
+                            </li>
+                        </ul>
+                    </div>
                 </div>
 
-                {/* Footer */}
-                <div className="mt-6 border-t border-white/20 pt-4">
-                    <NavLink
-                        to=""
-                        className="flex items-center gap-2 p-2 rounded-lg hover:bg-primary/50 transition"
+                {/* Fixed Logout Button at Bottom */}
+                <div className="p-6 border-t border-white/20 bg-primary flex-shrink-0">
+                    <button
+                        className={`flex items-center gap-2 p-3 rounded-lg hover:bg-red-500/20 hover:text-red-300 transition-all w-full ${!isSidebarOpen ? "justify-center" : "text-left"
+                            }`}
+                        onClick={() => {
+                            // Add logout functionality here
+                            console.log('Logout clicked');
+                        }}
                     >
-                        <LogOut className="w-5 h-5" />
-                        {isSidebarOpen && <span>تسجيل الخروج</span>}
-                    </NavLink>
+                        <LogOut className="w-5 h-5 flex-shrink-0" />
+                        {isSidebarOpen && <span className="text-sm font-medium">تسجيل الخروج</span>}
+                    </button>
                 </div>
             </div>
         </>

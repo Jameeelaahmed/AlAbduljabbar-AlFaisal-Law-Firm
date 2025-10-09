@@ -1,4 +1,3 @@
-import React from "react";
 import SettingsSectionContainer from "../../../components/AdminComponents/Settings/SettingsSectionContainer";
 
 export default function SettingsPagePresentational({
@@ -31,7 +30,6 @@ export default function SettingsPagePresentational({
     return (
         <div className="p-8 space-y-10">
             <h1 className="text-3xl font-bold text-primary">إدارة محتوى الصفحة</h1>
-
             <div className="space-y-8">
                 {sections.map((section) => (
                     <SettingsSectionContainer
