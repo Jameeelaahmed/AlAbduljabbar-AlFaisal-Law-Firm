@@ -12,13 +12,8 @@ import { useAuthStore } from "../../../store/useAuthStore";
 function HeaderContainer() {
     const { t } = useTranslation();
     const { isAuthenticated, user, logout } = useAuthStore();
-    console.log("User from Zustand store:", user);
     const role = user?.lastRole;
     const name = user?.name;
-
-    useEffect(() => {
-        console.log("Auth State Changed:", { isAuthenticated, role, name });
-    }, [isAuthenticated, role, name]);
 
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
     const [currentLang, setCurrentLang] = useState(() => {

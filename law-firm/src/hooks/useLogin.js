@@ -15,7 +15,6 @@ export const useLogin = () => {
         onSuccess: (data) => {
             if (data?.isSuccess) {
                 const userData = data.data;
-
                 const { token, id, name, email, lastRole } = userData;
 
                 loginToStore(token, { id, name, email, lastRole });
@@ -28,12 +27,12 @@ export const useLogin = () => {
                     navigate("/");
                 }
             } else {
-                console.error("⚠️ Login failed:", data?.error?.description || data);
+                console.error("Login failed:", data?.error?.description || data);
             }
         },
 
         onError: (err) => {
-            console.error("❌ Login request error:", err);
+            console.error("Login request error:", err);
         },
     });
 };
