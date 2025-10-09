@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom'
 // imgs
 import logo1 from '../../../assets/Logos/Logo1.png'
 import logo2 from '../../../assets/Logos/Logo2.png'
+import { useEffect } from 'react'
 
 function HeaderPresentational({
     t,
@@ -28,7 +29,6 @@ function HeaderPresentational({
     closeLogo2DropDown,
     isLogo2DropDown
 }) {
-
 
     return (
         <>

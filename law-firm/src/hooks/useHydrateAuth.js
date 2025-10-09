@@ -7,27 +7,37 @@ export const useHydrateAuth = () => {
     const login = useAuthStore((state) => state.login);
     const logout = useAuthStore((state) => state.logout);
     const setHydrated = useAuthStore((state) => state.setHydrated);
+    const user = useAuthStore((state) => state.user);
 
     useEffect(() => {
         const hydrate = async () => {
             try {
                 const { data } = await api.post("/api/Auth/RefreshToken", {});
-                const newToken = data.data.token
+                const payload = data.data;
 
-                login(newToken, {
-                    id: data.data.id,
-                    name: data.data.name,
-                    email: data.data.email,
-                    lastRole: data.data.lastRole,
+                login(payload.token, {
+                    id: payload.id,
+                    name: payload.name,
+                    email: payload.email,
+                    lastRole: payload.lastRole,
+                    refreshTokenExpiration: payload.refreshTokenExpiration,
                 });
+
             } catch (err) {
-                console.warn("⚠️ No valid refresh session:", err);
+                console.warn("⚠️ Session refresh failed:", err);
                 logout();
+
+                window.location.href = "/login";
             } finally {
                 setHydrated(true);
             }
         };
 
-        hydrate();
-    }, [login, logout, setHydrated]);
+        // Run once on mount
+        if (!user) {
+            hydrate();
+        } else {
+            setHydrated(true);
+        }
+    }, [login, logout, setHydrated, user]);
 };
