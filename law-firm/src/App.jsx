@@ -5,7 +5,7 @@ import { useAutoLogout } from "./hooks/useAutoLogout";
 
 function App() {
   useHydrateAuth();
-  useAutoLogout();  
+  useAutoLogout();
 
   return <RoutesPages />;
 }

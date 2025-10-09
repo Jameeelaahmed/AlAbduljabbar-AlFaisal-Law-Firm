@@ -14,18 +14,17 @@ export default function UsersPagePresentational({
     actions,
 }) {
 
-
     return (
-        <div className="p-6 bg-gray-50 shadow-lg">
+        <div className="min-h-screen p-4 sm:p-6 bg-gray-50 shadow-lg">
             {/* Header */}
             <HeadlineContainer headlineLabel="إدارة المستخدمين" buttonLabel="إضافة مستخدم" buttonIcon="+" />
 
             {/* Filters & Search */}
-            <div className="flex flex-wrap gap-4 mb-4 items-center">
+            <div className="flex flex-col sm:flex-row sm:flex-wrap gap-2 sm:gap-4 mb-4 sm:mb-6">
                 <select
                     value={roleFilter}
                     onChange={(e) => setRoleFilter(e.target.value)}
-                    className="border border-gray-300 rounded-lg p-2 cursor-pointer"
+                    className="border border-gray-300 rounded-lg p-2 sm:p-3 cursor-pointer bg-white shadow-sm focus:ring-2 focus:ring-primary focus:border-primary transition-all text-sm sm:text-base w-full sm:w-auto min-w-[120px]"
                 >
                     <option value="">الدور</option>
                     <option value="مسؤول">مسؤول</option>
@@ -36,7 +35,7 @@ export default function UsersPagePresentational({
                 <select
                     value={branchFilter}
                     onChange={(e) => setBranchFilter(e.target.value)}
-                    className="border border-gray-300 rounded-lg p-2 cursor-pointer"
+                    className="border border-gray-300 rounded-lg p-2 sm:p-3 cursor-pointer bg-white shadow-sm focus:ring-2 focus:ring-primary focus:border-primary transition-all text-sm sm:text-base w-full sm:w-auto min-w-[120px]"
                 >
                     <option value="">الفرع</option>
                     <option value="الرياض">الرياض</option>
@@ -50,22 +49,24 @@ export default function UsersPagePresentational({
                     placeholder="ابحث عن المستخدمين بالاسم، البريد الإلكتروني..."
                     value={search}
                     onChange={(e) => setSearch(e.target.value)}
-                    className="flex-1 border border-gray-300 rounded-lg p-2"
+                    className="flex-1 border border-gray-300 rounded-lg p-2 sm:p-3 bg-white shadow-sm focus:ring-2 focus:ring-primary focus:border-primary transition-all text-sm sm:text-base placeholder:text-xs sm:placeholder:text-sm min-w-[250px] sm:min-w-[300px]"
                 />
             </div>
 
             {/* Users Table - Using GenericTableContainer */}
-            <GenericTableContainer
-                useDataHook={useUsers}
-                columns={columns}
-                actions={actions}
-                perPage={5}
-                filters={{
-                    search,
-                    branch: branchFilter,
-                    role: roleFilter,
-                }}
-            />
+            <div className="bg-white rounded-lg shadow-sm overflow-hidden">
+                <GenericTableContainer
+                    useDataHook={useUsers}
+                    columns={columns}
+                    actions={actions}
+                    perPage={5}
+                    filters={{
+                        search,
+                        branch: branchFilter,
+                        role: roleFilter,
+                    }}
+                />
+            </div>
         </div>
     );
 }

@@ -6,9 +6,9 @@ export default function SettingsSectionPersetnational({ section, contentAr, cont
             <h2 className="text-2xl font-bold mb-6 text-secondary flex items-center gap-2">
                 {section?.title?.ar}
             </h2>
-            <div className="flex gap-4">
+            <div className="flex flex-col lg:flex-row gap-4">
                 {/* Arabic Editor */}
-                <div className="mb-6">
+                <div className="mb-6 lg:w-1/2">
                     <div className="flex items-center gap-2 mb-3">
                         <label className="font-semibold text-secondary text-lg">Arabic Content</label>
                     </div>
@@ -21,7 +21,7 @@ export default function SettingsSectionPersetnational({ section, contentAr, cont
                 </div>
 
                 {/* English Editor */}
-                <div>
+                <div className="lg:w-1/2">
                     <div className="flex items-center gap-2 mb-3">
                         <label className="font-semibold text-secondary text-lg">English Content</label>
                     </div>
