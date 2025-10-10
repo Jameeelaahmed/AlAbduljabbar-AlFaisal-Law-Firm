@@ -26,3 +26,8 @@ export const getCategoryById = async (id) => {
     const res = await api.get(`${API_URL}/${id}`);
     return res.data.data;
 };
+
+export const getCategoryForUpdate = async (id) => {
+    const res = await api.get(`${API_URL}/GetForUpdate/${id}`);
+    return res.data.data;
+}

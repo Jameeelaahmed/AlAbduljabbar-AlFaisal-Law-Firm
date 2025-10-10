@@ -4,20 +4,19 @@ import { Formik, Field, Form, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import { toast } from "react-toastify";
 import { useUpdateCategory } from "../../../../hooks/useCategories";
-
-function UpdateName({ category, onSuccess }) {
+import { useGetCategoryForUpdate } from "../../../../hooks/useCategories";
+function UpdateName({ categoryId, onSuccess }) {
     const { t } = useTranslation();
     const { mutateAsync: updateCategory, isLoading: isUpdating } = useUpdateCategory();
 
-    const initialNameEn = category?.NameEn ?? category?.nameEn ?? category?.name ?? "";
-    const initialNameAr = category?.NameAr ?? category?.nameAr ?? category?.name ?? "";
-    const branchId = category?.branchId ?? 1;
+    const { data } = useGetCategoryForUpdate(categoryId);
+    console.log(data);
 
     return (
         <div className="flex items-center justify-center p-4" onClick={(e) => e.stopPropagation()}>
             <div className="w-full max-w-md">
                 <Formik
-                    initialValues={{ nameEn: initialNameEn, nameAr: initialNameAr }}
+                    initialValues={{ nameEn: data.nameEn, nameAr: data.nameAr }}
                     validationSchema={Yup.object({
                         nameEn: Yup.string().min(3).required(t("Services.English name is required")),
                         nameAr: Yup.string().min(3).required(t("Services.Arabic name is required")),
@@ -28,10 +27,10 @@ function UpdateName({ category, onSuccess }) {
                             const payload = {
                                 NameEn: values.nameEn,
                                 NameAr: values.nameAr,
-                                branchId,
+                                branchId: data.branchId,
                             };
 
-                            await updateCategory({ id: category.id, data: payload });
+                            await updateCategory({ id: categoryId, data: payload });
 
                             toast.success(t("Services.Category updated successfully"));
                             if (typeof onSuccess === "function") onSuccess();
