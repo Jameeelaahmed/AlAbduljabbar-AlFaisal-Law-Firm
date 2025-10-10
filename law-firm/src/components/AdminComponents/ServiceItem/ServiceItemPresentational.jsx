@@ -1,6 +1,23 @@
 import { Trash, ChevronDown, Plus } from "lucide-react"
+import Modal from "../Modals/Modal";
+import DeleteModalContainer from "../Modals/DeleteModal/DeleteModalContainer";
 
-function ServiceItemPresentational({ isChecked, setIsChecked, isExpanded, setIsExpanded }) {
+function ServiceItemPresentational({
+    isExpanded,
+    setIsExpanded,
+    t,
+    category,
+    deleteRef,
+    onOpenDeleteCategory,
+    onCloseDeleteCategory,
+    handleDeleteCategory,
+    isDeleting,
+    error }) {
+
+    // Determine toggle states based on branchId
+    const isEgyptToggled = category.branchId === 0 || category.branchId === 1;
+    const isSaudiToggled = category.branchId === 0 || category.branchId === 2;
+
     return (
         <div className="group">
             <div className={`flex justify-between items-center p-4 md:p-6 cursor-pointer transition-all duration-300 ${isExpanded
@@ -9,7 +26,7 @@ function ServiceItemPresentational({ isChecked, setIsChecked, isExpanded, setIsE
                 }`} onClick={() => setIsExpanded(!isExpanded)}>
                 <div className="flex flex-col gap-1">
                     <p className={`font-semibold text-base md:text-lg lg:text-xl transition-colors ${isExpanded ? 'text-white' : 'group-hover:text-white'
-                        }`}>الملكيه الفكريه</p>
+                        }`}>{category.name}</p>
                     <span className={`text-xs md:text-sm transition-colors ${isExpanded
                         ? 'text-white/80'
                         : 'text-secondary group-hover:text-white/80'
@@ -20,19 +37,15 @@ function ServiceItemPresentational({ isChecked, setIsChecked, isExpanded, setIsE
                     {/* Egypt Toggle */}
                     <div className="flex items-center gap-2">
                         <span className={`text-sm md:text-base font-medium transition-colors ${isExpanded ? 'text-white' : 'group-hover:text-white'
-                            }`}>مصر</span>
+                            }`}>{t("Egypt")}</span>
                         <label
-                            onClick={(e) => {
-                                e.stopPropagation();
-                                setIsChecked(!isChecked);
-                            }}
-                            className={`relative inline-flex items-center w-10 h-6 md:w-12 md:h-7 rounded-full cursor-pointer transition-colors duration-200 ${isChecked
+                            className={`relative inline-flex items-center w-10 h-6 md:w-12 md:h-7 rounded-full cursor-pointer transition-colors duration-200 ${isEgyptToggled
                                 ? (isExpanded ? "bg-white/20" : "bg-primary group-hover:bg-white/20")
                                 : (isExpanded ? "bg-white/20" : "bg-gray-600 group-hover:bg-white/20")
                                 }`}
                         >
                             <span
-                                className={`absolute left-1 top-1 h-4 w-4 md:h-5 md:w-5 rounded-full bg-white border-2 border-white shadow-md transform transition-transform duration-200 ${isChecked ? "translate-x-4 md:translate-x-5" : "translate-x-0"
+                                className={`absolute left-1 top-1 h-4 w-4 md:h-5 md:w-5 rounded-full bg-white border-2 border-white shadow-md transform transition-transform duration-200 ${isEgyptToggled ? "translate-x-4 md:translate-x-5" : "translate-x-0"
                                     }`}
                             ></span>
                         </label>
@@ -41,19 +54,15 @@ function ServiceItemPresentational({ isChecked, setIsChecked, isExpanded, setIsE
                     {/* Saudi Arabia Toggle */}
                     <div className="flex items-center gap-2">
                         <span className={`text-sm md:text-base font-medium transition-colors ${isExpanded ? 'text-white' : 'group-hover:text-white'
-                            }`}>السعوديه</span>
+                            }`}>{t("Saudi Arabia")}</span>
                         <label
-                            onClick={(e) => {
-                                e.stopPropagation();
-                                setIsChecked(!isChecked);
-                            }}
-                            className={`relative inline-flex items-center w-10 h-6 md:w-12 md:h-7 rounded-full cursor-pointer transition-colors duration-200 ${isChecked
+                            className={`relative inline-flex items-center w-10 h-6 md:w-12 md:h-7 rounded-full cursor-pointer transition-colors duration-200 ${isSaudiToggled
                                 ? (isExpanded ? "bg-white/20" : "bg-primary group-hover:bg-white/20")
                                 : (isExpanded ? "bg-white/20" : "bg-gray-600 group-hover:bg-white/20")
                                 }`}
                         >
                             <span
-                                className={`absolute left-1 top-1 h-4 w-4 md:h-5 md:w-5 rounded-full bg-white border-2 border-white shadow-md transform transition-transform duration-200 ${isChecked ? "translate-x-4 md:translate-x-5" : "translate-x-0"
+                                className={`absolute left-1 top-1 h-4 w-4 md:h-5 md:w-5 rounded-full bg-white border-2 border-white shadow-md transform transition-transform duration-200 ${isSaudiToggled ? "translate-x-4 md:translate-x-5" : "translate-x-0"
                                     }`}
                             ></span>
                         </label>
@@ -70,13 +79,15 @@ function ServiceItemPresentational({ isChecked, setIsChecked, isExpanded, setIsE
                                 : 'text-primary group-hover:text-white'
                                 }`} />
                         </button>
-                        <button className={`p-1.5 md:p-2 rounded-lg transition-all duration-200 ${isExpanded
+                        <button onClick={(e) => { onOpenDeleteCategory(); e.stopPropagation() }} className={`p-1.5 md:p-2 rounded-lg transition-all duration-200 ${isExpanded
                             ? 'hover:bg-white/20'
                             : 'hover:bg-red-50 group-hover:hover:bg-white/20'
                             }`}>
                             <Trash className={`w-3.5 h-3.5 md:w-4 md:h-4 lg:w-5 lg:h-5  transition-colors text-denied`} />
                         </button>
-
+                        <Modal title={`Delete ${category.name}`} onClose={(e) => { onCloseDeleteCategory(); e.stopPropagation(); }} ref={deleteRef}>
+                            <DeleteModalContainer itemName={category.name} handleDeleteCategory={handleDeleteCategory} isDeleting={handleDeleteCategory} error={error} />
+                        </Modal>
                         <ChevronDown className={`w-4 h-4 md:w-5 md:h-5 lg:w-6 lg:h-6 transition-all duration-300 ${isExpanded
                             ? 'rotate-180 text-white'
                             : 'text-primary group-hover:text-white'

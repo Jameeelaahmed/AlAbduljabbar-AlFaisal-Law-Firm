@@ -1,4 +1,6 @@
 {
+  "Saudi Arabia": "Saudi Arabia",
+  "Egypt": "Egypt",
   "sidebar": {
     "title": "Abdul Jabbar & Al-Faisal",
     "subtitle": "Control Panel",
@@ -25,5 +27,14 @@
     "Hello": "Hello, ",
     "Profile": "Profile",
     "Logout": "Logout"
+  },
+  "Services": {
+    "Service Management": "Service Management",
+    "Add New Category": "Add New Category",
+    "Submit Category": "Submit Category",
+    "Submitting...": "Submitting...",
+    "Add New Service": "Add New Service",
+    "Category Name in English": "Category Name in English",
+    "Category Name in Arabic": "Category Name in Arabic"
   }
 }

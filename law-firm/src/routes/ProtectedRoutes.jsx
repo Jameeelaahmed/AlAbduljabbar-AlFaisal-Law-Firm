@@ -1,17 +1,25 @@
-// ProtectedRoute.jsx
-// import { Navigate, Outlet } from "react-router-dom";
-// import { useAuth } from "../context/AuthContext"; // your auth context
+import { Navigate } from 'react-router-dom';
+import { useAuthStore } from '../store/useAuthStore';
 
-// export default function ProtectedRoute({ roles }) {
-//     const { user } = useAuth(); // user = { role: "admin" | "support" | "client" }
+const ProtectedRoute = ({ children, allowedRoles = [], requireAuth = true }) => {
+    const { isAuthenticated, user, isHydrated } = useAuthStore();
 
-//     if (!user) {
-//         return <Navigate to="/login" replace />;
-//     }
+    // Wait for hydration to complete
+    // if (!isHydrated) {
+    //     return <div>Loading...</div>; // Or your loading component
+    // }
 
-//     if (roles && !roles.includes(user.role)) {
-//         return <Navigate to="/" replace />;
-//     }
+    // Check authentication
+    if (requireAuth && !isAuthenticated) {
+        return <Navigate to="/login" replace />;
+    }
 
-//     return <Outlet />;
-// }
+    // Check role authorization
+    if (allowedRoles.length > 0 && (!user?.lastRole || !allowedRoles.includes(user.lastRole))) {
+        return <Navigate to="/unauthorized" replace />; // Or redirect to appropriate page
+    }
+
+    return children;
+};
+
+export default ProtectedRoute;

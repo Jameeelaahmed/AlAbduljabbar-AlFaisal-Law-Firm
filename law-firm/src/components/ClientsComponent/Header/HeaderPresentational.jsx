@@ -41,7 +41,7 @@ function HeaderPresentational({
                             <img className='w-[55px]' src={logo1} alt="logo1" />
                             <p className='font-bold text-lg text-white'>العبد الجبار </p>
                             <span className='text-white'>محامون و مستشاورن</span>
-                            <span className='text-accents text-sm font-bold'>اضغط لرؤية بيانات الشركه</span>
+                            <span className='text-[#f7c630] text-sm font-bold'>اضغط لرؤية بيانات الشركه</span>
                         </div>
                         <div className={`absolute rtl:right-2 ltr:left-2 mt-5 w-66 backdrop-blur-xl shadow-2xl rounded-lg border border-primary p-2 z-60 text-white
                     transform transition-transform duration-300 ease-in-out origin-top
@@ -202,7 +202,7 @@ function HeaderPresentational({
                             <img className='w-[55px]' src={logo2} alt="logo2" />
                             <p className='font-bold text-lg text-white'>العبد الجبار و الفيصل </p>
                             <span className='text-white'>محامون و مستشاورن</span>
-                            <span className='text-text text-sm font-bold'>اضغط لرؤية بيانات الشركه</span>
+                            <span className='text-[#f7c630] text-sm font-bold'>اضغط لرؤية بيانات الشركه</span>
                         </div>
                         <div className={`absolute ltr:right-2 rtl:left-2 mt-5 w-66 backdrop-blur-xl shadow-2xl rounded-lg border border-primary p-2 z-60 text-white
                     transform transition-transform duration-300 ease-in-out origin-top

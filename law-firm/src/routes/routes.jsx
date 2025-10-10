@@ -1,10 +1,11 @@
 // libs
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { lazy, Suspense } from "react";
-
+import ProtectedRoute from "./ProtectedRoutes";
 //layout components
 import AdminLayout from "../layouts/AdminLayout";
 import ClientLayout from "../layouts/ClientLayout";
+import DashboardContainer from "../pages/AdminPages/Dashboard/DashboardContainer";
 
 //lazy loaded components
 const LoginRegisterContainer = lazy(() => import("../pages/AuthPages/LoginRegisterPage/LoginRegisterContainer"));
@@ -23,49 +24,71 @@ const routes = createBrowserRouter([
     },
     {
         path: '/admin',
-        element: <AdminLayout />,
+        element:
+            <ProtectedRoute allowedRoles={['Admin']}>
+                <AdminLayout />
+            </ProtectedRoute>
+        ,
         children: [
+            {
+                path: "dashboard",
+                element: (
+                    <ProtectedRoute allowedRoles={['Admin']}>
+                        <Suspense fallback={<div>Loading Serivices...</div>}>
+                            <DashboardContainer />
+                        </Suspense>
+                    </ProtectedRoute>
+                ),
+            },
             {
                 path: "services",
                 element: (
-                    <Suspense fallback={<div>Loading Serivices...</div>}>
-                        <AdminServices />
-                    </Suspense>
+                    <ProtectedRoute allowedRoles={['Admin']}>
+                        <Suspense fallback={<div>Loading Serivices...</div>}>
+                            <AdminServices />
+                        </Suspense>
+                    </ProtectedRoute>
                 ),
             },
             {
                 path: "settings",
                 element: (
-                    <Suspense fallback={<div>Loading Settings...</div>}>
-                        <AdminSettings />
-                    </Suspense>
+                    <ProtectedRoute allowedRoles={['Admin']}>
+                        <Suspense fallback={<div>Loading Settings...</div>}>
+                            <AdminSettings />
+                        </Suspense>
+                    </ProtectedRoute>
                 ),
             },
             {
                 path: "requests",
                 element: (
-                    <Suspense fallback={<div>Loading Settings...</div>}>
-                        <AdminRequests />
-                    </Suspense>
+                    <ProtectedRoute allowedRoles={['Admin']}>
+                        <Suspense fallback={<div>Loading Settings...</div>}>
+                            <AdminRequests />
+                        </Suspense>
+                    </ProtectedRoute>
                 ),
             },
             {
                 path: "requests/:requestId",
                 element: (
-                    <Suspense fallback={<div>Loading Request Details...</div>}>
-                        <AdminRequestDetails />
-                    </Suspense>
+                    <ProtectedRoute allowedRoles={['Admin']}>
+                        <Suspense fallback={<div>Loading Request Details...</div>}>
+                            <AdminRequestDetails />
+                        </Suspense>
+                    </ProtectedRoute>
                 ),
             },
             {
                 path: "users",
                 element: (
-                    <Suspense fallback={<div>Loading Settings...</div>}>
-                        <AdminUsers />
-                    </Suspense>
+                    <ProtectedRoute allowedRoles={['Admin']}>
+                        <Suspense fallback={<div>Loading Settings...</div>}>
+                            <AdminUsers />
+                        </Suspense>
+                    </ProtectedRoute>
                 ),
-
-
             },
         ]
     },
@@ -80,7 +103,12 @@ const routes = createBrowserRouter([
         path: '/',
         element: <ClientLayout />,
         children: [
-            { path: '/', element: <LandingContainer /> }
+            {
+                path: '/', element:
+                    <ProtectedRoute allowedRoles={['User']}>
+                        <LandingContainer />
+                    </ProtectedRoute>
+            }
         ]
     },
 ])
