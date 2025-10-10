@@ -5,9 +5,10 @@ const ProtectedRoute = ({ children, allowedRoles = [], requireAuth = true }) => 
     const { isAuthenticated, user, isHydrated } = useAuthStore();
 
     // Wait for hydration to complete
-    // if (!isHydrated) {
-    //     return <div>Loading...</div>; // Or your loading component
-    // }
+    if (!isHydrated) {
+        console.log("Waiting for auth hydration...");
+        return <h1>Loading...</h1>; // Or your loading component
+    }
 
     // Check authentication
     if (requireAuth && !isAuthenticated) {
