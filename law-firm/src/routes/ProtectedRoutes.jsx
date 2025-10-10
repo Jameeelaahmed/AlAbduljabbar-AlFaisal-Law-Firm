@@ -2,13 +2,8 @@ import { Navigate } from 'react-router-dom';
 import { useAuthStore } from '../store/useAuthStore';
 
 const ProtectedRoute = ({ children, allowedRoles = [], requireAuth = true }) => {
-    const { isAuthenticated, user, isHydrated } = useAuthStore();
+    const { isAuthenticated, user } = useAuthStore();
 
-    // Wait for hydration to complete
-    if (!isHydrated) {
-        console.log("Waiting for auth hydration...");
-        return <h1>Loading...</h1>; // Or your loading component
-    }
 
     // Check authentication
     if (requireAuth && !isAuthenticated) {

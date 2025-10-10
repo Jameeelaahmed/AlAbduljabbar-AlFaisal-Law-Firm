@@ -1,3 +1,11 @@
+// helpers
+import i18n from "../../../i18n";
+// libs
+import { useEffect } from "react";
+import { useTranslation } from 'react-i18next'
+import { useState } from "react";
+// components
+import { useAuthStore } from "../../../store/useAuthStore";
 // icons
 import { LogOut, Menu, X, User, ChevronDown, Globe, UserCircle, MapPin, Phone, Mail } from 'lucide-react'
 // libs
@@ -6,27 +14,70 @@ import { Link } from 'react-router-dom'
 import logo1 from '../../../assets/Logos/Logo1.png'
 import logo2 from '../../../assets/Logos/Logo2.png'
 
-function HeaderPresentational({
-    t,
-    username,
-    isAuthenticated,
-    role,
-    handleLogout,
-    isMobileMenuOpen,
-    toggleMobileMenu,
-    currentLang,
-    handleLanguageChange,
-    isDesktopDropdownOpen,
-    toggleDesktopDropdown,
-    closeDesktopDropdown,
-    openLogo1DropDown,
-    closeLogo1DropDown,
-    isLogo1DropDown,
-    openLogo2DropDown,
-    closeLogo2DropDown,
-    isLogo2DropDown
-}) {
+function Header() {
+    const { t } = useTranslation();
+    const { isAuthenticated, user, logout } = useAuthStore();
+    const role = user?.lastRole;
+    const name = user?.name;
 
+    const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+    const [currentLang, setCurrentLang] = useState(() => {
+        const savedLang = localStorage.getItem("selectedLanguage");
+        return savedLang || i18n.language;
+    });
+
+    const [isDesktopDropdownOpen, setIsDesktopDropdownOpen] = useState(false)
+    const [isLogo1DropDown, setIsLogo1DropDown] = useState(false)
+    const [isLogo2DropDown, setIsLogo2DropDown] = useState(false)
+
+    // desptop dropdown
+    const toggleDesktopDropdown = () => {
+        setIsDesktopDropdownOpen(!isDesktopDropdownOpen)
+    }
+
+    const closeDesktopDropdown = () => {
+        setIsDesktopDropdownOpen(false)
+    }
+
+    //logo1 drop down 
+    const openLogo1DropDown = () => {
+        setIsLogo1DropDown(!isDesktopDropdownOpen)
+    }
+
+    const closeLogo1DropDown = () => {
+        setIsLogo1DropDown(false)
+    }
+    //logo2 drop down 
+    const openLogo2DropDown = () => {
+        setIsLogo2DropDown(!isDesktopDropdownOpen)
+    }
+
+    const closeLogo2DropDown = () => {
+        setIsLogo2DropDown(false)
+    }
+    const toggleMobileMenu = () => {
+        setIsMobileMenuOpen(!isMobileMenuOpen);
+    };
+
+
+    const handleLanguageChange = (lang) => {
+        i18n
+            .changeLanguage(lang)
+            .then(() => {
+                setCurrentLang(lang);
+                localStorage.setItem("selectedLanguage", lang);
+            })
+            .catch((err) => console.error("Error changing language:", err));
+    };
+
+
+    function handleLogout() {
+        logout();
+    }
+
+    useEffect(() => {
+        document.documentElement.dir = currentLang === "ar" ? "rtl" : "ltr";
+    }, [currentLang]);
     return (
         <>
             {/* Main Header */}
@@ -119,7 +170,7 @@ function HeaderPresentational({
                                     transform transition-transform duration-300 ease-in-out origin-top
                                     ${isDesktopDropdownOpen ? 'scale-y-100 opacity-100' : 'scale-y-0 opacity-0'}
                                     `}>
-                                        <span>{t("landing.Hello")} {username}</span>
+                                        <span>{t("landing.Hello")} {name}</span>
                                         {/* Profile Link */}
                                         <Link
                                             to="/profile"
@@ -285,7 +336,7 @@ function HeaderPresentational({
                     <div className='mt-6 pt-4 border-t border-gray-200' >
                         {(isAuthenticated && role == 'User') ? (
                             <div className='flex flex-col space-y-3'>
-                                <p className='text-center text-secondary'>{t("landing.Hello")} {username}</p>
+                                <p className='text-center text-secondary'>{t("landing.Hello")} {name}</p>
 
                                 {/* Profile Link */}
                                 <Link
@@ -345,4 +396,4 @@ function HeaderPresentational({
     )
 }
 
-export default HeaderPresentational
+export default Header

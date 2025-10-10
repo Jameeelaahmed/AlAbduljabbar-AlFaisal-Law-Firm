@@ -1,16 +1,66 @@
+// libs
+import { useTranslation } from "react-i18next"
+// libs
+import { useState } from "react";
 import { Formik, Field, Form, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
+// hooks
+import { useCreateCategory } from '../../../../hooks/useCategories';
 
-function AddCategoryPresentational({ t, handleToggleChange, selectedBranches, handleSubmit, createCategoryMutation }) {
+function AddCategory({ onClose }) {
+    const { t } = useTranslation();
+    const [selectedBranches, setSelectedBranches] = useState({
+        egypt: false,
+        saudi: false
+    });
+
+    const getBranchId = (egypt, saudi) => {
+        if (egypt && saudi) return 3; // Both branches
+        if (egypt && !saudi) return 1; // Egypt only
+        if (!egypt && saudi) return 2; // Saudi only
+        return 3; // Default to both if none selected
+    };
+
+    const handleToggleChange = (branch, setFieldValue) => {
+        const newSelection = {
+            ...selectedBranches,
+            [branch]: !selectedBranches[branch]
+        };
+        setSelectedBranches(newSelection);
+
+        const branchId = getBranchId(newSelection.egypt, newSelection.saudi);
+        setFieldValue('branchId', branchId);
+    };
+
+    const createCategoryMutation = useCreateCategory();
+
+    const handleSubmit = async (values, { setSubmitting, resetForm }) => {
+        try {
+            await createCategoryMutation.mutateAsync(values);
+
+            resetForm();
+            onClose?.(); // Close modal after successful creation
+        } catch (error) {
+            // Error is already handled in the hook with toast
+            console.error('Failed to create category:', error);
+        } finally {
+            setSubmitting(false);
+            setSelectedBranches({
+                egypt: false,
+                saudi: false
+            })
+        }
+    };
+
     return (
         <div className="flex items-center justify-center p-4">
             <div className="w-full max-w-md">
                 <Formik
                     initialValues={{ nameEn: '', nameAr: '', branchId: 0 }}
                     validationSchema={Yup.object({
-                        nameEn: Yup.string().min(3).required('English name is required'),
-                        nameAr: Yup.string().min(3).required('Arabic name is required'),
-                        branchId: Yup.number().required('Branch selection is required')
+                        nameEn: Yup.string().min(3).required(t('Services.English name is required')),
+                        nameAr: Yup.string().min(3).required(t('Services.Arabic name is required')),
+                        branchId: Yup.number().required(t('Services.Branch selection is required'))
                     })}
                     onSubmit={handleSubmit}
                 >
@@ -19,7 +69,7 @@ function AddCategoryPresentational({ t, handleToggleChange, selectedBranches, ha
                             {/* English Name */}
                             <div className="space-y-2">
                                 <label htmlFor="nameEn" className="flex items-center gap-2 text-sm font-semibold text-primary">
-                                    {t("Category Name in English")}
+                                    {t("Services.Category Name in English")}
                                 </label>
                                 <Field name="nameEn">
                                     {({ field }) => (
@@ -30,7 +80,7 @@ function AddCategoryPresentational({ t, handleToggleChange, selectedBranches, ha
                                                 ? 'border-red-300 focus:ring-red-200 bg-red-50'
                                                 : 'border-gray-300 focus:ring-primary focus:border-primary'
                                                 }`}
-                                            placeholder="ادخل اسم الفئه بالانجليزي"
+                                            placeholder={t("Add Category.Category Name in English is required")}
                                             dir="ltr"
                                             disabled={isSubmitting || createCategoryMutation.isPending}
                                         />
@@ -42,7 +92,7 @@ function AddCategoryPresentational({ t, handleToggleChange, selectedBranches, ha
                             {/* Arabic Name */}
                             <div className="space-y-2">
                                 <label htmlFor="nameAr" className="flex items-center gap-2 text-sm font-semibold text-primary">
-                                    {t("Category Name in Arabic")}
+                                    {t("Services.Category Name in Arabic")}
                                 </label>
                                 <div className="relative">
                                     <Field name="nameAr">
@@ -54,7 +104,7 @@ function AddCategoryPresentational({ t, handleToggleChange, selectedBranches, ha
                                                     ? 'border-red-300 focus:ring-red-200 bg-red-50'
                                                     : 'border-gray-300 focus:ring-primary focus:border-primary'
                                                     }`}
-                                                placeholder="ادخل اسم الفئه بالعربي"
+                                                placeholder={t("Add Category.Category Name in Arabic is required")}
                                                 dir="rtl"
                                                 disabled={isSubmitting || createCategoryMutation.isPending}
                                             />
@@ -67,7 +117,7 @@ function AddCategoryPresentational({ t, handleToggleChange, selectedBranches, ha
                             {/* Branch Selection */}
                             <div className="space-y-2">
                                 <label className="flex items-center gap-2 text-sm font-semibold text-primary">
-                                    {t("Select Branch(es)")}
+                                    {t("Services.Select Branch(es)")}
                                 </label>
                                 <div className="flex justify-around gap-2 md:gap-4 lg:gap-6 items-center">
                                     {/* Egypt Toggle */}
@@ -86,7 +136,7 @@ function AddCategoryPresentational({ t, handleToggleChange, selectedBranches, ha
                                                 }`}
                                         >
                                             <span
-                                                className={`absolute top-1 h-4 w-4 md:h-5 md:w-5 rounded-full bg-white border-2 border-white shadow-md transform transition-transform duration-200 ${selectedBranches.egypt ? 'translate-x-4 md:translate-x-5' : 'translate-x-1'
+                                                className={`absolute top-1 h-4 w-4 md:h-5 md:w-5 rounded-full bg-white border-2 border-white shadow-md transform transition-transform duration-200 ${selectedBranches.egypt ? 'ltr:translate-x-4 md:ltr:translate-x-5 rtl:-translate-x-4 md:rtl:-translate-x-5 ' : 'ltr:translate-x-1 rtl:-translate-x-1'
                                                     }`}
                                             ></span>
                                         </label>
@@ -108,24 +158,12 @@ function AddCategoryPresentational({ t, handleToggleChange, selectedBranches, ha
                                                 }`}
                                         >
                                             <span
-                                                className={`absolute top-1 h-4 w-4 md:h-5 md:w-5 rounded-full bg-white border-2 border-white shadow-md transform transition-transform duration-200 ${selectedBranches.saudi ? 'translate-x-4 md:translate-x-5' : 'translate-x-1'
+                                                className={`absolute top-1 h-4 w-4 md:h-5 md:w-5 rounded-full bg-white border-2 border-white shadow-md transform transition-transform duration-200 ${selectedBranches.saudi ? 'ltr:translate-x-4 md:ltr:translate-x-5 rtl:-translate-x-4 md:rtl:-translate-x-5 ' : 'ltr:translate-x-1 rtl:-translate-x-1'
                                                     }`}
                                             ></span>
                                         </label>
                                     </div>
                                 </div>
-
-                                {/* Branch ID Display (for debugging) */}
-                                <Field name="branchId">
-                                    {({ field }) => (
-                                        <div className="text-xs text-gray-500 text-center">
-                                            Branch ID: {field.value}
-                                            {field.value === 0 && ' (Both branches)'}
-                                            {field.value === 1 && ' (Egypt only)'}
-                                            {field.value === 2 && ' (Saudi only)'}
-                                        </div>
-                                    )}
-                                </Field>
                             </div>
 
                             {/* Submit Button */}
@@ -140,10 +178,10 @@ function AddCategoryPresentational({ t, handleToggleChange, selectedBranches, ha
                                 {isSubmitting || createCategoryMutation.isPending ? (
                                     <div className="flex items-center justify-center gap-2">
                                         <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
-                                        {t("Submitting...")}
+                                        {t("Services.Submitting...")}
                                     </div>
                                 ) : (
-                                    t("Submit Category")
+                                    t("Services.Submit Category")
                                 )}
                             </button>
 
@@ -161,4 +199,4 @@ function AddCategoryPresentational({ t, handleToggleChange, selectedBranches, ha
     )
 }
 
-export default AddCategoryPresentational
+export default AddCategory

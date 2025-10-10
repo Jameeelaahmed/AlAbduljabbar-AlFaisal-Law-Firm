@@ -1,10 +1,4 @@
 import api from "./axiosInstance";
-// const API_URL = "https://alabduljabbarandalfaisalapi.runasp.net/";
-
-// export const registerUser = async (userData) => {
-//     const response = await axios.post(`${API_URL}/Register`, userData);
-//     return response.data;
-// }
 
 export const registerUser = async (userData) => {
     try {

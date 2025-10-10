@@ -1,5 +1,4 @@
 // helpers
-import { useAuthUser } from "../../../hooks/useAuthUser";
 import i18n from "../../../i18n";
 // libs
 import { useEffect } from "react";
@@ -84,8 +83,8 @@ function HeaderContainer() {
                 handleLogout={handleLogout}
                 isMobileMenuOpen={isMobileMenuOpen}
                 toggleMobileMenu={toggleMobileMenu}
-                handleLanguageChange={handleLanguageChange}
                 currentLang={currentLang}
+                handleLanguageChange={handleLanguageChange}
                 isDesktopDropdownOpen={isDesktopDropdownOpen}
                 toggleDesktopDropdown={toggleDesktopDropdown}
                 closeDesktopDropdown={closeDesktopDropdown}
