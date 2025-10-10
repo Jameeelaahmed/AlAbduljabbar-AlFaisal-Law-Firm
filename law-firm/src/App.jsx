@@ -1,12 +1,12 @@
 import "./App.css";
 import RoutesPages from "./routes/routes";
-import { useHydrateAuth } from "./hooks/useHydrateAuth";
+// import { useHydrateAuth } from "./hooks/useHydrateAuth";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { useAutoLogout } from "./hooks/useAutoLogout";
+// import { useAutoLogout } from "./hooks/useAutoLogout";
 
 function App() {
-  useHydrateAuth();
+  // useHydrateAuth();
   // useAutoLogout();
 
   return (

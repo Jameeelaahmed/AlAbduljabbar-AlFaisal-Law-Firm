@@ -112,7 +112,7 @@ function CategoryItem({ category }) {
                         <SquarePen size={16} />
                     </div>
                     <Modal ref={changeNameRef} title={t("Services.Change Category Name")} onClose={(e) => { handleCloseUpdateCategoryName(); e.stopPropagation() }}>
-                        <UpdateName category={category} onSuccess={() => {
+                        <UpdateName categoryId={category.id} onSuccess={() => {
                             changeNameRef.current?.close();
                         }} />
                     </Modal>

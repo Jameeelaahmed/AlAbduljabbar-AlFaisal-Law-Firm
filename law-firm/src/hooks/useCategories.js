@@ -16,6 +16,13 @@ export const useCategoryById = (id) =>
         queryFn: () => categoryApi.getCategoryById(id),
         enabled: !!id,
     });
+// 🔹 Get For Update Category By Id
+export const useGetCategoryForUpdate = (id) =>
+    useQuery({
+        queryKey: ["categoryById", id],
+        queryFn: () => categoryApi.getCategoryForUpdate(id),
+        enabled: !!id,
+    });
 
 // 🔹 Create Category
 export const useCreateCategory = () => {
