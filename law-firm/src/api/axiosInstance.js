@@ -23,6 +23,19 @@ const processQueue = (error, token = null) => {
 api.interceptors.request.use((config) => {
     const token = useAuthStore.getState().accessToken;
     if (token) config.headers.Authorization = `Bearer ${token}`;
+
+    // set Accept-Language based on saved language or page direction
+    // priority: localStorage.selectedLanguage -> document.dir -> default 'en'
+    try {
+        const savedLang = typeof window !== "undefined" ? localStorage.getItem("selectedLanguage") : null;
+        const lang = savedLang
+            || (typeof document !== "undefined" && document.documentElement.dir === "rtl" ? "ar" : "en");
+        config.headers = config.headers || {};
+        config.headers["Accept-Language"] = lang;
+    } catch (e) {
+        // ignore if running in non-browser environment
+    }
+
     return config;
 });
 

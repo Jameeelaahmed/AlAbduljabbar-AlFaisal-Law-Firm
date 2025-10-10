@@ -1,10 +1,28 @@
 import api from "./axiosInstance";
 
-// Since axiosInstance already has baseURL, use relative paths
 const API_URL = "/api/Categories";
 
-export const createCategory = (data) => api.post(`${API_URL}/Create`, data);
-export const updateCategory = (id, data) => api.put(`${API_URL}/${id}`, data);
-export const deleteCategory = (id) => api.delete(`${API_URL}/${id}`);
-export const getAllCategories = () => api.get(`${API_URL}/GetAll`);
-export const getCategoryById = (id) => api.get(`${API_URL}/${id}`);
+export const createCategory = async (data) => {
+    const res = await api.post(`${API_URL}/Create`, data);
+    return res.data.data;
+};
+
+export const updateCategory = async (id, data) => {
+    const res = await api.put(`${API_URL}/Update/${id}`, data);
+    return res.data.data;
+};
+
+export const deleteCategory = async (id) => {
+    const res = await api.delete(`${API_URL}/Delete/${id}`);
+    return res.data;
+};
+
+export const getAllCategories = async () => {
+    const res = await api.get(`${API_URL}/GetAll`);
+    return res.data.data;
+};
+
+export const getCategoryById = async (id) => {
+    const res = await api.get(`${API_URL}/${id}`);
+    return res.data.data;
+};

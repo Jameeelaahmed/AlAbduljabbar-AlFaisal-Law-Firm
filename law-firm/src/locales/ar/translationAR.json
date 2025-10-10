@@ -1,6 +1,7 @@
 {
   "Saudi Arabia": "السعوديه",
   "Egypt": "مصر",
+  "Category must belong to at least one branch": "يجب أن تنتمي الفئة إلى فرع واحد على الأقل",
   "sidebar": {
     "title": "عبد الجبار والفيصل",
     "subtitle": "لوحة التحكم",
@@ -35,6 +36,19 @@
     "Submitting...": "جاري الإرسال...",
     "Add New Service": "إضافة خدمة جديدة",
     "Category Name in English": "اسم الفئة بالإنجليزية",
-    "Category Name in Arabic": "اسم الفئة بالعربية"
+    "Category Name in Arabic": "اسم الفئة بالعربية",
+    "English name is required": "الاسم بالإنجليزية مطلوب",
+    "Arabic name is required": "الاسم بالعربية مطلوب",
+    "Branch selection is required": "اختيار الفرع مطلوب",
+    "Select Branch(es)": " اختر الفرع (الفروع)"
+  },
+  "Add Category": {
+    "Category Name in English is required": "اسم الفئة بالإنجليزية مطلوب",
+    "Category Name in Arabic is required": "اسم الفئة بالعربية مطلوب"
+  },
+  "Delete": {
+    "Are you sure you want to delete this item?": "هل أنت متأكد أنك تريد حذف هذا العنصر؟",
+    "Delete": "حذف",
+    "Deleting...": "جاري الحذف..."
   }
 }

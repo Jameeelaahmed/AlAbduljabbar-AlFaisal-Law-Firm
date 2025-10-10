@@ -3,24 +3,25 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { lazy, Suspense } from "react";
 import ProtectedRoute from "./ProtectedRoutes";
 //layout components
+
 import AdminLayout from "../layouts/AdminLayout";
 import ClientLayout from "../layouts/ClientLayout";
-import DashboardContainer from "../pages/AdminPages/Dashboard/DashboardContainer";
+import Dashboard from "../pages/AdminPages/Dashboard/Dashboard";
 
 //lazy loaded components
-const LoginRegisterContainer = lazy(() => import("../pages/AuthPages/LoginRegisterPage/LoginRegisterContainer"));
-const LandingContainer = lazy(() => import("../pages/ClientPages/Landing/LandingContainer"));
+const LoginRegister = lazy(() => import("../pages/AuthPages/LoginRegisterPage/LoginRegisterPage"));
+const Landing = lazy(() => import("../pages/ClientPages/Landing/Landing"));
 
 // Admin Components
-const AdminSettings = lazy(() => import("../pages/AdminPages/settings/SettingsPageContainer"));
-const AdminRequests = lazy(() => import("../pages/AdminPages/Requests/RequestsPageContainer"));
-const AdminRequestDetails = lazy(() => import("../pages/AdminPages/Requests/RequestsDetailsContainer"));
-const AdminUsers = lazy(() => import("../pages/AdminPages/Users/UsersPageContainer"));
-const AdminServices = lazy(() => import("../pages/AdminPages/Services/ServicesContainer"));
+// const AdminSettings = lazy(() => import("../pages/AdminPages/settings/SettingsPageContainer"));
+const AdminRequests = lazy(() => import("../pages/AdminPages/Requests/Requests"));
+const AdminRequestDetails = lazy(() => import("../pages/AdminPages/Requests/RequestsDetails"));
+const AdminUsers = lazy(() => import("../pages/AdminPages/Users/Users"));
+const AdminServices = lazy(() => import("../pages/AdminPages/Services/Services"));
 const routes = createBrowserRouter([
     {
         path: "/login",
-        element: <LoginRegisterContainer />,
+        element: <LoginRegister />,
     },
     {
         path: '/admin',
@@ -34,8 +35,8 @@ const routes = createBrowserRouter([
                 path: "dashboard",
                 element: (
                     <ProtectedRoute allowedRoles={['Admin']}>
-                        <Suspense fallback={<div>Loading Serivices...</div>}>
-                            <DashboardContainer />
+                        <Suspense fallback={<div>Loading Dashboard...</div>}>
+                            <Dashboard />
                         </Suspense>
                     </ProtectedRoute>
                 ),
@@ -50,16 +51,16 @@ const routes = createBrowserRouter([
                     </ProtectedRoute>
                 ),
             },
-            {
-                path: "settings",
-                element: (
-                    <ProtectedRoute allowedRoles={['Admin']}>
-                        <Suspense fallback={<div>Loading Settings...</div>}>
-                            <AdminSettings />
-                        </Suspense>
-                    </ProtectedRoute>
-                ),
-            },
+            //         {
+            //             path: "settings",
+            //             element: (
+            //                 <ProtectedRoute allowedRoles={['Admin']}>
+            //                     <Suspense fallback={<div>Loading Settings...</div>}>
+            //                         <AdminSettings />
+            //                     </Suspense>
+            //                 </ProtectedRoute>
+            //             ),
+            //         },
             {
                 path: "requests",
                 element: (
@@ -90,12 +91,12 @@ const routes = createBrowserRouter([
                     </ProtectedRoute>
                 ),
             },
-        ]
-    },
-    {
-        path: '/support',
-        element: <AdminLayout />,
-        children: [
+            //     ]
+            // },
+            // {
+            //     path: '/support',
+            //     element: <AdminLayout />,
+            //     children: [
 
         ]
     },
@@ -105,9 +106,9 @@ const routes = createBrowserRouter([
         children: [
             {
                 path: '/', element:
-                    <ProtectedRoute allowedRoles={['User']}>
-                        <LandingContainer />
-                    </ProtectedRoute>
+                    // <ProtectedRoute allowedRoles={['User']}>
+                    <Landing />
+                // </ProtectedRoute>
             }
         ]
     },

@@ -3,12 +3,12 @@ import { lazy } from "react"
 import { Outlet } from "react-router-dom"
 
 // components
-const HeaderContainer = lazy(() => import("../components/ClientsComponent/Header/HeaderContainer"))
+const Header = lazy(() => import("../components/ClientComponents/Header/Header"))
 
 function ClientLayout() {
     return (
         <>
-            <HeaderContainer />
+            <Header />
             <Outlet />
         </>
     )
