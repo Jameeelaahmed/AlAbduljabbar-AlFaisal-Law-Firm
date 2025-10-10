@@ -10,13 +10,16 @@ function UpdateName({ categoryId, onSuccess }) {
     const { mutateAsync: updateCategory, isLoading: isUpdating } = useUpdateCategory();
 
     const { data } = useGetCategoryForUpdate(categoryId);
-    console.log(data);
 
     return (
         <div className="flex items-center justify-center p-4" onClick={(e) => e.stopPropagation()}>
             <div className="w-full max-w-md">
                 <Formik
-                    initialValues={{ nameEn: data.nameEn, nameAr: data.nameAr }}
+                    enableReinitialize
+                    initialValues={{
+                        nameEn: data?.nameEn || "",
+                        nameAr: data?.nameAr || "",
+                    }}
                     validationSchema={Yup.object({
                         nameEn: Yup.string().min(3).required(t("Services.English name is required")),
                         nameAr: Yup.string().min(3).required(t("Services.Arabic name is required")),
@@ -27,7 +30,7 @@ function UpdateName({ categoryId, onSuccess }) {
                             const payload = {
                                 NameEn: values.nameEn,
                                 NameAr: values.nameAr,
-                                branchId: data.branchId,
+                                branchId: data?.branchId,
                             };
 
                             await updateCategory({ id: categoryId, data: payload });
