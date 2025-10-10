@@ -1,4 +1,6 @@
 {
+  "Saudi Arabia": "السعوديه",
+  "Egypt": "مصر",
   "sidebar": {
     "title": "عبد الجبار والفيصل",
     "subtitle": "لوحة التحكم",
@@ -25,5 +27,14 @@
     "Hello": "مرحبا، ",
     "Profile": "الملف الشخصي",
     "Logout": "تسجيل الخروج"
+  },
+  "Services": {
+    "Service Management": "إدارة الخدمات",
+    "Add New Category": "إضافة فئة جديدة",
+    "Submit Category": "إرسال الفئة",
+    "Submitting...": "جاري الإرسال...",
+    "Add New Service": "إضافة خدمة جديدة",
+    "Category Name in English": "اسم الفئة بالإنجليزية",
+    "Category Name in Arabic": "اسم الفئة بالعربية"
   }
 }

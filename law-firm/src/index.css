@@ -31,6 +31,20 @@ body {
   --color-deniedBg: rgba(255, 61, 96, 0.18);
   --color-inProgress: #1795ce;
   --color-inProgressBg: rgba(61, 96, 255, 0.18);
+
+  --animate-fade-slide-in: fade-slide-in-from-top 0.3s ease-out forwards;
+}
+
+@keyframes fade-slide-in-from-top {
+  0% {
+    opacity: 0;
+    transform: translateY(-50px);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 /* Remove default browser password reveal buttons */
