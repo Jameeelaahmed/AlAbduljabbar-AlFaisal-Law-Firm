@@ -10,7 +10,6 @@ const api = axios.create({
 let isRefreshing = false;
 let failedQueue = [];
 
-// Helper: process queued requests
 const processQueue = (error, token = null) => {
     failedQueue.forEach(({ resolve, reject }) => {
         if (error) reject(error);
@@ -20,39 +19,49 @@ const processQueue = (error, token = null) => {
 };
 
 // 🔹 Request interceptor
-api.interceptors.request.use((config) => {
-    const token = useAuthStore.getState().accessToken;
-    if (token) config.headers.Authorization = `Bearer ${token}`;
+api.interceptors.request.use(
+    (config) => {
+        const token = useAuthStore.getState().token; // 🔸 adjusted to new store key
+        if (token) {
+            config.headers.Authorization = `Bearer ${token}`;
+        }
 
-    // set Accept-Language based on saved language or page direction
-    // priority: localStorage.selectedLanguage -> document.dir -> default 'en'
-    try {
-        const savedLang = typeof window !== "undefined" ? localStorage.getItem("selectedLanguage") : null;
-        const lang = savedLang
-            || (typeof document !== "undefined" && document.documentElement.dir === "rtl" ? "ar" : "en");
-        config.headers = config.headers || {};
-        config.headers["Accept-Language"] = lang;
-    } catch (e) {
-        // ignore if running in non-browser environment
-    }
+        // 🔸 Auto set language header (optional)
+        try {
+            const savedLang =
+                typeof window !== "undefined"
+                    ? localStorage.getItem("selectedLanguage")
+                    : null;
+            const lang =
+                savedLang ||
+                (typeof document !== "undefined" &&
+                    document.documentElement.dir === "rtl"
+                    ? "ar"
+                    : "en");
+            config.headers["Accept-Language"] = lang;
+        } catch {
+            // ignore if server-side or inaccessible
+        }
 
-    return config;
-});
+        return config;
+    },
+    (error) => Promise.reject(error)
+);
 
-// 🔹 Response interceptor
+// 🔹 Response interceptor (handles refresh token logic)
 api.interceptors.response.use(
     (response) => response,
     async (error) => {
         const originalRequest = error.config;
 
-        // Ignore if no response or other than 401
+        // skip if no response, not 401, or already retried
         if (!error.response || error.response.status !== 401 || originalRequest._retry)
             return Promise.reject(error);
 
         originalRequest._retry = true;
 
-        // If a refresh is already happening, queue this request
         if (isRefreshing) {
+            // Wait for refresh to complete
             return new Promise((resolve, reject) => {
                 failedQueue.push({ resolve, reject });
             })
@@ -66,30 +75,27 @@ api.interceptors.response.use(
         isRefreshing = true;
 
         try {
+            // 🔹 Call refresh endpoint
             const { data } = await api.post("/api/Auth/RefreshToken", {});
-
-            const newAccessToken = data.token || data.accessToken;
+            const newAccessToken = data?.token || data?.accessToken;
             const currentUser = useAuthStore.getState().user;
 
-            // Update Zustand state
+            if (!newAccessToken) throw new Error("No new access token received");
+
+            // 🔹 Update Zustand store (auto syncs to sessionStorage)
             useAuthStore.getState().login(newAccessToken, currentUser);
 
-            // Resolve queued requests
+            // Process queued requests
             processQueue(null, newAccessToken);
 
-            // Retry the failed request with the new token
+            // Retry the original request with the new token
             originalRequest.headers.Authorization = `Bearer ${newAccessToken}`;
             return api(originalRequest);
         } catch (refreshError) {
             console.error("🔴 Refresh token failed:", refreshError);
-
-            // Reject all queued requests
             processQueue(refreshError, null);
-
-            // Logout and redirect
             useAuthStore.getState().logout();
             window.location.href = "/login";
-
             return Promise.reject(refreshError);
         } finally {
             isRefreshing = false;
