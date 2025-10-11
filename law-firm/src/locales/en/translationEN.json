@@ -40,7 +40,21 @@
     "English name is required": "English name is required",
     "Arabic name is required": "Arabic name is required",
     "Branch selection is required": "Branch selection is required",
-    "Select Branch(es)": " Select Branch(es)"
+    "Select Branch(es)": " Select Branch(es)",
+    "English description is required": "English description is required",
+    "Arabic description is required": "Arabic description is required",
+    "Category is required": "Category is required",
+    "Select a category": "Select a category",
+    "Description in English": "Description in English",
+    "Description in Arabic": "Description in Arabic",
+    "Category": "Category",
+    "Save": "Save",
+    "All Categories": "All Categories",
+    "All Branches": "All Branches",
+    "Search by name or description": "Search by name or description",
+    "Clear filters": "Clear filters",
+    "Clear": "Clear",
+    "Change Category Name": "Change Category Name"
   },
   "Add Category": {
     "Category Name in English is required": "Category Name in English is required",
@@ -50,5 +64,19 @@
     "Are you sure you want to delete this item?": "Are you sure you want to delete this item?",
     "Delete": "Delete",
     "Deleting...": "Deleting..."
+  },
+  "Dashboard": {
+    "Dashboard": "Dashboard",
+    "Requests by Branch": "Requests by Branch",
+    "Total Requests": "Total Requests",
+    "Current Services": "Current Services",
+    "Clients": "Clients",
+    "Customer Service": "Customer Service",
+    "Most Active Requests": "Most Active Requests",
+    "Date": "Date",
+    "Activity": "Activity",
+    "Client": "Client",
+    "Branch": "Branch",
+    "Count": "Count"
   }
 }

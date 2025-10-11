@@ -10,19 +10,32 @@ import { Trash, ChevronDown, Plus, SquarePen } from "lucide-react";
 import Modal from "../Modals/Modal";
 import DeleteModal from "../Modals/DeleteModal/DeleteModal";
 import UpdateName from "../Modals/UpdateName/UpdateName";
+import AddService from "../Modals/AddService/AddService";
 
 function CategoryItem({ category }) {
     const { t } = useTranslation();
     const [isExpanded, setIsExpanded] = useState(false);
     const deleteRef = useRef();
     const changeNameRef = useRef();
-
+    const addServiceRef = useRef();
     const { mutate: deleteCategory, isLoading: isDeleting, error } = useDeleteCategory();
     const { mutate: updateCategory, isLoading: isUpdating } = useUpdateCategory();
 
     const isEgyptToggled = category.branchId === 3 || category.branchId === 1;
     const isSaudiToggled = category.branchId === 3 || category.branchId === 2;
 
+
+    // --- Add Service Handlers ---
+
+    function handleOpenAddService() {
+        addServiceRef.current.open();
+    }
+
+    function handleCloseAddService() {
+        addServiceRef.current.close();
+    }
+
+    // --- Update Handlers --- 
     function handleOpenUpdateCategoryName() {
         changeNameRef.current.open();
     }
@@ -112,9 +125,7 @@ function CategoryItem({ category }) {
                         <SquarePen size={16} />
                     </div>
                     <Modal ref={changeNameRef} title={t("Services.Change Category Name")} onClose={(e) => { handleCloseUpdateCategoryName(); e.stopPropagation() }}>
-                        <UpdateName categoryId={category.id} onSuccess={() => {
-                            changeNameRef.current?.close();
-                        }} />
+                        <UpdateName categoryId={category.id} />
                     </Modal>
                     <span
                         className={`text-xs md:text-sm transition-colors ${isExpanded ? "text-white/80" : "text-secondary group-hover:text-accent"
@@ -199,11 +210,17 @@ function CategoryItem({ category }) {
                                 }`}
                         >
                             <Plus
+                                onClick={(e) => { handleOpenAddService(); e.stopPropagation() }}
                                 className={`w-3.5 h-3.5 md:w-4 md:h-4 lg:w-5 lg:h-5 transition-colors ${isExpanded ? "text-white" : "text-primary group-hover:text-accent"
                                     }`}
                             />
                         </button>
+                        <Modal ref={addServiceRef} title={t("Services.Add New Service")}
 
+                            onClose={(e) => { handleCloseAddService(); e.stopPropagation() }}
+                        >
+                            <AddService onClose={() => handleCloseAddService()} />
+                        </Modal>
                         {/* Delete Button */}
                         <button
                             onClick={(e) => {
@@ -253,9 +270,12 @@ function CategoryItem({ category }) {
                     <li className="bg-gray-50 group-hover:bg-primary/5 border-t border-gray-200">
                         {/* Example subcategory item */}
                         <div className="flex justify-between items-center p-4 md:p-6 lg:p-8 ml-4 md:ml-8 border-l-2 border-primary/20">
-                            <p className="text-sm md:text-base lg:text-lg font-medium text-gray-700 group-hover:text-primary">
-                                تسجيل العلامات التجاريه
-                            </p>
+                            <div>
+                                <p className="text-sm md:text-base lg:text-lg font-medium text-gray-700 group-hover:text-primary">
+                                    تسجيل العلامات التجاريه
+                                </p>
+                                <span>{/*description*/}</span>
+                            </div>
                             <div className="flex items-center gap-1 md:gap-2">
                                 <button className="p-1.5 md:p-2 hover:bg-secondary/10 rounded-lg transition-all duration-200">
                                     <Plus className="w-3 h-3 md:w-4 md:h-4 text-primary hover:text-secondary" />

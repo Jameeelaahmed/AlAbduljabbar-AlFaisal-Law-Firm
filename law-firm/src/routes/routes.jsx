@@ -6,14 +6,15 @@ import ProtectedRoute from "./ProtectedRoutes";
 
 import AdminLayout from "../layouts/AdminLayout";
 import ClientLayout from "../layouts/ClientLayout";
-import Dashboard from "../pages/AdminPages/Dashboard/Dashboard";
+const Dashboard = lazy(() => import("../pages/AdminPages/Dashboard/Dashboard"));
+import NotFoundPage from "../pages/NotFoundPage";
 
 //lazy loaded components
 const LoginRegister = lazy(() => import("../pages/AuthPages/LoginRegisterPage/LoginRegisterPage"));
 const Landing = lazy(() => import("../pages/ClientPages/Landing/Landing"));
 
 // Admin Components
-// const AdminSettings = lazy(() => import("../pages/AdminPages/settings/SettingsPageContainer"));
+// const AdminSettings = lazy(() => import("../pages/AdminPages/"));
 const AdminRequests = lazy(() => import("../pages/AdminPages/Requests/Requests"));
 const AdminRequestDetails = lazy(() => import("../pages/AdminPages/Requests/RequestsDetails"));
 const AdminUsers = lazy(() => import("../pages/AdminPages/Users/Users"));
@@ -32,7 +33,7 @@ const routes = createBrowserRouter([
         ,
         children: [
             {
-                path: "dashboard",
+                path: "",
                 element: (
                     <ProtectedRoute allowedRoles={['Admin']}>
                         <Suspense fallback={<div>Loading Dashboard...</div>}>
@@ -51,16 +52,16 @@ const routes = createBrowserRouter([
                     </ProtectedRoute>
                 ),
             },
-            //         {
-            //             path: "settings",
-            //             element: (
-            //                 <ProtectedRoute allowedRoles={['Admin']}>
-            //                     <Suspense fallback={<div>Loading Settings...</div>}>
-            //                         <AdminSettings />
-            //                     </Suspense>
-            //                 </ProtectedRoute>
-            //             ),
-            //         },
+            // {
+            //     path: "settings",
+            //     element: (
+            //         <ProtectedRoute allowedRoles={['Admin']}>
+            //             <Suspense fallback={<div>Loading Settings...</div>}>
+            //                 <AdminSettings />
+            //             </Suspense>
+            //         </ProtectedRoute>
+            //     ),
+            // },
             {
                 path: "requests",
                 element: (
@@ -112,6 +113,11 @@ const routes = createBrowserRouter([
             }
         ]
     },
+    // catch-all 404 route (must be last)
+    {
+        path: "*",
+        element: <NotFoundPage />
+    }
 ])
 
 
