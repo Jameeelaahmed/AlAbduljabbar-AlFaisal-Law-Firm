@@ -40,7 +40,21 @@
     "English name is required": "الاسم بالإنجليزية مطلوب",
     "Arabic name is required": "الاسم بالعربية مطلوب",
     "Branch selection is required": "اختيار الفرع مطلوب",
-    "Select Branch(es)": " اختر الفرع (الفروع)"
+    "Select Branch(es)": " اختر الفرع (الفروع)",
+    "English description is required": " الوصف بالإنجليزية مطلوب",
+    "Arabic description is required": "الوصف بالعربية مطلوب",
+    "Category is required": "الفئة مطلوبة",
+    "Select a category": "اختر فئة",
+    "Description in English": "الوصف بالإنجليزية",
+    "Description in Arabic": "الوصف بالعربية",
+    "Category": "الفئة",
+    "Save": "حفظ",
+    "All Categories": "جميع الفئات",
+    "All Branches": "جميع الفروع",
+    "Search by name or description": "البحث بالاسم أو الوصف",
+    "Clear filters": "مسح الفلاتر",
+    "Clear": "مسح",
+    "Change Category Name": "تغيير اسم الفئة"
   },
   "Add Category": {
     "Category Name in English is required": "اسم الفئة بالإنجليزية مطلوب",
@@ -50,5 +64,19 @@
     "Are you sure you want to delete this item?": "هل أنت متأكد أنك تريد حذف هذا العنصر؟",
     "Delete": "حذف",
     "Deleting...": "جاري الحذف..."
+  },
+  "Dashboard": {
+    "Dashboard": "لوحة القيادة",
+    "Requests by Branch": "الطلبات حسب الفرع",
+    "Total Requests": "إجمالي الطلبات",
+    "Current Services": "الخدمات الحالية",
+    "Clients": "العملاء",
+    "Customer Service": "خدمة العملاء",
+    "Most Active Requests": "أكثر الطلبات نشاطًا",
+    "Date": "التاريخ",
+    "Activity": "النشاط",
+    "Client": "العميل",
+    "Branch": "الفرع",
+    "Count": "العدد"
   }
 }
