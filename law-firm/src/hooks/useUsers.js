@@ -1,27 +1,120 @@
-import { useQuery } from "@tanstack/react-query";
-import axios from "axios";
+import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
+import * as userApi from "../api/user";
+import { toast } from "react-toastify";
 
-const fetchUsers = async ({ queryKey }) => {
-    const [_key, { page, perPage }] = queryKey;
-    const { data } = await axios.get("/data/users.json");
-    const start = (page - 1) * perPage;
-    const end = start + perPage;
+// 🔹 Get Paginated Users
+export const useUsers = ({ searchTerm = "", pageIndex = 1, pageSize = 5 } = {}) =>
+    useQuery({
+        queryKey: ["users", { searchTerm, pageIndex, pageSize }],
+        queryFn: userApi.fetchUsers,
+        keepPreviousData: true,
+        staleTime: 1000 * 60 * 2,
+    });
 
-    return {
-        data: data.data.slice(start, end),
-        meta: {
-            ...data.meta,
-            current_page: page,
-            total_pages: Math.ceil(data.meta.total_records / perPage)
-        }
-    };
+// 🔹 Get User by ID
+export const useUserById = (id) =>
+    useQuery({
+        queryKey: ["userById", id],
+        queryFn: () => userApi.getUserById(id),
+        enabled: !!id,
+    });
+
+// 🔹 Get User for Update
+export const useGetUserForUpdate = (id) =>
+    useQuery({
+        queryKey: ["userForUpdate", id],
+        queryFn: () => userApi.getUserForUpdate(id),
+        enabled: !!id,
+    });
+
+// 🔹 Create User
+export const useCreateUser = () => {
+    const queryClient = useQueryClient();
+
+    return useMutation({
+        mutationFn: userApi.createUser,
+        onMutate: async (newUser) => {
+            await queryClient.cancelQueries(["users"]);
+            const previousUsers = queryClient.getQueryData(["users"]);
+
+            queryClient.setQueryData(["users"], (old = { data: [] }) => ({
+                ...old,
+                data: [...(old.data || []), { ...newUser, id: Date.now(), isTemp: true }],
+            }));
+
+            return { previousUsers };
+        },
+        onError: (err, newUser, context) => {
+            if (context?.previousUsers) {
+                queryClient.setQueryData(["users"], context.previousUsers);
+            }
+            toast.error(
+                err.response?.data?.message ||
+                `Something went wrong — couldn't create ${newUser.fullName || "user"}!`
+            );
+        },
+        onSuccess: () => {
+            toast.success("✅ User created successfully!");
+        },
+        onSettled: () => {
+            queryClient.invalidateQueries(["users"]);
+        },
+    });
 };
 
-export function useUsers({ page = 1, perPage = 5 }) {
-    return useQuery({
-        queryKey: ["users", { page, perPage }],
-        queryFn: fetchUsers,
-        keepPreviousData: true,
-        staleTime: 1000 * 60 * 2, // 2 minutes
+// 🔹 Update User
+export const useUpdateUser = () => {
+    const queryClient = useQueryClient();
+    return useMutation({
+        mutationFn: ({ id, data }) => userApi.updateUser({ id, data }),
+        onError: (err) => {
+            toast.error(
+                err.response?.data?.message ||
+                `Something went wrong — couldn't update this user!`
+            );
+        },
+        onSuccess: () => {
+            toast.success("📝 User updated successfully!");
+            queryClient.invalidateQueries(["users"]);
+        },
     });
-}
+};
+
+// 🔹 Delete User
+export const useDeleteUser = () => {
+    const queryClient = useQueryClient();
+
+    return useMutation({
+        mutationFn: (id) => userApi.deleteUser(id),
+
+        onMutate: async (id) => {
+            await queryClient.cancelQueries(["users"]);
+            const previousUsers = queryClient.getQueryData(["users"]);
+
+            queryClient.setQueryData(["users"], (old) => ({
+                ...old,
+                data: old?.data?.filter((user) => user.id !== id),
+            }));
+
+            return { previousUsers };
+        },
+
+        onError: (err, _, context) => {
+            if (context?.previousUsers) {
+                queryClient.setQueryData(["users"], context.previousUsers);
+            }
+            toast.error(
+                err.response?.data?.message ||
+                `Something went wrong — couldn't delete this user!`
+            );
+        },
+
+        onSuccess: () => {
+            toast.success("🗑️ User deleted successfully!");
+        },
+
+        onSettled: () => {
+            queryClient.invalidateQueries(["users"]);
+        },
+    });
+};

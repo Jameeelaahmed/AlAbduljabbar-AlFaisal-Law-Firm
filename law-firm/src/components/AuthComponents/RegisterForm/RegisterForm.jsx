@@ -6,6 +6,7 @@ import * as Yup from 'yup';
 import { registerUser } from '../../../api/auth';
 // icons
 import { Eye, EyeOff, User, Mail, Lock } from 'lucide-react';
+import { Formik, Field, Form, ErrorMessage } from 'formik';
 
 function RegisterForm() {
     const [serverMessage, setServerMessage] = useState();
