@@ -316,8 +316,9 @@ function CategoryItem({ category }) {
                                     <p className="text-sm md:text-base lg:text-lg font-medium text-gray-700 group-hover:text-primary">
                                         {data.name}
                                     </p>
-                                    <span>{data.description}</span>
-                                </div>
+                                    <span className="block max-w-full whitespace-normal break-words text-sm text-gray-600">
+                                        {data.description}
+                                    </span>                                </div>
                                 <div className="flex items-center gap-1 md:gap-2">
                                     <button onClick={(e) => { openUpdateService(data.id); e.stopPropagation() }} className="p-1.5 md:p-2 hover:bg-secondary/10 rounded-lg transition-all duration-200">
                                         <SquarePen className="w-3 h-3 md:w-4 md:h-4 text-primary hover:text-secondary" />
