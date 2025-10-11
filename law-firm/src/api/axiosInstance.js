@@ -4,7 +4,10 @@ import { useAuthStore } from "../store/useAuthStore";
 
 const api = axios.create({
     baseURL: import.meta.env.VITE_API_BASE_URL,
-    withCredentials: true, // ensures refresh cookie is sent automatically
+    headers: {
+        'Content-Type': 'application/json',
+    },
+    withCredentials: true,
 });
 
 let isRefreshing = false;
