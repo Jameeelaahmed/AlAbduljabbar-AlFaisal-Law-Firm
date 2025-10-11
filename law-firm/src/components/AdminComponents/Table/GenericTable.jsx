@@ -1,131 +1,111 @@
-import React from 'react'
-import { useState, useEffect } from 'react';
 import { useNavigate } from "react-router-dom";
+import { useState, useEffect } from "react";
 
-function GenericTable({
-    useDataHook,
-    columns,
-    actions,
-    perPage = 5,
-    initialPage = 1,
-    filters = {},
-}) {
+function GenericTable({ useDataHook, columns, actions, pageSize = 5, initialPage = 1, filters = {} }) {
     const [currentPage, setCurrentPage] = useState(initialPage);
+    const [lastPageReached, setLastPageReached] = useState(false);
+    const navigate = useNavigate();
 
-    const { data, isLoading } = useDataHook({
-        page: currentPage,
-        perPage,
-        ...filters
+    // Fetch data from hook
+    const { data, isLoading, isError, error } = useDataHook({
+        searchTerm: filters.search || "",
+        pageIndex: currentPage,
+        pageSize,
     });
 
     const items = data?.data || [];
-    const meta = data?.meta || {
-        current_page: 1,
-        total_pages: 1,
-        per_page: perPage,
-        total_records: 0,
-    };
+    const currentItemCount = items.length;
+    const indexOfFirstRecord = (currentPage - 1) * pageSize;
+    const indexOfLastRecord = indexOfFirstRecord + currentItemCount;
 
-    const handlePageChange = (page) => {
-        if (page >= 1 && page <= meta.total_pages) {
-            setCurrentPage(page);
-        }
-    };
-    const indexOfFirstRecord = (currentPage - 1) * perPage;
-    const indexOfLastRecord = indexOfFirstRecord + items.length;
+    // Determine if next page exists
+    const canGoNext = currentItemCount === pageSize;
 
-    const navigate = useNavigate();
-
-
-    // Reset to page 1 when filters change
+    // Update lastPageReached whenever items or page change
     useEffect(() => {
-        setCurrentPage(1);
-    }, [filters.roleFilter, filters.branchFilter, filters.search]);
+        setLastPageReached(!canGoNext);
+    }, [currentItemCount, pageSize]);
 
-    if (isLoading) {
-        return <div className="text-center py-10">جاري التحميل...</div>;
-    }
+    const handlePrev = () => {
+        if (currentPage > 1) setCurrentPage((p) => p - 1);
+    };
+
+    const handleNext = () => {
+        if (!lastPageReached) setCurrentPage((p) => p + 1);
+    };
+
+    if (isLoading) return <div className="text-center py-10">جاري التحميل...</div>;
+    if (isError) return <div className="text-center text-red-600 py-10">خطأ: {error?.message || "فشل تحميل البيانات"}</div>;
+
     return (
         <div className="overflow-x-auto bg-white rounded-lg shadow p-4">
             <table className="min-w-full text-right">
                 <thead>
                     <tr className="bg-gray-100">
-                        {columns.map((column) => (
-                            <th key={column.key} className="p-3 text-primary">
-                                {column.header}
-                            </th>
+                        {columns.map((col) => (
+                            <th key={col.key} className="p-3 text-primary">{col.header}</th>
                         ))}
                         {actions && <th className="p-3 text-primary">الإجراءات</th>}
                     </tr>
                 </thead>
                 <tbody>
-                    {items.map((item, index) => (
-                        <tr
-                            key={item.id || index}
-                            className="border-b border-gray-300 hover:bg-gray-50 transition"
-                            onClick={() => navigate(`/admin/requests/${item.id}`)}
-                        >
-                            {columns.map((column) => (
-                                <td key={column.key} className="p-3">
-                                    {column.render
-                                        ? column.render(item[column.key], item)
-                                        : item[column.key]}
-                                </td>
-                            ))}
-                            {actions && (
-                                <td className="p-3 flex gap-2">
-                                    {actions.map((action, idx) => (
-                                        <button
-                                            key={idx}
-                                            onClick={() => action.onClick(item)}
-                                            className={`px-4 py-2 text-sm rounded-lg border-b hover:bg-gray-100 shadow-sm cursor-pointer ${action.className || "text-gray-500"
-                                                }`}
-                                        >
-                                            {action.label}
-                                        </button>
-                                    ))}
-                                </td>
-                            )}
+                    {items.length === 0 ? (
+                        <tr>
+                            <td colSpan={columns.length + (actions ? 1 : 0)} className="text-center p-6">
+                                لا توجد بيانات لعرضها
+                            </td>
                         </tr>
-                    ))}
+                    ) : (
+                        items.map((item, idx) => (
+                            <tr
+                                key={item.id || idx}
+                                className="border-b border-gray-300 hover:bg-gray-50 transition cursor-pointer"
+                                onClick={() => navigate(`/admin/requests/${item.id}`)}
+                            >
+                                {columns.map((col) => (
+                                    <td key={col.key} className="p-3">
+                                        {col.render ? col.render(item[col.key], item) : item[col.key]}
+                                    </td>
+                                ))}
+                                {actions && (
+                                    <td className="p-3 flex gap-2">
+                                        {actions.map((action, i) => (
+                                            <button
+                                                key={i}
+                                                onClick={(e) => {
+                                                    e.stopPropagation();
+                                                    action.onClick(item, e);
+                                                }}
+                                                className={`px-4 py-2 text-sm rounded-lg border hover:bg-gray-100 shadow-sm cursor-pointer ${action.className || "text-gray-500"}`}
+                                            >
+                                                {action.label}
+                                            </button>
+                                        ))}
+                                    </td>
+                                )}
+                            </tr>
+                        ))
+                    )}
                 </tbody>
             </table>
 
-            {/* Meta info */}
+            {/* Pagination */}
             <div className="flex justify-between items-center mt-4 text-sm text-gray-600">
                 <div>
-                    عرض {indexOfFirstRecord + 1} إلى {indexOfLastRecord} من{" "}
-                    {meta.total_records} سجل
+                    عرض {indexOfFirstRecord + 1} إلى {indexOfLastRecord} من {indexOfFirstRecord + currentItemCount} سجل
                 </div>
-
-                {/* Pagination */}
                 <div className="flex gap-2">
                     <button
-                        onClick={() => handlePageChange(currentPage - 1)}
+                        onClick={handlePrev}
                         disabled={currentPage === 1}
                         className="px-3 py-1 rounded-lg border bg-white text-gray-700 hover:bg-gray-100 disabled:opacity-50"
                     >
                         السابق
                     </button>
-
-                    {Array.from({ length: meta.total_pages }, (_, i) => i + 1).map(
-                        (page) => (
-                            <button
-                                key={page}
-                                onClick={() => handlePageChange(page)}
-                                className={`px-3 py-1 rounded-lg border ${currentPage === page
-                                    ? "bg-primary text-white"
-                                    : "bg-white text-gray-700 hover:bg-gray-100"
-                                    }`}
-                            >
-                                {page}
-                            </button>
-                        )
-                    )}
-
+                    <span className="px-3 py-1">{currentPage}</span>
                     <button
-                        onClick={() => handlePageChange(currentPage + 1)}
-                        disabled={currentPage === meta.total_pages}
+                        onClick={handleNext}
+                        disabled={lastPageReached || currentItemCount === 0}
                         className="px-3 py-1 rounded-lg border bg-white text-gray-700 hover:bg-gray-100 disabled:opacity-50"
                     >
                         التالي
@@ -133,7 +113,7 @@ function GenericTable({
                 </div>
             </div>
         </div>
-    )
+    );
 }
 
-export default GenericTable
+export default GenericTable;
