@@ -12,7 +12,7 @@ function App() {
   return (
 
     <>
-      <RoutesPages />;
+      <RoutesPages />
       <ToastContainer
         position="top-right"
         autoClose={3000}

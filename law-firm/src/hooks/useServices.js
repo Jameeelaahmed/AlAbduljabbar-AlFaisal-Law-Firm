@@ -88,11 +88,11 @@ export const useUpdateService = () => {
 };
 
 // 🔹 Delete Category
-export const useDeleteCategory = () => {
+export const useDeleteService = () => {
     const queryClient = useQueryClient();
 
     return useMutation({
-        mutationFn: (id) => serviceApi.deleteCategory(id),
+        mutationFn: (id) => serviceApi.deleteService(id),
 
         onMutate: async (id) => {
             await queryClient.cancelQueries(["allServices"]);

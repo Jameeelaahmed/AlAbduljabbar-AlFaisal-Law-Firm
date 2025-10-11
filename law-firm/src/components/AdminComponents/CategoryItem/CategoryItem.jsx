@@ -4,7 +4,7 @@ import { useTranslation } from "react-i18next";
 import { toast } from "react-toastify";
 // hooks
 import { useDeleteCategory, useUpdateCategory } from "../../../hooks/useCategories";
-import { useGetServicesByCategoryId } from "../../../hooks/useServices";
+import { useGetServicesByCategoryId, useDeleteService } from "../../../hooks/useServices";
 // icons
 import { Trash, ChevronDown, Plus, SquarePen } from "lucide-react";
 // components
@@ -21,7 +21,10 @@ function CategoryItem({ category }) {
     const changeNameRef = useRef();
     const addServiceRef = useRef();
     const updateServiceRef = useRef();
+    const deleteServiceRef = useRef();
     const { mutate: deleteCategory, isLoading: isDeleting, error } = useDeleteCategory();
+    const { mutate: deleteService, isLoading: isDeletingService, error: errorService } = useDeleteService();
+
     const { mutate: updateCategory, isLoading: isUpdating } = useUpdateCategory();
     const { data: servicesData } = useGetServicesByCategoryId(category.id);
     const [selectedServiceId, setSelectedServiceId] = useState(null);
@@ -67,10 +70,30 @@ function CategoryItem({ category }) {
         updateServiceRef.current.close();
     }
 
+    // --Delete Service Modal
+
+    function openDeleteService(serviceId) {
+        deleteServiceRef.current.open();
+        setSelectedServiceId(serviceId)
+    }
+
+    function closeDeleteService() {
+        deleteServiceRef.current.close();
+    }
+
     async function handleDeleteCategory() {
         try {
             await deleteCategory(category.id);
             closeDeleteModal();
+        } catch (err) {
+            console.error("Failed to delete category:", err);
+        }
+    }
+    async function handleDeleteService() {
+        try {
+            await deleteService(selectedServiceId);
+            setSelectedServiceId(null);
+            closeDeleteService();
         } catch (err) {
             console.error("Failed to delete category:", err);
         }
@@ -262,7 +285,7 @@ function CategoryItem({ category }) {
                         >
                             <DeleteModal
                                 itemName={category.name}
-                                handleDeleteCategory={handleDeleteCategory}
+                                handleDeleteItem={handleDeleteCategory}
                                 isDeleting={isDeleting}
                                 error={error}
                             />
@@ -293,13 +316,14 @@ function CategoryItem({ category }) {
                                     <p className="text-sm md:text-base lg:text-lg font-medium text-gray-700 group-hover:text-primary">
                                         {data.name}
                                     </p>
-                                    <span>{data.description}</span>
-                                </div>
+                                    <span className="block max-w-full whitespace-normal break-words text-sm text-gray-600">
+                                        {data.description}
+                                    </span>                                </div>
                                 <div className="flex items-center gap-1 md:gap-2">
                                     <button onClick={(e) => { openUpdateService(data.id); e.stopPropagation() }} className="p-1.5 md:p-2 hover:bg-secondary/10 rounded-lg transition-all duration-200">
                                         <SquarePen className="w-3 h-3 md:w-4 md:h-4 text-primary hover:text-secondary" />
                                     </button>
-                                    <button className="p-1.5 md:p-2 hover:bg-red-50 rounded-lg transition-all duration-200">
+                                    <button onClick={(e) => { openDeleteService(data.id); e.stopPropagation() }} className="p-1.5 md:p-2 hover:bg-red-50 rounded-lg transition-all duration-200">
                                         <Trash className="w-3 h-3 md:w-4 md:h-4 text-denied hover:text-red-600" />
                                     </button>
                                 </div>
@@ -308,7 +332,10 @@ function CategoryItem({ category }) {
                     ))}
                 </ul>
                 <Modal title={t("Services.Update Service")} ref={updateServiceRef} onClose={(e) => { closeUpdateService(); e.stopPropagation() }}>
-                    <UpdateService selectedServiceId={selectedServiceId} onClose={(e) => { closeUpdateService(); e.stopPropagation() }} />
+                    <UpdateService setSelectedServiceId={setSelectedServiceId} selectedServiceId={selectedServiceId} onClose={(e) => { closeUpdateService(); e.stopPropagation() }} />
+                </Modal>
+                <Modal title={t("Delete Service")} ref={deleteServiceRef} onClose={(e) => { closeDeleteService(); e.stopPropagation() }}>
+                    <DeleteModal handleDeleteItem={handleDeleteService} isDeletingService={isDeletingService} errorService={errorService} onClose={(e) => { closeDeleteService(); e.stopPropagation() }} />
                 </Modal>
             </div>
         </div>
