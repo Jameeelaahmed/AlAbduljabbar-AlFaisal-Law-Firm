@@ -124,9 +124,9 @@ function Users() {
                     className="border border-gray-300 rounded-lg p-2 sm:p-3 cursor-pointer bg-white shadow-sm focus:ring-2 focus:ring-primary focus:border-primary transition-all text-sm sm:text-base w-full sm:w-auto min-w-[120px]"
                 >
                     <option value="">الدور</option>
-                    <option value="مسؤول">مسؤول</option>
-                    <option value="دعم">دعم</option>
-                    <option value="عميل">عميل</option>
+                    <option value="Admin">مسؤول</option>
+                    <option value="CustomerService">دعم</option>
+                    <option value="User">عميل</option>
                 </select>
 
                 <select
@@ -135,10 +135,8 @@ function Users() {
                     className="border border-gray-300 rounded-lg p-2 sm:p-3 cursor-pointer bg-white shadow-sm focus:ring-2 focus:ring-primary focus:border-primary transition-all text-sm sm:text-base w-full sm:w-auto min-w-[120px]"
                 >
                     <option value="">الفرع</option>
-                    <option value="الرياض">الرياض</option>
-                    <option value="جدة">جدة</option>
-                    <option value="الدمام">الدمام</option>
-                    <option value="مكة">مكة</option>
+                    <option value="1">مصر</option>
+                    <option value="2">السعودية</option>
                 </select>
 
                 <input

@@ -1,15 +1,23 @@
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import * as userApi from "../api/user";
 import { toast } from "react-toastify";
+import { fetchUsers } from "../api/user";
 
 // 🔹 Get Paginated Users
-export const useUsers = ({ searchTerm = "", pageIndex = 1, pageSize = 5 } = {}) =>
+export const useUsers = ({
+    searchTerm = "",
+    pageIndex = 1,
+    pageSize = 5,
+    branchId = null,
+    role = null,
+} = {}) =>
     useQuery({
-        queryKey: ["users", { searchTerm, pageIndex, pageSize }],
-        queryFn: userApi.fetchUsers,
+        queryKey: ["users", { searchTerm, pageIndex, pageSize, branchId, role }],
+        queryFn: fetchUsers,
         keepPreviousData: true,
         staleTime: 1000 * 60 * 2,
     });
+
 
 // 🔹 Get User by ID
 export const useUserById = (id) =>

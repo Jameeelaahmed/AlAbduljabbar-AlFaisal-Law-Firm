@@ -2,15 +2,22 @@ import api from '../api/axiosInstance'
 
 // Get all users with optional pagination and search
 export const fetchUsers = async ({ queryKey }) => {
-    const [_key, { searchTerm = "", pageIndex = 1, pageSize = 5 }] = queryKey;
+    const [
+        _key,
+        { searchTerm = "", pageIndex = 1, pageSize = 5, branchId = null, role = null },
+    ] = queryKey;
 
-    const { data: response } = await api.get("/api/ApplicationUsers/GetAll", {
-        params: {
-            SearchTerm: searchTerm,
-            PageIndex: pageIndex,
-            PageSize: pageSize,
-        },
-    });
+    const params = {
+        SearchTerm: searchTerm,
+        PageIndex: pageIndex,
+        PageSize: pageSize,
+    };
+
+    // ✅ Add optional filters
+    if (branchId) params.BranchId = branchId;
+    if (role) params.Role = role;
+
+    const { data: response } = await api.get("/api/ApplicationUsers/GetAll", { params });
 
     if (!response?.isSuccess) {
         throw new Error(response?.error?.description || "Failed to fetch users");
@@ -26,6 +33,7 @@ export const fetchUsers = async ({ queryKey }) => {
         },
     };
 };
+
 
 // Get a single user by ID
 export const getUserById = async (userId) => {
