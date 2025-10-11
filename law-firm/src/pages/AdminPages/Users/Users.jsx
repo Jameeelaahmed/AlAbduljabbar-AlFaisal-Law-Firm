@@ -171,7 +171,7 @@ function Users() {
                     closeCreateUserModal();
                 }}
             >
-                <AddUser />
+                <AddUser onSuccess={() => closeCreateUserModal()} onFailure={closeCreateUserModal()} />
             </Modal>
             {/* Edit User Modal */}
             <Modal
