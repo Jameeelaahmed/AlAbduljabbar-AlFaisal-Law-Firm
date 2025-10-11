@@ -9,9 +9,12 @@ function GenericTable({ useDataHook, columns, actions, pageSize = 5, initialPage
     // Fetch data from hook
     const { data, isLoading, isError, error } = useDataHook({
         searchTerm: filters.search || "",
+        branchId: filters.branch || null,
+        role: filters.role || null,
         pageIndex: currentPage,
         pageSize,
     });
+
 
     const items = data?.data || [];
     const currentItemCount = items.length;
