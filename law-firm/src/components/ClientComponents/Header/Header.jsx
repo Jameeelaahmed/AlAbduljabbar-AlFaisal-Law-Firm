@@ -19,6 +19,7 @@ function Header() {
     const { isAuthenticated, user, logout } = useAuthStore();
     const role = user?.lastRole;
     const name = user?.name;
+    const [isScrolled, setIsScrolled] = useState(false);
 
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
     const [currentLang, setCurrentLang] = useState(() => {
@@ -78,21 +79,40 @@ function Header() {
     useEffect(() => {
         document.documentElement.dir = currentLang === "ar" ? "rtl" : "ltr";
     }, [currentLang]);
+
+    // change header/logo appearance on scroll
+    useEffect(() => {
+        let ticking = false;
+        const threshold = 16; // px scrolled before apply styles
+        const onScroll = () => {
+            if (!ticking) {
+                window.requestAnimationFrame(() => {
+                    setIsScrolled(window.scrollY > threshold);
+                    ticking = false;
+                });
+                ticking = true;
+            }
+        };
+        window.addEventListener("scroll", onScroll, { passive: true });
+        // check initial position
+        setIsScrolled(window.scrollY > threshold);
+        return () => window.removeEventListener("scroll", onScroll);
+    }, []);
     return (
         <>
             {/* Main Header */}
             <div className=" fixed w-full flex justify-between items-center z-50">
                 {/* Logo Section */}
-                <>
-                    <div className='relative cursor-pointer hover:scale-105 transition-transform duration-300'>
-                        <div className='flex flex-col justify-center items-center p-4 backdrop-blur-xl shadow-2xl rtl:rounded-tl-3xl rtl:rounded-bl-3xl ltr:rounded-tr-3xl ltr:rounded-br-3xl  border-primary border-3'
+                <div className="">
+                    <div className='hidden lg:block relative cursor-pointer hover:scale-105 transition-transform duration-300'>
+                        <div className={`flex flex-col justify-center items-center p-4 ${isScrolled && 'bg-primary/40'}  backdrop-blur-xl shadow-2xl rtl:rounded-tl-3xl rtl:rounded-bl-3xl ltr:rounded-tr-3xl ltr:rounded-br-3xl  border-primary border-3`}
                             onClick={openLogo1DropDown}>
                             <img className='w-[55px]' src={logo1} alt="logo1" />
                             <p className='font-bold text-lg text-white'>العبد الجبار </p>
-                            <span className='text-white'>محامون و مستشاورن</span>
+                            <span className={` ${isScrolled ? 'text-text' : "text-white"}`}>محامون و مستشاورن</span>
                             <span className='text-[#f7c630] text-sm font-bold'>اضغط لرؤية بيانات الشركه</span>
                         </div>
-                        <div className={`absolute rtl:right-2 ltr:left-2 mt-5 w-66 backdrop-blur-xl shadow-2xl rounded-lg border border-primary p-2 z-60 text-white
+                        <div className={`absolute rtl:right-2 ltr:left-2 mt-5 w-66 ${isScrolled && 'bg-primary/40'} backdrop-blur-xl shadow-2xl rounded-lg border border-primary p-2 z-60 text-white
                     transform transition-transform duration-300 ease-in-out origin-top
                     ${isLogo1DropDown ? 'scale-y-100 opacity-100' : 'scale-y-0 opacity-0'}
                     flex flex-col
@@ -118,31 +138,31 @@ function Header() {
                             onClick={closeLogo1DropDown}
                         ></div>
                     )}
-                </>
+                </div>
 
                 {/* Desktop Navigation */}
-                <ul className='hidden lg:flex justify-around bg-white rounded-full pr-2 pl-2 pt-2 pb-2'>
-                    <li className='pt-3 pb-3 pr-6 pl-6 rounded-full text-secondary hover:bg-primary hover:text-white transition-all'>
+                <ul className={`hidden lg:flex justify-around  ${isScrolled ? 'bg-primary text-white' : 'bg-white text-secondary'} rounded-full pr-2 pl-2 pt-2 pb-2`}>
+                    <li className={`pt-3 pb-3 pr-6 pl-6 rounded-full ${isScrolled ? "hover:bg-secondary hover:text-white " : "hover:bg-primary hover:text-white"} transition-all`}>
                         <Link>
                             <p>{t("landing.Home")}</p>
                         </Link>
                     </li>
-                    <li className='pt-3 pb-3 pr-6 pl-6 rounded-full text-secondary hover:bg-primary hover:text-white transition-all'>
+                    <li className={`pt-3 pb-3 pr-6 pl-6 rounded-full ${isScrolled ? "hover:bg-secondary hover:text-white " : "hover:bg-primary hover:text-white"} transition-all`}>
                         <Link>
                             <p>{t("landing.OurLawServices")}</p>
                         </Link>
                     </li>
-                    <li className='pt-3 pb-3 pr-6 pl-6 rounded-full text-secondary hover:bg-primary hover:text-white transition-all'>
+                    <li className={`pt-3 pb-3 pr-6 pl-6 rounded-full ${isScrolled ? "hover:bg-secondary hover:text-white " : "hover:bg-primary hover:text-white"} transition-all`}>
                         <Link>
                             <p>{t("landing.FAQ")}</p>
                         </Link>
                     </li>
-                    <li className='pt-3 pb-3 pr-6 pl-6 rounded-full text-secondary hover:bg-primary hover:text-white transition-all'>
+                    <li className={`pt-3 pb-3 pr-6 pl-6 rounded-full ${isScrolled ? "hover:bg-secondary hover:text-white " : "hover:bg-primary hover:text-white"} transition-all`}>
                         <Link>
                             <p>{t("landing.AboutUs")}</p>
                         </Link>
                     </li>
-                    <li className='pt-3 pb-3 pr-6 pl-6 rounded-full text-secondary hover:bg-primary hover:text-white transition-all'>
+                    <li className={`pt-3 pb-3 pr-6 pl-6 rounded-full ${isScrolled ? "hover:bg-secondary hover:text-white " : "hover:bg-primary hover:text-white"} transition-all`}>
                         <Link>
                             <p>{t("landing.ContactUs")}</p>
                         </Link>
@@ -232,7 +252,7 @@ function Header() {
                                 )}
                             </>
                         ) : (
-                            <div className='font-bold text-primary mr-3 ml-3'>
+                            <div className={`font-bold ${isScrolled ? 'text-white' : 'text-primary'}mr-3 ml-3`}>
                                 <Link to='login'>
                                     {t("landing.Login")}
                                 </Link>
@@ -242,18 +262,16 @@ function Header() {
                 </ul>
 
                 {/* The other Logo */}
-
-
                 <>
-                    <div className='relative cursor-pointer hover:scale-105 transition-transform duration-300'>
-                        <div className='flex flex-col justify-center items-center p-4 backdrop-blur-xl shadow-2xl rtl:rounded-tr-3xl rtl:rounded-br-3xl ltr:rounded-tl-3xl ltr:rounded-bl-3xl  border-primary border-3'
+                    <div className='hidden lg:block relative cursor-pointer hover:scale-105 transition-transform duration-300'>
+                        <div className={`flex flex-col justify-center items-center p-4 ${isScrolled && 'bg-primary/40'} backdrop-blur-xl shadow-2xl rtl:rounded-tr-3xl rtl:rounded-br-3xl ltr:rounded-tl-3xl ltr:rounded-bl-3xl  border-primary border-3`}
                             onClick={openLogo2DropDown}>
                             <img className='w-[55px]' src={logo2} alt="logo2" />
                             <p className='font-bold text-lg text-white'>العبد الجبار و الفيصل </p>
-                            <span className='text-white'>محامون و مستشاورن</span>
+                            <span className={` ${isScrolled ? 'text-text' : "text-white"}`}>محامون و مستشاورن</span>
                             <span className='text-[#f7c630] text-sm font-bold'>اضغط لرؤية بيانات الشركه</span>
                         </div>
-                        <div className={`absolute ltr:right-2 rtl:left-2 mt-5 w-66 backdrop-blur-xl shadow-2xl rounded-lg border border-primary p-2 z-60 text-white
+                        <div className={`absolute ltr:right-2 rtl:left-2 mt-5 w-66 ${isScrolled && 'bg-primary/40'} backdrop-blur-xl shadow-2xl rounded-lg border border-primary p-2 z-60 text-white
                     transform transition-transform duration-300 ease-in-out origin-top
                     ${isLogo2DropDown ? 'scale-y-100 opacity-100' : 'scale-y-0 opacity-0'}
                     flex flex-col
@@ -285,20 +303,11 @@ function Header() {
                         ></div>
                     )}
                 </>
-                {/* Mobile Menu Button */}
-                <div className='lg:hidden'>
-                    <button
-                        onClick={toggleMobileMenu}
-                        className='p-2 text-primary hover:bg-gray-100 rounded'
-                    >
-                        {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
-                    </button>
-                </div>
             </div >
 
             {/* Mobile Slide Menu */}
             < div className={`
-                fixed top-0 left-0 w-full bg-white z-50 shadow-lg transform transition-transform duration-300 ease-in-out lg:hidden
+                fixed top-0 left-0 w-full bg-white ${isScrolled && "bg-primary/50"} z-50 shadow-lg transform transition-transform duration-300 ease-in-out lg:hidden
                 ${isMobileMenuOpen ? 'translate-y-0' : '-translate-y-full'}
             `}>
                 {/* Mobile menu content with top padding to account for fixed header */}
@@ -330,10 +339,10 @@ function Header() {
                                 <p>{t("landing.ContactUs")}</p>
                             </Link>
                         </li>
-                    </ul >
+                    </ ul>
 
                     {/* Mobile Auth Section */}
-                    <div className='mt-6 pt-4 border-t border-gray-200' >
+                    <div div className='mt-6 pt-4 border-t border-gray-200' >
                         {(isAuthenticated && role == 'User') ? (
                             <div className='flex flex-col space-y-3'>
                                 <p className='text-center text-secondary'>{t("landing.Hello")} {name}</p>
@@ -382,6 +391,25 @@ function Header() {
                     </div >
                 </div >
             </div >
+
+            {/* Alternate mobile logo - visible on sm and md only, fixed on scroll */}
+            <div
+                className={`lg:hidden fixed top-0 left-0 w-full flex items-center justify-center gap-3 px-4 py-2 z-40 transition-all duration-300 bg-white/80 backdrop-blur-md shadow-md`}
+            >
+                <img src={logo1} alt="logo1" className="w-10 h-10 object-contain" />
+                <img src={logo2} alt="logo2" className="w-10 h-10 object-contain" />
+                <p className="text-primary font-bold text-base sm:text-lg text-center leading-tight">
+                    مكتب العبد الجبار و الفيصل
+                </p>
+
+                {/* Mobile Menu Button */}
+                <button
+                    onClick={toggleMobileMenu}
+                    className='p-2 text-primary hover:bg-gray-100 rounded'
+                >
+                    {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
+                </button>
+            </div>
 
             {/* Backdrop overlay for mobile menu */}
             {

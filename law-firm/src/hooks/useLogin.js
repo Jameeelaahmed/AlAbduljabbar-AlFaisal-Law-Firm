@@ -37,7 +37,7 @@ export const useLogin = () => {
 
                 // ✅ Redirect based on role
                 if (lastRole === "Admin") {
-                    navigate("/admin/dashboard");
+                    navigate("/admin");
                 } else {
                     navigate("/");
                 }
