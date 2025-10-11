@@ -1,7 +1,7 @@
 import { useTranslation } from "react-i18next";
 import { Trash2, AlertTriangle } from "lucide-react";
 
-function DeleteModal({ itemName, handleDeleteCategory, isDeleting, error }) {
+function DeleteModal({ itemName, handleDeleteItem, isDeleting, error }) {
     const { t } = useTranslation();
 
     return (
@@ -45,7 +45,7 @@ function DeleteModal({ itemName, handleDeleteCategory, isDeleting, error }) {
                 <button
                     type="button"
                     onClick={(e) => {
-                        handleDeleteCategory();
+                        handleDeleteItem();
                         e.stopPropagation();
                     }}
                     disabled={isDeleting}

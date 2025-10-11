@@ -4,11 +4,11 @@ import { useTranslation } from "react-i18next";
 
 import { useGetServiceForUpdate, useUpdateService } from "../../../../hooks/useServices";
 
-function UpdateService({ selectedServiceId, onClose }) {
+function UpdateService({ selectedServiceId, onClose, setSelectedServiceId }) {
     const { t } = useTranslation();
 
     const { data: serviceInitialData } = useGetServiceForUpdate(selectedServiceId)
-    const { mutateAsync: updateService, isLoading: isUpdating } = useUpdateService();
+    const { mutateAsync: updateService, isLoading: isUpdating } = useUpdateService(selectedServiceId);
     console.log(serviceInitialData);
 
     return (
@@ -31,12 +31,12 @@ function UpdateService({ selectedServiceId, onClose }) {
                         categoryId: Yup.number().required(t("Services.Category is required")).typeError(t("Services.Select a category")),
                     })}
                     onSubmit={async (values, { setSubmitting }) => {
-
                         try {
                             // Convert categoryId to number if needed
-                            const payload = { id: selectedServiceId, ...values, categoryId: values.categoryId };
-                            await updateService(payload);
-                            onClose()
+                            const payload = { ...values, categoryId: values.categoryId };
+                            await updateService({ id: selectedServiceId, data: payload });
+                            setSelectedServiceId(null)
+                            onClose();
                         } catch (err) {
                             console.log(values.categoryId);
                             onClose()
