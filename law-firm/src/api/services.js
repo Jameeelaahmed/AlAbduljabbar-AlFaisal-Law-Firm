@@ -31,3 +31,8 @@ export const getServiceForUpdate = async (id) => {
     const res = await api.get(`${API_URL}/GetForUpdate/${id}`);
     return res.data.data;
 }
+
+export const getServiceByCategoryId = async (id) => {
+    const res = await api.get(`${API_URL}/GetServicesByCategoryId/${id}`);
+    return res.data.data
+}

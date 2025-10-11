@@ -107,5 +107,16 @@
     "Mobile number is required": "Mobile number is required",
     "WhatsApp number is required": "WhatsApp number is required",
     "Are you sure you want to delete this user?": "Are you sure you want to delete this user?"
+  },
+  "OurCompany": {
+    "about our company": "about our company",
+    "visit": "Visit Us",
+    "Directions": "Directions"
+  },
+  "ClientOpinions": {
+    "Our Clients' Opinions": "our clients' opinions"
+  },
+  "OurVision": {
+    "Our Vision and Mission": "Our Vision and Mission"
   }
 }

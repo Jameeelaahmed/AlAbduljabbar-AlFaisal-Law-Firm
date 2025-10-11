@@ -107,5 +107,16 @@
     "Mobile number is required": "رقم الجوال مطلوب",
     "WhatsApp number is required": "رقم الواتساب مطلوب",
     "Are you sure you want to delete this user?": "هل أنت متأكد أنك تريد حذف هذا المستخدم؟"
+  },
+  "OurCompany": {
+    "about our company": "عن شركتنا",
+    "visit": "زيارة موقعنا",
+    "Directions": "عرض الموقع"
+  },
+  "ClientOpinions": {
+    "Our Clients' Opinions": "آراء عملائنا"
+  },
+  "OurVision": {
+    "Our Vision and Mission": "رؤيتنا ورسالتنا"
   }
 }

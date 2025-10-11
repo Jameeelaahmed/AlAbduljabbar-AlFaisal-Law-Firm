@@ -4,6 +4,7 @@ import { useTranslation } from "react-i18next";
 import { toast } from "react-toastify";
 // hooks
 import { useDeleteCategory, useUpdateCategory } from "../../../hooks/useCategories";
+import { useGetServicesByCategoryId } from "../../../hooks/useServices";
 // icons
 import { Trash, ChevronDown, Plus, SquarePen } from "lucide-react";
 // components
@@ -20,6 +21,7 @@ function CategoryItem({ category }) {
     const addServiceRef = useRef();
     const { mutate: deleteCategory, isLoading: isDeleting, error } = useDeleteCategory();
     const { mutate: updateCategory, isLoading: isUpdating } = useUpdateCategory();
+    const { data: servicesData } = useGetServicesByCategoryId(category.id);
 
     const isEgyptToggled = category.branchId === 3 || category.branchId === 1;
     const isSaudiToggled = category.branchId === 3 || category.branchId === 2;
@@ -267,25 +269,27 @@ function CategoryItem({ category }) {
                     }`}
             >
                 <ul className="overflow-hidden">
-                    <li className="bg-gray-50 group-hover:bg-primary/5 border-t border-gray-200">
-                        {/* Example subcategory item */}
-                        <div className="flex justify-between items-center p-4 md:p-6 lg:p-8 ml-4 md:ml-8 border-l-2 border-primary/20">
-                            <div>
-                                <p className="text-sm md:text-base lg:text-lg font-medium text-gray-700 group-hover:text-primary">
-                                    تسجيل العلامات التجاريه
-                                </p>
-                                <span>{/*description*/}</span>
-                            </div>
-                            <div className="flex items-center gap-1 md:gap-2">
-                                <button className="p-1.5 md:p-2 hover:bg-secondary/10 rounded-lg transition-all duration-200">
-                                    <Plus className="w-3 h-3 md:w-4 md:h-4 text-primary hover:text-secondary" />
-                                </button>
-                                <button className="p-1.5 md:p-2 hover:bg-red-50 rounded-lg transition-all duration-200">
-                                    <Trash className="w-3 h-3 md:w-4 md:h-4 text-denied hover:text-red-600" />
-                                </button>
-                            </div>
-                        </div>
-                    </li>
+                    {Array.isArray(servicesData) && servicesData.map((data) => (
+                        <li
+                            key={data.id ?? data.name}
+                            className="bg-gray-50 group-hover:bg-primary/5 border-t border-gray-200"
+                        >                            {/* Example subcategory item */}
+                            <div className="flex justify-between items-center p-4 md:p-6 lg:p-8 ml-4 md:ml-8 border-l-2 border-primary/20">
+                                <div>
+                                    <p className="text-sm md:text-base lg:text-lg font-medium text-gray-700 group-hover:text-primary">
+                                        {data.name}
+                                    </p>
+                                    <span>{data.description}</span>
+                                </div>
+                                <div className="flex items-center gap-1 md:gap-2">
+                                    <button className="p-1.5 md:p-2 hover:bg-secondary/10 rounded-lg transition-all duration-200">
+                                        <SquarePen className="w-3 h-3 md:w-4 md:h-4 text-primary hover:text-secondary" />
+                                    </button>
+                                    <button className="p-1.5 md:p-2 hover:bg-red-50 rounded-lg transition-all duration-200">
+                                        <Trash className="w-3 h-3 md:w-4 md:h-4 text-denied hover:text-red-600" />
+                                    </button>                                </div>
+                            </div>                   </li>
+                    ))}
                 </ul>
             </div>
         </div>

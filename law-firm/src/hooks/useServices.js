@@ -24,6 +24,15 @@ export const useGetServiceForUpdate = (id) =>
         enabled: !!id,
     });
 
+// Get Service By Category Id 
+
+export const useGetServicesByCategoryId = (id) =>
+    useQuery({
+        queryKey: ["serviceByCategoryId", id],
+        queryFn: () => serviceApi.getServiceByCategoryId(id),
+        enabled: !!id,
+    });
+
 // 🔹 Create Service
 export const useCreateService = () => {
     const queryClient = useQueryClient();
