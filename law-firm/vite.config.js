@@ -8,4 +8,5 @@ export default defineConfig({
     react(),
     tailwindcss(),
   ],
+  base: proccess.env.VITE_BASE_PATH || "/AlAbduljabbar-AlFaisal-Law-Firm",
 })
