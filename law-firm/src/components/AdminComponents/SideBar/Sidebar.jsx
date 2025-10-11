@@ -102,7 +102,7 @@ function Sidebar() {
                                     }
                                 >
                                     <LayoutDashboard className="w-5 h-5 flex-shrink-0" />
-                                    {isSidebarOpen && <span className="text-sm font-medium transition-all duration-300">لوحة القيادة</span>}
+                                    {isSidebarOpen && <span className="text-sm font-medium transition-all duration-300">{t("sidebar.dashboard")}</span>}
                                 </NavLink>
                             </li>
 
@@ -118,7 +118,7 @@ function Sidebar() {
                                     }
                                 >
                                     <Scale className="w-5 h-5 flex-shrink-0" />
-                                    {isSidebarOpen && <span className="text-sm font-medium">الخدمات القانونية</span>}
+                                    {isSidebarOpen && <span className="text-sm font-medium">{t("sidebar.LawServices")}</span>}
                                 </NavLink>
                             </li>
 
@@ -134,7 +134,7 @@ function Sidebar() {
                                     }
                                 >
                                     <CalendarCheck className="w-5 h-5 flex-shrink-0" />
-                                    {isSidebarOpen && <span className="text-sm font-medium">الطلبات</span>}
+                                    {isSidebarOpen && <span className="text-sm font-medium">{t("sidebar.requests")}</span>}
                                 </NavLink>
                             </li>
 
@@ -150,23 +150,7 @@ function Sidebar() {
                                     }
                                 >
                                     <Users className="w-5 h-5 flex-shrink-0" />
-                                    {isSidebarOpen && <span className="text-sm font-medium">المستخدمين</span>}
-                                </NavLink>
-                            </li>
-
-                            <li>
-                                <NavLink
-                                    to="reports"
-                                    className={({ isActive }) =>
-                                        `flex items-center gap-3 p-3 rounded-xl transition-all cursor-pointer ${!isSidebarOpen ? "justify-center" : ""
-                                        } ${isActive
-                                            ? "bg-white/30 text-white shadow-lg"
-                                            : "hover:bg-white/20"
-                                        }`
-                                    }
-                                >
-                                    <FileText className="w-5 h-5 flex-shrink-0" />
-                                    {isSidebarOpen && <span className="text-sm font-medium">التقارير</span>}
+                                    {isSidebarOpen && <span className="text-sm font-medium">{t("sidebar.users")}</span>}
                                 </NavLink>
                             </li>
 
@@ -182,7 +166,7 @@ function Sidebar() {
                                     }
                                 >
                                     <Settings className="w-5 h-5 flex-shrink-0" />
-                                    {isSidebarOpen && <span className="text-sm font-medium">الإعدادات</span>}
+                                    {isSidebarOpen && <span className="text-sm font-medium">{t("sidebar.settings")}</span>}
                                 </NavLink>
                             </li>
                         </ul>
@@ -200,7 +184,7 @@ function Sidebar() {
                         }}
                     >
                         <LogOut className="w-5 h-5 flex-shrink-0" />
-                        {isSidebarOpen && <span className="text-sm font-medium">تسجيل الخروج</span>}
+                        {isSidebarOpen && <span className="text-sm font-medium">{t("sidebar.logout")}</span>}
                     </button>
                 </div>
             </div>

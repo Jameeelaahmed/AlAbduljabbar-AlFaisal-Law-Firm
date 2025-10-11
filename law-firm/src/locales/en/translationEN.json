@@ -6,10 +6,9 @@
     "title": "Abdul Jabbar & Al-Faisal",
     "subtitle": "Control Panel",
     "dashboard": "Dashboard",
-    "legalServices": "Legal Services",
+    "LawServices": "Law Services",
     "requests": "Requests",
     "users": "Users",
-    "reports": "Reports",
     "settings": "Settings",
     "logout": "Logout"
   },
@@ -54,7 +53,9 @@
     "Search by name or description": "Search by name or description",
     "Clear filters": "Clear filters",
     "Clear": "Clear",
-    "Change Category Name": "Change Category Name"
+    "Change Category Name": "Change Category Name",
+    "Update Service": "Update Service",
+    "Sub-services": "Sub-services"
   },
   "Add Category": {
     "Category Name in English is required": "Category Name in English is required",
