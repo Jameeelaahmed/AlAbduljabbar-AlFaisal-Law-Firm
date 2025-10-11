@@ -12,7 +12,7 @@ export const updateService = async (id, data) => {
     return res.data.data;
 };
 
-export const deleteServicr = async (id) => {
+export const deleteService = async (id) => {
     const res = await api.delete(`${API_URL}/Delete/${id}`);
     return res.data;
 };

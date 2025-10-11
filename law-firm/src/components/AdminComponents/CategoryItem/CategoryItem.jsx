@@ -12,6 +12,7 @@ import Modal from "../Modals/Modal";
 import DeleteModal from "../Modals/DeleteModal/DeleteModal";
 import UpdateName from "../Modals/UpdateName/UpdateName";
 import AddService from "../Modals/AddService/AddService";
+import UpdateService from "../Modals/UpdateService/UpdateService";
 
 function CategoryItem({ category }) {
     const { t } = useTranslation();
@@ -19,9 +20,11 @@ function CategoryItem({ category }) {
     const deleteRef = useRef();
     const changeNameRef = useRef();
     const addServiceRef = useRef();
+    const updateServiceRef = useRef();
     const { mutate: deleteCategory, isLoading: isDeleting, error } = useDeleteCategory();
     const { mutate: updateCategory, isLoading: isUpdating } = useUpdateCategory();
     const { data: servicesData } = useGetServicesByCategoryId(category.id);
+    const [selectedServiceId, setSelectedServiceId] = useState(null);
 
     const isEgyptToggled = category.branchId === 3 || category.branchId === 1;
     const isSaudiToggled = category.branchId === 3 || category.branchId === 2;
@@ -51,6 +54,17 @@ function CategoryItem({ category }) {
     }
     function closeDeleteModal() {
         deleteRef.current.close();
+    }
+
+    // --- Update Service Handlers ---
+
+    function openUpdateService(serviceId) {
+        updateServiceRef.current.open()
+        setSelectedServiceId(serviceId)
+    }
+
+    function closeUpdateService() {
+        updateServiceRef.current.close();
     }
 
     async function handleDeleteCategory() {
@@ -133,7 +147,7 @@ function CategoryItem({ category }) {
                         className={`text-xs md:text-sm transition-colors ${isExpanded ? "text-white/80" : "text-secondary group-hover:text-accent"
                             }`}
                     >
-                        3 خدمات فرعيه
+                        {servicesData && servicesData.length} {t("Services.Sub-services")}
                     </span>
                 </div>
 
@@ -156,10 +170,10 @@ function CategoryItem({ category }) {
                             }}
                             className={`relative inline-flex items-center w-10 h-6 md:w-12 md:h-7 rounded-full cursor-pointer transition-colors duration-200 ${isEgyptToggled
                                 ? isExpanded
-                                    ? "bg-white/20"
+                                    ? "bg-secondary"
                                     : "bg-primary"
                                 : isExpanded
-                                    ? "bg-white/20"
+                                    ? "bg-white/50"
                                     : "bg-gray-600"
                                 } ${isUpdating ? "opacity-50 cursor-not-allowed" : ""}`}
                         >
@@ -189,10 +203,10 @@ function CategoryItem({ category }) {
                             }}
                             className={`relative inline-flex items-center w-10 h-6 md:w-12 md:h-7 rounded-full cursor-pointer transition-colors duration-200 ${isSaudiToggled
                                 ? isExpanded
-                                    ? "bg-white/20"
+                                    ? "bg-secondary"
                                     : "bg-primary"
                                 : isExpanded
-                                    ? "bg-white/20"
+                                    ? "bg-white/50"
                                     : "bg-gray-600"
                                 } ${isUpdating ? "opacity-50 cursor-not-allowed" : ""}`}
                         >
@@ -282,15 +296,20 @@ function CategoryItem({ category }) {
                                     <span>{data.description}</span>
                                 </div>
                                 <div className="flex items-center gap-1 md:gap-2">
-                                    <button className="p-1.5 md:p-2 hover:bg-secondary/10 rounded-lg transition-all duration-200">
+                                    <button onClick={(e) => { openUpdateService(data.id); e.stopPropagation() }} className="p-1.5 md:p-2 hover:bg-secondary/10 rounded-lg transition-all duration-200">
                                         <SquarePen className="w-3 h-3 md:w-4 md:h-4 text-primary hover:text-secondary" />
                                     </button>
                                     <button className="p-1.5 md:p-2 hover:bg-red-50 rounded-lg transition-all duration-200">
                                         <Trash className="w-3 h-3 md:w-4 md:h-4 text-denied hover:text-red-600" />
-                                    </button>                                </div>
-                            </div>                   </li>
+                                    </button>
+                                </div>
+                            </div>
+                        </li>
                     ))}
                 </ul>
+                <Modal title={t("Services.Update Service")} ref={updateServiceRef} onClose={(e) => { closeUpdateService(); e.stopPropagation() }}>
+                    <UpdateService selectedServiceId={selectedServiceId} onClose={(e) => { closeUpdateService(); e.stopPropagation() }} />
+                </Modal>
             </div>
         </div>
     );

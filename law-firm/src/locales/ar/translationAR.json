@@ -6,7 +6,7 @@
     "title": "عبد الجبار والفيصل",
     "subtitle": "لوحة التحكم",
     "dashboard": "لوحة القيادة",
-    "legalServices": "الخدمات القانونية",
+    "LawServices": "الخدمات القانونية",
     "requests": "الطلبات",
     "users": "المستخدمين",
     "reports": "التقارير",
@@ -54,7 +54,9 @@
     "Search by name or description": "البحث بالاسم أو الوصف",
     "Clear filters": "مسح الفلاتر",
     "Clear": "مسح",
-    "Change Category Name": "تغيير اسم الفئة"
+    "Change Category Name": "تغيير اسم الفئة",
+    "Update Service": "تحديث الخدمة",
+    "Sub-services": "خدمات الفرعية"
   },
   "Add Category": {
     "Category Name in English is required": "اسم الفئة بالإنجليزية مطلوب",
