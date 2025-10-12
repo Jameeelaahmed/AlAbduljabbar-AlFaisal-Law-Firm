@@ -40,8 +40,6 @@ import { useTranslation } from 'react-i18next';
 import { Scale } from 'lucide-react';
 import Modal from '../Modals/Modal';
 import RequestService from '../Modals/RequestService/RequestService';
-import logo1 from '../../../assets/Logos/logo1.png'
-import logo2 from '../../../assets/Logos/Logo2.png'
 import { MapPin, Phone, Mail } from 'lucide-react'
 import { Link } from 'react-router-dom';
 function Hero() {
@@ -83,7 +81,7 @@ function Hero() {
                 <div className='hidden lg:block relative cursor-pointer hover:scale-105 transition-transform duration-300'>
                     <div className={`flex flex-col justify-center items-center p-4  backdrop-blur-xl shadow-2xl rtl:rounded-tl-3xl rtl:rounded-bl-3xl ltr:rounded-tr-3xl ltr:rounded-br-3xl  border-primary border-3`}
                         onClick={openLogo1DropDown}>
-                        <img className='w-[55px]' src={logo1} alt="logo1" />
+                        <img className='w-[55px]' src='logo1.png' alt="logo1" />
                         <p className='font-bold text-lg text-white'>العبد الجبار </p>
                         <span className={`text-white`}>محامون و مستشاورن</span>
                         <span className='text-[#f7c630] text-sm font-bold'>اضغط لرؤية بيانات الشركه</span>
@@ -121,7 +119,7 @@ function Hero() {
                 <div className='hidden lg:block relative cursor-pointer hover:scale-105 transition-transform duration-300'>
                     <div className={`flex flex-col justify-center items-center p-4  backdrop-blur-xl shadow-2xl rtl:rounded-tr-3xl rtl:rounded-br-3xl ltr:rounded-tl-3xl ltr:rounded-bl-3xl  border-primary border-3`}
                         onClick={openLogo2DropDown}>
-                        <img className='w-[55px]' src={logo2} alt="logo2" />
+                        <img className='w-[55px]' src="Logo2.png" alt="logo2" />
                         <p className='font-bold text-lg text-white'>العبد الجبار و الفيصل </p>
                         <span className={`text-white`}>محامون و مستشاورن</span>
                         <span className='text-[#f7c630] text-sm font-bold'>اضغط لرؤية بيانات الشركه</span>
