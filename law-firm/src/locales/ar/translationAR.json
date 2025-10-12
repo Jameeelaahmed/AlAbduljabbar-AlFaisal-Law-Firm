@@ -130,13 +130,25 @@
       "saveChanges": "حفظ التغييرات",
       "saving": "جاري الحفظ...",
       "cancel": "إلغاء",
-      "back": "العودة"
+      "back": "العودة",
+      "addNote": "أضف ملاحظة",
+      "markContacted": "تم التواصل",
+      "resolve": "تم الحل",
+      "reject": "رفض",
+      "updating": "جاري التحديث..."
     },
     "Messages": {
       "updateSuccess": "تم تحديث الطلب بنجاح",
       "updateError": "حدث خطأ أثناء تحديث الطلب",
       "noteAddedSuccess": "تمت إضافة الملاحظة بنجاح",
-      "noteAddedError": "حدث خطأ أثناء إضافة الملاحظة"
+      "noteAddedError": "حدث خطأ أثناء إضافة الملاحظة",
+      "loading": "جاري التحميل...",
+      "loadError": "حدث خطأ أثناء تحميل البيانات",
+      "notFound": "لم يتم العثور على الطلب"
+    },
+    "Team": {
+      "reviewTeam": "فريق المراجعة",
+      "supervisor": "المشرف"
     },
     "Filters": {
       "all": "جميع الطلبات",

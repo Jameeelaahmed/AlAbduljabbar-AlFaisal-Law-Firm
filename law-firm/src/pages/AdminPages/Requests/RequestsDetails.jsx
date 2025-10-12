@@ -1,10 +1,18 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { useRequest, useUpdateRequestStatus, useAddRequestNote } from '../../../hooks/useRequests';
+import {
+    useRequest,
+    useUpdateRequest,
+    useRejectRequest,
+    useResolveRequest,
+    useContactRequest
+} from '../../../hooks/useRequests';
 import { useUserById } from '../../../hooks/useUsers';
 import { useServiceById } from '../../../hooks/useServices';
 import { useQueryClient } from '@tanstack/react-query';
+import { useTranslation } from 'react-i18next';
 function RequestsDetails({ initialRequest = null }) {
+    const { t } = useTranslation();
     const { requestId } = useParams();
     const navigate = useNavigate();
     // Fetch request data
@@ -19,38 +27,36 @@ function RequestsDetails({ initialRequest = null }) {
     const { data: userData } = useUserById(requestData?.userID);
     const { data: serviceData } = useServiceById(requestData?.serviceID);
 
-    // Mutations
-    const { mutate: updateStatus, isLoading: isUpdatingStatus } = useUpdateRequestStatus();
-    const { mutate: addNote, isLoading: isAddingNote } = useAddRequestNote();
+    // Status update mutations
+    const { mutate: rejectRequest, isLoading: isRejecting } = useRejectRequest();
+    const { mutate: resolveRequest, isLoading: isResolving } = useResolveRequest();
+    const { mutate: contactRequest, isLoading: isContacting } = useContactRequest();
+    const { mutate: updateRequest, isLoading: isUpdating } = useUpdateRequest();
 
-    const [selectedStatus, setSelectedStatus] = useState(requestData?.status ?? null);
+    // Notes state
     const [notes, setNotes] = useState('');
 
-    // Update selected status when data changes
-    useEffect(() => {
-        if (requestData?.status !== undefined) {
-            setSelectedStatus(requestData.status);
-        }
-    }, [requestData?.status]);
+    // Handle adding notes
+    const handleAddNote = () => {
+        if (!notes.trim()) return;
 
-    const handleSaveChanges = () => {
-        if (selectedStatus !== requestData?.status) {
-            updateStatus({ id: requestId, status: selectedStatus });
-        }
-
-        if (notes.trim()) {
-            addNote({ requestId, note: notes });
-            setNotes('');
-        }
+        updateRequest(
+            { id: requestId, note: notes.trim() },
+            {
+                onSuccess: () => {
+                    setNotes('');
+                }
+            }
+        );
     };
 
     const getStatusLabel = (statusCode) => {
         switch (statusCode) {
-            case 0: return "قيد الانتظار";
-            case 1: return "قيد المراجعة";
-            case 2: return "تم الحل";
-            case 3: return "مرفوض";
-            default: return "غير معروف";
+            case 0: return t("Requests.Status.Pending");
+            case 1: return t("Requests.Status.Contacted");
+            case 2: return t("Requests.Status.Resolved");
+            case 3: return t("Requests.Status.Rejected");
+            default: return t("Requests.Status.Unknown");
         }
     };
     const statusColors = {
@@ -66,26 +72,26 @@ function RequestsDetails({ initialRequest = null }) {
             status: getStatusLabel(0),
             date: new Date(requestData?.createdAt).toLocaleDateString('ar-SA'),
             time: new Date(requestData?.createdAt).toLocaleTimeString('ar-SA'),
-            by: 'النظام'
+            by: t("Requests.Timeline.system")
         },
         {
             status: getStatusLabel(1),
             date: new Date(requestData?.createdAt).toLocaleDateString('ar-SA'),
             time: new Date(new Date(requestData?.createdAt).getTime() + 1800000).toLocaleTimeString('ar-SA'), // 30 minutes later
-            by: 'فريق المراجعة'
+            by: t("Requests.Team.reviewTeam")
         },
         {
             status: getStatusLabel(2),
             date: new Date(requestData?.createdAt).toLocaleDateString('ar-SA'),
             time: new Date(new Date(requestData?.createdAt).getTime() + 3600000).toLocaleTimeString('ar-SA'), // 1 hour later
-            by: 'المشرف'
+            by: t("Requests.Team.supervisor")
         }
     ];
 
     if (isLoading) {
         return (
             <div className="min-h-screen bg-gray-50 p-4 sm:p-6 flex items-center justify-center" dir="rtl">
-                <div className="text-lg text-gray-600">جاري التحميل...</div>
+                <div className="text-lg text-gray-600">{t("Requests.Messages.loading")}</div>
             </div>
         );
     }
@@ -94,13 +100,13 @@ function RequestsDetails({ initialRequest = null }) {
         return (
             <div className="min-h-screen bg-gray-50 p-4 sm:p-6 flex flex-col items-center justify-center gap-4" dir="rtl">
                 <div className="text-lg text-red-600">
-                    {error.message || "حدث خطأ أثناء تحميل البيانات"}
+                    {error.message || t("Requests.Messages.loadError")}
                 </div>
                 <button
                     onClick={() => navigate('/admin/requests')}
                     className="px-4 py-2 bg-primary text-white rounded-md hover:bg-primary/80"
                 >
-                    العودة للطلبات
+                    {t("Requests.Actions.back")}
                 </button>
             </div>
         );
@@ -109,12 +115,12 @@ function RequestsDetails({ initialRequest = null }) {
     if (!requestData) {
         return (
             <div className="min-h-screen bg-gray-50 p-4 sm:p-6 flex flex-col items-center justify-center gap-4" dir="rtl">
-                <div className="text-lg text-gray-600">لم يتم العثور على الطلب</div>
+                <div className="text-lg text-gray-600">{t("Requests.Messages.notFound")}</div>
                 <button
                     onClick={() => navigate('/admin/requests')}
                     className="px-4 py-2 bg-primary text-white rounded-md hover:bg-primary/80"
                 >
-                    العودة للطلبات
+                    {t("Requests.Actions.back")}
                 </button>
             </div>
         );
@@ -125,9 +131,9 @@ function RequestsDetails({ initialRequest = null }) {
             <div className="max-w-7xl mx-auto mb-4 sm:mb-6">
                 <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-4 sm:mb-6">
                     <div>
-                        <h1 className="text-xl sm:text-2xl lg:text-3xl font-extrabold text-gray-900">تفاصيل الطلب</h1>
+                        <h1 className="text-xl sm:text-2xl lg:text-3xl font-extrabold text-gray-900">{t("Requests.RequestDetails")}</h1>
                         <p className="text-sm sm:text-base text-gray-600">
-                            #{requestData.id} — {userData?.fullName || `عميل ${requestData.userID}`}
+                            #{requestData.id} — {userData?.fullName || t("Requests.Client") + ` ${requestData.userID}`}
                         </p>
                     </div>
 
@@ -140,7 +146,7 @@ function RequestsDetails({ initialRequest = null }) {
                             onClick={() => navigate('/admin/requests')}
                             className="inline-flex items-center gap-2 px-3 py-2 bg-white border border-gray-200 rounded-md shadow-sm text-xs sm:text-sm text-gray-700 hover:bg-gray-50 w-full sm:w-auto justify-center"
                         >
-                            العودة
+                            {t("Requests.Actions.back")}
                         </button>
                     </div>
                 </div>
@@ -153,38 +159,38 @@ function RequestsDetails({ initialRequest = null }) {
                                 <div className="flex-1">
                                     <dl className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
                                         <div className="bg-gray-50 p-3 sm:p-4 rounded-md">
-                                            <dt className="text-xs sm:text-sm text-gray-500">العميل</dt>
+                                            <dt className="text-xs sm:text-sm text-gray-500">{t("Requests.Client")}</dt>
                                             <dd className="mt-1 text-sm sm:text-base font-semibold text-gray-900">
-                                                {userData?.fullName || `عميل ${requestData.userID}`}
+                                                {userData?.fullName || t("Requests.Client") + ` ${requestData.userID}`}
                                             </dd>
                                         </div>
 
                                         <div className="bg-gray-50 p-3 sm:p-4 rounded-md">
-                                            <dt className="text-xs sm:text-sm text-gray-500">نوع الخدمة</dt>
+                                            <dt className="text-xs sm:text-sm text-gray-500">{t("Requests.ServiceType")}</dt>
                                             <dd className="mt-1 text-sm sm:text-base font-semibold text-gray-900">
-                                                {serviceData?.name || `خدمة ${requestData.serviceID}`}
+                                                {serviceData?.name || t("Requests.Service") + ` ${requestData.serviceID}`}
                                             </dd>
                                         </div>
 
                                         <div className="bg-gray-50 p-3 sm:p-4 rounded-md">
-                                            <dt className="text-xs sm:text-sm text-gray-500">تاريخ الإستلام</dt>
+                                            <dt className="text-xs sm:text-sm text-gray-500">{t("Requests.ReceivedDate")}</dt>
                                             <dd className="mt-1 text-sm sm:text-base text-gray-700">{new Date(requestData.createdAt).toLocaleString()}</dd>
                                         </div>
 
                                         <div className="bg-gray-50 p-3 sm:p-4 rounded-md">
-                                            <dt className="text-xs sm:text-sm text-gray-500">تاريخ الإستحقاق</dt>
+                                            <dt className="text-xs sm:text-sm text-gray-500">{t("Requests.DueDate")}</dt>
                                             <dd className="mt-1 text-sm sm:text-base font-semibold text-gray-900">{requestData.dueDate}</dd>
                                         </div>
                                     </dl>
 
                                     <div className="mt-4 sm:mt-6">
-                                        <h3 className="text-sm sm:text-base font-medium text-gray-700 mb-2 sm:mb-3">مرفقات</h3>
+                                        <h3 className="text-sm sm:text-base font-medium text-gray-700 mb-2 sm:mb-3">{t("Requests.Attachments.title")}</h3>
                                         {!requestData.attachments || requestData.attachments.length === 0 ? (
                                             <div className="bg-gray-50 rounded-lg p-4 text-center">
                                                 <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-gray-400 mx-auto mb-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15.172 7l-6.586 6.586a2 2 0 102.828 2.828l6.414-6.586a4 4 0 00-5.656-5.656l-6.415 6.585a6 6 0 108.486 8.486L20.5 13" />
                                                 </svg>
-                                                <p className="text-sm text-gray-500">لا توجد مرفقات لهذا الطلب</p>
+                                                <p className="text-sm text-gray-500">{t("Requests.Attachments.noAttachments")}</p>
                                             </div>
                                         ) : (
                                             <ul className="space-y-2">
@@ -201,8 +207,8 @@ function RequestsDetails({ initialRequest = null }) {
                                                         </div>
 
                                                         <div className="flex items-center gap-2 self-end sm:self-auto">
-                                                            <button className="text-xs sm:text-sm text-gray-500 hover:underline">عرض</button>
-                                                            <button className="text-xs sm:text-sm text-blue-400">تحميل</button>
+                                                            <button className="text-xs sm:text-sm text-gray-500 hover:underline">{t("Requests.Attachments.view")}</button>
+                                                            <button className="text-xs sm:text-sm text-blue-400">{t("Requests.Attachments.download")}</button>
                                                         </div>
                                                     </li>
                                                 ))}
@@ -214,7 +220,7 @@ function RequestsDetails({ initialRequest = null }) {
                         </section>
 
                         <section className="bg-white rounded-lg shadow p-4 sm:p-6 border border-gray-200">
-                            <h3 className="text-base sm:text-lg font-semibold text-gray-900 mb-3 sm:mb-4">سجل الطلب</h3>
+                            <h3 className="text-base sm:text-lg font-semibold text-gray-900 mb-3 sm:mb-4">{t("Requests.Timeline.title")}</h3>
                             <div className="flow-root">
                                 <ul className="-mb-8">
                                     {(requestData.timeline?.length > 0 ? requestData.timeline : defaultTimeline).map((event, idx) => (
@@ -224,7 +230,7 @@ function RequestsDetails({ initialRequest = null }) {
                                                 <div className="ml-8 sm:ml-10 pr-3 sm:pr-4">
                                                     <p className="text-xs sm:text-sm font-semibold text-gray-900">{event.status}</p>
                                                     <p className="text-xs text-gray-500">
-                                                        {event.date} {event.time ? `${event.time} •` : '•'} بواسطة {event.by}
+                                                        {event.date} {event.time ? `${event.time} •` : '•'} {t("Requests.Timeline.by")} {event.by}
                                                     </p>
                                                 </div>
                                             </div>
@@ -238,53 +244,80 @@ function RequestsDetails({ initialRequest = null }) {
                     {/* Right: Actions & Status */}
                     <aside className="space-y-4 sm:space-y-6">
                         <div className="lg:sticky lg:top-6 bg-white rounded-lg shadow p-4 sm:p-6 border border-gray-200">
-                            <h4 className="text-sm sm:text-base font-medium text-gray-700 mb-3">تحديث الحالة</h4>
-                            <label htmlFor="status" className="sr-only">الحالة</label>
-                            <select
-                                id="status"
-                                value={selectedStatus}
-                                onChange={(e) => setSelectedStatus(e.target.value)}
-                                className="w-full px-3 py-2 border border-gray-200 rounded-md focus:outline-none focus:ring-2 focus:ring-amber-400 text-sm sm:text-base"
-                            >
-                                <option value={0}>قيد الانتظار</option>
-                                <option value={1}>قيد المراجعة</option>
-                                <option value={2}>تم الحل</option>
-                                <option value={3}>مرفوض</option>
-                            </select>
+                            <h4 className="text-sm sm:text-base font-medium text-gray-700 mb-3">{t("Requests.Actions.updateStatus")}</h4>
 
-                            <label htmlFor="notes" className="block text-xs sm:text-sm font-medium text-gray-700 mt-4">ملاحظات داخلية</label>
+                            {/* Status Action Buttons */}
+                            <div className="grid grid-cols-1 sm:grid-cols-3 gap-2 mb-4">
+                                <button
+                                    onClick={() => contactRequest(requestId)}
+                                    disabled={isContacting || requestData.status === 1}
+                                    className={`inline-flex justify-center items-center px-4 py-2 rounded-md text-sm font-medium
+                                        ${requestData.status === 1
+                                            ? 'bg-gray-100 text-gray-400 cursor-not-allowed'
+                                            : 'bg-blue-50 text-blue-600 hover:bg-blue-100'
+                                        } transition-colors duration-200`}
+                                >
+                                    {isContacting ? t("Requests.Actions.updating") : t("Requests.Actions.markContacted")}
+                                </button>
+
+                                <button
+                                    onClick={() => resolveRequest(requestId)}
+                                    disabled={isResolving || requestData.status === 2}
+                                    className={`inline-flex justify-center items-center px-4 py-2 rounded-md text-sm font-medium
+                                        ${requestData.status === 2
+                                            ? 'bg-gray-100 text-gray-400 cursor-not-allowed'
+                                            : 'bg-green-50 text-green-600 hover:bg-green-100'
+                                        } transition-colors duration-200`}
+                                >
+                                    {isResolving ? t("Requests.Actions.updating") : t("Requests.Actions.resolve")}
+                                </button>
+
+                                <button
+                                    onClick={() => rejectRequest(requestId)}
+                                    disabled={isRejecting || requestData.status === 3}
+                                    className={`inline-flex justify-center items-center px-4 py-2 rounded-md text-sm font-medium
+                                        ${requestData.status === 3
+                                            ? 'bg-gray-100 text-gray-400 cursor-not-allowed'
+                                            : 'bg-red-50 text-red-600 hover:bg-red-100'
+                                        } transition-colors duration-200`}
+                                >
+                                    {isRejecting ? t("Requests.Actions.updating") : t("Requests.Actions.reject")}
+                                </button>
+                            </div>
+
+                            {/* Notes Section */}
+                            <label htmlFor="notes" className="block text-xs sm:text-sm font-medium text-gray-700">{t("Requests.Notes.internal")}</label>
                             <textarea
                                 id="notes"
                                 value={notes}
                                 onChange={(e) => setNotes(e.target.value)}
                                 rows={4}
                                 className="mt-1 block w-full px-3 py-2 border border-gray-200 rounded-md focus:outline-none focus:ring-2 focus:ring-amber-400 resize-none text-sm sm:text-base"
-                                placeholder="أضف ملاحظة قصيرة للأعضاء..."
+                                placeholder={t("Requests.Notes.placeholder")}
                             />
 
                             <div className="mt-4 flex flex-col gap-2">
                                 <button
-                                    onClick={handleSaveChanges}
-                                    disabled={isUpdatingStatus || isAddingNote}
-                                    className={`w-full inline-flex justify-center items-center gap-2 px-4 py-2 bg-primary text-white rounded-md hover:bg-primary/80 transition-colors duration-300 text-sm sm:text-base ${(isUpdatingStatus || isAddingNote) ? 'opacity-50 cursor-not-allowed' : 'cursor-pointer'}`}
+                                    onClick={handleAddNote}
+                                    disabled={isUpdating || !notes.trim()}
+                                    className={`w-full inline-flex justify-center items-center gap-2 px-4 py-2 bg-primary text-white rounded-md hover:bg-primary/80 transition-colors duration-300 text-sm sm:text-base ${(isUpdating || !notes.trim()) ? 'opacity-50 cursor-not-allowed' : 'cursor-pointer'}`}
                                 >
-                                    {isUpdatingStatus || isAddingNote ? 'جاري الحفظ...' : 'حفظ التغييرات'}
+                                    {isUpdating ? t("Requests.Actions.saving") : t("Requests.Actions.addNote")}
                                 </button>
 
                                 <button
-                                    onClick={() => {
-                                        setSelectedStatus(requestData.status);
-                                        setNotes('');
-                                    }}
-                                    disabled={isUpdatingStatus || isAddingNote}
-                                    className={`w-full inline-flex justify-center items-center gap-2 px-4 py-2 bg-white border border-gray-200 rounded-md text-xs sm:text-sm text-gray-700 hover:bg-gray-50 ${(isUpdatingStatus || isAddingNote) ? 'opacity-50 cursor-not-allowed' : ''}`}
-                                >إلغاء</button>
+                                    onClick={() => setNotes('')}
+                                    disabled={isUpdating || !notes.trim()}
+                                    className={`w-full inline-flex justify-center items-center gap-2 px-4 py-2 bg-white border border-gray-200 rounded-md text-xs sm:text-sm text-gray-700 hover:bg-gray-50 ${(isUpdating || !notes.trim()) ? 'opacity-50 cursor-not-allowed' : ''}`}
+                                >
+                                    {t("Requests.Actions.cancel")}
+                                </button>
                             </div>
                         </div>
 
                         {/* Previous Notes Card */}
                         <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-4 sm:p-6">
-                            <h2 className="text-lg sm:text-xl font-bold text-gray-900 mb-4 sm:mb-6">الملاحظات السابقة</h2>
+                            <h2 className="text-lg sm:text-xl font-bold text-gray-900 mb-4 sm:mb-6">{t("Requests.Notes.previous")}</h2>
 
                             <div className="space-y-3 sm:space-y-4">
                                 {!requestData.previousNotes || requestData.previousNotes.length === 0 ? (
@@ -292,7 +325,7 @@ function RequestsDetails({ initialRequest = null }) {
                                         <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-gray-400 mx-auto mb-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
                                         </svg>
-                                        <p className="text-sm text-gray-500">لا توجد ملاحظات سابقة لهذا الطلب</p>
+                                        <p className="text-sm text-gray-500">{t("Requests.Notes.noPreviousNotes")}</p>
                                     </div>
                                 ) : (
                                     requestData.previousNotes.map((item, index) => (
