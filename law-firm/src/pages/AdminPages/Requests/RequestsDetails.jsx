@@ -3,23 +3,22 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { useRequest, useUpdateRequestStatus, useAddRequestNote } from '../../../hooks/useRequests';
 import { useUserById } from '../../../hooks/useUsers';
 import { useServiceById } from '../../../hooks/useServices';
-
+import { useQueryClient } from '@tanstack/react-query';
 function RequestsDetails({ initialRequest = null }) {
     const { requestId } = useParams();
     const navigate = useNavigate();
-
     // Fetch request data
     const {
         data: requestData,
         isLoading,
         error
     } = useRequest(requestId);
+    const queryInfo = useQueryClient().getQueryState(["request", requestId]);
 
     // Fetch related data
     const { data: userData } = useUserById(requestData?.userID);
     const { data: serviceData } = useServiceById(requestData?.serviceID);
-    console.log("user", userData)
-    console.log("service", serviceData)
+
     // Mutations
     const { mutate: updateStatus, isLoading: isUpdatingStatus } = useUpdateRequestStatus();
     const { mutate: addNote, isLoading: isAddingNote } = useAddRequestNote();
@@ -65,20 +64,20 @@ function RequestsDetails({ initialRequest = null }) {
     const defaultTimeline = [
         {
             status: getStatusLabel(0),
-            date: new Date(requestData.createdAt).toLocaleDateString('ar-SA'),
-            time: new Date(requestData.createdAt).toLocaleTimeString('ar-SA'),
+            date: new Date(requestData?.createdAt).toLocaleDateString('ar-SA'),
+            time: new Date(requestData?.createdAt).toLocaleTimeString('ar-SA'),
             by: 'النظام'
         },
         {
             status: getStatusLabel(1),
-            date: new Date(requestData.createdAt).toLocaleDateString('ar-SA'),
-            time: new Date(new Date(requestData.createdAt).getTime() + 1800000).toLocaleTimeString('ar-SA'), // 30 minutes later
+            date: new Date(requestData?.createdAt).toLocaleDateString('ar-SA'),
+            time: new Date(new Date(requestData?.createdAt).getTime() + 1800000).toLocaleTimeString('ar-SA'), // 30 minutes later
             by: 'فريق المراجعة'
         },
         {
             status: getStatusLabel(2),
-            date: new Date(requestData.createdAt).toLocaleDateString('ar-SA'),
-            time: new Date(new Date(requestData.createdAt).getTime() + 3600000).toLocaleTimeString('ar-SA'), // 1 hour later
+            date: new Date(requestData?.createdAt).toLocaleDateString('ar-SA'),
+            time: new Date(new Date(requestData?.createdAt).getTime() + 3600000).toLocaleTimeString('ar-SA'), // 1 hour later
             by: 'المشرف'
         }
     ];
