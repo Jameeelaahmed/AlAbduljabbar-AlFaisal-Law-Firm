@@ -31,7 +31,7 @@ function OurVision() {
                     {/* Mission */}
                     <div className="group relative bg-white rounded-3xl shadow-lg hover:shadow-xl border border-secondary/10 p-8 transition-all duration-500 hover:-translate-y-2">
                         {/* Background Accent */}
-                        <div className="absolute top-0 right-0 w-32 h-32 bg-primary/5 rounded-full -translate-y-16 translate-x-16 group-hover:scale-150 transition-transform duration-700"></div>
+                        <div className="absolute top-0 right-0 w-32 h-32 bg-primary/5 rounded-full -translate-y-16 translate-x-16 group-hover:scale-150 transition-transform duration-700 hidden lg:block"></div>
 
                         <div className="relative z-10">
                             <div className="flex items-start justify-between mb-6">
@@ -58,7 +58,7 @@ function OurVision() {
                     {/* Vision */}
                     <div className="group relative bg-white rounded-3xl shadow-lg hover:shadow-xl border border-secondary/10 p-8 transition-all duration-500 hover:-translate-y-2">
                         {/* Background Accent */}
-                        <div className="absolute top-0 left-0 w-32 h-32 bg-accent/5 rounded-full -translate-y-16 -translate-x-16 group-hover:scale-150 transition-transform duration-700"></div>
+                        <div className="absolute top-0 left-0 w-32 h-32 bg-accent/5 rounded-full -translate-y-16 -translate-x-16 group-hover:scale-150 transition-transform duration-700 hidden lg:block"></div>
 
                         <div className="relative z-10">
                             <div className="flex items-start justify-between mb-6">

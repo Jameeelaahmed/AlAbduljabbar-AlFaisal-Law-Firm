@@ -76,9 +76,12 @@ function Hero() {
 
     return (
         <div className="min-h-screen relative flex items-center justify-center bg-primary">
+            {/* Simple Gradient Overlay */}
+            <div className="absolute inset-0 bg-gradient-to-br from-[var(--color-primary)] to-[var(--color-accent)]/20"></div>
+
             {/* Logo Section */}
-            <div className="absolute top-0 rtl:right-0 ltr:left-0 z-40">
-                <div className='hidden lg:block relative cursor-pointer hover:scale-105 transition-transform duration-300'>
+            <div className="hidden lg:block absolute top-0 rtl:right-0 ltr:left-0 z-40">
+                <div className=' relative cursor-pointer hover:scale-105 transition-transform duration-300'>
                     <div className={`flex flex-col justify-center items-center p-4  backdrop-blur-xl shadow-2xl rtl:rounded-tl-3xl rtl:rounded-bl-3xl ltr:rounded-tr-3xl ltr:rounded-br-3xl  border-primary border-3`}
                         onClick={openLogo1DropDown}>
                         <img className='w-[55px]' src='logo1.png' alt="logo1" />
@@ -115,8 +118,8 @@ function Hero() {
             </div>
 
             {/* The other Logo */}
-            <div className="absolute top-0 rtl:left-0 ltr:right-0 z-40">
-                <div className='hidden lg:block relative cursor-pointer hover:scale-105 transition-transform duration-300'>
+            <div className="hidden lg:block absolute top-0 rtl:left-0 ltr:right-0 z-40">
+                <div className=' relative cursor-pointer hover:scale-105 transition-transform duration-300'>
                     <div className={`flex flex-col justify-center items-center p-4  backdrop-blur-xl shadow-2xl rtl:rounded-tr-3xl rtl:rounded-br-3xl ltr:rounded-tl-3xl ltr:rounded-bl-3xl  border-primary border-3`}
                         onClick={openLogo2DropDown}>
                         <img className='w-[55px]' src="Logo2.png" alt="logo2" />
@@ -156,9 +159,6 @@ function Hero() {
                     ></div>
                 )}
             </div>
-
-            {/* Simple Gradient Overlay */}
-            <div className="absolute inset-0 bg-gradient-to-br from-primary to-accent/20"></div>
 
             {/* Content */}
             <div className="container mx-auto px-4 text-center text-white space-y-8 relative z-20">
