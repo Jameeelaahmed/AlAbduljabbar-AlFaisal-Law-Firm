@@ -14,7 +14,7 @@ const LoginRegister = lazy(() => import("../pages/AuthPages/LoginRegisterPage/Lo
 const Landing = lazy(() => import("../pages/ClientPages/Landing/Landing"));
 
 // Admin Components
-// const AdminSettings = lazy(() => import("../pages/AdminPages/"));
+const AdminSettings = lazy(() => import("../pages/AdminPages/Settings/SettingsPage"));
 const AdminRequests = lazy(() => import("../pages/AdminPages/Requests/Requests"));
 const AdminRequestDetails = lazy(() => import("../pages/AdminPages/Requests/RequestsDetails"));
 const AdminUsers = lazy(() => import("../pages/AdminPages/Users/Users"));
@@ -52,16 +52,16 @@ const routes = createBrowserRouter([
                     </ProtectedRoute>
                 ),
             },
-            // {
-            //     path: "settings",
-            //     element: (
-            //         <ProtectedRoute allowedRoles={['Admin']}>
-            //             <Suspense fallback={<div>Loading Settings...</div>}>
-            //                 <AdminSettings />
-            //             </Suspense>
-            //         </ProtectedRoute>
-            //     ),
-            // },
+            {
+                path: "settings",
+                element: (
+                    <ProtectedRoute allowedRoles={['Admin']}>
+                        <Suspense fallback={<div>Loading Settings...</div>}>
+                            <AdminSettings />
+                        </Suspense>
+                    </ProtectedRoute>
+                ),
+            },
             {
                 path: "requests",
                 element: (
