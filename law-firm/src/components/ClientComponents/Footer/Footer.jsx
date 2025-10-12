@@ -1,76 +1,213 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { MapPin, Phone, Mail } from "lucide-react";
+import { MapPin, Phone, Mail, Scale, ArrowRight, Facebook, Twitter, Linkedin, Instagram } from "lucide-react";
 import { useTranslation } from "react-i18next";
 
 function Footer() {
     const { t, i18n } = useTranslation?.() ?? { t: (s) => s, i18n: { language: "ar" } };
     const isRtl = (i18n?.language || document.documentElement.dir) === "ar";
 
+    const socialLinks = [
+        { icon: Linkedin, href: "#", label: "LinkedIn" },
+        { icon: Twitter, href: "#", label: "Twitter" },
+        { icon: Facebook, href: "#", label: "Facebook" },
+        { icon: Instagram, href: "#", label: "Instagram" }
+    ];
+
+    const quickLinks = [
+        { name: t("landing.Home") || "الرئيسية", path: "/" },
+        { name: t("landing.AboutUs") || "من نحن", path: "/about" },
+        { name: t("landing.OurLawServices") || "خدماتنا", path: "/services" },
+        { name: t("landing.ContactUs") || "اتصل بنا", path: "/contact" }
+    ];
+
+    const serviceLinks = [
+        { name: isRtl ? "القانون التجاري" : "Commercial Law", path: "/services/commercial" },
+        { name: isRtl ? "القانون العقاري" : "Real Estate Law", path: "/services/real-estate" },
+        { name: isRtl ? "قانون الشركات" : "Corporate Law", path: "/services/corporate" },
+        { name: isRtl ? "التحكيم الدولي" : "International Arbitration", path: "/services/arbitration" }
+    ];
+
     return (
-        <footer dir={isRtl ? "rtl" : "ltr"} className="bg-white border-t border-gray-200">
-            <div className="container mx-auto px-6 py-10">
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-                    {/* Quick links */}
-                    <div className={`${isRtl ? "md:text-right" : "md:text-left"}`}>
-                        <h4 className="text-lg font-semibold text-gray-800 mb-4">{t("Footer.QuickLinks") || "روابط سريعة"}</h4>
-                        <ul className="space-y-3 text-gray-600">
-                            <li>
-                                <Link to="/" className="hover:text-primary transition-colors">{t("landing.Home") || "الرئيسية"}</Link>
-                            </li>
-                            <li>
-                                <Link to="/about" className="hover:text-primary transition-colors">{t("landing.AboutUs") || "من نحن"}</Link>
-                            </li>
-                            <li>
-                                <Link to="/services" className="hover:text-primary transition-colors">{t("landing.OurLawServices") || "خدماتنا"}</Link>
-                            </li>
-                            <li>
-                                <Link to="/contact" className="hover:text-primary transition-colors">{t("landing.ContactUs") || "اتصل بنا"}</Link>
-                            </li>
+        <footer dir={isRtl ? "rtl" : "ltr"} className="bg-gradient-to-b from-white to-[var(--color-bg)] border-t border-[var(--color-secondary)]/20">
+            {/* Main Footer Content */}
+            <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-12">
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-12">
+                    {/* Brand Column */}
+                    <div className="lg:col-span-1">
+                        <div className="flex items-center gap-3 mb-6">
+                            <div className="w-10 h-10 bg-[var(--color-primary)] rounded-lg flex items-center justify-center">
+                                <Scale size={24} className="text-white" />
+                            </div>
+                            <div>
+                                <h3 className="text-xl font-bold text-[var(--color-text)]">
+                                    {isRtl ? "العبدالجبار والفيصل" : "AlAbduljabbar & AlFaisal"}
+                                </h3>
+                                <p className="text-sm text-[var(--color-secondary)]">
+                                    {isRtl ? "للمحاماة والاستشارات القانونية" : "Law Firm & Legal Consultations"}
+                                </p>
+                            </div>
+                        </div>
+
+                        <p className="text-gray-600 text-sm leading-relaxed mb-6">
+                            {isRtl
+                                ? "شركة محاماة سعودية مصرية تقدم حلولاً قانونية متكاملة تجمع بين عراقة التراث وحداثة التطبيق"
+                                : "A Saudi-Egyptian law firm providing integrated legal solutions that blend heritage with modern practice"
+                            }
+                        </p>
+
+                        {/* Social Links */}
+                        <div className="flex gap-3">
+                            {socialLinks.map((social, index) => (
+                                <a
+                                    key={index}
+                                    href={social.href}
+                                    className="w-10 h-10 bg-white border border-[var(--color-secondary)]/20 rounded-lg flex items-center justify-center text-gray-600 hover:bg-[var(--color-primary)] hover:text-white hover:border-[var(--color-primary)] transition-all duration-300 group shadow-sm"
+                                    aria-label={social.label}
+                                >
+                                    <social.icon size={18} className="group-hover:scale-110 transition-transform" />
+                                </a>
+                            ))}
+                        </div>
+                    </div>
+
+                    {/* Quick Links */}
+                    <div>
+                        <h4 className="text-lg font-semibold text-[var(--color-text)] mb-6 flex items-center gap-2">
+                            <div className="w-1 h-6 bg-[var(--color-primary)] rounded-full"></div>
+                            {t("Footer.QuickLinks") || "روابط سريعة"}
+                        </h4>
+                        <ul className="space-y-3">
+                            {quickLinks.map((link, index) => (
+                                <li key={index}>
+                                    <Link
+                                        to={link.path}
+                                        className="text-gray-600 hover:text-[var(--color-primary)] transition-all duration-300 flex items-center gap-2 group"
+                                    >
+                                        <ArrowRight size={14} className={`text-[var(--color-secondary)] transform ${isRtl ? 'rotate-180' : ''} group-hover:translate-x-1 transition-transform`} />
+                                        {link.name}
+                                    </Link>
+                                </li>
+                            ))}
                         </ul>
                     </div>
 
-                    {/* Contact info */}
-                    <div className="text-center md:text-center">
-                        <h4 className="text-lg font-semibold text-gray-800 mb-4">{t("Footer.Contact") || "معلومات الاتصال"}</h4>
-                        <div className="text-gray-600 space-y-2 text-sm">
-                            <div>{t("Footer.RiyadhTitle") || "الرياض، المملكة العربية السعودية: العليا، الرياض - 12214"}</div>
-                            <div>{t("Footer.CairoTitle") || "القاهرة، مصر: الزمالك، القاهرة - 11211"}</div>
-                            <div className="flex items-start justify-center gap-2 mt-3">
-                                <MapPin size={16} className="text-secondary mt-1 flex-shrink-0" />
-                                <span className="text-gray-600">contact@aaf-law.com</span>
+                    {/* Services */}
+                    <div>
+                        <h4 className="text-lg font-semibold text-[var(--color-text)] mb-6 flex items-center gap-2">
+                            <div className="w-1 h-6 bg-[var(--color-accent)] rounded-full"></div>
+                            {isRtl ? "خدماتنا" : "Our Services"}
+                        </h4>
+                        <ul className="space-y-3">
+                            {serviceLinks.map((service, index) => (
+                                <li key={index}>
+                                    <Link
+                                        to={service.path}
+                                        className="text-gray-600 hover:text-[var(--color-accent)] transition-all duration-300 flex items-center gap-2 group"
+                                    >
+                                        <ArrowRight size={14} className={`text-[var(--color-secondary)] transform ${isRtl ? 'rotate-180' : ''} group-hover:translate-x-1 transition-transform`} />
+                                        {service.name}
+                                    </Link>
+                                </li>
+                            ))}
+                        </ul>
+                    </div>
+
+                    {/* Contact Info */}
+                    <div>
+                        <h4 className="text-lg font-semibold text-[var(--color-text)] mb-6 flex items-center gap-2">
+                            <div className="w-1 h-6 bg-[var(--color-secondary)] rounded-full"></div>
+                            {t("Footer.Contact") || "معلومات الاتصال"}
+                        </h4>
+
+                        <div className="space-y-4">
+                            {/* Riyadh Office */}
+                            <div className="bg-white rounded-lg p-4 border border-[var(--color-secondary)]/10 shadow-sm">
+                                <div className="flex items-start gap-3">
+                                    <MapPin size={16} className="text-[var(--color-primary)] mt-1 flex-shrink-0" />
+                                    <div>
+                                        <h5 className="font-semibold text-[var(--color-text)] text-sm">
+                                            {isRtl ? "الرياض، السعودية" : "Riyadh, Saudi Arabia"}
+                                        </h5>
+                                        <p className="text-gray-600 text-xs mt-1">
+                                            {isRtl
+                                                ? "العليا، الرياض - 12214"
+                                                : "Al Olaya, Riyadh - 12214"
+                                            }
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            {/* Cairo Office */}
+                            <div className="bg-white rounded-lg p-4 border border-[var(--color-secondary)]/10 shadow-sm">
+                                <div className="flex items-start gap-3">
+                                    <MapPin size={16} className="text-[var(--color-accent)] mt-1 flex-shrink-0" />
+                                    <div>
+                                        <h5 className="font-semibold text-[var(--color-text)] text-sm">
+                                            {isRtl ? "القاهرة، مصر" : "Cairo, Egypt"}
+                                        </h5>
+                                        <p className="text-gray-600 text-xs mt-1">
+                                            {isRtl
+                                                ? "الزمالك، القاهرة - 11211"
+                                                : "Zamalek, Cairo - 11211"
+                                            }
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            {/* Contact Methods */}
+                            <div className="space-y-3">
+                                <a
+                                    href="mailto:contact@aaf-law.com"
+                                    className="flex items-center gap-3 text-gray-600 hover:text-[var(--color-primary)] transition-colors duration-300 group"
+                                >
+                                    <div className="w-8 h-8 bg-[var(--color-primary)]/10 rounded flex items-center justify-center group-hover:bg-[var(--color-primary)] transition-colors">
+                                        <Mail size={14} className="text-[var(--color-primary)] group-hover:text-white" />
+                                    </div>
+                                    <span className="text-sm">contact@aaf-law.com</span>
+                                </a>
+
+                                <a
+                                    href="tel:+966123456789"
+                                    className="flex items-center gap-3 text-gray-600 hover:text-[var(--color-accent)] transition-colors duration-300 group"
+                                >
+                                    <div className="w-8 h-8 bg-[var(--color-accent)]/10 rounded flex items-center justify-center group-hover:bg-[var(--color-accent)] transition-colors">
+                                        <Phone size={14} className="text-[var(--color-accent)] group-hover:text-white" />
+                                    </div>
+                                    <span className="text-sm">+966 12 345 6789</span>
+                                </a>
                             </div>
                         </div>
                     </div>
+                </div>
+            </div>
 
-                    {/* Social / copyright */}
-                    <div className={`${isRtl ? "md:text-left" : "md:text-right"}`}>
-                        <h4 className="text-lg font-semibold text-gray-800 mb-4">{t("Footer.Follow") || "تابعنا"}</h4>
-
-                        <div className="flex items-center gap-4 mb-4 justify-start md:justify-end">
-                            {/* LinkedIn */}
-                            <a href="#" aria-label="LinkedIn" className="text-gray-500 hover:text-secondary transition-colors">
-                                <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" className="block">
-                                    <path d="M4.98 3.5C4.98 4.88 3.86 6 2.48 6S0 4.88 0 3.5 1.12 1 2.5 1 4.98 2.12 4.98 3.5zM.22 8h4.53V24H.22zM8.5 8h4.34v2.18h.06c.6-1.14 2.06-2.18 4.24-2.18C22.15 8 24 9.88 24 13.5V24h-4.53v-9.02c0-2.15-.04-4.92-3-4.92-3 0-3.46 2.34-3.46 4.76V24H8.5z" />
-                                </svg>
-                            </a>
-
-                            {/* Twitter */}
-                            <a href="#" aria-label="Twitter" className="text-gray-500 hover:text-secondary transition-colors">
-                                <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" className="block">
-                                    <path d="M24 4.56c-.89.39-1.85.65-2.86.77a4.98 4.98 0 0 0 2.17-2.75 9.93 9.93 0 0 1-3.16 1.21 4.94 4.94 0 0 0-8.42 4.5A14 14 0 0 1 1.67 3.15a4.93 4.93 0 0 0 1.53 6.58 4.9 4.9 0 0 1-2.24-.62v.06a4.94 4.94 0 0 0 3.96 4.83 4.97 4.97 0 0 1-2.23.08 4.95 4.95 0 0 0 4.61 3.43A9.92 9.92 0 0 1 0 19.54a14 14 0 0 0 7.56 2.22c9.05 0 14-7.5 14-14v-.64A9.98 9.98 0 0 0 24 4.56z" />
-                                </svg>
-                            </a>
+            {/* Bottom Bar */}
+            <div className="border-t border-[var(--color-secondary)]/20 bg-white/50 backdrop-blur-sm">
+                <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-6">
+                    <div className={`flex flex-col md:flex-row items-center justify-between gap-4 ${isRtl ? 'md:flex-row-reverse' : ''}`}>
+                        <div className="text-gray-600 text-sm text-center md:text-left">
+                            © {new Date().getFullYear()} {t("Footer.CompanyName") || "شركة العبد الجبار والفيصل للمحاماة"}. {t("Footer.Copyright") || "كل الحقوق محفوظة."}
                         </div>
 
-                        <div className="border-t border-gray-100 pt-4 text-xs text-gray-500">
-                            © {new Date().getFullYear()} {t("Footer.CompanyName") || "شركة العبد الجبار والفيصل للمحاماة"}. {t("Footer.Copyright") || "كل الحقوق محفوظة."}
+                        <div className="flex items-center gap-6 text-xs text-gray-500">
+                            <Link to="/privacy" className="hover:text-[var(--color-primary)] transition-colors">
+                                {isRtl ? "سياسة الخصوصية" : "Privacy Policy"}
+                            </Link>
+                            <Link to="/terms" className="hover:text-[var(--color-primary)] transition-colors">
+                                {isRtl ? "شروط الخدمة" : "Terms of Service"}
+                            </Link>
+                            <Link to="/sitemap" className="hover:text-[var(--color-primary)] transition-colors">
+                                {isRtl ? "خريطة الموقع" : "Sitemap"}
+                            </Link>
                         </div>
                     </div>
                 </div>
             </div>
         </footer>
-    )
+    );
 }
 
 export default Footer;

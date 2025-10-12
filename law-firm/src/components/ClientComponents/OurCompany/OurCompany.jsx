@@ -1,123 +1,193 @@
 import React from "react";
 import { useTranslation } from "react-i18next";
-import { MapPin, Phone, Mail } from "lucide-react";
-import { Link } from "react-router-dom";
+import { Users, Award, TrendingUp, Scale, HeartHandshake } from "lucide-react";
 
 function OurCompany() {
-    const { t, i18n } = useTranslation?.() ?? { t: (s) => s, i18n: { language: "ar" } };
+    const { i18n } = useTranslation?.() ?? { t: (s) => s, i18n: { language: "ar" } };
     const isRtl = (i18n?.language || document.documentElement.dir) === "ar";
 
-    const locations = [
+    const milestones = [
         {
-            id: "riyadh",
-            title: isRtl ? "الرياض، المملكة العربية السعودية" : "Riyadh, Saudi Arabia",
-            line1: isRtl ? "العليا، الرياض" : "Al Olaya, Riyadh",
-            postal: "12214",
-            address: isRtl
-                ? "السعوديه - الرياض - حي المروج - مركز الحياة سنتر - مبني B- الدور الاول - مكتب 5"
-                : "Saudi Arabia - Riyadh - Al Muruj - Hayat Center - Building B - 1st floor - Office 5",
-            phone: "+0996 505 120 293",
-            mobile: null,
-            email: "khedaib@malathegypt.com",
+            year: "2008",
+            title: isRtl ? "بداية الرحلة" : "Our Beginning",
+            description: isRtl
+                ? "تأسيس الشركة بمكتب صغير وطموح كبير لتقديم خدمات قانونية متميزة"
+                : "Founded with a small office and big ambitions to deliver exceptional legal services"
         },
         {
-            id: "cairo",
-            title: isRtl ? "القاهرة، مصر" : "Cairo, Egypt",
-            line1: isRtl ? "الزمالك، القاهرة" : "Zamalek, Cairo",
-            postal: "11211",
-            address: isRtl
-                ? "مصر - القاهره 20 شاراع الطيران - الدور الاول - شقه 2"
-                : "Egypt - Cairo, 20 Al Tayaran St - 1st floor - Apt 2",
-            phone: "0222604857",
-            mobile: "01044947784 - 01005842307",
-            email: "aziz.nasr11@gmail.com",
+            year: "2012",
+            title: isRtl ? "التوسع الإقليمي" : "Regional Expansion",
+            description: isRtl
+                ? "فتح أول مكتب دولي وبناء سمعة قوية في مجال المحاماة الدولية"
+                : "Opened first international office and built strong reputation in international law"
         },
+        {
+            year: "2018",
+            title: isRtl ? "التميز القانوني" : "Legal Excellence",
+            description: isRtl
+                ? "فوز بجائزة أفضل شركة محاماة وحصول فريقنا على اعترافات متعددة"
+                : "Awarded Best Law Firm and multiple recognitions for our legal team"
+        },
+        {
+            year: "2024",
+            title: isRtl ? "الريادة المستمرة" : "Continued Leadership",
+            description: isRtl
+                ? "مواصلة الريادة في تقديم حلول قانونية مبتكرة لعملائنا حول العالم"
+                : "Continuing to lead with innovative legal solutions for clients worldwide"
+        }
+    ];
+
+    const values = [
+        {
+            icon: Scale,
+            title: isRtl ? "العدالة" : "Justice",
+            description: isRtl
+                ? "نسعى لتحقيق العدالة في كل قضية نتعامل معها"
+                : "We pursue justice in every case we handle"
+        },
+        {
+            icon: HeartHandshake,
+            title: isRtl ? "الثقة" : "Trust",
+            description: isRtl
+                ? "نبني علاقات قائمة على الثقة والشفافية مع عملائنا"
+                : "We build relationships based on trust and transparency"
+        },
+        {
+            icon: Award,
+            title: isRtl ? "التميز" : "Excellence",
+            description: isRtl
+                ? "نلتزم بأعلى معايير الجودة في خدماتنا القانونية"
+                : "We commit to the highest standards of legal service quality"
+        },
+        {
+            icon: Users,
+            title: isRtl ? "العملاء أولاً" : "Clients First",
+            description: isRtl
+                ? "نضع مصالح عملائنا في مقدمة أولوياتنا"
+                : "Our clients' interests are our top priority"
+        }
+    ];
+
+    const stats = [
+        { number: "15+", label: isRtl ? "سنوات من الخبرة" : "Years Experience" },
+        { number: "500+", label: isRtl ? "عميل راضٍ" : "Satisfied Clients" },
+        { number: "1000+", label: isRtl ? "قضية منجزة" : "Cases Handled" },
+        { number: "98%", label: isRtl ? "معدل النجاح" : "Success Rate" }
     ];
 
     return (
-        <section className={`py-12 ${isRtl ? "text-right" : "text-left"}`}>
-            <div className="container mx-auto px-4">
-                <div className="max-w-3xl mx-auto mb-8 text-center">
-                    <h2 className="text-4xl font-semibold text-primary">
-                        {t("OurCompany.about our company")}
-                    </h2>
-                    <p className="text-gray-600 mt-3 leading-relaxed">
-                        {t("OurCompany.Description") ||
-                            "مهمتنا هي تقديم خدمات قانونية لا مثيل لها، وتعزيز الثقة وتحقيق أفضل النتائج لعملائنا. رؤيتنا هي أن نكون شركة محاماة رائدة ومعروفة بالالتزام والتميز ورضا العملاء."}
+        <section className={`py-16 bg-bg rtl:text-right ltr:text-left`}>
+            <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+                {/* Header */}
+                <div className="max-w-4xl mx-auto mb-16 text-center">
+                    <div className="inline-flex items-center gap-2 px-4 py-2 bg--primary/10 text-primary rounded-lg text-sm font-medium mb-6">
+                        <TrendingUp size={18} />
+                        {isRtl ? "رحلتنا" : "Our Journey"}
+                    </div>
+                    <h1 className="text-4xl md:text-5xl font-bold text-text mb-6">
+                        {isRtl ? "شركة المحاماة: قصة تمتد 15 عاماً" : "The Law Firm: A 15-Year Journey"}
+                    </h1>
+                    <p className="text-lg text-gray-600 leading-relaxed max-w-3xl mx-auto">
+                        {isRtl
+                            ? "من مكتب صغير إلى شركة محاماة رائدة، نحن نسير برؤية واضحة ورسالة ثابتة لخدمة العدالة"
+                            : "From a small office to a leading law firm, we walk with clear vision and steadfast mission to serve justice"
+                        }
                     </p>
                 </div>
 
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-                    {locations.map((loc) => (
-                        <div
-                            key={loc.id}
-                            className="bg-white rounded-lg border border-gray-100 shadow-sm p-6 flex flex-col gap-3"
-                        >
-                            <div className="flex items-start justify-between">
-                                <div>
-                                    <h3 className="text-lg font-medium text-gray-800">{loc.title}</h3>
-                                    <p className="text-sm text-gray-500 mt-2">{loc.line1}</p>
-                                    <p className="text-sm text-gray-400 mt-1">{loc.postal}</p>
-                                </div>
+                {/* Stats Section */}
+                <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mb-16 max-w-4xl mx-auto">
+                    {stats.map((stat, index) => (
+                        <div key={index} className="text-center bg-white rounded-2xl p-6 shadow-sm border border-secondary/10">
+                            <div className="text-2xl md:text-3xl font-bold text-primary mb-2">
+                                {stat.number}
                             </div>
-
-                            {/* Contact details */}
-                            <div className="pt-2 space-y-2 text-sm text-gray-600">
-                                {/* Saudi (Riyadh) branch - insert provided block */}
-                                {loc.id === "riyadh" && (
-                                    <>
-                                        <div className="flex items-start gap-2">
-                                            <MapPin size={16} className="text-secondary mt-1 flex-shrink-0" />
-                                            <p>{loc.address}</p>
-                                        </div>
-                                        <div className="flex items-center gap-2">
-                                            <Phone size={16} className="text-secondary flex-shrink-0" />
-                                            <span>{loc.phone}</span>
-                                        </div>
-                                        <div className="flex items-center gap-2 hover:text-secondary transition-all">
-                                            <Mail size={16} className="text-secondary flex-shrink-0" />
-                                            <Link to={`mailto:${loc.email}`}>{loc.email}</Link>
-                                        </div>
-                                    </>
-                                )}
-
-                                {/* other branches (e.g. Cairo) - existing fields */}
-                                {loc.id !== "riyadh" && (
-                                    <>
-                                        {loc.address && (
-                                            <div className="flex items-start gap-2">
-                                                <MapPin size={16} className="text-secondary mt-1 flex-shrink-0" />
-                                                <p>{loc.address}</p>
-                                            </div>
-                                        )}
-
-                                        {loc.phone && (
-                                            <div className="flex items-center gap-2">
-                                                <svg width={16} height={16} viewBox="0 0 24 24" fill="currentColor" className="text-secondary">
-                                                    <path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z" />
-                                                </svg>
-                                                <span>{loc.phone}</span>
-                                            </div>
-                                        )}
-
-                                        {loc.mobile && (
-                                            <div className="flex items-center gap-2">
-                                                <Phone size={16} className="text-secondary flex-shrink-0" />
-                                                <span>{loc.mobile}</span>
-                                            </div>
-                                        )}
-
-                                        {loc.email && (
-                                            <div className="flex items-center gap-2 hover:text-secondary transition-all">
-                                                <Mail size={16} className="text-secondary flex-shrink-0" />
-                                                <Link to={`mailto:${loc.email}`}>{loc.email}</Link>
-                                            </div>
-                                        )}
-                                    </>
-                                )}
+                            <div className="text-sm text-gray-600 font-medium">
+                                {stat.label}
                             </div>
                         </div>
                     ))}
+                </div>
+
+                {/* Timeline Section */}
+                <div className="max-w-5xl mx-auto mb-20">
+                    <h2 className="text-3xl font-bold text-text text-center mb-12">
+                        {isRtl ? "محطات رئيسية في رحلتنا" : "Key Milestones in Our Journey"}
+                    </h2>
+                    <div className="relative">
+                        {/* Timeline line */}
+                        <div className="absolute left-1/2 transform -translate-x-1/2 w-1 h-full bg-secondary/20 hidden md:block"></div>
+
+                        {milestones.map((milestone, index) => (
+                            <div key={index} className={`flex flex-col md:flex-row items-center mb-12 ${index % 2 === 0 ? 'md:flex-row' : 'md:flex-row-reverse'}`}>
+                                {/* Content */}
+                                <div className={`md:w-1/2 ${index % 2 === 0 ? 'md:pr-12' : 'md:pl-12'} mb-6 md:mb-0`}>
+                                    <div className="bg-white rounded-2xl p-6 shadow-sm border border-secondary/10 hover:shadow-md transition-shadow duration-300">
+                                        <div className="text-2xl font-bold text-primary mb-2">
+                                            {milestone.year}
+                                        </div>
+                                        <h3 className="text-xl font-semibold text-text mb-3">
+                                            {milestone.title}
+                                        </h3>
+                                        <p className="text-gray-600 leading-relaxed">
+                                            {milestone.description}
+                                        </p>
+                                    </div>
+                                </div>
+
+                                {/* Center dot */}
+                                <div className="hidden md:flex w-4 h-4 bg-primary rounded-full z-10 flex-shrink-0"></div>
+
+                                {/* Empty space for alternating sides */}
+                                <div className="md:w-1/2"></div>
+                            </div>
+                        ))}
+                    </div>
+                </div>
+
+                {/* Values Section */}
+                <div className="max-w-5xl mx-auto">
+                    <h2 className="text-3xl font-bold text-text text-center mb-12">
+                        {isRtl ? "قيمنا الأساسية" : "Our Core Values"}
+                    </h2>
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                        {values.map((value, index) => (
+                            <div key={index} className="text-center bg-white rounded-2xl p-6 shadow-sm border border-secondary/10 hover:shadow-md transition-all duration-300">
+                                <div className="w-14 h-14 bg-[var(--color-secondary)]/10 rounded-2xl flex items-center justify-center mx-auto mb-4">
+                                    <value.icon size={24} className="text-secondary" />
+                                </div>
+                                <h3 className="text-lg font-semibold text-text mb-3">
+                                    {value.title}
+                                </h3>
+                                <p className="text-gray-600 text-sm leading-relaxed">
+                                    {value.description}
+                                </p>
+                            </div>
+                        ))}
+                    </div>
+                </div>
+
+                {/* CTA Section */}
+                <div className="text-center mt-16">
+                    <div className="bg-white rounded-2xl border border-secondary/20 p-8 max-w-2xl mx-auto">
+                        <h3 className="text-2xl font-bold text-[var(--color-text)] mb-4">
+                            {isRtl ? "انضم إلى رحلتنا" : "Join Our Journey"}
+                        </h3>
+                        <p className="text-gray-600 mb-6">
+                            {isRtl
+                                ? "اكتشف كيف يمكننا مساعدتك في رحلتك القانونية"
+                                : "Discover how we can assist you in your legal journey"
+                            }
+                        </p>
+                        <div className="flex flex-col sm:flex-row gap-3 justify-center">
+                            <button className="px-6 py-3 bg-primary hover:bg-accent text-white font-medium rounded-lg transition-colors duration-300">
+                                {isRtl ? "تعرف على فريقنا" : "Meet Our Team"}
+                            </button>
+                            <button className="px-6 py-3 border border-[var(--color-secondary)] text-[var(--color-secondary)] hover:bg-[var(--color-secondary)] hover:text-white font-medium rounded-lg transition-all duration-300">
+                                {isRtl ? "اطلب استشارة" : "Request Consultation"}
+                            </button>
+                        </div>
+                    </div>
                 </div>
             </div>
         </section>

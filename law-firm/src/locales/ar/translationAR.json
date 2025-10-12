@@ -2,7 +2,12 @@
   "Saudi Arabia": "السعوديه",
   "Egypt": "مصر",
   "Category must belong to at least one branch": "يجب أن تنتمي الفئة إلى فرع واحد على الأقل",
-  "RequestService": "طلب خدمه",
+  "RequestService": "اطلب خدمه",
+  "Send Request": "إرسال الطلب",
+  "Sending...": "جاري الإرسال...",
+  "title": "العنوان",
+  "selectservice": "اختر خدمه",
+  "description": "الوصف",
   "sidebar": {
     "title": "عبد الجبار والفيصل",
     "subtitle": "لوحة التحكم",

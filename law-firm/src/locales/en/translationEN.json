@@ -1,8 +1,13 @@
 {
   "Saudi Arabia": "Saudi Arabia",
   "Egypt": "Egypt",
-  "RequestService": "Request Service",
   "Category must belong to at least one branch": "Category must belong to at least one branch",
+  "RequestService": "Request Service",
+  "Send Request": "Send Request",
+  "Sending...": "Sending...",
+  "title": "Title",
+  "selectservice": "Select Service",
+  "description": "Description",
   "sidebar": {
     "title": "Abdul Jabbar & Al-Faisal",
     "subtitle": "Control Panel",
