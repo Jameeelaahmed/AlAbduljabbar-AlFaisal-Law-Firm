@@ -2,6 +2,7 @@
 import { useEffect, useState } from 'react'
 // Components
 import { useTranslation } from 'react-i18next';
+import { useAuthStore } from '../../../store/useAuthStore';
 import {
     LayoutDashboard,
     Users,
@@ -16,6 +17,9 @@ import {
 import { NavLink } from "react-router-dom";
 function Sidebar() {
     const { t } = useTranslation();
+    const { user } = useAuthStore();
+    const isCustomerService = user?.role === 'CustomerService';
+
     const [isSidebarOpen, setIsSidebarOpen] = useState(() => {
         // Check if screen is large (>= 1024px) on initial load
         if (typeof window !== 'undefined') {
@@ -89,39 +93,7 @@ function Sidebar() {
                     {/* Navigation - Scrollable if content overflows */}
                     <div className="flex-1 overflow-y-auto scrollbar-thin scrollbar-thumb-white/20 scrollbar-track-transparent">
                         <ul className="space-y-2">
-                            <li>
-                                <NavLink
-                                    to=""
-                                    end
-                                    className={({ isActive }) =>
-                                        `flex items-center gap-3 p-3 rounded-xl transition-all cursor-pointer ${!isSidebarOpen ? "justify-center" : ""
-                                        } ${isActive
-                                            ? "bg-white/30 text-white shadow-lg"
-                                            : "hover:bg-white/20"
-                                        }`
-                                    }
-                                >
-                                    <LayoutDashboard className="w-5 h-5 flex-shrink-0" />
-                                    {isSidebarOpen && <span className="text-sm font-medium transition-all duration-300">{t("sidebar.dashboard")}</span>}
-                                </NavLink>
-                            </li>
-
-                            <li>
-                                <NavLink
-                                    to="services"
-                                    className={({ isActive }) =>
-                                        `flex items-center gap-3 p-3 rounded-xl transition-all cursor-pointer ${!isSidebarOpen ? "justify-center" : ""
-                                        } ${isActive
-                                            ? "bg-white/30 text-white shadow-lg"
-                                            : "hover:bg-white/20"
-                                        }`
-                                    }
-                                >
-                                    <Scale className="w-5 h-5 flex-shrink-0" />
-                                    {isSidebarOpen && <span className="text-sm font-medium">{t("sidebar.LawServices")}</span>}
-                                </NavLink>
-                            </li>
-
+                            {/* Requests link - always visible */}
                             <li>
                                 <NavLink
                                     to="/admin/requests"
@@ -138,37 +110,75 @@ function Sidebar() {
                                 </NavLink>
                             </li>
 
-                            <li>
-                                <NavLink
-                                    to="/admin/users"
-                                    className={({ isActive }) =>
-                                        `flex items-center gap-3 p-3 rounded-xl transition-all cursor-pointer ${!isSidebarOpen ? "justify-center" : ""
-                                        } ${isActive
-                                            ? "bg-white/30 text-white shadow-lg"
-                                            : "hover:bg-white/20"
-                                        }`
-                                    }
-                                >
-                                    <Users className="w-5 h-5 flex-shrink-0" />
-                                    {isSidebarOpen && <span className="text-sm font-medium">{t("sidebar.users")}</span>}
-                                </NavLink>
-                            </li>
+                            {/* Admin-only navigation items */}
+                            {!isCustomerService && (
+                                <>
+                                    <li>
+                                        <NavLink
+                                            to=""
+                                            end
+                                            className={({ isActive }) =>
+                                                `flex items-center gap-3 p-3 rounded-xl transition-all cursor-pointer ${!isSidebarOpen ? "justify-center" : ""
+                                                } ${isActive
+                                                    ? "bg-white/30 text-white shadow-lg"
+                                                    : "hover:bg-white/20"
+                                                }`
+                                            }
+                                        >
+                                            <LayoutDashboard className="w-5 h-5 flex-shrink-0" />
+                                            {isSidebarOpen && <span className="text-sm font-medium transition-all duration-300">{t("sidebar.dashboard")}</span>}
+                                        </NavLink>
+                                    </li>
 
-                            <li>
-                                <NavLink
-                                    to="/admin/settings"
-                                    className={({ isActive }) =>
-                                        `flex items-center gap-3 p-3 rounded-xl transition-all cursor-pointer ${!isSidebarOpen ? "justify-center" : ""
-                                        } ${isActive
-                                            ? "bg-white/30 text-white shadow-lg"
-                                            : "hover:bg-white/20"
-                                        }`
-                                    }
-                                >
-                                    <Settings className="w-5 h-5 flex-shrink-0" />
-                                    {isSidebarOpen && <span className="text-sm font-medium">{t("sidebar.settings")}</span>}
-                                </NavLink>
-                            </li>
+                                    <li>
+                                        <NavLink
+                                            to="services"
+                                            className={({ isActive }) =>
+                                                `flex items-center gap-3 p-3 rounded-xl transition-all cursor-pointer ${!isSidebarOpen ? "justify-center" : ""
+                                                } ${isActive
+                                                    ? "bg-white/30 text-white shadow-lg"
+                                                    : "hover:bg-white/20"
+                                                }`
+                                            }
+                                        >
+                                            <Scale className="w-5 h-5 flex-shrink-0" />
+                                            {isSidebarOpen && <span className="text-sm font-medium">{t("sidebar.LawServices")}</span>}
+                                        </NavLink>
+                                    </li>
+
+                                    <li>
+                                        <NavLink
+                                            to="/admin/users"
+                                            className={({ isActive }) =>
+                                                `flex items-center gap-3 p-3 rounded-xl transition-all cursor-pointer ${!isSidebarOpen ? "justify-center" : ""
+                                                } ${isActive
+                                                    ? "bg-white/30 text-white shadow-lg"
+                                                    : "hover:bg-white/20"
+                                                }`
+                                            }
+                                        >
+                                            <Users className="w-5 h-5 flex-shrink-0" />
+                                            {isSidebarOpen && <span className="text-sm font-medium">{t("sidebar.users")}</span>}
+                                        </NavLink>
+                                    </li>
+
+                                    <li>
+                                        <NavLink
+                                            to="/admin/settings"
+                                            className={({ isActive }) =>
+                                                `flex items-center gap-3 p-3 rounded-xl transition-all cursor-pointer ${!isSidebarOpen ? "justify-center" : ""
+                                                } ${isActive
+                                                    ? "bg-white/30 text-white shadow-lg"
+                                                    : "hover:bg-white/20"
+                                                }`
+                                            }
+                                        >
+                                            <Settings className="w-5 h-5 flex-shrink-0" />
+                                            {isSidebarOpen && <span className="text-sm font-medium">{t("sidebar.settings")}</span>}
+                                        </NavLink>
+                                    </li>
+                                </>
+                            )}
                         </ul>
                     </div>
                 </div>
