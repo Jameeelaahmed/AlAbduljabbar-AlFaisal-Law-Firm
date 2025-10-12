@@ -14,11 +14,11 @@ function Requests() {
 
     const getStatusLabel = (statusCode) => {
         switch (statusCode) {
-            case 0: return "قيد الانتظار";
-            case 1: return "قيد المراجعة";
-            case 2: return "تم الحل";
-            case 3: return "مرفوض";
-            default: return "غير معروف";
+            case 0: return t("Requests.Status.Pending");
+            case 1: return t("Requests.Status.Contacted");
+            case 2: return t("Requests.Status.Resolved");
+            case 3: return t("Requests.Status.Rejected");
+            default: return t("Requests.Status.Pending");
         }
     };
 
@@ -35,27 +35,27 @@ function Requests() {
     const tableColumns = [
         {
             key: "id",
-            header: "رقم الطلب",
+            header: t("Requests.RequestID"),
         },
         {
             key: "title",
-            header: "العنوان",
+            header: t("Requests.Title"),
         },
         {
             key: "description",
-            header: "الوصف",
+            header: t("Requests.Description"),
             render: (description) => (
                 <span className="line-clamp-2">{description}</span>
             ),
         },
         {
             key: "createdAt",
-            header: "تاريخ الإنشاء",
+            header: t("Requests.ReceivedDate"),
             render: (date) => new Date(date).toLocaleDateString('ar-SA'),
         },
         {
             key: "status",
-            header: "الحالة",
+            header: t("Requests.Status.label"),
             render: (status) => (
                 <span
                     className={`px-3 py-1 rounded-full text-sm font-medium ${getStatusStyles(status)}`}
@@ -68,7 +68,7 @@ function Requests() {
 
     const tableActions = [
         {
-            label: t("Requests.Request Details"),
+            label: t("Requests.RequestDetails"),
             onClick: (request) => {
                 navigate(`/admin/requests/${request.id}`)
             },
@@ -78,7 +78,7 @@ function Requests() {
 
     return (
         <div className="min-h-screen p-4 sm:p-6 bg-gray-50 shadow-lg">
-            <Headline headlineLabel="إدارة الطلبات" />
+            <Headline headlineLabel={t("Requests.Management")} />
 
             {/* Filter buttons */}
             <div className="flex flex-wrap gap-2 sm:gap-3 mb-4 sm:mb-6">
@@ -89,7 +89,7 @@ function Requests() {
                         : "bg-white text-primary border-gray-400 hover:border-primary"
                         }`}
                 >
-                    الكل
+                    {t("Requests.Filters.all")}
                 </button>
                 <button
                     onClick={() => setStatusFilter("0")}
@@ -98,7 +98,7 @@ function Requests() {
                         : "bg-white text-primary border-gray-400 hover:border-primary"
                         }`}
                 >
-                    قيد الانتظار
+                    {t("Requests.Status.Pending")}
                 </button>
                 <button
                     onClick={() => setStatusFilter("2")}
@@ -107,7 +107,7 @@ function Requests() {
                         : "bg-white text-primary border-gray-400 hover:border-primary"
                         }`}
                 >
-                    تم الحل
+                    {t("Requests.Status.Resolved")}
                 </button>
                 <button
                     onClick={() => setStatusFilter("1")}
@@ -116,7 +116,7 @@ function Requests() {
                         : "bg-white text-primary border-gray-400 hover:border-primary"
                         }`}
                 >
-                    قيد المراجعة
+                    {t("Requests.Status.Contacted")}
                 </button>
             </div>
 

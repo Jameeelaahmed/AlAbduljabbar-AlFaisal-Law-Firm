@@ -86,6 +86,67 @@
     "Branch": "Branch",
     "Count": "Count"
   },
+  "Requests": {
+    "RequestDetails": "Request Details",
+    "RequestList": "Request List",
+    "RequestID": "Request ID",
+    "Management": "Request Management",
+    "Title": "Title",
+    "Description": "Description",
+    "Status": {
+      "label": "Status",
+      "Pending": "Pending",
+      "Contacted": "Contacted",
+      "Resolved": "Resolved",
+      "Rejected": "Rejected"
+    },
+    "Client": "Client",
+    "ServiceType": "Service Type",
+    "ReceivedDate": "Received Date",
+    "DueDate": "Due Date",
+    "Attachments": {
+      "title": "Attachments",
+      "noAttachments": "No attachments for this request",
+      "view": "View",
+      "download": "Download",
+      "size": "Size"
+    },
+    "Timeline": {
+      "title": "Request Timeline",
+      "by": "by",
+      "system": "System"
+    },
+    "Notes": {
+      "title": "Notes",
+      "internal": "Internal Notes",
+      "add": "Add Note",
+      "previous": "Previous Notes",
+      "noPreviousNotes": "No previous notes for this request",
+      "placeholder": "Add a short note for team members..."
+    },
+    "Actions": {
+      "updateStatus": "Update Status",
+      "saveChanges": "Save Changes",
+      "saving": "Saving...",
+      "cancel": "Cancel",
+      "back": "Back"
+    },
+    "Messages": {
+      "updateSuccess": "Request updated successfully",
+      "updateError": "Error updating request",
+      "noteAddedSuccess": "Note added successfully",
+      "noteAddedError": "Error adding note"
+    },
+    "Filters": {
+      "all": "All Requests",
+      "pending": "Pending",
+      "contacted": "Contacted",
+      "resolved": "Resolved",
+      "rejected": "Rejected",
+      "search": "Search requests...",
+      "clearFilters": "Clear Filters"
+    }
+  },
   "Users": {
     "Users": "Users",
     "User deleted successfully": "User deleted successfully",
