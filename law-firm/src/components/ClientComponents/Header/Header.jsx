@@ -301,10 +301,10 @@ function Header() {
                 className={`lg:hidden fixed top-0 rtl:right-0 ltr:left-0 w-full flex items-center justify-center gap-3 px-4 py-2 z-40 transition-all duration-300 bg-white/80 backdrop-blur-md shadow-md`}
             >
                 <img src={logo1} alt="logo1" className="w-10 h-10 object-contain" />
-                <img src={logo2} alt="logo2" className="w-10 h-10 object-contain" />
                 <p className="text-primary font-bold text-base sm:text-lg text-center leading-tight">
                     مكتب العبد الجبار و الفيصل
                 </p>
+                <img src={logo2} alt="logo2" className="w-10 h-10 object-contain" />
 
                 {/* Mobile Menu Button */}
                 <button
