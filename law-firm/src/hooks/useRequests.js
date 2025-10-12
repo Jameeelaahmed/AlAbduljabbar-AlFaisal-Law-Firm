@@ -12,6 +12,8 @@ import {
     getRequestStats
 } from "../api/requests";
 
+import { toast } from "react-toastify";
+
 // Hook for fetching requests list with pagination and filters
 export function useRequests({ searchTerm = "", pageIndex = 1, pageSize = 5, status = null, branchId = null } = {}) {
     return useQuery({
@@ -38,6 +40,7 @@ export function useCreateRequest() {
         mutationFn: createRequest,
         onSuccess: () => {
             queryClient.invalidateQueries(["requests"]);
+            toast.success("✅ Category created successfully!");
         },
     });
 }

@@ -48,7 +48,7 @@ export const getRequestById = async (requestId) => {
 
 // Create new request
 export const createRequest = async (requestData) => {
-    const { data: response } = await api.post('/api/Requests/Create', requestData);
+    const { data: response } = await api.post('/api/UserService/RequestService', requestData);
 
     if (!response?.isSuccess) {
         throw new Error(response?.error?.description || "Failed to create request");

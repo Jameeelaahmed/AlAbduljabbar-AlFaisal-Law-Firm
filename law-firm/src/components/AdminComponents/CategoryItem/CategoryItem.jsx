@@ -148,15 +148,15 @@ function CategoryItem({ category }) {
         <div className="group">
             {/* Category Header */}
             <div
-                className={`flex justify-between items-center p-4 md:p-6 cursor-pointer transition-all duration-300 ${isExpanded ? "bg-primary text-white" : "hover:text-accent"
+                className={`flex justify-between items-center p-3 sm:p-4 md:p-6 cursor-pointer transition-all duration-300 ${isExpanded ? "bg-primary text-white" : "hover:text-accent"
                     }`}
                 onClick={() => setIsExpanded(!isExpanded)}
             >
                 {/* Left: Name + Subtext */}
                 <div className="flex flex-col gap-1">
-                    <div className="flex items-center gap-2 p-2 rounded hover:bg-primary hover:text-white transition-all" onClick={(e) => { handleOpenUpdateCategoryName(); e.stopPropagation() }}>
+                    <div className="flex gap-2 p-1.5 sm:p-2 rounded hover:bg-primary hover:text-white transition-all sm:flex-col md:flex-col lg:flex-row sm:items-start md:items-start lg:items-center" onClick={(e) => { handleOpenUpdateCategoryName(); e.stopPropagation() }}>
                         <p
-                            className={`font-semibold text-base md:text-lg lg:text-xl transition-colors ${isExpanded ? "text-white" : "group-hover:text-accent"
+                            className={`font-semibold text-sm sm:text-base md:text-lg lg:text-xl leading-tight transition-colors ${isExpanded ? "text-white" : "group-hover:text-accent"
                                 }`}
                         >
                             {category.name}
@@ -167,7 +167,7 @@ function CategoryItem({ category }) {
                         <UpdateName categoryId={category.id} />
                     </Modal>
                     <span
-                        className={`text-xs md:text-sm transition-colors ${isExpanded ? "text-white/80" : "text-secondary group-hover:text-accent"
+                        className={`text-xs sm:text-sm md:text-sm transition-colors ${isExpanded ? "text-white/80" : "text-secondary group-hover:text-accent"
                             }`}
                     >
                         {servicesData && servicesData.length} {t("Services.Sub-services")}
@@ -175,11 +175,11 @@ function CategoryItem({ category }) {
                 </div>
 
                 {/* Right: Toggles + Actions */}
-                <div className="flex justify-around gap-2 md:gap-4 lg:gap-6 items-center">
+                <div className="flex justify-around gap-2 sm:gap-3 md:gap-4 lg:gap-6 items-center">
                     {/* Egypt Toggle */}
                     <div className="flex items-center gap-2">
                         <span
-                            className={`text-sm md:text-base font-medium transition-colors ${isExpanded ? "text-white" : "group-hover:text-accent"
+                            className={`text-xs sm:text-sm md:text-base font-medium transition-colors ${isExpanded ? "text-white" : "group-hover:text-accent"
                                 }`}
                         >
                             {t("Egypt")}
@@ -191,7 +191,7 @@ function CategoryItem({ category }) {
                                 e.stopPropagation();
                                 if (!isUpdating) handleToggleBranch(1);
                             }}
-                            className={`relative inline-flex items-center w-10 h-6 md:w-12 md:h-7 rounded-full cursor-pointer transition-colors duration-200 ${isEgyptToggled
+                            className={`relative inline-flex items-center w-10 h-5 sm:w-10 sm:h-6 md:w-12 md:h-7 rounded-full cursor-pointer transition-colors duration-200 ${isEgyptToggled
                                 ? isExpanded
                                     ? "bg-secondary"
                                     : "bg-primary"
@@ -201,8 +201,8 @@ function CategoryItem({ category }) {
                                 } ${isUpdating ? "opacity-50 cursor-not-allowed" : ""}`}
                         >
                             <span
-                                className={`absolute ltr:left-1 rtl:right-1 top-1 h-4 w-4 md:h-5 md:w-5 rounded-full bg-white border-2 border-white shadow-md transform transition-transform duration-200 ${isEgyptToggled
-                                    ? "ltr:translate-x-4 md:ltr:translate-x-5 rtl:-translate-x-4 md:rtl:-translate-x-5"
+                                className={`absolute ltr:left-1 rtl:right-1 top-1 h-3.5 w-3.5 sm:h-4 sm:w-4 md:h-5 md:w-5 rounded-full bg-white border-2 border-white shadow-md transform transition-transform duration-200 ${isEgyptToggled
+                                    ? "ltr:translate-x-3 sm:ltr:translate-x-4 md:ltr:translate-x-5 rtl:-translate-x-3 sm:rtl:-translate-x-4 md:rtl:-translate-x-5"
                                     : "ltr:translate-x-0 rtl:translate-x-0"
                                     }`}
                             />
@@ -212,7 +212,7 @@ function CategoryItem({ category }) {
                     {/* Saudi Arabia Toggle */}
                     <div className="flex items-center gap-2">
                         <span
-                            className={`text-sm md:text-base font-medium transition-colors ${isExpanded ? "text-white" : "group-hover:text-accent"
+                            className={`text-xs sm:text-sm md:text-base font-medium transition-colors ${isExpanded ? "text-white" : "group-hover:text-accent"
                                 }`}
                         >
                             {t("Saudi Arabia")}
@@ -224,7 +224,7 @@ function CategoryItem({ category }) {
                                 e.stopPropagation();
                                 if (!isUpdating) handleToggleBranch(2);
                             }}
-                            className={`relative inline-flex items-center w-10 h-6 md:w-12 md:h-7 rounded-full cursor-pointer transition-colors duration-200 ${isSaudiToggled
+                            className={`relative inline-flex items-center w-10 h-5 sm:w-10 sm:h-6 md:w-12 md:h-7 rounded-full cursor-pointer transition-colors duration-200 ${isSaudiToggled
                                 ? isExpanded
                                     ? "bg-secondary"
                                     : "bg-primary"
@@ -234,8 +234,8 @@ function CategoryItem({ category }) {
                                 } ${isUpdating ? "opacity-50 cursor-not-allowed" : ""}`}
                         >
                             <span
-                                className={`absolute ltr:left-1 rtl:right-1 top-1 h-4 w-4 md:h-5 md:w-5 rounded-full bg-white border-2 border-white shadow-md transform transition-transform duration-200 ${isSaudiToggled
-                                    ? "ltr:translate-x-4 md:ltr:translate-x-5 rtl:-translate-x-4 md:rtl:-translate-x-5"
+                                className={`absolute ltr:left-1 rtl:right-1 top-1 h-3.5 w-3.5 sm:h-4 sm:w-4 md:h-5 md:w-5 rounded-full bg-white border-2 border-white shadow-md transform transition-transform duration-200 ${isSaudiToggled
+                                    ? "ltr:translate-x-3 sm:ltr:translate-x-4 md:ltr:translate-x-5 rtl:-translate-x-3 sm:rtl:-translate-x-4 md:rtl:-translate-x-5"
                                     : "ltr:translate-x-0 rtl:translate-x-0"
                                     }`}
                             />
@@ -243,14 +243,14 @@ function CategoryItem({ category }) {
                     </div>
 
                     {/* Action Icons */}
-                    <div className="flex items-center gap-1 md:gap-2">
+                    <div className="flex items-center gap-1 sm:gap-2 md:gap-3">
                         <button
-                            className={`p-1.5 md:p-2 rounded-lg transition-all duration-200 ${isExpanded ? "hover:bg-white/20" : "hover:bg-secondary/10 group-hover:hover:bg-white/20"
+                            className={`p-1 sm:p-1.5 md:p-2 rounded-lg transition-all duration-200 ${isExpanded ? "hover:bg-white/20" : "hover:bg-secondary/10 group-hover:hover:bg-white/20"
                                 }`}
                         >
                             <Plus
                                 onClick={(e) => { handleOpenAddService(); e.stopPropagation() }}
-                                className={`w-3.5 h-3.5 md:w-4 md:h-4 lg:w-5 lg:h-5 transition-colors ${isExpanded ? "text-white" : "text-primary group-hover:text-accent"
+                                className={`w-3 h-3 sm:w-3.5 sm:h-3.5 md:w-4 md:h-4 lg:w-5 lg:h-5 transition-colors ${isExpanded ? "text-white" : "text-primary group-hover:text-accent"
                                     }`}
                             />
                         </button>
@@ -266,11 +266,11 @@ function CategoryItem({ category }) {
                                 openDeleteModal();
                                 e.stopPropagation();
                             }}
-                            className={`p-1.5 md:p-2 rounded-lg transition-all duration-200 ${isExpanded ? "hover:bg-white/20" : "hover:bg-red-50 group-hover:hover:bg-white/20"
+                            className={`p-1 sm:p-1.5 md:p-2 rounded-lg transition-all duration-200 ${isExpanded ? "hover:bg-white/20" : "hover:bg-red-50 group-hover:hover:bg-white/20"
                                 }`}
                         >
                             <Trash
-                                className={`w-3.5 h-3.5 md:w-4 md:h-4 lg:w-5 lg:h-5 transition-colors text-denied`}
+                                className={`w-3 h-3 sm:w-3.5 sm:h-3.5 md:w-4 md:h-4 lg:w-5 lg:h-5 transition-colors text-denied`}
                             />
                         </button>
 
@@ -293,7 +293,7 @@ function CategoryItem({ category }) {
 
                         {/* Expand Icon */}
                         <ChevronDown
-                            className={`w-4 h-4 md:w-5 md:h-5 lg:w-6 lg:h-6 transition-all duration-300 ${isExpanded ? "rotate-180 text-white" : "text-primary group-hover:text-accent"
+                            className={`w-4 h-4 sm:w-5 sm:h-5 md:w-5 md:h-5 lg:w-6 lg:h-6 transition-all duration-300 ${isExpanded ? "rotate-180 text-white" : "text-primary group-hover:text-accent"
                                 }`}
                         />
                     </div>
@@ -311,20 +311,21 @@ function CategoryItem({ category }) {
                             key={data.id ?? data.name}
                             className="bg-gray-50 group-hover:bg-primary/5 border-t border-gray-200"
                         >                            {/* Example subcategory item */}
-                            <div className="flex justify-between items-center p-4 md:p-6 lg:p-8 ml-4 md:ml-8 border-l-2 border-primary/20">
-                                <div>
-                                    <p className="text-sm md:text-base lg:text-lg font-medium text-gray-700 group-hover:text-primary">
+                            <div className="flex justify-between items-start p-3 sm:p-4 md:p-6 lg:p-8 ml-3 sm:ml-4 md:ml-8 border-l-2 border-primary/20">
+                                <div className="flex-1 min-w-0 pr-3">
+                                    <p className="text-sm sm:text-base md:text-lg lg:text-lg font-medium text-gray-700 group-hover:text-primary truncate-2-lines">
                                         {data.name}
                                     </p>
-                                    <span className="block max-w-full whitespace-normal break-words text-sm text-gray-600">
+                                    <div className="mt-1 text-xs sm:text-sm md:text-sm text-gray-600 break-words whitespace-normal max-h-20 overflow-auto">
                                         {data.description}
-                                    </span>                                </div>
-                                <div className="flex items-center gap-1 md:gap-2">
-                                    <button onClick={(e) => { openUpdateService(data.id); e.stopPropagation() }} className="p-1.5 md:p-2 hover:bg-secondary/10 rounded-lg transition-all duration-200">
-                                        <SquarePen className="w-3 h-3 md:w-4 md:h-4 text-primary hover:text-secondary" />
+                                    </div>
+                                </div>
+                                <div className="flex-shrink-0 flex items-center gap-1 sm:gap-2 md:gap-2">
+                                    <button onClick={(e) => { openUpdateService(data.id); e.stopPropagation() }} className="p-1 sm:p-1.5 md:p-2 hover:bg-secondary/10 rounded-lg transition-all duration-200">
+                                        <SquarePen className="w-3 h-3 sm:w-4 sm:h-4 md:w-4 md:h-4 text-primary hover:text-secondary" />
                                     </button>
-                                    <button onClick={(e) => { openDeleteService(data.id); e.stopPropagation() }} className="p-1.5 md:p-2 hover:bg-red-50 rounded-lg transition-all duration-200">
-                                        <Trash className="w-3 h-3 md:w-4 md:h-4 text-denied hover:text-red-600" />
+                                    <button onClick={(e) => { openDeleteService(data.id); e.stopPropagation() }} className="p-1 sm:p-1.5 md:p-2 hover:bg-red-50 rounded-lg transition-all duration-200">
+                                        <Trash className="w-3 h-3 sm:w-4 sm:h-4 md:w-4 md:h-4 text-denied hover:text-red-600" />
                                     </button>
                                 </div>
                             </div>
