@@ -94,22 +94,24 @@ function Sidebar() {
                     <div className="flex-1 overflow-y-auto scrollbar-thin scrollbar-thumb-white/20 scrollbar-track-transparent">
                         <ul className="space-y-2">
                             {/* Requests link - always visible */}
-                            <li>
-                                <NavLink
-                                    to="/admin/requests"
-                                    className={({ isActive }) =>
-                                        `flex items-center gap-3 p-3 rounded-xl transition-all cursor-pointer ${!isSidebarOpen ? "justify-center" : ""
-                                        } ${isActive
-                                            ? "bg-white/30 text-white shadow-lg"
-                                            : "hover:bg-white/20"
-                                        }`
-                                    }
-                                >
-                                    <CalendarCheck className="w-5 h-5 flex-shrink-0" />
-                                    {isSidebarOpen && <span className="text-sm font-medium">{t("sidebar.requests")}</span>}
-                                </NavLink>
-                            </li>
-
+                            {
+                                isCustomerService && (
+                                    <li>
+                                        <NavLink
+                                            to="/admin/requests"
+                                            className={({ isActive }) =>
+                                                `flex items-center gap-3 p-3 rounded-xl transition-all cursor-pointer ${!isSidebarOpen ? "justify-center" : ""
+                                                } ${isActive
+                                                    ? "bg-white/30 text-white shadow-lg"
+                                                    : "hover:bg-white/20"
+                                                }`
+                                            }
+                                        >
+                                            <CalendarCheck className="w-5 h-5 flex-shrink-0" />
+                                            {isSidebarOpen && <span className="text-sm font-medium">{t("sidebar.requests")}</span>}
+                                        </NavLink>
+                                    </li>
+                                )}
                             {/* Admin-only navigation items */}
                             {!isCustomerService && (
                                 <>
@@ -145,7 +147,21 @@ function Sidebar() {
                                             {isSidebarOpen && <span className="text-sm font-medium">{t("sidebar.LawServices")}</span>}
                                         </NavLink>
                                     </li>
-
+                                    <li>
+                                        <NavLink
+                                            to="/admin/requests"
+                                            className={({ isActive }) =>
+                                                `flex items-center gap-3 p-3 rounded-xl transition-all cursor-pointer ${!isSidebarOpen ? "justify-center" : ""
+                                                } ${isActive
+                                                    ? "bg-white/30 text-white shadow-lg"
+                                                    : "hover:bg-white/20"
+                                                }`
+                                            }
+                                        >
+                                            <CalendarCheck className="w-5 h-5 flex-shrink-0" />
+                                            {isSidebarOpen && <span className="text-sm font-medium">{t("sidebar.requests")}</span>}
+                                        </NavLink>
+                                    </li>
                                     <li>
                                         <NavLink
                                             to="/admin/users"
