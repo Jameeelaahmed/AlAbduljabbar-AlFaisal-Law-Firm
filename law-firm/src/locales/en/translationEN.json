@@ -135,7 +135,14 @@
       "updateSuccess": "Request updated successfully",
       "updateError": "Error updating request",
       "noteAddedSuccess": "Note added successfully",
-      "noteAddedError": "Error adding note"
+      "noteAddedError": "Error adding note",
+      "loading": "Loading...",
+      "loadError": "Error loading data",
+      "notFound": "Request not found"
+    },
+    "Team": {
+      "reviewTeam": "Review Team",
+      "supervisor": "Supervisor"
     },
     "Filters": {
       "all": "All Requests",
