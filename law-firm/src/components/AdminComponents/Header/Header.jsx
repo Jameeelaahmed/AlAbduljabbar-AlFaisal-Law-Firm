@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import i18n from '../../../i18n';
 import { Bell, Globe } from "lucide-react";
 import { useQueryClient } from "@tanstack/react-query";
@@ -6,6 +6,7 @@ import { useQueryClient } from "@tanstack/react-query";
 function Header() {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
     const queryClient = useQueryClient();
+    const menuRef = useRef(null);
 
     const [currentLang, setCurrentLang] = useState(() => {
         const savedLang = localStorage.getItem("selectedLanguage");
@@ -14,7 +15,6 @@ function Header() {
     });
 
     const handleLanguageChange = (lang) => {
-        console.log("Language change triggered with:", lang); // 👈 check this
         i18n
             .changeLanguage(lang)
             .then(() => {
@@ -28,107 +28,100 @@ function Header() {
         document.documentElement.dir = currentLang === "ar" ? "rtl" : "ltr";
     }, [currentLang]);
 
+    // close menu on outside click / blur
+    useEffect(() => {
+        function handleClickOutside(e) {
+            if (menuRef.current && !menuRef.current.contains(e.target)) {
+                setIsMenuOpen(false);
+            }
+        }
+        document.addEventListener('mousedown', handleClickOutside);
+        return () => document.removeEventListener('mousedown', handleClickOutside);
+    }, []);
 
     return (
-        <nav className="relative bg-gray-800">
-            <div className="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
-                <div className="relative flex h-16 items-center justify-between">
-                    {/* Mobile menu button */}
-                    <div className="absolute inset-y-0 left-0 flex items-center sm:hidden">
-                        <button
-                            onClick={() => setIsMenuOpen(!isMenuOpen)}
-                            className="relative inline-flex items-center justify-center rounded-md p-2 text-gray-400 hover:bg-white/5 hover:text-white focus:outline-none focus:ring-2 focus:ring-indigo-500"
-                        >
-                            <span className="sr-only">Open main menu</span>
-                            {isMenuOpen ? (
-                                <svg
-                                    viewBox="0 0 24 24"
-                                    fill="none"
-                                    stroke="currentColor"
-                                    strokeWidth="1.5"
-                                    className="size-6"
-                                >
-                                    <path
-                                        d="M6 18L18 6M6 6l12 12"
-                                        strokeLinecap="round"
-                                        strokeLinejoin="round"
-                                    />
-                                </svg>
-                            ) : (
-                                <svg
-                                    viewBox="0 0 24 24"
-                                    fill="none"
-                                    stroke="currentColor"
-                                    strokeWidth="1.5"
-                                    className="size-6"
-                                >
-                                    <path
-                                        d="M3.75 6.75h16.5M3.75 12h16.5M3.75 17.25h16.5"
-                                        strokeLinecap="round"
-                                        strokeLinejoin="round"
-                                    />
-                                </svg>
-                            )}
-                        </button>
+        <nav className="sticky top-0 z-50 bg-white/70 backdrop-blur-sm border-b border-gray-100 shadow-lg">
+            <div className="max-w-screen-xl mx-auto px-4">
+                <div className="flex items-center justify-between h-16">
+                    {/* Left: brand / title */}
+                    <div className="flex items-center gap-3">
+                        <div className="w-8 h-8 rounded-full bg-primary flex items-center justify-center text-white font-bold">
+                            AJ
+                        </div>
+                        <div className="hidden sm:block">
+                            <h1 className="text-sm font-semibold text-gray-800">Admin Panel</h1>
+                            <p className="text-xs text-gray-500">Dashboard</p>
+                        </div>
                     </div>
 
-                    {/* Right side icons */}
-                    <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0 space-x-2">
+                    {/* Right: actions */}
+                    <div className="flex items-center gap-3">
                         {/* Language toggle */}
                         <button
-                            onClick={() => handleLanguageChange(currentLang === "ar" ? "en" : "ar")} className="relative rounded-full p-2 text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                            onClick={() => handleLanguageChange(currentLang === "ar" ? "en" : "ar")}
+                            aria-label="Toggle language"
+                            className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-gray-100 hover:bg-gray-200 text-sm text-gray-700 transition"
                         >
-                            <Globe className="w-5 h-5" />
-                            <span className="sr-only">Change language</span>
+                            <Globe className="w-4 h-4" />
+                            <span className="hidden sm:inline">{currentLang === "ar" ? "العربية" : "EN"}</span>
                         </button>
-                        <span className="text-gray-300 text-sm hidden sm:inline-block">
-                            {currentLang === "en" ? "EN" : "AR"}
-                        </span>
 
                         {/* Notifications */}
                         <button
                             type="button"
-                            className="relative rounded-full p-2 text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                            className="relative p-2 rounded-full text-gray-600 hover:bg-gray-100 transition"
+                            aria-label="Notifications"
                         >
                             <Bell className="w-5 h-5" />
-                            <span className="sr-only">View notifications</span>
+                            <span className="absolute top-0 right-0 w-2 h-2 bg-red-500 rounded-full ring-1 ring-white" />
                         </button>
 
-                        {/* Profile dropdown */}
-                        <div className="relative ml-3">
-                            <button className="relative flex rounded-full focus:outline-none focus:ring-2 focus:ring-indigo-500">
+                        {/* User menu */}
+                        <div className="relative" ref={menuRef}>
+                            <button
+                                onClick={() => setIsMenuOpen(v => !v)}
+                                className="flex items-center gap-2 px-2 py-1 rounded-full hover:bg-gray-100 transition"
+                                aria-expanded={isMenuOpen}
+                            >
                                 <img
                                     src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=64&h=64&q=80"
-                                    alt="user"
-                                    className="w-8 h-8 rounded-full"
+                                    alt="user avatar"
+                                    className="w-8 h-8 rounded-full object-cover"
                                 />
+                                <span className="hidden md:inline-block text-sm text-gray-800">Admin</span>
+                                <span className="text-gray-400 text-xs">{isMenuOpen ? '▴' : '▾'}</span>
                             </button>
+
+                            {/* dropdown */}
+                            {isMenuOpen && (
+                                <div className="absolute rtl:right-0 ltr:left-0 mt-2 w-44 bg-white rounded-lg shadow-lg border border-gray-100 overflow-hidden z-50">
+                                    <button
+                                        onClick={() => { /* navigate to profile */ }}
+                                        className="w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-50"
+                                    >
+                                        Profile
+                                    </button>
+                                    <button
+                                        onClick={() => { /* navigate to settings */ }}
+                                        className="w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-50"
+                                    >
+                                        Settings
+                                    </button>
+                                    <div className="border-t border-gray-100" />
+                                    <button
+                                        onClick={() => { /* logout */ }}
+                                        className="w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-red-50"
+                                    >
+                                        Logout
+                                    </button>
+                                </div>
+                            )}
                         </div>
                     </div>
                 </div>
             </div>
-
-            {/* Mobile menu */}
-            {isMenuOpen && (
-                <div className="sm:hidden" id="mobile-menu">
-                    <div className="space-y-1 px-2 pt-2 pb-3">
-                        {["Dashboard", "Team", "Projects", "Calendar"].map((item) => (
-                            <a
-                                key={item}
-                                href="#"
-                                className={`block rounded-md px-3 py-2 text-base font-medium ${item === "Dashboard"
-                                    ? "bg-gray-900 text-white"
-                                    : "text-gray-300 hover:bg-white/5 hover:text-white"
-                                    }`}
-                            >
-                                {item}
-                            </a>
-                        ))}
-                    </div>
-                </div>
-            )}
         </nav>
-    )
+    );
 }
 
-export default Header
+export default Header;
