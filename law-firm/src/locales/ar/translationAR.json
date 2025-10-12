@@ -82,6 +82,67 @@
     "Branch": "الفرع",
     "Count": "العدد"
   },
+  "Requests": {
+    "RequestDetails": "تفاصيل الطلب",
+    "RequestList": "قائمة الطلبات",
+    "RequestID": "رقم الطلب",
+    "Management": "إدارة الطلبات",
+    "Title": "العنوان",
+    "Description": "الوصف",
+    "Status": {
+      "label": "الحالة",
+      "Pending": "قيد الانتظار",
+      "Contacted": "تم التواصل",
+      "Resolved": "تم الحل",
+      "Rejected": "مرفوض"
+    },
+    "Client": "العميل",
+    "ServiceType": "نوع الخدمة",
+    "ReceivedDate": "تاريخ الاستلام",
+    "DueDate": "تاريخ الاستحقاق",
+    "Attachments": {
+      "title": "المرفقات",
+      "noAttachments": "لا توجد مرفقات لهذا الطلب",
+      "view": "عرض",
+      "download": "تحميل",
+      "size": "الحجم"
+    },
+    "Timeline": {
+      "title": "سجل الطلب",
+      "by": "بواسطة",
+      "system": "النظام"
+    },
+    "Notes": {
+      "title": "الملاحظات",
+      "internal": "ملاحظات داخلية",
+      "add": "أضف ملاحظة",
+      "previous": "الملاحظات السابقة",
+      "noPreviousNotes": "لا توجد ملاحظات سابقة لهذا الطلب",
+      "placeholder": "أضف ملاحظة قصيرة للأعضاء..."
+    },
+    "Actions": {
+      "updateStatus": "تحديث الحالة",
+      "saveChanges": "حفظ التغييرات",
+      "saving": "جاري الحفظ...",
+      "cancel": "إلغاء",
+      "back": "العودة"
+    },
+    "Messages": {
+      "updateSuccess": "تم تحديث الطلب بنجاح",
+      "updateError": "حدث خطأ أثناء تحديث الطلب",
+      "noteAddedSuccess": "تمت إضافة الملاحظة بنجاح",
+      "noteAddedError": "حدث خطأ أثناء إضافة الملاحظة"
+    },
+    "Filters": {
+      "all": "جميع الطلبات",
+      "pending": "قيد الانتظار",
+      "contacted": "تم التواصل",
+      "resolved": "تم الحل",
+      "rejected": "مرفوض",
+      "search": "بحث في الطلبات...",
+      "clearFilters": "مسح الفلترة"
+    }
+  },
   "Users": {
     "Users": "المستخدمين",
     "User deleted successfully": "تم حذف المستخدم بنجاح",
