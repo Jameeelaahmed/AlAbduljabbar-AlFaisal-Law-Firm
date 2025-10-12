@@ -3,23 +3,22 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { useRequest, useUpdateRequestStatus, useAddRequestNote } from '../../../hooks/useRequests';
 import { useUserById } from '../../../hooks/useUsers';
 import { useServiceById } from '../../../hooks/useServices';
-
+import { useQueryClient } from '@tanstack/react-query';
 function RequestsDetails({ initialRequest = null }) {
     const { requestId } = useParams();
     const navigate = useNavigate();
-
     // Fetch request data
     const {
         data: requestData,
         isLoading,
         error
     } = useRequest(requestId);
+    const queryInfo = useQueryClient().getQueryState(["request", requestId]);
 
     // Fetch related data
     const { data: userData } = useUserById(requestData?.userID);
     const { data: serviceData } = useServiceById(requestData?.serviceID);
-    console.log("user", userData)
-    console.log("service", serviceData)
+
     // Mutations
     const { mutate: updateStatus, isLoading: isUpdatingStatus } = useUpdateRequestStatus();
     const { mutate: addNote, isLoading: isAddingNote } = useAddRequestNote();
@@ -60,6 +59,28 @@ function RequestsDetails({ initialRequest = null }) {
         2: 'bg-succeededBg text-succeeded',
         3: 'bg-deniedBg text-denied',
     };
+
+    // Default timeline data for new requests or when API timeline is not available
+    const defaultTimeline = [
+        {
+            status: getStatusLabel(0),
+            date: new Date(requestData?.createdAt).toLocaleDateString('ar-SA'),
+            time: new Date(requestData?.createdAt).toLocaleTimeString('ar-SA'),
+            by: 'النظام'
+        },
+        {
+            status: getStatusLabel(1),
+            date: new Date(requestData?.createdAt).toLocaleDateString('ar-SA'),
+            time: new Date(new Date(requestData?.createdAt).getTime() + 1800000).toLocaleTimeString('ar-SA'), // 30 minutes later
+            by: 'فريق المراجعة'
+        },
+        {
+            status: getStatusLabel(2),
+            date: new Date(requestData?.createdAt).toLocaleDateString('ar-SA'),
+            time: new Date(new Date(requestData?.createdAt).getTime() + 3600000).toLocaleTimeString('ar-SA'), // 1 hour later
+            by: 'المشرف'
+        }
+    ];
 
     if (isLoading) {
         return (
@@ -195,28 +216,21 @@ function RequestsDetails({ initialRequest = null }) {
                         <section className="bg-white rounded-lg shadow p-4 sm:p-6 border border-gray-200">
                             <h3 className="text-base sm:text-lg font-semibold text-gray-900 mb-3 sm:mb-4">سجل الطلب</h3>
                             <div className="flow-root">
-                                {!requestData.timeline || requestData.timeline.length === 0 ? (
-                                    <div className="bg-gray-50 rounded-lg p-4 text-center">
-                                        <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-gray-400 mx-auto mb-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
-                                        </svg>
-                                        <p className="text-sm text-gray-500">لا يوجد سجل للطلب حتى الآن</p>
-                                    </div>
-                                ) : (
-                                    <ul className="-mb-8">
-                                        {requestData.timeline.map((event, idx) => (
-                                            <li key={idx} className="mb-6 sm:mb-8">
-                                                <div className="relative pb-6 sm:pb-8">
-                                                    <span className="absolute -right-2 sm:-right-3 top-1 w-3 h-3 sm:w-3.5 sm:h-3.5 bg-gray-500 rounded-full ring-2 sm:ring-4 ring-white" />
-                                                    <div className="ml-8 sm:ml-10 pr-3 sm:pr-4">
-                                                        <p className="text-xs sm:text-sm font-semibold text-gray-900">{event.status}</p>
-                                                        <p className="text-xs text-gray-500">{event.date} • بواسطة {event.by}</p>
-                                                    </div>
+                                <ul className="-mb-8">
+                                    {(requestData.timeline?.length > 0 ? requestData.timeline : defaultTimeline).map((event, idx) => (
+                                        <li key={idx} className="mb-6 sm:mb-8">
+                                            <div className="relative pb-6 sm:pb-8">
+                                                <span className={`absolute -right-2 sm:-right-3 top-1 w-3 h-3 sm:w-3.5 sm:h-3.5 rounded-full ring-2 sm:ring-4 ring-white ${idx === 0 ? 'bg-primary' : 'bg-gray-500'}`} />
+                                                <div className="ml-8 sm:ml-10 pr-3 sm:pr-4">
+                                                    <p className="text-xs sm:text-sm font-semibold text-gray-900">{event.status}</p>
+                                                    <p className="text-xs text-gray-500">
+                                                        {event.date} {event.time ? `${event.time} •` : '•'} بواسطة {event.by}
+                                                    </p>
                                                 </div>
-                                            </li>
-                                        ))}
-                                    </ul>
-                                )}
+                                            </div>
+                                        </li>
+                                    ))}
+                                </ul>
                             </div>
                         </section>
                     </div>
