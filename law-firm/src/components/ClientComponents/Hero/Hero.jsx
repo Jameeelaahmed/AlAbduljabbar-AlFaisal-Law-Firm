@@ -81,7 +81,7 @@ function Hero() {
 
             {/* Logo Section */}
             <div className="hidden lg:block absolute top-0 rtl:right-0 ltr:left-0 z-40">
-                <div className=' relative cursor-pointer hover:scale-105 transition-transform duration-300'>
+                <div className='relative cursor-pointer hover:scale-105 transition-transform duration-300'>
                     <div className={`flex flex-col justify-center items-center p-4  backdrop-blur-xl shadow-2xl rtl:rounded-tl-3xl rtl:rounded-bl-3xl ltr:rounded-tr-3xl ltr:rounded-br-3xl  border-primary border-3`}
                         onClick={openLogo1DropDown}>
                         <img className='w-[55px]' src='logo1.png' alt="logo1" />
@@ -120,14 +120,14 @@ function Hero() {
             {/* The other Logo */}
             <div className="hidden lg:block absolute top-0 rtl:left-0 ltr:right-0 z-40">
                 <div className=' relative cursor-pointer hover:scale-105 transition-transform duration-300'>
-                    <div className={`flex flex-col justify-center items-center p-4  backdrop-blur-xl shadow-2xl rtl:rounded-tr-3xl rtl:rounded-br-3xl ltr:rounded-tl-3xl ltr:rounded-bl-3xl  border-primary border-3`}
+                    <div className={`flex flex-col justify-center items-center p-4 backdrop-blur-xl shadow-2xl rtl:rounded-tr-3xl rtl:rounded-br-3xl ltr:rounded-tl-3xl ltr:rounded-bl-3xl  border-primary border-3`}
                         onClick={openLogo2DropDown}>
                         <img className='w-[55px]' src="Logo2.png" alt="logo2" />
                         <p className='font-bold text-lg text-white'>العبد الجبار و الفيصل </p>
                         <span className={`text-white`}>محامون و مستشاورن</span>
                         <span className='text-[#f7c630] text-sm font-bold'>اضغط لرؤية بيانات الشركه</span>
                     </div>
-                    <div className={`absolute ltr:right-2 rtl:left-2 mt-5 w-66backdrop-blur-xl shadow-2xl rounded-lg border border-primary p-2 z-60 text-white
+                    <div className={`absolute ltr:right-2 rtl:left-2 mt-5 w-6 backdrop-blur-xl shadow-2xl rounded-lg border border-primary p-2 z-60 text-white
                     transform transition-transform duration-300 ease-in-out origin-top
                     ${isLogo2DropDown ? 'scale-y-100 opacity-100' : 'scale-y-0 opacity-0'}
                     flex flex-col
