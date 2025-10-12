@@ -11,7 +11,7 @@ function OurOffices() {
         {
             id: "riyadh",
             title: isRtl ? "الرياض، المملكة العربية السعودية" : "Riyadh, Saudi Arabia",
-            line1: isRtl ? "العليا، الرياض" : "Al Olaya, Riyadh",
+            line1: isRtl ? "السعوديه, الرياض" : "Saudi Arabia, Riyadh",
             postal: "12214",
             address: isRtl
                 ? "السعوديه - الرياض - حي المروج - مركز الحياة سنتر - مبني B- الدور الاول - مكتب 5"
@@ -23,7 +23,7 @@ function OurOffices() {
         {
             id: "cairo",
             title: isRtl ? "القاهرة، مصر" : "Cairo, Egypt",
-            line1: isRtl ? "الزمالك، القاهرة" : "Zamalek, Cairo",
+            line1: isRtl ? "القاهرة، مصر" : "Cairo, Egypt",
             postal: "11211",
             address: isRtl
                 ? "مصر - القاهره 20 شاراع الطيران - الدور الاول - شقه 2"
