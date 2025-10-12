@@ -38,20 +38,6 @@ function Requests() {
             header: "رقم الطلب",
         },
         {
-            key: "userID",
-            header: "العميل",
-            render: (userId) => (
-                <span className="text-primary">{`عميل ${userId}`}</span>
-            ),
-        },
-        {
-            key: "serviceID",
-            header: "الخدمة",
-            render: (serviceId) => (
-                <span className="text-gray-600">{`خدمة ${serviceId}`}</span>
-            ),
-        },
-        {
             key: "title",
             header: "العنوان",
         },

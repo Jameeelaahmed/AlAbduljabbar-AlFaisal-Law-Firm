@@ -37,7 +37,7 @@ export const fetchRequests = async ({ queryKey }) => {
 // Get request details by ID
 export const getRequestById = async (requestId) => {
     if (!requestId) throw new Error('Request ID is required');
-    const { data } = await api.get(`/api/Requests/${requestId}`);
+    const { data } = await api.get(`/api/UserService/GetById/${requestId}`);
 
     if (!data?.isSuccess) {
         throw new Error(data?.error?.description || "Failed to fetch request details");
