@@ -34,6 +34,26 @@ export const fetchUsers = async ({ queryKey }) => {
     };
 };
 
+// Create new user
+export const createUser = async (userData) => {
+    const { data: response } = await api.post('/api/ApplicationUsers/AddWithRole', {
+        fullNameAr: userData.fullNameAr,
+        fullNameEn: userData.fullNameEn,
+        mobileNumber: userData.mobileNumber,
+        whatsAppNumber: userData.whatsAppNumber,
+        email: userData.email,
+        password: userData.password,
+        confirmPassword: userData.confirmPassword,
+        branchId: Number(userData.branchId),
+        role: userData.role
+    });
+
+    if (!response?.isSuccess) {
+        throw new Error(response?.error?.description || "Failed to create user");
+    }
+
+    return response.data;
+};
 
 // Get a single user by ID
 export const getUserById = async (userId) => {
