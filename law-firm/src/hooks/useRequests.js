@@ -6,7 +6,9 @@ import {
     updateRequest,
     deleteRequest,
     getRequestForUpdate,
-    updateRequestStatus,
+    rejectRequest,
+    resolveRequest,
+    contactRequest,
     addRequestNote,
     getRequestTimeline,
     getRequestStats
@@ -40,7 +42,7 @@ export function useCreateRequest() {
         mutationFn: createRequest,
         onSuccess: () => {
             queryClient.invalidateQueries(["requests"]);
-            toast.success("✅ Category created successfully!");
+            toast.success("✅ Request created successfully!");
         },
     });
 }
@@ -79,15 +81,44 @@ export function useDeleteRequest() {
     });
 }
 
-// Hook for updating request status
-export function useUpdateRequestStatus() {
+// Hook for rejecting a request
+export function useRejectRequest() {
     const queryClient = useQueryClient();
 
     return useMutation({
-        mutationFn: updateRequestStatus,
+        mutationFn: rejectRequest,
         onSuccess: (data, variables) => {
             queryClient.invalidateQueries(["requests"]);
-            queryClient.invalidateQueries(["request", variables.id]);
+            queryClient.invalidateQueries(["request", variables]);
+            toast.success("Request rejected successfully");
+        },
+    });
+}
+
+// Hook for resolving a request
+export function useResolveRequest() {
+    const queryClient = useQueryClient();
+
+    return useMutation({
+        mutationFn: resolveRequest,
+        onSuccess: (data, variables) => {
+            queryClient.invalidateQueries(["requests"]);
+            queryClient.invalidateQueries(["request", variables]);
+            toast.success("Request resolved successfully");
+        },
+    });
+}
+
+// Hook for marking a request as contacted
+export function useContactRequest() {
+    const queryClient = useQueryClient();
+
+    return useMutation({
+        mutationFn: contactRequest,
+        onSuccess: (data, variables) => {
+            queryClient.invalidateQueries(["requests"]);
+            queryClient.invalidateQueries(["request", variables]);
+            toast.success("Request marked as contacted");
         },
     });
 }

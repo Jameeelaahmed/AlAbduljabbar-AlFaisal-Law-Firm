@@ -61,7 +61,7 @@ export const createRequest = async (requestData) => {
 export const updateRequest = async ({ id, data }) => {
     if (!id) throw new Error('Request ID is required');
 
-    const { data: response } = await api.put(`/api/Requests/Update/${id}`, data);
+    const { data: response } = await api.put(`/api/UserService/UpdateService/${id}`, data);
 
     if (!response?.isSuccess) {
         throw new Error(response?.error?.description || "Failed to update request");
@@ -94,15 +94,40 @@ export const deleteRequest = async (requestId) => {
     return data;
 };
 
-// Update request status
-export const updateRequestStatus = async ({ id, status }) => {
+// Reject request
+export const rejectRequest = async (id) => {
     if (!id) throw new Error('Request ID is required');
-    if (!status) throw new Error('Status is required');
 
-    const { data: response } = await api.put(`/api/Requests/UpdateStatus/${id}`, { status });
+    const { data: response } = await api.put(`/api/UserService/RejectRequest/${id}`);
 
     if (!response?.isSuccess) {
-        throw new Error(response?.error?.description || "Failed to update request status");
+        throw new Error(response?.error?.description || "Failed to reject request");
+    }
+
+    return response.data;
+};
+
+// Resolve request
+export const resolveRequest = async (id) => {
+    if (!id) throw new Error('Request ID is required');
+
+    const { data: response } = await api.put(`/api/UserService/ResolveRequest/${id}`);
+
+    if (!response?.isSuccess) {
+        throw new Error(response?.error?.description || "Failed to resolve request");
+    }
+
+    return response.data;
+};
+
+// Contact request
+export const contactRequest = async (id) => {
+    if (!id) throw new Error('Request ID is required');
+
+    const { data: response } = await api.put(`/api/UserService/ContactRequest/${id}`);
+
+    if (!response?.isSuccess) {
+        throw new Error(response?.error?.description || "Failed to mark request as contacted");
     }
 
     return response.data;
