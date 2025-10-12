@@ -58,8 +58,8 @@ export const createUser = async (userData) => {
 // Get a single user by ID
 export const getUserById = async (userId) => {
     if (!userId) throw new Error('User ID is required');
-    const { data } = await api.get(`/api/ApplicationUsers/${userId}`);
-    return data;
+    const { data } = await api.get(`/api/ApplicationUsers/GetById/${userId}`);
+    return data.data;
 };
 
 // Update user details
