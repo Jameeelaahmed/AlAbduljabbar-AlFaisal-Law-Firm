@@ -5,8 +5,32 @@ import { useState } from 'react';
 // components
 import GenericTable from '../../../components/AdminComponents/Table/GenericTable';
 import Headline from "../../../components/AdminComponents/Headline/Headline";
+import { useTranslation } from "react-i18next";
+import { useNavigate } from "react-router-dom";
 function Requests() {
+    const { t } = useTranslation();
+    const navigate = useNavigate()
     const [statusFilter, setStatusFilter] = useState("");
+
+    const getStatusLabel = (statusCode) => {
+        switch (statusCode) {
+            case 0: return "قيد الانتظار";
+            case 1: return "قيد المراجعة";
+            case 2: return "تم الحل";
+            case 3: return "مرفوض";
+            default: return "غير معروف";
+        }
+    };
+
+    const getStatusStyles = (statusCode) => {
+        switch (statusCode) {
+            case 0: return "bg-pendingBg text-pending";
+            case 1: return "bg-inProgressBg text-inProgress";
+            case 2: return "bg-succeededBg text-succeeded";
+            case 3: return "bg-deniedBg text-denied";
+            default: return "bg-gray-400 text-white";
+        }
+    };
 
     const tableColumns = [
         {
@@ -14,30 +38,43 @@ function Requests() {
             header: "رقم الطلب",
         },
         {
-            key: "customer",
-            header: "اسم العميل",
+            key: "userID",
+            header: "العميل",
+            render: (userId) => (
+                <span className="text-primary">{`عميل ${userId}`}</span>
+            ),
         },
         {
-            key: "branch",
-            header: "الفرع",
+            key: "serviceID",
+            header: "الخدمة",
+            render: (serviceId) => (
+                <span className="text-gray-600">{`خدمة ${serviceId}`}</span>
+            ),
+        },
+        {
+            key: "title",
+            header: "العنوان",
+        },
+        {
+            key: "description",
+            header: "الوصف",
+            render: (description) => (
+                <span className="line-clamp-2">{description}</span>
+            ),
+        },
+        {
+            key: "createdAt",
+            header: "تاريخ الإنشاء",
+            render: (date) => new Date(date).toLocaleDateString('ar-SA'),
         },
         {
             key: "status",
             header: "الحالة",
             render: (status) => (
                 <span
-                    className={`px-3 py-1 rounded-full text-sm font-medium ${status === "تم الحل"
-                        ? "bg-succeededBg text-succeeded"
-                        : status === "قيد الانتظار"
-                            ? "bg-pendingBg text-pending"
-                            : status === "قيد المراجعة"
-                                ? "bg-inProgressBg text-inProgress"
-                                : status === "مرفوض"
-                                    ? "bg-deniedBg text-denied"
-                                    : "bg-gray-400 text-white"
-                        }`}
+                    className={`px-3 py-1 rounded-full text-sm font-medium ${getStatusStyles(status)}`}
                 >
-                    {status}
+                    {getStatusLabel(status)}
                 </span>
             ),
         },
@@ -45,18 +82,9 @@ function Requests() {
 
     const tableActions = [
         {
-            label: "تحديث الحالة",
+            label: t("Requests.Request Details"),
             onClick: (request) => {
-                console.log("Update status for:", request);
-                // Add your status update logic here
-            },
-            className: "text-gray-500 hover:bg-gray-50",
-        },
-        {
-            label: "إضافة ملاحظة",
-            onClick: (request) => {
-                console.log("Add note for:", request);
-                // Add your note logic here
+                navigate(`/admin/requests/${request.id}`)
             },
             className: "text-gray-500 hover:bg-gray-50",
         },
@@ -78,8 +106,8 @@ function Requests() {
                     الكل
                 </button>
                 <button
-                    onClick={() => setStatusFilter("قيد الانتظار")}
-                    className={`px-3 py-2 sm:px-4 sm:py-2 border rounded-lg hover:bg-gray-100 cursor-pointer transition-all text-xs sm:text-sm md:text-base flex-shrink-0 ${statusFilter === "قيد الانتظار"
+                    onClick={() => setStatusFilter("0")}
+                    className={`px-3 py-2 sm:px-4 sm:py-2 border rounded-lg hover:bg-gray-100 cursor-pointer transition-all text-xs sm:text-sm md:text-base flex-shrink-0 ${statusFilter === "0"
                         ? "bg-primary text-white border-primary shadow-md"
                         : "bg-white text-primary border-gray-400 hover:border-primary"
                         }`}
@@ -87,8 +115,8 @@ function Requests() {
                     قيد الانتظار
                 </button>
                 <button
-                    onClick={() => setStatusFilter("تم الحل")}
-                    className={`px-3 py-2 sm:px-4 sm:py-2 border rounded-lg hover:bg-gray-100 cursor-pointer transition-all text-xs sm:text-sm md:text-base flex-shrink-0 ${statusFilter === "تم الحل"
+                    onClick={() => setStatusFilter("2")}
+                    className={`px-3 py-2 sm:px-4 sm:py-2 border rounded-lg hover:bg-gray-100 cursor-pointer transition-all text-xs sm:text-sm md:text-base flex-shrink-0 ${statusFilter === "2"
                         ? "bg-primary text-white border-primary shadow-md"
                         : "bg-white text-primary border-gray-400 hover:border-primary"
                         }`}
@@ -96,8 +124,8 @@ function Requests() {
                     تم الحل
                 </button>
                 <button
-                    onClick={() => setStatusFilter("قيد المراجعة")}
-                    className={`px-3 py-2 sm:px-4 sm:py-2 border rounded-lg hover:bg-gray-100 cursor-pointer transition-all text-xs sm:text-sm md:text-base flex-shrink-0 ${statusFilter === "قيد المراجعة"
+                    onClick={() => setStatusFilter("1")}
+                    className={`px-3 py-2 sm:px-4 sm:py-2 border rounded-lg hover:bg-gray-100 cursor-pointer transition-all text-xs sm:text-sm md:text-base flex-shrink-0 ${statusFilter === "1"
                         ? "bg-primary text-white border-primary shadow-md"
                         : "bg-white text-primary border-gray-400 hover:border-primary"
                         }`}
@@ -106,15 +134,16 @@ function Requests() {
                 </button>
             </div>
 
-            {/* Table using GenericTableContainer */}
+            {/* Table Container */}
             <div className="bg-white rounded-lg shadow-sm overflow-hidden">
                 <GenericTable
                     useDataHook={useRequests}
                     columns={tableColumns}
                     actions={tableActions}
-                    perPage={5}
+                    pageSize={5}
+                    initialPage={1}
                     filters={{
-                        statusFilter,
+                        status: statusFilter || null
                     }}
                 />
             </div>
