@@ -127,8 +127,8 @@ function Hero() {
                         <span className={`text-white`}>محامون و مستشاورن</span>
                         <span className='text-[#f7c630] text-sm font-bold'>اضغط لرؤية بيانات الشركه</span>
                     </div>
-                    <div className={`absolute ltr:right-2 rtl:left-2 mt-5 w-6 backdrop-blur-xl shadow-2xl rounded-lg border border-primary p-2 z-60 text-white
-                    transform transition-transform duration-300 ease-in-out origin-top
+                    <div className={`absolute top-full ltr:right-0 rtl:left-0 mt-2 w-64 max-w-[calc(100vw-2rem)] backdrop-blur-xl shadow-2xl rounded-lg border border-primary p-3 z-70 text-white
+                   transform transition-transform duration-300 ease-in-out origin-top
                     ${isLogo2DropDown ? 'scale-y-100 opacity-100' : 'scale-y-0 opacity-0'}
                     flex flex-col
                     `}>
