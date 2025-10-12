@@ -211,7 +211,7 @@ function Header() {
 
             {/* Mobile Slide Menu */}
             < div className={`
-                fixed top-0 left-0 w-full bg-white ${isScrolled && "bg-primary/50"} z-50 shadow-lg transform transition-transform duration-300 ease-in-out lg:hidden
+                fixed top-0 rtl:right-0 ltr:left-0 w-full bg-white ${isScrolled && "bg-primary/50"} z-50 shadow-lg transform transition-transform duration-300 ease-in-out lg:hidden
                 ${isMobileMenuOpen ? 'translate-y-0' : '-translate-y-full'}
             `}>
                 {/* Mobile menu content with top padding to account for fixed header */}
@@ -298,7 +298,7 @@ function Header() {
 
             {/* Alternate mobile logo - visible on sm and md only, fixed on scroll */}
             <div div
-                className={`lg:hidden fixed top-0 left-0 w-full flex items-center justify-center gap-3 px-4 py-2 z-40 transition-all duration-300 bg-white/80 backdrop-blur-md shadow-md`}
+                className={`lg:hidden fixed top-0 rtl:right-0 ltr:left-0 w-full flex items-center justify-center gap-3 px-4 py-2 z-40 transition-all duration-300 bg-white/80 backdrop-blur-md shadow-md`}
             >
                 <img src={logo1} alt="logo1" className="w-10 h-10 object-contain" />
                 <img src={logo2} alt="logo2" className="w-10 h-10 object-contain" />
