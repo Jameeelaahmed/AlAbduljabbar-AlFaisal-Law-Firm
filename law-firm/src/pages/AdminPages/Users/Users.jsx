@@ -6,6 +6,7 @@ import UpdateUser from "../../../components/AdminComponents/Modals/UpdateUser/Up
 import DeleteUser from "../../../components/AdminComponents/Modals/DeleteUser/DeleteUser";
 import { useUsers } from "../../../hooks/useUsers";
 import AddUser from "../../../components/AdminComponents/Modals/AddUser/AddUser";
+import { useTranslation } from "react-i18next";
 
 function Users() {
     const [branchFilter, setBranchFilter] = useState("");
@@ -17,7 +18,7 @@ function Users() {
     const editUserRef = useRef(null);
     const deleteUSerRef = useRef(null);
     const createUserRef = useRef(null);
-
+    const { t } = useTranslation()
     // 🔹 Debounce search input
     useEffect(() => {
         const handler = setTimeout(() => {
@@ -199,7 +200,7 @@ function Users() {
             {/* Delete User Modal */}
             <Modal
                 ref={deleteUSerRef}
-                title="حذف المستخدم"
+                title={t("Users.Delete User")}
                 onClose={(e) => {
                     e?.stopPropagation?.();
                     closeDeleteUserModal();
@@ -215,7 +216,7 @@ function Users() {
                     />
                 )}
             </Modal>
-        </div>
+        </div >
     );
 }
 

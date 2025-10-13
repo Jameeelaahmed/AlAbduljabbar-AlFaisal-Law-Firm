@@ -102,8 +102,8 @@ export default function AddUser({ onSuccess, onFailure }) {
                                         disabled={isSubmitting || isLoading}
                                     >
                                         <option value="Admin">{t("Users.Admin")}</option>
-                                        <option value="Support">{t("Users.Support")}</option>
-                                        <option value="Client">{t("Users.Client")}</option>
+                                        <option value="CustomerService">{t("Users.Support")}</option>
+                                        <option value="User">{t("Users.Client")}</option>
                                     </Field>
                                     <ErrorMessage name="role" component="div" className="text-red-500 text-xs mt-1 font-medium" />
                                 </div>

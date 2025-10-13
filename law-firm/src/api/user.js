@@ -64,9 +64,7 @@ export const getUserById = async (userId) => {
 
 // Update user details
 export const updateUser = async ({ id, data }) => {
-    console.log("id", id);       // now logs correctly
-    console.log("data", data);   // now logs correctly
-    const { data: response } = await api.put(`/api/ApplicationUsers/Update/${id}`, data);
+    const { data: response } = await api.put(`/api/ApplicationUsers/Update`, { id, ...data });
     return response;
 };
 

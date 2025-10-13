@@ -17,16 +17,16 @@ function UpdateUser({ userId, onSuccess, onFailure }) {
                 <Formik
                     enableReinitialize
                     initialValues={{
-                        nameEn: user.fullNameEn || "",
-                        nameAr: user.fullNameAr || "",
+                        FullNameEn: user.fullNameEn || "",
+                        FullNameAr: user.fullNameAr || "",
                         email: user.email || "",
                         role: user.role || "Admin",
                         mobileNumber: user.mobileNumber || "",
                         whatsAppNumber: user.whatsAppNumber || "",
                     }}
                     validationSchema={Yup.object({
-                        nameEn: Yup.string().min(3).required(t("English name is required")),
-                        nameAr: Yup.string().min(3).required(t("Arabic name is required")),
+                        FullNameEn: Yup.string().min(3).required(t("English name is required")),
+                        FullNameAr: Yup.string().min(3).required(t("Arabic name is required")),
                         email: Yup.string().email().required(t("Email is required")),
                         role: Yup.string().required(t("Role is required")),
                         mobileNumber: Yup.string().required(t("Mobile number is required")),
@@ -51,8 +51,8 @@ function UpdateUser({ userId, onSuccess, onFailure }) {
                 >
                     {({ isSubmitting, errors, touched }) => (
                         <Form className="space-y-4" onClick={(e) => e.stopPropagation()} onBlur={(e) => e.stopPropagation()}>
-                            <FormField name="nameAr" label={t("Users.Name in Arabic")} dir="rtl" errors={errors} touched={touched} disabled={isSubmitting || isUpdating} />
-                            <FormField name="nameEn" label={t("Users.Name in English")} dir="ltr" errors={errors} touched={touched} disabled={isSubmitting || isUpdating} />
+                            <FormField name="FullNameAr" label={t("Users.Name in Arabic")} dir="rtl" errors={errors} touched={touched} disabled={isSubmitting || isUpdating} />
+                            <FormField name="FullNameEn" label={t("Users.Name in English")} dir="ltr" errors={errors} touched={touched} disabled={isSubmitting || isUpdating} />
                             <FormField name="email" label={t("Users.Email")} type="email" errors={errors} touched={touched} disabled={isSubmitting || isUpdating} />
                             <div className="space-y-2">
                                 <label className="text-sm font-semibold text-primary">{t("Users.Role")}</label>

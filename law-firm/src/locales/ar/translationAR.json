@@ -162,7 +162,8 @@
   },
   "Users": {
     "Users": "المستخدمين",
-    "User deleted successfully": "تم حذف المستخدم بنجاح",
+    "User Created Successfully": "تم اضافة المستخدم بنجاح",
+    "User Deleted successfully": "تم حذف المستخدم بنجاح",
     "Failed to delete user": "فشل حذف المستخدم",
     "User updated successfully": "تم تحديث المستخدم بنجاح",
     "Failed to update user": "فشل تحديث المستخدم",
