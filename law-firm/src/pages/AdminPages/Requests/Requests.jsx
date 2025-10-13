@@ -118,6 +118,15 @@ function Requests() {
                 >
                     {t("Requests.Status.Contacted")}
                 </button>
+                <button
+                    onClick={() => setStatusFilter("3")}
+                    className={`px-3 py-2 sm:px-4 sm:py-2 border rounded-lg hover:bg-gray-100 cursor-pointer transition-all text-xs sm:text-sm md:text-base flex-shrink-0 ${statusFilter === "3"
+                        ? "bg-primary text-white border-primary shadow-md"
+                        : "bg-white text-primary border-gray-400 hover:border-primary"
+                        }`}
+                >
+                    {t("Requests.Status.Rejected")}
+                </button>
             </div>
 
             {/* Table Container */}

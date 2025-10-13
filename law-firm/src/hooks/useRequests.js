@@ -17,9 +17,9 @@ import {
 import { toast } from "react-toastify";
 
 // Hook for fetching requests list with pagination and filters
-export function useRequests({ searchTerm = "", pageIndex = 1, pageSize = 5, status = null, branchId = null } = {}) {
+export function useRequests({ pageIndex = 1, pageSize = 5, status = null } = {}) {
     return useQuery({
-        queryKey: ["requests", { searchTerm, pageIndex, pageSize, status, branchId }],
+        queryKey: ["requests", { pageIndex, pageSize, status }],
         queryFn: fetchRequests,
         keepPreviousData: true,
     });
