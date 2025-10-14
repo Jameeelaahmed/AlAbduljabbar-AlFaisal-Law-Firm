@@ -145,7 +145,7 @@
       "loading": "جاري التحميل...",
       "loadError": "حدث خطأ أثناء تحميل البيانات",
       "notFound": "لم يتم العثور على الطلب",
-      "noContent":"لا يوجد طلبات لعرضها"
+      "noContent": "لا يوجد طلبات لعرضها"
     },
     "Team": {
       "reviewTeam": "فريق المراجعة",
@@ -201,5 +201,56 @@
   },
   "OurVision": {
     "Our Vision and Mission": "رؤيتنا ورسالتنا"
+  },
+  "NotFound": {
+    "title": "الصفحة غير موجودة",
+    "subtitle": "عذراً، الصفحة التي تبحث عنها غير موجودة أو تم نقلها",
+    "description": "قد تكون الصفحة قد تم حذفها أو تغيير عنوانها أو أنها غير متاحة مؤقتاً",
+    "goBack": "العودة للخلف",
+    "goHome": "العودة للرئيسية",
+    "search": "البحث",
+    "errorCode": "رمز الخطأ",
+    "lostInSpace": "ضائع في الفضاء الرقمي",
+    "replayAnimation": "إعادة تشغيل الرسوم المتحركة"
+  },
+  "ForgetPassword": {
+    "title": "استعادة كلمة المرور",
+    "subtitle": "أدخل بريدك الإلكتروني وسنرسل لك رمز التحقق",
+    "email": "البريد الإلكتروني",
+    "emailPlaceholder": "example@email.com",
+    "emailRequired": "البريد الإلكتروني مطلوب",
+    "emailInvalid": "عنوان البريد الإلكتروني غير صحيح",
+    "sendCode": "إرسال رمز التحقق",
+    "sending": "جاري الإرسال...",
+    "backToLogin": "العودة إلى تسجيل الدخول",
+    "verifyTitle": "تحقق من الرمز",
+    "verifySubtitle": "أدخل الرمز المكون من 6 أرقام المرسل إلى بريدك الإلكتروني",
+    "otpLabel": "رمز التحقق",
+    "otpRequired": "الرمز مطلوب",
+    "otpLength": "يجب أن يكون الرمز 6 أرقام",
+    "verifyCode": "تحقق من الرمز",
+    "verifying": "جاري التحقق...",
+    "resendTimer": "يمكنك طلب رمز جديد خلال",
+    "resendCode": "إعادة إرسال الرمز",
+    "resetTitle": "إعادة تعيين كلمة المرور",
+    "resetSubtitle": "أدخل كلمة المرور الجديدة",
+    "newPassword": "كلمة المرور الجديدة",
+    "newPasswordPlaceholder": "أدخل كلمة المرور الجديدة",
+    "confirmPassword": "تأكيد كلمة المرور",
+    "confirmPasswordPlaceholder": "أعد إدخال كلمة المرور",
+    "passwordRequired": "كلمة المرور الجديدة مطلوبة",
+    "passwordMinLength": "كلمة المرور يجب أن تكون 6 أحرف على الأقل",
+    "confirmPasswordRequired": "تأكيد كلمة المرور مطلوب",
+    "passwordsNotMatch": "كلمات المرور غير متطابقة",
+    "resetPassword": "إعادة تعيين كلمة المرور",
+    "resetting": "جاري إعادة التعيين...",
+    "passwordRequirements": "متطلبات كلمة المرور:",
+    "passwordRequirement1": "يجب أن تكون 6 أحرف على الأقل",
+    "passwordRequirement2": "يجب أن تتطابق كلمات المرور",
+    "codeSent": "تم إرسال رمز التحقق إلى بريدك الإلكتروني بنجاح",
+    "wrongCode": "رمز التحقق غير صحيح أو منتهي الصلاحية",
+    "serverError": "حدث خطأ أثناء محاولة إرسال الرمز، حاول مجددًا لاحقًا",
+    "networkError": "تعذر الاتصال بالخادم. تحقق من الاتصال بالإنترنت وحاول مرة أخرى",
+    "passwordChanged": "تم تغير كلمة المرور بنجاح"
   }
 }
