@@ -25,9 +25,9 @@ export function useRequests({ pageIndex = 1, pageSize = 5, status = null } = {})
         keepPreviousData: true,
     });
 }
-export function useRequestsByBranch({ pageIndex = 1, pageSize = 5, status = null } = {}) {
+export function useRequestsByBranch({ pageIndex = 1, pageSize = 5, status = null, branchId = null } = {}) {
     return useQuery({
-        queryKey: ["requests", { pageIndex, pageSize, status }],
+        queryKey: ["requests", { pageIndex, pageSize, status, branchId }],
         queryFn: fetchRequestsByBranch,
         keepPreviousData: true,
     });
@@ -35,7 +35,7 @@ export function useRequestsByBranch({ pageIndex = 1, pageSize = 5, status = null
 export function useRequestsByRole({ pageIndex = 1, pageSize = 5, status = null } = {}) {
     const { user } = useAuthStore();
     const isCustomerService = user?.lastRole === "CustomerService";
-
+    console.log("user branch", user?.branchId)
     if (isCustomerService) {
         return useRequestsByBranch({
             pageIndex,

@@ -12,7 +12,7 @@ export const useAuthStore = create(
             refreshTokenExpiration: null,
 
             login: (token, userData) => {
-                console.log("🟢 Logged in user:", userData);
+                console.log("🟢 Logged in user:", userData.branchId);
 
                 set({
                     accessToken: token,
@@ -21,6 +21,7 @@ export const useAuthStore = create(
                         name: userData.name,
                         email: userData.email,
                         lastRole: userData.lastRole,
+                        branchId: userData.branchId
                     },
                     refreshTokenExpiration: userData.refreshTokenExpiration || null,
                     isAuthenticated: true,

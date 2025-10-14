@@ -21,6 +21,7 @@ export const useLogin = () => {
                     email,
                     lastRole,
                     refreshTokenExpiration,
+                    branchId
                 } = userData;
 
                 // ✅ Save to Zustand (persisted automatically in sessionStorage)
@@ -30,6 +31,7 @@ export const useLogin = () => {
                     email,
                     lastRole,
                     refreshTokenExpiration,
+                    branchId
                 });
 
                 // ✅ Optional caching for React Query
