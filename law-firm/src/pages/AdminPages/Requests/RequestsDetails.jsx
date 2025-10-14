@@ -11,6 +11,8 @@ import { useUserById } from '../../../hooks/useUsers';
 import { useServiceById } from '../../../hooks/useServices';
 import { useQueryClient } from '@tanstack/react-query';
 import { useTranslation } from 'react-i18next';
+import { getFileTypeAndName, handleDownload } from '../../../utils/documents';
+
 function RequestsDetails({ initialRequest = null }) {
     const { t } = useTranslation();
     const { requestId } = useParams();
@@ -22,6 +24,13 @@ function RequestsDetails({ initialRequest = null }) {
         error
     } = useRequest(requestId);
     const queryInfo = useQueryClient().getQueryState(["request", requestId]);
+
+    const attachments = [
+        requestData?.photo1url,
+        requestData?.photo2url,
+        requestData?.photo3url,
+        requestData?.photo4url
+    ].filter(Boolean);
 
     // Fetch related data
     const { data: userData } = useUserById(requestData?.userID);
@@ -185,7 +194,7 @@ function RequestsDetails({ initialRequest = null }) {
 
                                     <div className="mt-4 sm:mt-6">
                                         <h3 className="text-sm sm:text-base font-medium text-gray-700 mb-2 sm:mb-3">{t("Requests.Attachments.title")}</h3>
-                                        {!requestData.attachments || requestData.attachments.length === 0 ? (
+                                        {!attachments || attachments.length === 0 ? (
                                             <div className="bg-gray-50 rounded-lg p-4 text-center">
                                                 <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-gray-400 mx-auto mb-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15.172 7l-6.586 6.586a2 2 0 102.828 2.828l6.414-6.586a4 4 0 00-5.656-5.656l-6.415 6.585a6 6 0 108.486 8.486L20.5 13" />
@@ -194,25 +203,49 @@ function RequestsDetails({ initialRequest = null }) {
                                             </div>
                                         ) : (
                                             <ul className="space-y-2">
-                                                {requestData.attachments.map(att => (
-                                                    <li key={att.id} className="flex flex-col sm:flex-row sm:items-center sm:justify-between bg-white border border-gray-100 rounded-md p-3 gap-2 sm:gap-3">
-                                                        <div className="flex items-center gap-3">
-                                                            <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 sm:h-5 sm:w-5 text-gray-500 flex-shrink-0" viewBox="0 0 20 20" fill="currentColor">
-                                                                <path fillRule="evenodd" d="M8 2a2 2 0 00-2 2v10a4 4 0 108 0V6a2 2 0 00-2-2H8z" clipRule="evenodd" />
-                                                            </svg>
-                                                            <div>
-                                                                <div className="text-xs sm:text-sm font-medium text-gray-900">{att.name}</div>
-                                                                <div className="text-xs text-gray-500">{att.size}</div>
-                                                            </div>
-                                                        </div>
+                                                {attachments.map((fileUrl, index) => {
+                                                    const { fileType, fileName } = getFileTypeAndName(fileUrl, index);
 
-                                                        <div className="flex items-center gap-2 self-end sm:self-auto">
-                                                            <button className="text-xs sm:text-sm text-gray-500 hover:underline">{t("Requests.Attachments.view")}</button>
-                                                            <button className="text-xs sm:text-sm text-blue-400">{t("Requests.Attachments.download")}</button>
-                                                        </div>
-                                                    </li>
-                                                ))}
+                                                    return (
+                                                        <li
+                                                            key={index}
+                                                            className="flex flex-col sm:flex-row sm:items-center sm:justify-between bg-white border border-gray-100 rounded-md p-3 gap-2 sm:gap-3"
+                                                        >
+                                                            <div className="flex items-center gap-3">
+                                                                <svg
+                                                                    xmlns="http://www.w3.org/2000/svg"
+                                                                    className="h-4 w-4 sm:h-5 sm:w-5 text-gray-500 flex-shrink-0"
+                                                                    viewBox="0 0 20 20"
+                                                                    fill="currentColor"
+                                                                >
+                                                                    <path
+                                                                        fillRule="evenodd"
+                                                                        d="M8 2a2 2 0 00-2 2v10a4 4 0 108 0V6a2 2 0 00-2-2H8z"
+                                                                        clipRule="evenodd"
+                                                                    />
+                                                                </svg>
+                                                                <div>
+                                                                    <div className="text-xs sm:text-sm font-medium text-gray-900">
+                                                                        {fileName}
+                                                                    </div>
+                                                                    <div className="text-xs text-gray-500">{fileType}</div>
+                                                                </div>
+                                                            </div>
+
+                                                            <div className="flex items-center gap-2 self-end sm:self-auto">
+                                                                <button
+                                                                    onClick={() => handleDownload(fileUrl, fileName)}
+                                                                    className="text-xs sm:text-sm text-blue-400 hover:underline"
+                                                                >
+                                                                    {t("Requests.Attachments.download")}
+                                                                </button>
+                                                            </div>
+                                                        </li>
+                                                    );
+                                                })}
                                             </ul>
+
+
                                         )}
                                     </div>
                                 </div>
