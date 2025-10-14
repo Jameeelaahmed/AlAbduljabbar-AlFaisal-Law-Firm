@@ -4,12 +4,12 @@ import i18n from "../../../i18n";
 import { useEffect } from "react";
 import { useTranslation } from 'react-i18next'
 import { useState } from "react";
+import { Link } from 'react-router-dom'
+import { useLocation } from "react-router-dom";
 // components
 import { useAuthStore } from "../../../store/useAuthStore";
 // icons
 import { LogOut, Menu, X, User, ChevronDown, Globe, UserCircle } from 'lucide-react'
-// libs
-import { Link } from 'react-router-dom'
 // imgs
 import logo1 from '../../../assets/Logos/Logo1.png'
 import logo2 from '../../../assets/Logos/Logo2.png'
@@ -17,6 +17,7 @@ import logo2 from '../../../assets/Logos/Logo2.png'
 function Header() {
     const { t } = useTranslation();
     const { isAuthenticated, user, logout } = useAuthStore();
+    const location = useLocation().pathname;
     const role = user?.lastRole;
     const name = user?.name;
     const [isScrolled, setIsScrolled] = useState(false);
@@ -42,8 +43,6 @@ function Header() {
         setIsDesktopDropdownOpen(false)
     }
 
-
-
     const handleLanguageChange = (lang) => {
         i18n
             .changeLanguage(lang)
@@ -54,7 +53,6 @@ function Header() {
             .catch((err) => console.error("Error changing language:", err));
     };
 
-
     function handleLogout() {
         logout();
     }
@@ -62,6 +60,9 @@ function Header() {
     useEffect(() => {
         document.documentElement.dir = currentLang === "ar" ? "rtl" : "ltr";
     }, [currentLang]);
+
+    const forceScrolled = location !== '/';
+    const headerActive = isScrolled || forceScrolled;
 
     // change header/logo appearance on scroll
     useEffect(() => {
@@ -84,30 +85,30 @@ function Header() {
     return (
         <>
             {/* Main Header */}
-            <div className={`fixed w-full ${!isScrolled && "flex justify-center items-center top-12"} transition-all z-50 ${isScrolled && "shadow-2xl"}`}>
+            <div className={`fixed w-full ${!headerActive && "flex justify-center items-center top-12"} transition-all z-50 ${headerActive && "shadow-2xl"}`}>
                 {/* Desktop Navigation */}
-                <ul className={`hidden lg:flex justify-around  bg-white ${!isScrolled && "rounded-full"} pr-2 pl-2 pt-2 pb-2`}>
-                    <li className={`pt-3 pb-3 pr-6 pl-6 rounded-full ${isScrolled ? "hover:bg-secondary hover:text-white " : "hover:bg-primary hover:text-white"} transition-all`}>
+                <ul className={`hidden lg:flex justify-around  bg-white ${!headerActive && "rounded-full"} pr-2 pl-2 pt-2 pb-2`}>
+                    <li className={`pt-3 pb-3 pr-6 pl-6 rounded-full ${headerActive ? "hover:bg-secondary hover:text-white " : "hover:bg-primary hover:text-white"} transition-all`}>
                         <Link>
                             <p>{t("landing.Home")}</p>
                         </Link>
                     </li>
-                    <li className={`pt-3 pb-3 pr-6 pl-6 rounded-full ${isScrolled ? "hover:bg-secondary hover:text-white " : "hover:bg-primary hover:text-white"} transition-all`}>
-                        <Link>
+                    <li className={`pt-3 pb-3 pr-6 pl-6 rounded-full ${headerActive ? "hover:bg-secondary hover:text-white " : "hover:bg-primary hover:text-white"} transition-all`}>
+                        <Link to="servicespage" >
                             <p>{t("landing.OurLawServices")}</p>
                         </Link>
                     </li>
-                    <li className={`pt-3 pb-3 pr-6 pl-6 rounded-full ${isScrolled ? "hover:bg-secondary hover:text-white " : "hover:bg-primary hover:text-white"} transition-all`}>
+                    <li className={`pt-3 pb-3 pr-6 pl-6 rounded-full ${headerActive ? "hover:bg-secondary hover:text-white " : "hover:bg-primary hover:text-white"} transition-all`}>
                         <Link>
                             <p>{t("landing.FAQ")}</p>
                         </Link>
                     </li>
-                    <li className={`pt-3 pb-3 pr-6 pl-6 rounded-full ${isScrolled ? "hover:bg-secondary hover:text-white " : "hover:bg-primary hover:text-white"} transition-all`}>
+                    <li className={`pt-3 pb-3 pr-6 pl-6 rounded-full ${headerActive ? "hover:bg-secondary hover:text-white " : "hover:bg-primary hover:text-white"} transition-all`}>
                         <Link>
                             <p>{t("landing.AboutUs")}</p>
                         </Link>
                     </li>
-                    <li className={`pt-3 pb-3 pr-6 pl-6 rounded-full ${isScrolled ? "hover:bg-secondary hover:text-white " : "hover:bg-primary hover:text-white"} transition-all`}>
+                    <li className={`pt-3 pb-3 pr-6 pl-6 rounded-full ${headerActive ? "hover:bg-secondary hover:text-white " : "hover:bg-primary hover:text-white"} transition-all`}>
                         <Link>
                             <p>{t("landing.ContactUs")}</p>
                         </Link>
@@ -197,7 +198,7 @@ function Header() {
                                 )}
                             </>
                         ) : (
-                            <div className={`font-bold ${isScrolled ? 'text-white' : 'text-primary'}mr-3 ml-3`}>
+                            <div className={`font-bold ${headerActive ? 'text-white' : 'text-primary'}mr-3 ml-3`}>
                                 <Link to='login'>
                                     {t("landing.Login")}
                                 </Link>
@@ -211,7 +212,7 @@ function Header() {
 
             {/* Mobile Slide Menu */}
             < div className={`
-                fixed top-0 rtl:right-0 ltr:left-0 w-full bg-white ${isScrolled && "bg-primary/50"} z-50 shadow-lg transform transition-transform duration-300 ease-in-out lg:hidden
+                fixed top-0 rtl:right-0 ltr:left-0 w-full bg-white ${headerActive && "bg-primary/50"} z-50 shadow-lg transform transition-transform duration-300 ease-in-out lg:hidden
                 ${isMobileMenuOpen ? 'translate-y-0' : '-translate-y-full'}
             `}>
                 {/* Mobile menu content with top padding to account for fixed header */}
@@ -224,7 +225,7 @@ function Header() {
                             </Link>
                         </li>
                         <li className='py-3 px-4 rounded text-secondary hover:bg-primary hover:text-white transition-all'>
-                            <Link onClick={toggleMobileMenu}>
+                            <Link to="servicespage" onClick={toggleMobileMenu}>
                                 <p>{t("landing.OurLawServices")}</p>
                             </Link>
                         </li>
