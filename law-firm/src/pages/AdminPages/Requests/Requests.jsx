@@ -1,5 +1,5 @@
 // hooks
-import { useRequests } from "../../../hooks/useRequests";
+import { useRequestsByRole } from "../../../hooks/useRequests";
 // libs
 import { useState } from 'react';
 // components
@@ -7,6 +7,7 @@ import GenericTable from '../../../components/AdminComponents/Table/GenericTable
 import Headline from "../../../components/AdminComponents/Headline/Headline";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
+
 function Requests() {
     const { t } = useTranslation();
     const navigate = useNavigate()
@@ -132,7 +133,7 @@ function Requests() {
             {/* Table Container */}
             <div className="bg-white rounded-lg shadow-sm overflow-hidden">
                 <GenericTable
-                    useDataHook={useRequests}
+                    useDataHook={useRequestsByRole}
                     columns={tableColumns}
                     actions={tableActions}
                     pageSize={5}

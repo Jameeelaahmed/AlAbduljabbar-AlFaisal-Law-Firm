@@ -33,6 +33,38 @@ export const fetchRequests = async ({ queryKey }) => {
         },
     };
 };
+export const fetchRequestsByBranch = async ({ queryKey }) => {
+    const [
+        _key,
+        { searchTerm = "", pageIndex = 1, pageSize = 5, status = null, branchId = null },
+    ] = queryKey;
+
+    const params = {
+        SearchTerm: searchTerm,
+        PageIndex: pageIndex,
+        PageSize: pageSize,
+    };
+
+    // Add optional filters
+    if (status) params.Status = status;
+    if (branchId) params.BranchId = branchId;
+
+    const { data: response } = await api.get(`/api/UserService/GetAllByBranchId/${branchId}`, { params });
+
+    if (!response?.isSuccess) {
+        throw new Error(response?.error?.description || "Failed to fetch requests");
+    }
+
+    return {
+        data: response.data,
+        meta: {
+            current_page: pageIndex,
+            page_size: pageSize,
+            total_records: response.data.length,
+            total_pages: Math.max(1, Math.ceil(response.data.length / pageSize)),
+        },
+    };
+};
 
 // Get request details by ID
 export const getRequestById = async (requestId) => {
