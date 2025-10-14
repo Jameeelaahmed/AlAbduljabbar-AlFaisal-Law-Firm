@@ -8,6 +8,7 @@ import AdminLayout from "../layouts/AdminLayout";
 import ClientLayout from "../layouts/ClientLayout";
 const Dashboard = lazy(() => import("../pages/AdminPages/Dashboard/Dashboard"));
 import NotFoundPage from "../pages/NotFoundPage";
+import LawServicesPage from "../pages/ClientPages/ServicesPage/ServicesPage";
 
 //lazy loaded components
 const LoginRegister = lazy(() => import("../pages/AuthPages/LoginRegisterPage/LoginRegisterPage"));
@@ -109,6 +110,12 @@ const routes = createBrowserRouter([
                 path: '/', element:
                     // <ProtectedRoute allowedRoles={['User']}>
                     <Landing />
+                // </ProtectedRoute>
+            },
+            {
+                path: '/servicespage', element:
+                    // <ProtectedRoute allowedRoles={['User']}>
+                    <LawServicesPage />
                 // </ProtectedRoute>
             }
         ]
