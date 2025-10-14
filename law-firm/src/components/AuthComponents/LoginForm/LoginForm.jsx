@@ -6,6 +6,7 @@ import { Eye, EyeOff, Mail, Lock } from 'lucide-react';
 import * as Yup from 'yup';
 import { Formik, Field, Form, ErrorMessage } from 'formik';
 import { useState } from "react";
+import { Link } from "react-router-dom";
 function LoginForm() {
     const loginMutation = useLogin();
     const [showPassword, setShowPassword] = useState(false);
@@ -86,9 +87,9 @@ function LoginForm() {
                             <div className="text-center mt-6">
                                 <p className="text-sm text-primary">
                                     نسيت كلمة المرور؟{' '}
-                                    <a href="#" className="text-secondary hover:text-secondary font-semibold hover:underline transition-colors">
+                                    <Link to="/forget-password" className="text-secondary hover:text-secondary font-semibold hover:underline transition-colors">
                                         استعادة كلمة المرور
-                                    </a>
+                                    </Link>
                                 </p>
                             </div>
 

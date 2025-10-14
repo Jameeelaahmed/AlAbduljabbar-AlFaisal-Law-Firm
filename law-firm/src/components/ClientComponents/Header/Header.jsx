@@ -87,8 +87,8 @@ function Header() {
             {/* Main Header */}
             <div className={`fixed w-full ${!headerActive && "flex justify-center items-center top-12"} transition-all z-50 ${headerActive && "shadow-2xl"}`}>
                 {/* Desktop Navigation */}
-                <ul className={`hidden lg:flex justify-around  bg-white ${!headerActive && "rounded-full"} pr-2 pl-2 pt-2 pb-2`}>
-                    <li className={`pt-3 pb-3 pr-6 pl-6 rounded-full ${headerActive ? "hover:bg-secondary hover:text-white " : "hover:bg-primary hover:text-white"} transition-all`}>
+                <ul className={`hidden lg:flex justify-around  bg-white ${!headerActive && "rounded-full"} pr-4 pl-4 pt-2 pb-2 items-center`}>
+                    <li className={`rounded-full ${headerActive ? "hover:bg-secondary hover:text-white " : "hover:bg-primary hover:text-white"} transition-all`}>
                         <Link>
                             <p>{t("landing.Home")}</p>
                         </Link>
