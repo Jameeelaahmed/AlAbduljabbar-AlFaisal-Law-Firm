@@ -29,7 +29,7 @@ export const useAuthStore = create(
 
             logout: async () => {
                 try {
-                    await logoutUser();
+                    // await logoutUser();
                 } catch (err) {
                     console.warn("⚠️ Logout request failed (ignored):", err);
                 }

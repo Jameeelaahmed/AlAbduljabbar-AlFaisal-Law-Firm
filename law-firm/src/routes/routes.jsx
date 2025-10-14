@@ -27,7 +27,7 @@ const routes = createBrowserRouter([
     {
         path: '/admin',
         element:
-            <ProtectedRoute allowedRoles={['Admin']}>
+            <ProtectedRoute allowedRoles={['Admin', 'CustomerService']}>
                 <AdminLayout />
             </ProtectedRoute>
         ,
@@ -65,7 +65,7 @@ const routes = createBrowserRouter([
             {
                 path: "requests",
                 element: (
-                    <ProtectedRoute allowedRoles={['Admin']}>
+                    <ProtectedRoute allowedRoles={['Admin', 'CustomerService']}>
                         <Suspense fallback={<div>Loading Settings...</div>}>
                             <AdminRequests />
                         </Suspense>
