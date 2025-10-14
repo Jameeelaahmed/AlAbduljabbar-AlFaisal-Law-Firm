@@ -62,7 +62,7 @@ export const useCreateUser = () => {
             );
         },
         onSuccess: () => {
-            toast.success("✅ User created successfully!");
+            toast.success(t());
         },
         onSettled: () => {
             queryClient.invalidateQueries(["users"]);
@@ -82,7 +82,7 @@ export const useUpdateUser = () => {
             );
         },
         onSuccess: () => {
-            toast.success("📝 User updated successfully!");
+            toast.success(t("Users.User updated successfully"));
             queryClient.invalidateQueries(["users"]);
         },
     });
@@ -118,7 +118,7 @@ export const useDeleteUser = () => {
         },
 
         onSuccess: () => {
-            toast.success("🗑️ User deleted successfully!");
+            toast.success(t("Users.Are you sure you want to delete this user?"));
         },
 
         onSettled: () => {

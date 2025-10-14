@@ -11,17 +11,44 @@ import {
     contactRequest,
     addRequestNote,
     getRequestTimeline,
-    getRequestStats
+    getRequestStats,
+    fetchRequestsByBranch
 } from "../api/requests";
-
+import { useAuthStore } from "../store/useAuthStore";
 import { toast } from "react-toastify";
 
 // Hook for fetching requests list with pagination and filters
-export function useRequests({ searchTerm = "", pageIndex = 1, pageSize = 5, status = null, branchId = null } = {}) {
+export function useRequests({ pageIndex = 1, pageSize = 5, status = null } = {}) {
     return useQuery({
-        queryKey: ["requests", { searchTerm, pageIndex, pageSize, status, branchId }],
+        queryKey: ["requests", { pageIndex, pageSize, status }],
         queryFn: fetchRequests,
         keepPreviousData: true,
+    });
+}
+export function useRequestsByBranch({ pageIndex = 1, pageSize = 5, status = null } = {}) {
+    return useQuery({
+        queryKey: ["requests", { pageIndex, pageSize, status }],
+        queryFn: fetchRequestsByBranch,
+        keepPreviousData: true,
+    });
+}
+export function useRequestsByRole({ pageIndex = 1, pageSize = 5, status = null } = {}) {
+    const { user } = useAuthStore();
+    const isCustomerService = user?.lastRole === "CustomerService";
+
+    if (isCustomerService) {
+        return useRequestsByBranch({
+            pageIndex,
+            pageSize,
+            status,
+            branchId: user?.branchId,
+        });
+    }
+
+    return useRequests({
+        pageIndex,
+        pageSize,
+        status,
     });
 }
 

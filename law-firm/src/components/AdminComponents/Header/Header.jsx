@@ -10,7 +10,7 @@ function Header() {
 
     const [currentLang, setCurrentLang] = useState(() => {
         const savedLang = localStorage.getItem("selectedLanguage");
-        queryClient.invalidateQueries(); // 👈 forces refetch
+        queryClient.invalidateQueries(); 
         return savedLang || i18n.language;
     });
 

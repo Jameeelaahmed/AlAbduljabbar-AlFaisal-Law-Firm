@@ -1,5 +1,5 @@
 // hooks
-import { useRequests } from "../../../hooks/useRequests";
+import { useRequestsByRole } from "../../../hooks/useRequests";
 // libs
 import { useState } from 'react';
 // components
@@ -7,6 +7,7 @@ import GenericTable from '../../../components/AdminComponents/Table/GenericTable
 import Headline from "../../../components/AdminComponents/Headline/Headline";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
+
 function Requests() {
     const { t } = useTranslation();
     const navigate = useNavigate()
@@ -118,12 +119,21 @@ function Requests() {
                 >
                     {t("Requests.Status.Contacted")}
                 </button>
+                <button
+                    onClick={() => setStatusFilter("3")}
+                    className={`px-3 py-2 sm:px-4 sm:py-2 border rounded-lg hover:bg-gray-100 cursor-pointer transition-all text-xs sm:text-sm md:text-base flex-shrink-0 ${statusFilter === "3"
+                        ? "bg-primary text-white border-primary shadow-md"
+                        : "bg-white text-primary border-gray-400 hover:border-primary"
+                        }`}
+                >
+                    {t("Requests.Status.Rejected")}
+                </button>
             </div>
 
             {/* Table Container */}
             <div className="bg-white rounded-lg shadow-sm overflow-hidden">
                 <GenericTable
-                    useDataHook={useRequests}
+                    useDataHook={useRequestsByRole}
                     columns={tableColumns}
                     actions={tableActions}
                     pageSize={5}

@@ -1,16 +1,18 @@
 import { useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
+import { useTranslation } from "react-i18next";
 
 function GenericTable({ useDataHook, columns, actions, pageSize = 5, initialPage = 1, filters = {} }) {
     const [currentPage, setCurrentPage] = useState(initialPage);
     const [lastPageReached, setLastPageReached] = useState(false);
     const navigate = useNavigate();
-
+    const { t } = useTranslation();
     // Fetch data from hook
     const { data, isLoading, isError, error } = useDataHook({
         searchTerm: filters.search || "",
         branchId: filters.branch || null,
         role: filters.role || null,
+        status: filters.status || null,
         pageIndex: currentPage,
         pageSize,
     });
@@ -55,7 +57,7 @@ function GenericTable({ useDataHook, columns, actions, pageSize = 5, initialPage
                     {items.length === 0 ? (
                         <tr>
                             <td colSpan={columns.length + (actions ? 1 : 0)} className="text-center p-6">
-                                لا توجد بيانات لعرضها
+                                {t("Requests.Messages.noContent")}
                             </td>
                         </tr>
                     ) : (

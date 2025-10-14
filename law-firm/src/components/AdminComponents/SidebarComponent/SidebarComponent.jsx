@@ -18,7 +18,7 @@ import { NavLink } from "react-router-dom";
 function Sidebar() {
     const { t } = useTranslation();
     const { user } = useAuthStore();
-    const isCustomerService = user?.role === 'CustomerService';
+    const isCustomerService = user?.lastRole === 'CustomerService';
 
     const [isSidebarOpen, setIsSidebarOpen] = useState(() => {
         // Check if screen is large (>= 1024px) on initial load

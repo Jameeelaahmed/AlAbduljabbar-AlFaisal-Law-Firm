@@ -138,7 +138,8 @@
       "noteAddedError": "Error adding note",
       "loading": "Loading...",
       "loadError": "Error loading data",
-      "notFound": "Request not found"
+      "notFound": "Request not found",
+      "noContent": "No requests to show"
     },
     "Team": {
       "reviewTeam": "Review Team",
