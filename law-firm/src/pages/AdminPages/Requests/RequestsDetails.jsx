@@ -11,11 +11,14 @@ import { useUserById } from '../../../hooks/useUsers';
 import { useServiceById } from '../../../hooks/useServices';
 import { useTranslation } from 'react-i18next';
 import { getFileTypeAndName, handleDownload } from '../../../utils/documents';
+import { useAddRequestNote } from '../../../hooks/useRequests';
+import { toast } from 'react-toastify';
 
 function RequestsDetails() {
     const { t } = useTranslation();
     const { requestId } = useParams();
     const navigate = useNavigate();
+
     // Fetch request data
     const {
         data: requestData,
@@ -39,6 +42,7 @@ function RequestsDetails() {
     const { mutate: resolveRequest, isLoading: isResolving } = useResolveRequest();
     const { mutate: contactRequest, isLoading: isContacting } = useContactRequest();
     const { mutate: updateRequest, isLoading: isUpdating } = useUpdateRequest();
+    const { mutate: addRequestNote, isLoading: isAddingNote } = useAddRequestNote();
 
     // Notes state
     const [notes, setNotes] = useState('');
@@ -47,15 +51,21 @@ function RequestsDetails() {
     const handleAddNote = () => {
         if (!notes.trim()) return;
 
-        updateRequest(
-            { id: requestId, note: notes.trim() },
+        addRequestNote(
+            { requestId, content: notes.trim(), consultationId: null },
             {
                 onSuccess: () => {
+                    toast.success(t("Requests.NoteAdded"));
                     setNotes('');
-                }
+                },
+                onError: (err) => {
+                    toast.error(t("Requests.FailedNote"))
+                    console.error("Failed to add note:", err);
+                },
             }
         );
     };
+
 
     const getStatusLabel = (statusCode) => {
         switch (statusCode) {

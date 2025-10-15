@@ -2,12 +2,13 @@ import { useState, useEffect, useRef } from 'react';
 import i18n from '../../../i18n';
 import { Bell, Globe } from "lucide-react";
 import { useQueryClient } from "@tanstack/react-query";
+import { useAuthStore } from '../../../store/useAuthStore';
 
 function Header() {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
     const queryClient = useQueryClient();
     const menuRef = useRef(null);
-
+    const logout = useAuthStore((state) => state.logout)
     const [currentLang, setCurrentLang] = useState(() => {
         const savedLang = localStorage.getItem("selectedLanguage");
         queryClient.invalidateQueries();
@@ -109,7 +110,7 @@ function Header() {
                                     </button>
                                     <div className="border-t border-gray-100" />
                                     <button
-                                        onClick={() => { /* logout */ }}
+                                        onClick={() => logout()}
                                         className="w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-red-50 cursor-pointer"
                                     >
                                         Logout
