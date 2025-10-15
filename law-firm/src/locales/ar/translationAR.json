@@ -202,6 +202,37 @@
   "OurVision": {
     "Our Vision and Mission": "رؤيتنا ورسالتنا"
   },
+  "validations": {
+    "Title is required": "العنوان مطلوب",
+    "Description is required": "الوصف مطلوب",
+    "Too short": "قصير جدا",
+    "Please select a service": "يرجى اختيار خدمة",
+    "You can upload up to 4 files": "يمكنك تحميل ما يصل إلى 4 ملفات"
+  },
+  "Legal Services": "الخدمات القانونية",
+  "Comprehensive legal expertise across {SERVICES.length} practice areas. Find the specialized counsel you need for your unique situation.": "خبرة قانونية شاملة عبر {SERVICES.length} مجالات ممارسة. اعثر على الاستشارة المتخصصة التي تحتاجها لحالتك الفريدة.",
+  "Search legal services, expertise, or practice areas...": "ابحث عن خدمات قانونية أو خبرات أو مجالات ممارسة...",
+  "ESC": "إلغاء",
+  "Office Location": "موقع المكتب",
+  "Cairo": "القاهرة",
+  "KSA": "المملكة",
+  "services available": "الخدمات المتاحة",
+  "Practice Areas": "مجالات الممارسة",
+  "Branch Specific": "خاص بالفرع",
+  "Both Branches": "كلا الفرعين",
+  "Both": "كلاهما",
+  "No services found": "لم يتم العثور على خدمات",
+  "We couldn't find any services matching your search criteria. Try adjusting your search terms or browse all categories.": "لم نتمكن من العثور على أي خدمات تطابق معايير البحث. حاول تعديل كلمات البحث أو تصفح جميع الفئات.",
+  "Clear search": "مسح البحث",
+  "Clear Search": "مسح البحث",
+  "View All Services": "عرض جميع الخدمات",
+  "Featured": "مميز",
+  "Flexible": "مرن",
+  "Legal Service": "خدمة قانونية",
+  "additional services": "خدمات إضافية",
+  "Request Service": "طلب خدمة",
+  "Request": "طلب",
+  "Enter title": "أدخل العنوان",
   "NotFound": {
     "title": "الصفحة غير موجودة",
     "subtitle": "عذراً، الصفحة التي تبحث عنها غير موجودة أو تم نقلها",
@@ -285,7 +316,13 @@
     "codeSent": "تم إرسال رمز التحقق إلى بريدك الإلكتروني بنجاح",
     "wrongCode": "رمز التحقق غير صحيح أو منتهي الصلاحية",
     "serverError": "حدث خطأ أثناء محاولة إرسال الرمز، حاول مجددًا لاحقًا",
-    "networkError": "تعذر الاتصال بالخادم. تحقق من الاتصال بالإنترنت وحاول مرة أخرى",
-    "passwordChanged": "تم تغير كلمة المرور بنجاح"
-  }
+    "networkError": "تعذر الاتصال بالخادم. تحقق من الاتصال بالإنترنت وحاول مرة أخرى"
+  },
+  "passwordChanged": "تم تغير كلمة المرور بنجاح",
+  "Delete Service": "حذف الخدمة",
+  "Item to delete": "العنصر المراد حذفه",
+  "Irreversible Action": "إجراء لا رجعة فيه",
+  "This action cannot be undone.": "لا يمكن التراجع عن هذا الإجراء.",
+  "faq": "الأسئلة الشائعة",
+  "add questions": "إضافة أسئلة"
 }

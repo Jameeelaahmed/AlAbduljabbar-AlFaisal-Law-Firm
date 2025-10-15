@@ -114,7 +114,7 @@ function Users() {
                 headlineLabel="إدارة المستخدمين"
                 buttonLabel="إضافة مستخدم"
                 buttonIcon="+"
-                handleOpenCategoryModal={openCreateUserModal}
+                handleOpenModal={openCreateUserModal}
             />
 
             {/* Filters & Search */}

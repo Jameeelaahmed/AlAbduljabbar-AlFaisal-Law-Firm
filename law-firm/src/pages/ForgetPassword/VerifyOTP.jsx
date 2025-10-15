@@ -190,7 +190,7 @@ export default function VerifyOTP() {
                                     <button
                                         type="button"
                                         onClick={resendOTP}
-                                        className="flex items-center justify-center gap-2 text-sm text-secondary hover:text-primary transition-colors mx-auto"
+                                        className="flex items-center cursor-pointer justify-center gap-2 text-sm text-secondary hover:text-primary transition-colors mx-auto"
                                     >
                                         <RotateCcw className="w-4 h-4" />
                                         {t('ForgetPassword.resendCode')}
@@ -203,7 +203,7 @@ export default function VerifyOTP() {
                                 type="button"
                                 onClick={handleSubmit}
                                 disabled={otp.join('').length !== 6 || verifyOTPMutation.isPending}
-                                className={`w-full py-3 px-4 rounded-lg font-semibold text-white transition-all duration-300 transform ${otp.join('').length !== 6 || verifyOTPMutation.isPending
+                                className={`w-full py-3 px-4 rounded-lg cursor-pointer font-semibold text-white transition-all duration-300 transform ${otp.join('').length !== 6 || verifyOTPMutation.isPending
                                     ? 'bg-gray-400 cursor-not-allowed'
                                     : 'bg-primary hover:scale-[1.02] active:scale-[0.98] shadow-lg hover:shadow-xl'
                                     }`}

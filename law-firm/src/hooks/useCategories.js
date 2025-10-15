@@ -24,6 +24,18 @@ export const useGetCategoryForUpdate = (id) =>
         enabled: !!id,
     });
 
+// 🔹 Get Category By branchId
+
+export const useGetCategoryByBranchId = (branchId, options = {}) =>
+    useQuery({
+        queryKey: ["categoriesByBranch", branchId],
+        queryFn: () => categoryApi.getCategoryByBranchId(branchId),
+        enabled: !!branchId,
+        keepPreviousData: true,
+        staleTime: 1000 * 60 * 2, // 2 minutes (adjust as needed)
+        ...options,
+    });
+
 // 🔹 Create Category
 export const useCreateCategory = () => {
     const queryClient = useQueryClient();

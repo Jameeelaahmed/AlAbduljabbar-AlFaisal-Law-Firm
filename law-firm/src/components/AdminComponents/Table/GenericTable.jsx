@@ -103,7 +103,7 @@ function GenericTable({ useDataHook, columns, actions, pageSize = 5, initialPage
                     <button
                         onClick={handlePrev}
                         disabled={currentPage === 1}
-                        className="px-3 py-1 rounded-lg border bg-white text-gray-700 hover:bg-gray-100 disabled:opacity-50"
+                        className="px-3 py-1 rounded-lg border cursor-pointer bg-white text-gray-700 hover:bg-gray-100 disabled:opacity-50"
                     >
                         السابق
                     </button>
@@ -111,7 +111,7 @@ function GenericTable({ useDataHook, columns, actions, pageSize = 5, initialPage
                     <button
                         onClick={handleNext}
                         disabled={lastPageReached || currentItemCount === 0}
-                        className="px-3 py-1 rounded-lg border bg-white text-gray-700 hover:bg-gray-100 disabled:opacity-50"
+                        className="px-3 py-1 rounded-lg cursor-pointer border bg-white text-gray-700 hover:bg-gray-100 disabled:opacity-50"
                     >
                         التالي
                     </button>

@@ -121,7 +121,7 @@ function Header() {
                                 <div className="relative">
                                     <button
                                         onClick={toggleDesktopDropdown}
-                                        className="flex items-center bg-primary gap-2 py-2 px-3 text-white hover:bg-secondary rounded-3xl transition-all"
+                                        className="flex items-center cursor-pointer bg-primary gap-2 py-2 px-3 text-white hover:bg-secondary rounded-3xl transition-all"
                                     >
                                         <UserCircle />
                                         <ChevronDown
@@ -156,7 +156,7 @@ function Header() {
                                                 </span>
                                             </div>
                                             <button
-                                                className={`relative w-12 h-6 rounded-full transition-colors duration-200 focus:outline-none ${currentLang === "ar"
+                                                className={`relative w-12 h-6 cursor-pointer rounded-full transition-colors duration-200 focus:outline-none ${currentLang === "ar"
                                                     ? "bg-primary"
                                                     : "bg-secondary"
                                                     }`}
@@ -181,7 +181,7 @@ function Header() {
                                                 handleLogout();
                                                 closeDesktopDropdown();
                                             }}
-                                            className="w-full flex items-center gap-2 px-4 py-2 text-red-600 hover:bg-red-50 transition-all"
+                                            className="w-full flex cursor-pointer items-center gap-2 px-4 py-2 text-red-600 hover:bg-red-50 transition-all"
                                         >
                                             <LogOut size={16} />
                                             <span>{t("landing.Logout")}</span>
@@ -264,7 +264,7 @@ function Header() {
 
                                 {/* Language Toggle */}
                                 <button
-                                    className='flex items-center justify-center gap-2 py-3 px-4 bg-blue-100 text-blue-700 rounded hover:bg-blue-200 transition-all'
+                                    className='flex items-center cursor-pointer justify-center gap-2 py-3 px-4 bg-blue-100 text-blue-700 rounded hover:bg-blue-200 transition-all'
                                 >
                                     <Globe size={18} />
                                     <span>{currentLang === 'en' ? 'العربية' : 'English'}</span>
@@ -276,7 +276,7 @@ function Header() {
                                         handleLogout();
                                         toggleMobileMenu();
                                     }}
-                                    className='flex items-center justify-center gap-2 py-3 px-4 bg-red-500 text-white rounded hover:bg-red-600 transition-all'
+                                    className='flex items-center cursor-pointer justify-center gap-2 py-3 px-4 bg-red-500 text-white rounded hover:bg-red-600 transition-all'
                                 >
                                     <LogOut size={18} />
                                     <span>{t("landing.Logout")}</span>
@@ -310,7 +310,7 @@ function Header() {
                 {/* Mobile Menu Button */}
                 <button
                     onClick={toggleMobileMenu}
-                    className='p-2 text-primary hover:bg-gray-100 rounded'
+                    className='p-2 text-primary cursor-pointer hover:bg-gray-100 rounded'
                 >
                     {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
                 </button>

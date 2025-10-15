@@ -20,7 +20,7 @@ function Services() {
         categoryModalRef.current.close();
     }
 
-    const { data: categoriesResponse, isLoading, isError, error } = useAllCategories();
+    const { data: categoriesResponse } = useAllCategories();
 
     const categories = categoriesResponse || [];
 
@@ -94,8 +94,8 @@ function Services() {
     // --- end added filtering/search state ---
 
     return (
-        <div className='p-6 bg-gray-50 shadow-lg'>
-            <Headline headlineLabel={t("Services.Service Management")} buttonLabel={t("Services.Add New Category")} buttonIcon="+" handleOpenCategoryModal={handleOpenCategoryModal} />
+        <div className='min-h-screen p-4 sm:p-6 bg-gray-50 shadow-lg'>
+            <Headline headlineLabel={t("Services.Service Management")} buttonLabel={t("Services.Add New Category")} buttonIcon="+" handleOpenModal={handleOpenCategoryModal} />
             <Modal ref={categoryModalRef} title={t("Services.Add New Category")} onClose={handleCloseCategoryModal}>
                 <AddCategory onClose={handleCloseCategoryModal} />
             </Modal>
@@ -134,7 +134,7 @@ function Services() {
 
                 <button
                     onClick={() => { setSearch(""); setSelectedCategoryFilter(""); setSelectedBranchFilter(""); }}
-                    className="ml-2 px-3 py-2 border rounded bg-gray-100"
+                    className="ml-2 cursor-pointer px-3 py-2 border rounded bg-gray-100"
                     title={t("Services.Clear filters")}
                 >
                     {t("Services.Clear")}

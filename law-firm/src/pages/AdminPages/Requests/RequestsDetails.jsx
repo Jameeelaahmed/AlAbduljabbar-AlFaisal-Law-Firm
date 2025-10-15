@@ -9,11 +9,10 @@ import {
 } from '../../../hooks/useRequests';
 import { useUserById } from '../../../hooks/useUsers';
 import { useServiceById } from '../../../hooks/useServices';
-import { useQueryClient } from '@tanstack/react-query';
 import { useTranslation } from 'react-i18next';
 import { getFileTypeAndName, handleDownload } from '../../../utils/documents';
 
-function RequestsDetails({ initialRequest = null }) {
+function RequestsDetails() {
     const { t } = useTranslation();
     const { requestId } = useParams();
     const navigate = useNavigate();
@@ -23,7 +22,6 @@ function RequestsDetails({ initialRequest = null }) {
         isLoading,
         error
     } = useRequest(requestId);
-    const queryInfo = useQueryClient().getQueryState(["request", requestId]);
 
     const attachments = [
         requestData?.photo1url,
@@ -113,7 +111,7 @@ function RequestsDetails({ initialRequest = null }) {
                 </div>
                 <button
                     onClick={() => navigate('/admin/requests')}
-                    className="px-4 py-2 bg-primary text-white rounded-md hover:bg-primary/80"
+                    className="px-4 py-2 bg-primary cursor-pointer text-white rounded-md hover:bg-primary/80"
                 >
                     {t("Requests.Actions.back")}
                 </button>
@@ -127,7 +125,7 @@ function RequestsDetails({ initialRequest = null }) {
                 <div className="text-lg text-gray-600">{t("Requests.Messages.notFound")}</div>
                 <button
                     onClick={() => navigate('/admin/requests')}
-                    className="px-4 py-2 bg-primary text-white rounded-md hover:bg-primary/80"
+                    className="px-4 py-2 bg-primary cursor-pointer text-white rounded-md hover:bg-primary/80"
                 >
                     {t("Requests.Actions.back")}
                 </button>
@@ -153,7 +151,7 @@ function RequestsDetails({ initialRequest = null }) {
 
                         <button
                             onClick={() => navigate('/admin/requests')}
-                            className="inline-flex items-center gap-2 px-3 py-2 bg-white border border-gray-200 rounded-md shadow-sm text-xs sm:text-sm text-gray-700 hover:bg-gray-50 w-full sm:w-auto justify-center"
+                            className="inline-flex items-center cursor-pointer gap-2 px-3 py-2 bg-white border border-gray-200 rounded-md shadow-sm text-xs sm:text-sm text-gray-700 hover:bg-gray-50 w-full sm:w-auto justify-center"
                         >
                             {t("Requests.Actions.back")}
                         </button>
@@ -235,7 +233,7 @@ function RequestsDetails({ initialRequest = null }) {
                                                             <div className="flex items-center gap-2 self-end sm:self-auto">
                                                                 <button
                                                                     onClick={() => handleDownload(fileUrl, fileName)}
-                                                                    className="text-xs sm:text-sm text-blue-400 hover:underline"
+                                                                    className="text-xs cursor-pointer sm:text-sm text-blue-400 hover:underline"
                                                                 >
                                                                     {t("Requests.Attachments.download")}
                                                                 </button>
@@ -284,10 +282,10 @@ function RequestsDetails({ initialRequest = null }) {
                                 <button
                                     onClick={() => contactRequest(requestId)}
                                     disabled={isContacting || requestData.status === 1}
-                                    className={`inline-flex justify-center items-center px-4 py-2 rounded-md text-sm font-medium
+                                    className={`inline-flex cursor-pointer justify-center items-center px-4 py-2 rounded-md text-sm font-medium
                                         ${requestData.status === 1
                                             ? 'bg-gray-100 text-gray-400 cursor-not-allowed'
-                                            : 'bg-blue-50 text-blue-600 hover:bg-blue-100'
+                                            : 'bg-blue-50 text-primary/80 hover:bg-blue-100'
                                         } transition-colors duration-200`}
                                 >
                                     {isContacting ? t("Requests.Actions.updating") : t("Requests.Actions.markContacted")}
@@ -296,7 +294,7 @@ function RequestsDetails({ initialRequest = null }) {
                                 <button
                                     onClick={() => resolveRequest(requestId)}
                                     disabled={isResolving || requestData.status === 2}
-                                    className={`inline-flex justify-center items-center px-4 py-2 rounded-md text-sm font-medium
+                                    className={`inline-flex cursor-pointer justify-center items-center px-4 py-2 rounded-md text-sm font-medium
                                         ${requestData.status === 2
                                             ? 'bg-gray-100 text-gray-400 cursor-not-allowed'
                                             : 'bg-green-50 text-green-600 hover:bg-green-100'
@@ -308,7 +306,7 @@ function RequestsDetails({ initialRequest = null }) {
                                 <button
                                     onClick={() => rejectRequest(requestId)}
                                     disabled={isRejecting || requestData.status === 3}
-                                    className={`inline-flex justify-center items-center px-4 py-2 rounded-md text-sm font-medium
+                                    className={`inline-flex cursor-pointer justify-center items-center px-4 py-2 rounded-md text-sm font-medium
                                         ${requestData.status === 3
                                             ? 'bg-gray-100 text-gray-400 cursor-not-allowed'
                                             : 'bg-red-50 text-red-600 hover:bg-red-100'
@@ -333,7 +331,7 @@ function RequestsDetails({ initialRequest = null }) {
                                 <button
                                     onClick={handleAddNote}
                                     disabled={isUpdating || !notes.trim()}
-                                    className={`w-full inline-flex justify-center items-center gap-2 px-4 py-2 bg-primary text-white rounded-md hover:bg-primary/80 transition-colors duration-300 text-sm sm:text-base ${(isUpdating || !notes.trim()) ? 'opacity-50 cursor-not-allowed' : 'cursor-pointer'}`}
+                                    className={`w-full cursor-pointer inline-flex justify-center items-center gap-2 px-4 py-2 bg-primary text-white rounded-md hover:bg-primary/80 transition-colors duration-300 text-sm sm:text-base ${(isUpdating || !notes.trim()) ? 'opacity-50 cursor-not-allowed' : 'cursor-pointer'}`}
                                 >
                                     {isUpdating ? t("Requests.Actions.saving") : t("Requests.Actions.addNote")}
                                 </button>
@@ -341,7 +339,7 @@ function RequestsDetails({ initialRequest = null }) {
                                 <button
                                     onClick={() => setNotes('')}
                                     disabled={isUpdating || !notes.trim()}
-                                    className={`w-full inline-flex justify-center items-center gap-2 px-4 py-2 bg-white border border-gray-200 rounded-md text-xs sm:text-sm text-gray-700 hover:bg-gray-50 ${(isUpdating || !notes.trim()) ? 'opacity-50 cursor-not-allowed' : ''}`}
+                                    className={`w-full cursor-pointer inline-flex justify-center items-center gap-2 px-4 py-2 bg-white border border-gray-200 rounded-md text-xs sm:text-sm text-gray-700 hover:bg-gray-50 ${(isUpdating || !notes.trim()) ? 'opacity-50 cursor-not-allowed' : ''}`}
                                 >
                                     {t("Requests.Actions.cancel")}
                                 </button>

@@ -31,3 +31,8 @@ export const getCategoryForUpdate = async (id) => {
     const res = await api.get(`${API_URL}/GetForUpdate/${id}`);
     return res.data.data;
 }
+
+export const getCategoryByBranchId = async (id) => {
+    const res = await api.get(`${API_URL}/GetByBranchId/${id}`);
+    return res.data.data;
+}

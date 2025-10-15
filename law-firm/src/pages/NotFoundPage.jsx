@@ -142,7 +142,7 @@ export default function NotFoundPage() {
                 </p>
 
                 {/* Action Buttons */}
-                <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
+                <div className="flex flex-col cursor-pointer sm:flex-row gap-4 justify-center items-center">
                     <button
                         onClick={() => window.history.back()}
                         className="flex items-center gap-2 px-6 py-3 bg-white text-primary border-2 border-primary rounded-lg font-semibold hover:bg-primary hover:text-white transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl"
@@ -175,7 +175,7 @@ export default function NotFoundPage() {
                     {/* Replay Icon */}
                     <button
                         onClick={handleReplay}
-                        className={`relative w-12 h-12 bg-white/80 backdrop-blur-sm rounded-full flex items-center justify-center shadow-lg hover:shadow-xl transition-all duration-300 transform ${isHovering ? "scale-110 rotate-180" : "scale-100"
+                        className={`relative w-12 h-12 cursor-pointer bg-white/80 backdrop-blur-sm rounded-full flex items-center justify-center shadow-lg hover:shadow-xl transition-all duration-300 transform ${isHovering ? "scale-110 rotate-180" : "scale-100"
                             }`}
                     >
                         <svg
