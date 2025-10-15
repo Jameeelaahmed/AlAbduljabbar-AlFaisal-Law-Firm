@@ -17,7 +17,9 @@
     "users": "المستخدمين",
     "reports": "التقارير",
     "settings": "الإعدادات",
-    "logout": "تسجيل الخروج"
+    "logout": "تسجيل الخروج",
+    "consultationTypes": "انواع الاستشارات",
+    "consultations": "الاستشارات"
   },
   "header": {
     "changeLanguage": "تغيير اللغة",
@@ -160,6 +162,78 @@
       "resolved": "تم الحل",
       "rejected": "مرفوض",
       "search": "بحث في الطلبات...",
+      "clearFilters": "مسح الفلترة"
+    }
+  },
+  "Consultations": {
+    "ConsultationDetails": "تفاصيل الاستشارة",
+    "ConsultationList": "قائمة الاستشارات",
+    "ConsultationID": "رقم الاستشارة",
+    "Management": "إدارة الاستشارات",
+    "User": "المستخدم",
+    "Category": "الفئة",
+    "Title": "العنوان",
+    "Description": "الوصف",
+    "Type": "نوع الاستشارة",
+    "Client": "العميل",
+    "Consultant": "المستشار",
+    "Status": {
+      "label": "الحالة",
+      "Pending": "قيد المراجعة",
+      "Scheduled": "تم الجدولة",
+      "Completed": "تمت",
+      "Cancelled": "ملغاة"
+    },
+    "ReceivedDate": "تاريخ الاستلام",
+    "ScheduledDate": "تاريخ الجدولة",
+    "Attachments": {
+      "title": "المرفقات",
+      "noAttachments": "لا توجد مرفقات لهذه الاستشارة",
+      "view": "عرض",
+      "download": "تحميل",
+      "size": "الحجم"
+    },
+    "Notes": {
+      "title": "الملاحظات",
+      "internal": "ملاحظات داخلية",
+      "add": "أضف ملاحظة",
+      "previous": "الملاحظات السابقة",
+      "noPreviousNotes": "لا توجد ملاحظات سابقة لهذه الاستشارة",
+      "placeholder": "أضف ملاحظة قصيرة للفريق..."
+    },
+    "Actions": {
+      "updateStatus": "تحديث الحالة",
+      "saveChanges": "حفظ التغييرات",
+      "saving": "جاري الحفظ...",
+      "cancel": "إلغاء",
+      "back": "العودة",
+      "addNote": "أضف ملاحظة",
+      "schedule": "جدولة",
+      "complete": "تمت",
+      "cancelConsultation": "إلغاء",
+      "updating": "جاري التحديث..."
+    },
+    "Messages": {
+      "updateSuccess": "تم تحديث الاستشارة بنجاح",
+      "updateError": "حدث خطأ أثناء تحديث الاستشارة",
+      "noteAddedSuccess": "تمت إضافة الملاحظة بنجاح",
+      "noteAddedError": "حدث خطأ أثناء إضافة الملاحظة",
+      "loading": "جاري التحميل...",
+      "loadError": "حدث خطأ أثناء تحميل البيانات",
+      "notFound": "لم يتم العثور على الاستشارة",
+      "noContent": "لا توجد استشارات لعرضها"
+    },
+    "Team": {
+      "consultingTeam": "فريق الاستشارة",
+      "supervisor": "المشرف"
+    },
+    "Filters": {
+      "all": "جميع الاستشارات",
+      "pending": "قيد المراجعة",
+      "scheduled": "تم الجدولة",
+      "completed": "تمت",
+      "cancelled": "ملغاة",
+      "search": "بحث في الاستشارات...",
       "clearFilters": "مسح الفلترة"
     }
   },

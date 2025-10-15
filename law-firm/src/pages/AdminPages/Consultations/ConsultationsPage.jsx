@@ -1,17 +1,16 @@
+// components 
+import GenericTable from "../../../components/AdminComponents/Table/GenericTable";
+import Headline from "../../../components/AdminComponents/Headline/Headline";
 // hooks
-import { useRequestsByRole } from "../../../hooks/useRequests";
+import { useState, useMemo, useCallback } from "react";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
-import { useState, useMemo, useCallback } from 'react';
-// libs
-// components
-import GenericTable from '../../../components/AdminComponents/Table/GenericTable';
-import Headline from "../../../components/AdminComponents/Headline/Headline";
+import { useConsultations } from "../../../hooks/useConsultations";
 
 
-function Requests() {
+export default function ConsultationsPage() {
     const { t } = useTranslation();
-    const navigate = useNavigate()
+    const navigate = useNavigate();
     const [statusFilter, setStatusFilter] = useState("");
 
     const getStatusLabel = useCallback((statusCode) => {
@@ -34,23 +33,34 @@ function Requests() {
         }
     }, []);
 
-
     const tableColumns = useMemo(
         () => [
             {
                 key: "id",
-                header: t("Requests.RequestID"),
+                header: t("Consultations.ConsultationID"),
             },
             {
                 key: "title",
-                header: t("Requests.Title"),
+                header: t("Consultations.Title"),
             },
             {
                 key: "description",
-                header: t("Requests.Description"),
+                header: t("Consultations.Description"),
                 render: (description) => (
                     <span className="line-clamp-2">{description}</span>
                 ),
+            },
+            {
+                key: "userID",
+                header: t("Consultations.User"),
+            },
+            {
+                key: "consultationID",
+                header: t("Consultations.Type"),
+            },
+            {
+                key: "categoryID",
+                header: t("Consultations.Category"),
             },
             {
                 key: "createdAt",
@@ -71,23 +81,22 @@ function Requests() {
                 ),
             },
         ],
-        [t] // 🧠 only re-run if translation function changes (like language switch)
+        [t]
     );
 
     const tableActions = useMemo(
         () => [
             {
-                label: t("Requests.RequestDetails"),
-                onClick: (request) => navigate(`/admin/requests/${request.id}`),
+                label: t("Consultations.ConsultationDetails"),
+                onClick: (consultation) => navigate(`/admin/law-consultations/${consultation.id}`),
                 className: "text-gray-500 hover:bg-gray-50",
             },
         ],
-        [t, navigate] // 🧠 both are stable, but safe to include
+        [t, navigate]
     );
-
     return (
         <div className="min-h-screen p-4 sm:p-6 bg-gray-50 shadow-lg">
-            <Headline headlineLabel={t("Requests.Management")} />
+            <Headline headlineLabel={t("Consultations.Management")} />
 
             {/* Filter buttons */}
             <div className="flex flex-wrap gap-2 sm:gap-3 mb-4 sm:mb-6">
@@ -141,10 +150,10 @@ function Requests() {
             {/* Table Container */}
             <div className="bg-white rounded-lg shadow-sm overflow-hidden">
                 <GenericTable
-                    useDataHook={useRequestsByRole}
+                    useDataHook={useConsultations}
                     columns={tableColumns}
                     actions={tableActions}
-                    url="/admin/requests"
+                    url="/admin/law-consultations"
                     pageSize={5}
                     initialPage={1}
                     filters={{
@@ -155,5 +164,3 @@ function Requests() {
         </div>
     )
 }
-
-export default Requests

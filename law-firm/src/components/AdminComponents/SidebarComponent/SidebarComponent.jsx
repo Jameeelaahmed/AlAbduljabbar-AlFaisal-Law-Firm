@@ -13,7 +13,8 @@ import {
     Settings,
     Scale,
     CalendarCheck,
-    HelpCircle
+    HelpCircle,
+    Handshake
 } from "lucide-react";
 import { NavLink } from "react-router-dom";
 function Sidebar() {
@@ -162,6 +163,22 @@ function Sidebar() {
                                         >
                                             <CalendarCheck className="w-5 h-5 flex-shrink-0" />
                                             {isSidebarOpen && <span className="text-sm font-medium">{t("sidebar.requests")}</span>}
+                                        </NavLink>
+                                    </li>
+                                    <li>
+                                        <NavLink
+                                            to="/admin/law-consultations"
+                                            end
+                                            className={({ isActive }) =>
+                                                `flex items-center gap-3 p-3 rounded-xl transition-all cursor-pointer ${!isSidebarOpen ? "justify-center" : ""
+                                                } ${isActive
+                                                    ? "bg-white/30 text-white shadow-lg"
+                                                    : "hover:bg-white/20"
+                                                }`
+                                            }
+                                        >
+                                            <Handshake className="w-5 h-5 flex-shrink-0" />
+                                            {isSidebarOpen && <span className="text-sm font-medium transition-all duration-300">{t("sidebar.consultations")}</span>}
                                         </NavLink>
                                     </li>
                                     <li>
