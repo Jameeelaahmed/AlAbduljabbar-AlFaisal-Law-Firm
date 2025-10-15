@@ -9,7 +9,7 @@ import AdminLayout from "../layouts/AdminLayout";
 import ClientLayout from "../layouts/ClientLayout";
 const Dashboard = lazy(() => import("../pages/AdminPages/Dashboard/Dashboard"));
 import NotFoundPage from "../pages/NotFoundPage";
-import UnAuthorized from "../pages/unAuthorized";
+import UnAuthorized from "../pages/UnAuthorized";
 import LawServicesPage from "../pages/ClientPages/ServicesPage/ServicesPage";
 
 //lazy loaded components
