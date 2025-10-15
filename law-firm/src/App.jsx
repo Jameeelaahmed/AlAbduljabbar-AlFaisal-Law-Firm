@@ -4,7 +4,6 @@ import RoutesPages from "./routes/routes";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 // import { useAutoLogout } from "./hooks/useAutoLogout";
-
 function App() {
   // useHydrateAuth();
   // useAutoLogout();

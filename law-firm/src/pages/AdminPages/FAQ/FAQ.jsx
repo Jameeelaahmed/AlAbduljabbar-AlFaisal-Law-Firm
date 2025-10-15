@@ -26,7 +26,7 @@ function FAQ() {
                 <FAQModal onClose={() => closeQuestionsModal()} />
             </Modal>
             {data?.map((faqItem) => (
-                <FAQItem data={faqItem} />
+                <FAQItem key={faqItem.id} data={faqItem} />
             ))}
         </div>
     )

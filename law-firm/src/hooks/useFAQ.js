@@ -9,7 +9,7 @@ import {
     testFaqCulture
 } from '../api/faq' // adjust the path to match your project
 import { toast } from 'react-toastify'
-
+import { useTranslation } from 'react-i18next'
 // helper to get readable error message
 const getErrorMessage = (error) => {
     return error?.response?.data?.message || error?.message || 'An unexpected error occurred'
@@ -17,8 +17,11 @@ const getErrorMessage = (error) => {
 
 // ✅ Fetch all FAQs
 export const useFaqs = () => {
+    const { i18n } = useTranslation() // read language at render time
+    const currentLang = i18n.language || localStorage.getItem('selectedLanguage') || 'ar'
+
     return useQuery({
-        queryKey: ['faqs'],
+        queryKey: ['faqs', currentLang],
         queryFn: getAllFaqs,
         onError: (err) => {
             toast.error(getErrorMessage(err))
@@ -28,8 +31,11 @@ export const useFaqs = () => {
 
 // ✅ Fetch FAQ by ID
 export const useFaqById = (id) => {
+    const { i18n } = useTranslation() // read language at render time
+    const currentLang = i18n.language || localStorage.getItem('selectedLanguage') || 'ar'
+
     return useQuery({
-        queryKey: ['faq', id],
+        queryKey: ['faq', id, currentLang],
         queryFn: () => getFaqById(id),
         enabled: !!id, // only fetch if id exists
         onError: (err) => {
@@ -40,8 +46,11 @@ export const useFaqById = (id) => {
 
 // ✅ Fetch FAQ for update
 export const useFaqForUpdate = (id) => {
+    const { i18n } = useTranslation() // read language at render time
+    const currentLang = i18n.language || localStorage.getItem('selectedLanguage') || 'ar'
+
     return useQuery({
-        queryKey: ['faqForUpdate', id],
+        queryKey: ['faqForUpdate', id, currentLang],
         queryFn: () => getFaqForUpdate(id),
         enabled: !!id,
         onError: (err) => {

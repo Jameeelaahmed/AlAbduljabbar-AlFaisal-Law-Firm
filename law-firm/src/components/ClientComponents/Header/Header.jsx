@@ -49,6 +49,7 @@ function Header() {
             .then(() => {
                 setCurrentLang(lang);
                 localStorage.setItem("selectedLanguage", lang);
+                closeDesktopDropdown();
             })
             .catch((err) => console.error("Error changing language:", err));
     };
@@ -88,7 +89,7 @@ function Header() {
             <div className={`fixed w-full ${!headerActive && "flex justify-center items-center top-12"} transition-all z-50 ${headerActive && "shadow-2xl"}`}>
                 {/* Desktop Navigation */}
                 <ul className={`hidden lg:flex justify-around  bg-white ${!headerActive && "rounded-full"} pr-4 pl-4 pt-2 pb-2 items-center`}>
-                    <li className={`rounded-full ${headerActive ? "hover:bg-secondary hover:text-white " : "hover:bg-primary hover:text-white"} transition-all`}>
+                    <li className={`pt-3 pb-3 pr-6 pl-6 rounded-full ${headerActive ? "hover:bg-secondary hover:text-white " : "hover:bg-primary hover:text-white"} transition-all`}>
                         <Link>
                             <p>{t("landing.Home")}</p>
                         </Link>
@@ -99,7 +100,7 @@ function Header() {
                         </Link>
                     </li>
                     <li className={`pt-3 pb-3 pr-6 pl-6 rounded-full ${headerActive ? "hover:bg-secondary hover:text-white " : "hover:bg-primary hover:text-white"} transition-all`}>
-                        <Link>
+                        <Link to="FAQClient">
                             <p>{t("landing.FAQ")}</p>
                         </Link>
                     </li>
@@ -109,7 +110,7 @@ function Header() {
                         </Link>
                     </li>
                     <li className={`pt-3 pb-3 pr-6 pl-6 rounded-full ${headerActive ? "hover:bg-secondary hover:text-white " : "hover:bg-primary hover:text-white"} transition-all`}>
-                        <Link>
+                        <Link to="contactus">
                             <p>{t("landing.ContactUs")}</p>
                         </Link>
                     </li>
@@ -132,15 +133,30 @@ function Header() {
 
                                     {/* Dropdown Menu */}
                                     <div className={`
-                                    absolute left-1/2 -translate-x-1/2 mt-5 w-66 bg-white rounded-lg shadow-lg border border-gray-200 py-2 z-60
+                                    absolute ${!headerActive && "rtl:left-1/2 rtl:-translate-x-1/2 ltr:right-1/2 ltr:translate-x-1/2"} ltr:right-0 rtl:left-0 mt-5 w-66 bg-white rounded-lg shadow-lg border border-gray-200 py-2 z-60
                                     transform transition-transform duration-300 ease-in-out origin-top
                                     ${isDesktopDropdownOpen ? 'scale-y-100 opacity-100' : 'scale-y-0 opacity-0'}
                                     `}>
-                                        <span>{t("landing.Hello")} {name}</span>
+                                        {/* Styled user header */}
+                                        <div
+                                            className="px-4 py-3 border-b border-gray-100"
+                                            dir={currentLang === "ar" ? "rtl" : "ltr"}
+                                        >
+                                            <div className="flex items-center gap-3">
+                                                <UserCircle className="w-8 h-8 text-primary" />
+                                                <div className="min-w-0">
+                                                    <p className="text-sm text-gray-800 truncate">
+                                                        {t("landing.Hello")}{" "}
+                                                        <span className="font-semibold">{name}</span>
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        </div>
+
                                         {/* Profile Link */}
                                         <Link
                                             to="/profile"
-                                            onClick={closeDesktopDropdown}
+                                            onClick={() => closeDesktopDropdown()}
                                             className="flex items-center gap-2 px-4 py-2 text-gray-700 hover:bg-gray-100 transition-all"
                                         >
                                             <User size={16} />
@@ -230,7 +246,7 @@ function Header() {
                             </Link>
                         </li>
                         <li className='py-3 px-4 rounded text-secondary hover:bg-primary hover:text-white transition-all'>
-                            <Link onClick={toggleMobileMenu}>
+                            <Link to="FAQClient" onClick={toggleMobileMenu}>
                                 <p>{t("landing.FAQ")}</p>
                             </Link>
                         </li>
@@ -247,7 +263,7 @@ function Header() {
                     </ ul >
 
                     {/* Mobile Auth Section */}
-                    <div className='mt-6 pt-4 border-t border-gray-200' >
+                    <div div className='mt-6 pt-4 border-t border-gray-200' >
                         {(isAuthenticated && role == 'User') ? (
                             <div className='flex flex-col space-y-3'>
                                 <p className='text-center text-secondary'>{t("landing.Hello")} {name}</p>
@@ -298,7 +314,7 @@ function Header() {
             </div >
 
             {/* Alternate mobile logo - visible on sm and md only, fixed on scroll */}
-            <div div
+            <div
                 className={`lg:hidden fixed top-0 rtl:right-0 ltr:left-0 w-full flex items-center justify-center gap-3 px-4 py-2 z-40 transition-all duration-300 bg-white/80 backdrop-blur-md shadow-md`}
             >
                 <img src={logo1} alt="logo1" className="w-10 h-10 object-contain" />

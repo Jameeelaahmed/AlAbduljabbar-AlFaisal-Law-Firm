@@ -2,7 +2,7 @@ import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import * as userApi from "../api/user";
 import { toast } from "react-toastify";
 import { fetchUsers } from "../api/user";
-
+import { useTranslation } from "react-i18next";
 // 🔹 Get Paginated Users
 export const useUsers = ({
     searchTerm = "",
@@ -38,7 +38,7 @@ export const useGetUserForUpdate = (id) =>
 // 🔹 Create User
 export const useCreateUser = () => {
     const queryClient = useQueryClient();
-
+    const { t } = useTranslation();
     return useMutation({
         mutationFn: userApi.createUser,
         onMutate: async (newUser) => {
@@ -73,6 +73,8 @@ export const useCreateUser = () => {
 // 🔹 Update User
 export const useUpdateUser = () => {
     const queryClient = useQueryClient();
+    const { t } = useTranslation();
+
     return useMutation({
         mutationFn: ({ id, data }) => userApi.updateUser({ id, data }),
         onError: (err) => {
@@ -91,6 +93,7 @@ export const useUpdateUser = () => {
 // 🔹 Delete User
 export const useDeleteUser = () => {
     const queryClient = useQueryClient();
+    const { t } = useTranslation();
 
     return useMutation({
         mutationFn: (id) => userApi.deleteUser(id),
