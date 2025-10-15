@@ -2,6 +2,7 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { lazy, Suspense } from "react";
 import ProtectedRoute from "./ProtectedRoutes";
+import VerifyOtpGuard from "./VerifyOtpGuard";
 //layout components
 
 import AdminLayout from "../layouts/AdminLayout";
@@ -13,6 +14,9 @@ import LawServicesPage from "../pages/ClientPages/ServicesPage/ServicesPage";
 //lazy loaded components
 const LoginRegister = lazy(() => import("../pages/AuthPages/LoginRegisterPage/LoginRegisterPage"));
 const Landing = lazy(() => import("../pages/ClientPages/Landing/Landing"));
+const ForgetPassword = lazy(() => import('../pages/ForgetPassword/ForgetPasswordPage'))
+const VerifyOTP = lazy(() => import("../pages/ForgetPassword/VerifyOTP"))
+const ResetPassword = lazy(() => import("../pages/ForgetPassword/ResetPasswordPage"))
 
 // Admin Components
 const AdminSettings = lazy(() => import("../pages/AdminPages/Settings/SettingsPage"));
@@ -24,6 +28,26 @@ const routes = createBrowserRouter([
     {
         path: "/login",
         element: <LoginRegister />,
+    },
+    {
+        path: "forget-password",
+        element: <ForgetPassword />
+    },
+    {
+        path: "verify-otp",
+        element: (
+            <VerifyOtpGuard>
+                <VerifyOTP />
+            </VerifyOtpGuard>
+        )
+    },
+    {
+        path: "reset-password",
+        element: (
+            <VerifyOtpGuard>
+                <ResetPassword />
+            </VerifyOtpGuard>
+        )
     },
     {
         path: '/admin',
