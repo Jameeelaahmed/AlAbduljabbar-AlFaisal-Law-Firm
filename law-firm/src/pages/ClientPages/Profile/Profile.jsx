@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { useChangePassword } from '../../../hooks/useChangePassword';
 import { useAuthStore } from '../../../store/useAuthStore';
 import { useRequestsByUserId } from '../../../hooks/useRequests';
-import Security from './security';
+import Security from './Security';
 import Requests from './requests';
 import { useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
