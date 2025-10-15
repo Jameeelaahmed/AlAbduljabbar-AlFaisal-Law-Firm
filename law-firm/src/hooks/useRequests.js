@@ -12,7 +12,8 @@ import {
     addRequestNote,
     getRequestTimeline,
     getRequestStats,
-    fetchRequestsByBranch
+    fetchRequestsByBranch,
+    fetchRequestsByUserId
 } from "../api/requests";
 import { useAuthStore } from "../store/useAuthStore";
 import { toast } from "react-toastify";
@@ -22,6 +23,13 @@ export function useRequests({ pageIndex = 1, pageSize = 5, status = null } = {})
     return useQuery({
         queryKey: ["requests", { pageIndex, pageSize, status }],
         queryFn: fetchRequests,
+        keepPreviousData: true,
+    });
+}
+export function useRequestsByUserId({ userId = null, pageIndex = 1, pageSize = 5 } = {}) {
+    return useQuery({
+        queryKey: ["requests", { userId, pageIndex, pageSize }],
+        queryFn: fetchRequestsByUserId,
         keepPreviousData: true,
     });
 }

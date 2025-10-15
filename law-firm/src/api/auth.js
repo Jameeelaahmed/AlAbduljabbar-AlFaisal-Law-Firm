@@ -68,3 +68,13 @@ export const resetPassword = async (passwordData) => {
         throw error;
     }
 };
+
+export const changePassword = async (passwordData) => {
+    try {
+        const response = await api.put("/api/Auth/ChangePassword", passwordData);
+        return response.data;
+    } catch (error) {
+        console.error("Change password error:", error);
+        throw error;
+    }
+};
