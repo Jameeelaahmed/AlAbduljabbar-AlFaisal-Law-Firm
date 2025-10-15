@@ -10,7 +10,7 @@ function Header() {
 
     const [currentLang, setCurrentLang] = useState(() => {
         const savedLang = localStorage.getItem("selectedLanguage");
-        queryClient.invalidateQueries(); 
+        queryClient.invalidateQueries();
         return savedLang || i18n.language;
     });
 
@@ -60,7 +60,7 @@ function Header() {
                         <button
                             onClick={() => handleLanguageChange(currentLang === "ar" ? "en" : "ar")}
                             aria-label="Toggle language"
-                            className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-gray-100 hover:bg-gray-200 text-sm text-gray-700 transition"
+                            className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-gray-100 hover:bg-gray-200 text-sm text-gray-700 transition cursor-pointer"
                         >
                             <Globe className="w-4 h-4" />
                             <span className="hidden sm:inline">{currentLang === "ar" ? "العربية" : "EN"}</span>
@@ -69,7 +69,7 @@ function Header() {
                         {/* Notifications */}
                         <button
                             type="button"
-                            className="relative p-2 rounded-full text-gray-600 hover:bg-gray-100 transition"
+                            className="relative p-2 rounded-full text-gray-600 hover:bg-gray-100 transition cursor-pointer"
                             aria-label="Notifications"
                         >
                             <Bell className="w-5 h-5" />
@@ -80,7 +80,7 @@ function Header() {
                         <div className="relative" ref={menuRef}>
                             <button
                                 onClick={() => setIsMenuOpen(v => !v)}
-                                className="flex items-center gap-2 px-2 py-1 rounded-full hover:bg-gray-100 transition"
+                                className="flex items-center gap-2 px-2 py-1 rounded-full hover:bg-gray-100 transition cursor-pointer"
                                 aria-expanded={isMenuOpen}
                             >
                                 <img
@@ -97,20 +97,20 @@ function Header() {
                                 <div className="absolute rtl:right-0 ltr:left-0 mt-2 w-44 bg-white rounded-lg shadow-lg border border-gray-100 overflow-hidden z-50">
                                     <button
                                         onClick={() => { /* navigate to profile */ }}
-                                        className="w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-50"
+                                        className="w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 cursor-pointer"
                                     >
                                         Profile
                                     </button>
                                     <button
                                         onClick={() => { /* navigate to settings */ }}
-                                        className="w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-50"
+                                        className="w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 cursor-pointer"
                                     >
                                         Settings
                                     </button>
                                     <div className="border-t border-gray-100" />
                                     <button
                                         onClick={() => { /* logout */ }}
-                                        className="w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-red-50"
+                                        className="w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-red-50 cursor-pointer"
                                     >
                                         Logout
                                     </button>

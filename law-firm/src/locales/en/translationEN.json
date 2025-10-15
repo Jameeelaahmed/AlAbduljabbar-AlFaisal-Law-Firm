@@ -195,6 +195,45 @@
   "OurVision": {
     "Our Vision and Mission": "Our Vision and Mission"
   },
+  "validations": {
+    "Title is required": "Title is required",
+    "Description is required": "Description is required",
+    "Too short": "Too short",
+    "Please select a service": "Please select a service",
+    "You can upload up to 4 files": "You can upload up to 4 files",
+    "Loading services...": "Loading services...",
+    "Select a service": "Select a service",
+    "Attach files": "Attach files",
+    "max 4 files": "max 4 files",
+    "Supported formats: PDF, DOC, DOCX, Images": "Supported formats: PDF, DOC, DOCX, Images",
+    "File is too large. Max size is 5MB": "File is too large. Max size is 5MB",
+    "Invalid file type": "Invalid file type",
+    "of 4 files selected": "of 4 files selected"
+  },
+  "Legal Services": "Legal Services",
+  "Comprehensive legal expertise across {SERVICES.length} practice areas. Find the specialized counsel you need for your unique situation.": "Comprehensive legal expertise across {SERVICES.length} practice areas. Find the specialized counsel you need for your unique situation.",
+  "Search legal services, expertise, or practice areas...": "Search legal services, expertise, or practice areas...",
+  "ESC": "ESC",
+  "Office Location": "Office Location",
+  "Cairo": "Cairo",
+  "KSA": "KSA",
+  "services available": "services available",
+  "Practice Areas": "Practice Areas",
+  "Branch Specific": "Branch Specific",
+  "Both Branches": "Both Branches",
+  "Both": "Both",
+  "No services found": "No services found",
+  "We couldn't find any services matching your search criteria. Try adjusting your search terms or browse all categories.": "We couldn't find any services matching your search criteria. Try adjusting your search terms or browse all categories.",
+  "Clear search": "Clear search",
+  "Clear Search": "Clear Search",
+  "View All Services": "View All Services",
+  "Featured": "Featured",
+  "Flexible": "Flexible",
+  "Legal Service": "Legal Service",
+  "additional services": "additional services",
+  "Request Service": "Request Service",
+  "Request": "Request",
+  "Enter title": "Enter title",
   "NotFound": {
     "title": "Page Not Found",
     "subtitle": "Sorry, the page you're looking for doesn't exist or has been moved",
@@ -280,5 +319,11 @@
     "serverError": "An error occurred while trying to send the code. Please try again later.",
     "networkError": "Failed to connect to the server. Check your internet connection and try again.",
     "passwordChanged": "Password Changed Successfully"
-  }
+  },
+  "Delete Service": "Delete Service",
+  "Item to delete": "Item to delete",
+  "Irreversible Action": "Irreversible Action",
+  "This action cannot be undone.": "This action cannot be undone.",
+  "faq": "Frequently Asked Questions",
+  "add questions": "Add Questions"
 }

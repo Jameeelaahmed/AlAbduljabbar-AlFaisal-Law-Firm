@@ -76,7 +76,7 @@ function UpdateUser({ userId, onSuccess, onFailure }) {
                             <FormField name="mobileNumber" label={t("Users.Mobile Number")} errors={errors} touched={touched} disabled={isSubmitting || isUpdating} />
                             <FormField name="whatsAppNumber" label={t("Users.WhatsApp Number")} errors={errors} touched={touched} disabled={isSubmitting || isUpdating} />
 
-                            <button type="submit" disabled={isSubmitting || isUpdating} className={`w-full py-3 px-4 rounded-lg font-semibold text-white transition-all duration-300 transform ${isSubmitting || isUpdating ? "bg-gray-400 cursor-not-allowed" : "bg-primary hover:scale-[1.02] active:scale-[0.98] shadow-lg hover:shadow-xl"}`}>
+                            <button type="submit" disabled={isSubmitting || isUpdating} className={`w-full cursor-pointer py-3 px-4 rounded-lg font-semibold text-white transition-all duration-300 transform ${isSubmitting || isUpdating ? "bg-gray-400 cursor-not-allowed" : "bg-primary hover:scale-[1.02] active:scale-[0.98] shadow-lg hover:shadow-xl"}`}>
                                 {isSubmitting || isUpdating ? t("Users.Submitting...") : t("Users.Save")}
                             </button>
                         </Form>

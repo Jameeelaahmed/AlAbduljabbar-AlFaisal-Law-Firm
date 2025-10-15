@@ -67,7 +67,7 @@ export default function ForgetPasswordPage() {
                             {/* Submit Button */}
                             <button
                                 type="submit"
-                                className={`w-full py-3 px-4 rounded-lg font-semibold text-white transition-all duration-300 transform ${isSubmitting
+                                className={`w-full py-3 px-4 cursor-pointer rounded-lg font-semibold text-white transition-all duration-300 transform ${isSubmitting
                                     ? 'bg-primary cursor-not-allowed'
                                     : 'bg-primary hover:scale-[1.02] active:scale-[0.98] shadow-lg hover:shadow-xl'
                                     }`}

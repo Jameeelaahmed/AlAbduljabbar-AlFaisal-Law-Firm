@@ -29,13 +29,13 @@ export default function DeleteUser({ userId, username, onClose }) {
                 <button
                     onClick={handleDelete}
                     disabled={isLoading}
-                    className={`px-4 py-2 rounded-lg font-semibold text-white transition-all duration-300 ${isLoading ? "bg-gray-400 cursor-not-allowed" : "bg-red-600 hover:bg-red-700"}`}
+                    className={`cursor-pointer px-4 py-2 rounded-lg font-semibold text-white transition-all duration-300 ${isLoading ? "bg-gray-400 cursor-not-allowed" : "bg-red-600 hover:bg-red-700"}`}
                 >
                     {isLoading ? "جارٍ الحذف..." : "حذف المستخدم"}
                 </button>
                 <button
                     onClick={onClose}
-                    className="px-4 py-2 rounded-lg font-semibold text-gray-700 border hover:bg-gray-100 transition-all duration-300"
+                    className="cursor-pointer px-4 py-2 rounded-lg font-semibold text-gray-700 border hover:bg-gray-100 transition-all duration-300"
                 >
                     إلغاء
                 </button>

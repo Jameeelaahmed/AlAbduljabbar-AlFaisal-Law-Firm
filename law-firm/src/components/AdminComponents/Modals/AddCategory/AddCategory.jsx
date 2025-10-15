@@ -170,7 +170,7 @@ function AddCategory({ onClose }) {
                             <button
                                 type="submit"
                                 disabled={isSubmitting || createCategoryMutation.isPending}
-                                className={`w-full py-3 px-4 rounded-lg font-semibold text-white transition-all duration-300 transform ${isSubmitting || createCategoryMutation.isPending
+                                className={`cursor-pointer w-full py-3 px-4 rounded-lg font-semibold text-white transition-all duration-300 transform ${isSubmitting || createCategoryMutation.isPending
                                     ? 'bg-gray-400 cursor-not-allowed'
                                     : 'bg-primary hover:scale-[1.02] active:scale-[0.98] shadow-lg hover:shadow-xl'
                                     }`}

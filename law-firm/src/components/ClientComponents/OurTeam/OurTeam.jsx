@@ -208,7 +208,7 @@ function OurTeam() {
 
                 {/* CTA */}
                 <div className="text-center mt-12">
-                    <button className="px-8 py-3 bg-[var(--color-primary)] hover:bg-[var(--color-accent)] text-white font-semibold rounded-lg transition-colors duration-300">
+                    <button className="px-8 py-3 cursor-pointer bg-[var(--color-primary)] hover:bg-[var(--color-accent)] text-white font-semibold rounded-lg transition-colors duration-300">
                         {isRtl ? "تعرف على المزيد عن فريقنا" : "Learn More About Our Team"}
                     </button>
                 </div>

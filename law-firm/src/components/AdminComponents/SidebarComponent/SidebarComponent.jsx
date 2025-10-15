@@ -12,7 +12,8 @@ import {
     ArrowLeft,
     Settings,
     Scale,
-    CalendarCheck
+    CalendarCheck,
+    HelpCircle
 } from "lucide-react";
 import { NavLink } from "react-router-dom";
 function Sidebar() {
@@ -164,6 +165,21 @@ function Sidebar() {
                                     </li>
                                     <li>
                                         <NavLink
+                                            to="/admin/faq"
+                                            className={({ isActive }) =>
+                                                `flex items-center gap-3 p-3 rounded-xl transition-all cursor-pointer ${!isSidebarOpen ? "justify-center" : ""
+                                                } ${isActive
+                                                    ? "bg-white/30 text-white shadow-lg"
+                                                    : "hover:bg-white/20"
+                                                }`
+                                            }
+                                        >
+                                            <HelpCircle className="w-5 h-5 flex-shrink-0" />
+                                            {isSidebarOpen && <span className="text-sm font-medium">{t("faq")}</span>}
+                                        </NavLink>
+                                    </li>
+                                    <li>
+                                        <NavLink
                                             to="/admin/users"
                                             className={({ isActive }) =>
                                                 `flex items-center gap-3 p-3 rounded-xl transition-all cursor-pointer ${!isSidebarOpen ? "justify-center" : ""
@@ -202,7 +218,7 @@ function Sidebar() {
                 {/* Fixed Logout Button at Bottom */}
                 <div className="p-6 border-t border-white/20 bg-primary flex-shrink-0">
                     <button
-                        className={`flex items-center gap-2 p-3 rounded-lg hover:bg-red-500/20 hover:text-red-300 transition-all w-full ${!isSidebarOpen ? "justify-center" : "text-left"
+                        className={`cursor-pointer flex items-center gap-2 p-3 rounded-lg hover:bg-red-500/20 hover:text-red-300 transition-all w-full ${!isSidebarOpen ? "justify-center" : "text-left"
                             }`}
                         onClick={() => {
                             // Add logout functionality here

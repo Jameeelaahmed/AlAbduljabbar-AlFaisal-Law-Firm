@@ -180,10 +180,10 @@ function OurCompany() {
                             }
                         </p>
                         <div className="flex flex-col sm:flex-row gap-3 justify-center">
-                            <button className="px-6 py-3 bg-primary hover:bg-accent text-white font-medium rounded-lg transition-colors duration-300">
+                            <button className="px-6 cursor-pointer py-3 bg-primary hover:bg-accent text-white font-medium rounded-lg transition-colors duration-300">
                                 {isRtl ? "تعرف على فريقنا" : "Meet Our Team"}
                             </button>
-                            <button className="px-6 py-3 border border-[var(--color-secondary)] text-[var(--color-secondary)] hover:bg-[var(--color-secondary)] hover:text-white font-medium rounded-lg transition-all duration-300">
+                            <button className="px-6 cursor-pointer py-3 border border-[var(--color-secondary)] text-[var(--color-secondary)] hover:bg-[var(--color-secondary)] hover:text-white font-medium rounded-lg transition-all duration-300">
                                 {isRtl ? "اطلب استشارة" : "Request Consultation"}
                             </button>
                         </div>

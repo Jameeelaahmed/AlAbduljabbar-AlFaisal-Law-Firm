@@ -55,7 +55,7 @@ export default function SettingsPage() {
             <div className="flex justify-end">
                 <button
                     onClick={handleSaveAll}
-                    className="bg-primary text-white px-8 py-3 rounded-lg hover:bg-primary/80 transition"
+                    className="bg-primary cursor-pointer text-white px-8 py-3 rounded-lg hover:bg-primary/80 transition"
                 >
                     حفظ جميع التغييرات
                 </button>

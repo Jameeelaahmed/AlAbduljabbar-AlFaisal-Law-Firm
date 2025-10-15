@@ -126,7 +126,7 @@ function OurOffices() {
 
                                 {/* Action Button */}
                                 <div className="mt-6 pt-4 border-t border-[var(--color-secondary)]/20">
-                                    <button className="w-full py-2.5 px-4 border border-[var(--color-secondary)] text-[var(--color-secondary)] hover:bg-[var(--color-secondary)] hover:text-white font-medium rounded-lg transition-all duration-300 flex items-center justify-center gap-2">
+                                    <button className="w-full cursor-pointer py-2.5 px-4 border border-[var(--color-secondary)] text-[var(--color-secondary)] hover:bg-[var(--color-secondary)] hover:text-white font-medium rounded-lg transition-all duration-300 flex items-center justify-center gap-2">
                                         <MapPin size={16} />
                                         <span>{isRtl ? "الاتجاهات" : "Get Directions"}</span>
                                     </button>

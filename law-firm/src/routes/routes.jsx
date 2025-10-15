@@ -18,6 +18,8 @@ const Landing = lazy(() => import("../pages/ClientPages/Landing/Landing"));
 const ForgetPassword = lazy(() => import('../pages/ForgetPassword/ForgetPasswordPage'))
 const VerifyOTP = lazy(() => import("../pages/ForgetPassword/VerifyOTP"))
 const ResetPassword = lazy(() => import("../pages/ForgetPassword/ResetPasswordPage"))
+const FAQ = lazy(() => import("../pages/AdminPages/FAQ/FAQ"));
+
 const ClientProfile = lazy(() => import("../pages/ClientPages/Profile/Profile"))
 // Admin Components
 const AdminSettings = lazy(() => import("../pages/AdminPages/Settings/SettingsPage"));
@@ -80,6 +82,16 @@ const routes = createBrowserRouter([
                     <ProtectedRoute allowedRoles={['Admin']}>
                         <Suspense fallback={<div>Loading Serivices...</div>}>
                             <AdminServices />
+                        </Suspense>
+                    </ProtectedRoute>
+                ),
+            },
+            {
+                path: "faq",
+                element: (
+                    <ProtectedRoute allowedRoles={['Admin']}>
+                        <Suspense fallback={<div>Loading Faq...</div>}>
+                            <FAQ />
                         </Suspense>
                     </ProtectedRoute>
                 ),

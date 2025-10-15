@@ -99,13 +99,13 @@ function ClientOpinions() {
                 <div className="relative max-w-7xl mx-auto">
                     {/* Custom Navigation Arrows - Positioned on sides */}
                     <button
-                        className="swiper-button-prev absolute top-1/2 left-2 lg:left-0 lg:-ml-6 -translate-y-1/2 z-10 w-12 h-12 rounded-full bg-white border border-[var(--color-secondary)]/30 shadow-lg hover:bg-[var(--color-primary)] hover:text-white hover:border-[var(--color-primary)] flex items-center justify-center transition-all duration-300 group"
+                        className="swiper-button-prev cursor-pointer absolute top-1/2 left-2 lg:left-0 lg:-ml-6 -translate-y-1/2 z-10 w-12 h-12 rounded-full bg-white border border-[var(--color-secondary)]/30 shadow-lg hover:bg-[var(--color-primary)] hover:text-white hover:border-[var(--color-primary)] flex items-center justify-center transition-all duration-300 group"
                     >
                         <ChevronLeft size={24} className="group-hover:-translate-x-0.5 transition-transform" />
                     </button>
 
                     <button
-                        className="swiper-button-next absolute top-1/2 right-2 lg:right-0 lg:-mr-6 -translate-y-1/2 z-10 w-12 h-12 rounded-full bg-white border border-[var(--color-secondary)]/30 shadow-lg hover:bg-[var(--color-primary)] hover:text-white hover:border-[var(--color-primary)] flex items-center justify-center transition-all duration-300 group"
+                        className="swiper-button-next cursor-pointer absolute top-1/2 right-2 lg:right-0 lg:-mr-6 -translate-y-1/2 z-10 w-12 h-12 rounded-full bg-white border border-[var(--color-secondary)]/30 shadow-lg hover:bg-[var(--color-primary)] hover:text-white hover:border-[var(--color-primary)] flex items-center justify-center transition-all duration-300 group"
                     >
                         <ChevronRight size={24} className="group-hover:translate-x-0.5 transition-transform" />
                     </button>
