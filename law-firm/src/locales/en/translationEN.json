@@ -93,6 +93,8 @@
     "Management": "Request Management",
     "Title": "Title",
     "Description": "Description",
+    "NoteAdded": "Note Added Successfully",
+    "FailedNote": "Failed To Add Note",
     "Status": {
       "label": "Status",
       "Pending": "Pending",
@@ -278,7 +280,7 @@
     "tryDifferentFilter": "Try adjusting your filters to find what you're looking for.",
     "clearFilters": "Clear Filters",
     "clearAll": "Clear All",
-      "filtering": "Filtering"
+    "filtering": "Filtering"
   },
   "ForgetPassword": {
     "title": "Reset Password",

@@ -189,11 +189,13 @@ export const contactRequest = async (id) => {
 };
 
 // Add request note/comment
-export const addRequestNote = async ({ requestId, note }) => {
-    if (!requestId) throw new Error('Request ID is required');
-    if (!note) throw new Error('Note content is required');
+export const addRequestNote = async ({ requestId = null, content, consultationId = null }) => {
+    console.log(requestId, content);
 
-    const { data: response } = await api.post(`/api/Requests/${requestId}/Notes`, { content: note });
+    if (!requestId) throw new Error('Request ID is required');
+    if (!content) throw new Error('Note content is required');
+
+    const { data: response } = await api.post(`/api/Notes`, { content, userServiceId: requestId, consultationId });
 
     if (!response?.isSuccess) {
         throw new Error(response?.error?.description || "Failed to add note");
@@ -201,6 +203,7 @@ export const addRequestNote = async ({ requestId, note }) => {
 
     return response.data;
 };
+
 
 // Get request timeline/history
 export const getRequestTimeline = async (requestId) => {
