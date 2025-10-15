@@ -20,6 +20,7 @@ function Sidebar() {
     const { t } = useTranslation();
     const { user } = useAuthStore();
     const isCustomerService = user?.lastRole === 'CustomerService';
+    const logout = useAuthStore((state) => state.logout)
 
     const [isSidebarOpen, setIsSidebarOpen] = useState(() => {
         // Check if screen is large (>= 1024px) on initial load
@@ -221,8 +222,7 @@ function Sidebar() {
                         className={`cursor-pointer flex items-center gap-2 p-3 rounded-lg hover:bg-red-500/20 hover:text-red-300 transition-all w-full ${!isSidebarOpen ? "justify-center" : "text-left"
                             }`}
                         onClick={() => {
-                            // Add logout functionality here
-                            console.log('Logout clicked');
+                            logout();
                         }}
                     >
                         <LogOut className="w-5 h-5 flex-shrink-0" />

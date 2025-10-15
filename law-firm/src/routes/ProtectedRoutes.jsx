@@ -4,12 +4,6 @@ import { useAuthStore } from '../store/useAuthStore';
 const ProtectedRoute = ({ children, allowedRoles = [], requireAuth = true }) => {
     const { isAuthenticated, user } = useAuthStore();
 
-    console.log("ProtectedRoute Debug →", {
-        isAuthenticated,
-        user,
-        allowedRoles,
-        userRole: user?.lastRole,
-    });
     // Check authentication
     if (requireAuth && !isAuthenticated) {
         return <Navigate to="/login" replace />;
