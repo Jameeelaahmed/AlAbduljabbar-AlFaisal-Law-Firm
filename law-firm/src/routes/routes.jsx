@@ -9,6 +9,7 @@ import AdminLayout from "../layouts/AdminLayout";
 import ClientLayout from "../layouts/ClientLayout";
 const Dashboard = lazy(() => import("../pages/AdminPages/Dashboard/Dashboard"));
 import NotFoundPage from "../pages/NotFoundPage";
+import UnAuthorized from "../pages/unAuthorized";
 import LawServicesPage from "../pages/ClientPages/ServicesPage/ServicesPage";
 
 //lazy loaded components
@@ -17,7 +18,7 @@ const Landing = lazy(() => import("../pages/ClientPages/Landing/Landing"));
 const ForgetPassword = lazy(() => import('../pages/ForgetPassword/ForgetPasswordPage'))
 const VerifyOTP = lazy(() => import("../pages/ForgetPassword/VerifyOTP"))
 const ResetPassword = lazy(() => import("../pages/ForgetPassword/ResetPasswordPage"))
-
+const ClientProfile = lazy(() => import("../pages/ClientPages/Profile/Profile"))
 // Admin Components
 const AdminSettings = lazy(() => import("../pages/AdminPages/Settings/SettingsPage"));
 const AdminRequests = lazy(() => import("../pages/AdminPages/Requests/Requests"));
@@ -47,6 +48,12 @@ const routes = createBrowserRouter([
             <VerifyOtpGuard>
                 <ResetPassword />
             </VerifyOtpGuard>
+        )
+    },
+    {
+        path: "unauthorized",
+        element: (
+            <UnAuthorized />
         )
     },
     {
@@ -141,6 +148,10 @@ const routes = createBrowserRouter([
                     // <ProtectedRoute allowedRoles={['User']}>
                     <LawServicesPage />
                 // </ProtectedRoute>
+            },
+            {
+                path: '/profile',
+                element: <ClientProfile />
             }
         ]
     },
