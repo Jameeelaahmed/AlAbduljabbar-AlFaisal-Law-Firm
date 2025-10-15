@@ -149,6 +149,7 @@ function Hero() {
                     </div>
                 ) : sliders.length > 0 ? (
                     <Swiper
+                        key={isRtl ? 'rtl-swiper' : 'ltr-swiper'}
                         modules={[Autoplay, Pagination, Navigation, EffectFade]}
                         spaceBetween={0}
                         centeredSlides={true}

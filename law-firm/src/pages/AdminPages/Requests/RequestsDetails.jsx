@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import {
     useRequest,
+    useNotes,
     useUpdateRequest,
     useRejectRequest,
     useResolveRequest,
@@ -25,6 +26,13 @@ function RequestsDetails() {
         isLoading,
         error
     } = useRequest(requestId);
+
+    const {
+        data: previousNotes,
+        isLoading: isFetchingNotes,
+        error: notesError
+    } = useNotes(requestId);
+
 
     const attachments = [
         requestData?.photo1url,
@@ -361,7 +369,7 @@ function RequestsDetails() {
                             <h2 className="text-lg sm:text-xl font-bold text-gray-900 mb-4 sm:mb-6">{t("Requests.Notes.previous")}</h2>
 
                             <div className="space-y-3 sm:space-y-4">
-                                {!requestData.previousNotes || requestData.previousNotes.length === 0 ? (
+                                {!previousNotes || previousNotes.length === 0 ? (
                                     <div className="bg-gray-50 rounded-lg p-4 text-center">
                                         <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-gray-400 mx-auto mb-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
@@ -369,7 +377,7 @@ function RequestsDetails() {
                                         <p className="text-sm text-gray-500">{t("Requests.Notes.noPreviousNotes")}</p>
                                     </div>
                                 ) : (
-                                    requestData.previousNotes.map((item, index) => (
+                                    previousNotes.map((item, index) => (
                                         <div key={index} className="bg-gray-50 rounded-lg p-3 sm:p-4 border border-gray-200">
                                             <div className="flex flex-col sm:flex-row sm:justify-between sm:items-start mb-2 gap-1 sm:gap-0">
                                                 <span className="text-xs sm:text-sm font-semibold text-gray-900">{item.author}</span>

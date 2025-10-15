@@ -13,7 +13,8 @@ import {
     getRequestTimeline,
     getRequestStats,
     fetchRequestsByBranch,
-    fetchRequestsByUserId
+    fetchRequestsByUserId,
+    getALLNotes
 } from "../api/requests";
 import { useAuthStore } from "../store/useAuthStore";
 import { toast } from "react-toastify";
@@ -168,6 +169,14 @@ export function useAddRequestNote() {
             queryClient.invalidateQueries(["request", variables.requestId]);
             queryClient.invalidateQueries(["request", variables.requestId, "timeline"]);
         },
+    });
+}
+
+export function useNotes(requestId) {
+    return useQuery({
+        queryKey: ["notes", { requestId, pageIndex: 1, pageSize: 5 }],
+        queryFn: getALLNotes,
+        enabled: !!requestId,
     });
 }
 

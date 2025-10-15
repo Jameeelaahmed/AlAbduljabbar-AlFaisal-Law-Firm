@@ -29,6 +29,8 @@ const AdminRequests = lazy(() => import("../pages/AdminPages/Requests/Requests")
 const AdminRequestDetails = lazy(() => import("../pages/AdminPages/Requests/RequestsDetails"));
 const AdminUsers = lazy(() => import("../pages/AdminPages/Users/Users"));
 const AdminServices = lazy(() => import("../pages/AdminPages/Services/Services"));
+const AdminConsultations = lazy(() => import("../pages/AdminPages/Consultations/ConsultationsPage"))
+const AdminConsultationDetails = lazy(() => import("../pages/AdminPages/Consultations/ConsultationDetailsPage"))
 const routes = createBrowserRouter([
     {
         path: "/login",
@@ -134,6 +136,26 @@ const routes = createBrowserRouter([
                     <ProtectedRoute allowedRoles={['Admin']}>
                         <Suspense fallback={<div>Loading Settings...</div>}>
                             <AdminUsers />
+                        </Suspense>
+                    </ProtectedRoute>
+                ),
+            },
+            {
+                path: "law-consultations",
+                element: (
+                    <ProtectedRoute allowedRoles={['Admin']}>
+                        <Suspense fallback={<div>Loading Settings...</div>}>
+                            <AdminConsultations />
+                        </Suspense>
+                    </ProtectedRoute>
+                ),
+            },
+            {
+                path: "law-consultations/:consultationId",
+                element: (
+                    <ProtectedRoute allowedRoles={['Admin']}>
+                        <Suspense fallback={<div>Loading Request Details...</div>}>
+                            < AdminConsultationDetails />
                         </Suspense>
                     </ProtectedRoute>
                 ),
