@@ -204,6 +204,25 @@ export const addRequestNote = async ({ requestId = null, content, consultationId
     return response.data;
 };
 
+export const getALLNotes = async ({ queryKey }) => {
+    const [_key, { requestId = null, pageIndex = 1, pageSize = 5 }] = queryKey;
+    console.log(requestId)
+    const { data: response } = await api.get(`/api/Notes/GetByUserServiceId/${requestId}`, { requestId, pageIndex, pageSize })
+
+    if (!response?.isSuccess) {
+        throw new Error(response?.error?.description || "Failed to fetch Notes");
+    }
+
+    return {
+        data: response.data,
+        meta: {
+            current_page: pageIndex,
+            page_size: pageSize,
+            total_records: response.data.length,
+            total_pages: Math.max(1, Math.ceil(response.data.length / pageSize)),
+        },
+    };
+}
 
 // Get request timeline/history
 export const getRequestTimeline = async (requestId) => {

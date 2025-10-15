@@ -16,7 +16,9 @@
     "requests": "Requests",
     "users": "Users",
     "settings": "Settings",
-    "logout": "Logout"
+    "logout": "Logout",
+    "consultationTypes": "Consultation Types",
+    "consultations": "consultations"
   },
   "header": {
     "changeLanguage": "Change language",
@@ -154,6 +156,78 @@
       "resolved": "Resolved",
       "rejected": "Rejected",
       "search": "Search requests...",
+      "clearFilters": "Clear Filters"
+    }
+  },
+  "Consultations": {
+    "ConsultationDetails": "Consultation Details",
+    "ConsultationList": "Consultation List",
+    "ConsultationID": "Consultation ID",
+    "Management": "Consultation Management",
+    "User": "User",
+    "Category": "Category",
+    "Title": "Title",
+    "Description": "Description",
+    "Type": "Consultation Type",
+    "Client": "Client",
+    "Consultant": "Consultant",
+    "Status": {
+      "label": "Status",
+      "Pending": "Pending Review",
+      "Scheduled": "Scheduled",
+      "Completed": "Completed",
+      "Cancelled": "Cancelled"
+    },
+    "ReceivedDate": "Received Date",
+    "ScheduledDate": "Scheduled Date",
+    "Attachments": {
+      "title": "Attachments",
+      "noAttachments": "No attachments for this consultation",
+      "view": "View",
+      "download": "Download",
+      "size": "Size"
+    },
+    "Notes": {
+      "title": "Notes",
+      "internal": "Internal Notes",
+      "add": "Add Note",
+      "previous": "Previous Notes",
+      "noPreviousNotes": "No previous notes for this consultation",
+      "placeholder": "Add a short note for the team..."
+    },
+    "Actions": {
+      "updateStatus": "Update Status",
+      "saveChanges": "Save Changes",
+      "saving": "Saving...",
+      "cancel": "Cancel",
+      "back": "Back",
+      "addNote": "Add Note",
+      "schedule": "Schedule",
+      "complete": "Mark as Completed",
+      "cancelConsultation": "Cancel Consultation",
+      "updating": "Updating..."
+    },
+    "Messages": {
+      "updateSuccess": "Consultation updated successfully",
+      "updateError": "An error occurred while updating the consultation",
+      "noteAddedSuccess": "Note added successfully",
+      "noteAddedError": "An error occurred while adding the note",
+      "loading": "Loading...",
+      "loadError": "An error occurred while loading data",
+      "notFound": "Consultation not found",
+      "noContent": "No consultations to display"
+    },
+    "Team": {
+      "consultingTeam": "Consulting Team",
+      "supervisor": "Supervisor"
+    },
+    "Filters": {
+      "all": "All Consultations",
+      "pending": "Pending Review",
+      "scheduled": "Scheduled",
+      "completed": "Completed",
+      "cancelled": "Cancelled",
+      "search": "Search consultations...",
       "clearFilters": "Clear Filters"
     }
   },

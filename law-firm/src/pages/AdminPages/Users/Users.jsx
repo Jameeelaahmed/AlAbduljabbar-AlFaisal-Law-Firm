@@ -155,6 +155,7 @@ function Users() {
                     useDataHook={useUsers}
                     columns={tableColumns}
                     actions={tableActions}
+                    url='/admin/users'
                     perPage={5}
                     filters={{
                         search: debouncedSearch,
