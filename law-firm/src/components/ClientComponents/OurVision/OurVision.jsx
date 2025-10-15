@@ -31,11 +31,11 @@ function OurVision() {
                     {/* Mission */}
                     <div className="group relative bg-white rounded-3xl shadow-lg hover:shadow-xl border border-secondary/10 p-8 transition-all duration-500 hover:-translate-y-2">
                         {/* Background Accent */}
-                        <div className="absolute top-0 right-0 w-32 h-32 bg-primary/5 rounded-full -translate-y-16 translate-x-16 group-hover:scale-150 transition-transform duration-700 hidden lg:block"></div>
+                        <div className="absolute top-0 rtl:right-0 ltr:left-0 w-32 h-32 bg-primary/5 rounded-full -translate-y-16 rtl:translate-x-16 ltr:-translate-x-16  group-hover:scale-150 transition-transform duration-700 hidden lg:block"></div>
 
                         <div className="relative z-10">
                             <div className="flex items-start justify-between mb-6">
-                                <div className="w-16 h-16 bg-gradient-to-br from-primary to-accent rounded-2xl flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform duration-300">
+                                <div className="w-16 h-16 rtl:bg-gradient-to-br ltr:bg-gradient-to-bl from-primary to-accent rounded-2xl flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform duration-300">
                                     <Target size={28} className="text-white" />
                                 </div>
                                 <div className="text-6xl text-primary/10 font-serif select-none">01</div>
@@ -58,7 +58,7 @@ function OurVision() {
                     {/* Vision */}
                     <div className="group relative bg-white rounded-3xl shadow-lg hover:shadow-xl border border-secondary/10 p-8 transition-all duration-500 hover:-translate-y-2">
                         {/* Background Accent */}
-                        <div className="absolute top-0 left-0 w-32 h-32 bg-accent/5 rounded-full -translate-y-16 -translate-x-16 group-hover:scale-150 transition-transform duration-700 hidden lg:block"></div>
+                        <div className="absolute top-0 rtl:left-0 ltr:right-0 w-32 h-32 bg-primary/5 rounded-full -translate-y-16 rtl:-translate-x-16 ltr:translate-x-16  group-hover:scale-150 transition-transform duration-700 hidden lg:block"></div>
 
                         <div className="relative z-10">
                             <div className="flex items-start justify-between mb-6">

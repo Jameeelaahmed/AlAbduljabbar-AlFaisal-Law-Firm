@@ -1,40 +1,53 @@
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import * as categoryApi from "../api/category";
 import { toast } from "react-toastify";
-
+import { useTranslation } from "react-i18next";
 // 🔹 Get All Categories
-export const useAllCategories = () =>
-    useQuery({
-        queryKey: ["allCategories"],
+export const useAllCategories = () => {
+    const { i18n } = useTranslation() // read language at render time
+    const currentLang = i18n.language || localStorage.getItem('selectedLanguage') || 'ar'
+    return useQuery({
+        queryKey: ["allCategories", currentLang],
         queryFn: categoryApi.getAllCategories,
     });
+}
 
 // 🔹 Get Category By Id
-export const useCategoryById = (id) =>
-    useQuery({
-        queryKey: ["categoryById", id],
+export const useCategoryById = (id) => {
+    const { i18n } = useTranslation() // read language at render time
+    const currentLang = i18n.language || localStorage.getItem('selectedLanguage') || 'ar'
+    return useQuery({
+        queryKey: ["categoryById", id, currentLang],
         queryFn: () => categoryApi.getCategoryById(id),
         enabled: !!id,
     });
+}
+
 // 🔹 Get For Update Category By Id
-export const useGetCategoryForUpdate = (id) =>
-    useQuery({
-        queryKey: ["categoryById", id],
+export const useGetCategoryForUpdate = (id) => {
+    const { i18n } = useTranslation() // read language at render time
+    const currentLang = i18n.language || localStorage.getItem('selectedLanguage') || 'ar'
+    return useQuery({
+        queryKey: ["categoryById", id, currentLang],
         queryFn: () => categoryApi.getCategoryForUpdate(id),
         enabled: !!id,
     });
+}
 
 // 🔹 Get Category By branchId
 
-export const useGetCategoryByBranchId = (branchId, options = {}) =>
-    useQuery({
-        queryKey: ["categoriesByBranch", branchId],
+export const useGetCategoryByBranchId = (branchId, options = {}) => {
+    const { i18n } = useTranslation() // read language at render time
+    const currentLang = i18n.language || localStorage.getItem('selectedLanguage') || 'ar'
+    return useQuery({
+        queryKey: ["categoriesByBranch", branchId, currentLang],
         queryFn: () => categoryApi.getCategoryByBranchId(branchId),
         enabled: !!branchId,
         keepPreviousData: true,
         staleTime: 1000 * 60 * 2, // 2 minutes (adjust as needed)
         ...options,
     });
+}
 
 // 🔹 Create Category
 export const useCreateCategory = () => {

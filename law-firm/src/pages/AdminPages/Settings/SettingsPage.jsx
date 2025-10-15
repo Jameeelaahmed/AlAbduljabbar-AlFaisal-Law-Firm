@@ -1,12 +1,13 @@
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import { useSections } from "../../../hooks/useSections";
 import { useSectionsStore } from "../../../store/useSectionStore";
-import SettingsSectionContainer from "../../../components/AdminComponents/Settings/SettingsSection";
+import SettingsSection from "../../../components/AdminComponents/Settings/SettingsSection";
 
+import { useTranslation } from "react-i18next";
 export default function SettingsPage() {
     const { data, isLoading, isError, error } = useSections();
     const { sections, setSections, updateSection } = useSectionsStore();
-
+    const { t } = useTranslation();
     //* Sync fetched data into Zustand once
     useEffect(() => {
         if (data) setSections(data);
@@ -23,7 +24,7 @@ export default function SettingsPage() {
     if (isLoading) {
         return (
             <div className="p-8 flex justify-center items-center min-h-screen">
-                <div className="text-xl text-gray-600">جاري التحميل...</div>
+                <div className="text-xl text-gray-600">{t("Loading...")}</div>
             </div>
         );
     }
@@ -32,7 +33,7 @@ export default function SettingsPage() {
         return (
             <div className="p-8">
                 <div className="bg-red-50 border border-red-200 text-red-800 px-6 py-4 rounded-lg">
-                    <p className="font-semibold">خطأ في تحميل البيانات</p>
+                    <p className="font-semibold">خطأ  تحميل البيانات</p>
                     <p className="text-sm mt-1">{error?.message}</p>
                 </div>
             </div>
@@ -44,7 +45,7 @@ export default function SettingsPage() {
 
             <div className="space-y-8">
                 {sections.map((section) => (
-                    <SettingsSectionContainer
+                    <SettingsSection
                         key={section.key}
                         section={section}
                         onChange={handleSectionChange}

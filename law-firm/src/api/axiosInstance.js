@@ -36,11 +36,7 @@ api.interceptors.request.use(
                     ? localStorage.getItem("selectedLanguage")
                     : null;
             const lang =
-                savedLang ||
-                (typeof document !== "undefined" &&
-                    document.documentElement.dir === "rtl"
-                    ? "ar"
-                    : "en");
+                savedLang
             config.headers["Accept-Language"] = lang;
         } catch {
             // ignore if server-side or inaccessible

@@ -11,6 +11,8 @@ const Dashboard = lazy(() => import("../pages/AdminPages/Dashboard/Dashboard"));
 import NotFoundPage from "../pages/NotFoundPage";
 import UnAuthorized from "../pages/UnAuthorized";
 import LawServicesPage from "../pages/ClientPages/ServicesPage/ServicesPage";
+import FAQPage from "../pages/ClientPages/FAQ/FAQ";
+import ContactUs from "../pages/ClientPages/ContactUs/ContactUs";
 
 //lazy loaded components
 const LoginRegister = lazy(() => import("../pages/AuthPages/LoginRegisterPage/LoginRegisterPage"));
@@ -161,6 +163,19 @@ const routes = createBrowserRouter([
                     <LawServicesPage />
                 // </ProtectedRoute>
             },
+            {
+                path: '/FAQClient', element:
+                    // <ProtectedRoute allowedRoles={['User']}>
+                    <FAQPage />
+                // </ProtectedRoute>
+            },
+            {
+                path: '/contactus', element:
+                    // <ProtectedRoute allowedRoles={['User']}>
+                    <ContactUs />
+                // </ProtectedRoute>
+            },
+
             {
                 path: '/profile',
                 element: <ClientProfile />
