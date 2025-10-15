@@ -1,8 +1,12 @@
 import { useQuery } from "@tanstack/react-query";
-import { fetchSliders } from '../api/landing'
+import { fetchSliders } from '../api/landing';
+import { useTranslation } from "react-i18next";
+
 export const useSliders = () => {
+    const { i18n } = useTranslation()
+    const currentLang = i18n.language || localStorage.getItem('selectedLanguage') || 'ar'
     return useQuery({
-        queryKey: ['sliders'],
+        queryKey: ['sliders', currentLang],
         queryFn: fetchSliders,
         staleTime: 1000 * 60 * 30,
         cacheTime: 1000 * 60 * 60,
