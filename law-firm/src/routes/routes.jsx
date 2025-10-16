@@ -22,7 +22,7 @@ const VerifyOTP = lazy(() => import("../pages/ForgetPassword/VerifyOTP"))
 const ResetPassword = lazy(() => import("../pages/ForgetPassword/ResetPasswordPage"))
 const FAQ = lazy(() => import("../pages/AdminPages/FAQ/FAQ"));
 const ConsultationTypes = lazy(() => import("../pages/AdminPages/ConsultationTypes/ConsultationTypes"));
-
+const ConsultantPage = lazy(() => import("../pages/ClientPages/ConsultantPage/ConsultantPage"))
 const ClientProfile = lazy(() => import("../pages/ClientPages/Profile/Profile"))
 // Admin Components
 const AdminSettings = lazy(() => import("../pages/AdminPages/Settings/SettingsPage"));
@@ -200,6 +200,12 @@ const routes = createBrowserRouter([
                 path: '/FAQClient', element:
                     // <ProtectedRoute allowedRoles={['User']}>
                     <FAQPage />
+                // </ProtectedRoute>
+            },
+            {
+                path: '/consultations', element:
+                    // <ProtectedRoute allowedRoles={['User']}>
+                    <ConsultantPage />
                 // </ProtectedRoute>
             },
             {

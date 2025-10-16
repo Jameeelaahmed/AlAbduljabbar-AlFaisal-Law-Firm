@@ -15,7 +15,51 @@ export function useConsultations({ pageIndex = 1, pageSize = 5 } = {}) {
     });
 }
 
+export const useCreateConsultationRequest = () => {
+    const queryClient = useQueryClient();
 
+    return useMutation({
+        mutationFn: consultationsApi.createConsultationRequest,
+
+        // 🔹 Optimistic update (optional)
+        onMutate: async (newRequest) => {
+            await queryClient.cancelQueries(["consultations"]);
+
+            const previousRequests = queryClient.getQueryData(["consultations"]);
+
+            // Optimistically update UI
+            queryClient.setQueryData(["consultations"], (old = []) => [
+                ...old,
+                { ...newRequest, id: Date.now(), isPending: true },
+            ]);
+
+            // Return rollback context
+            return { previousRequests };
+        },
+
+        // 🔹 If error happens → rollback
+        onError: (error, newRequest, context) => {
+            if (context?.previousRequests) {
+                queryClient.setQueryData(["consultations"], context.previousRequests);
+            }
+            console.error("Error creating consultation:", error);
+        },
+
+        // 🔹 When success → refetch or update cache
+        onSuccess: (data) => {
+            // Option 1: refetch consultations list
+            queryClient.invalidateQueries(["consultations"]);
+            toast.success("Consultation Request Sent Successfully")
+            // Option 2 (optional): directly add new data to cache
+            // queryClient.setQueryData(["consultations"], (old = []) => [...old, data]);
+        },
+
+        // 🔹 Always runs after success/error
+        onSettled: () => {
+            queryClient.invalidateQueries(["consultations"]);
+        },
+    });
+};
 
 // **** CONSULTATION TYPES ****
 export const useCreateConsultationType = () => {
