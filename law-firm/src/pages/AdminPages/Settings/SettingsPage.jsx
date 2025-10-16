@@ -5,6 +5,8 @@ import { CoreValuesSection } from '../../../components/AdminComponents/Settings/
 import { BaseOfSuccessSection } from '../../../components/AdminComponents/Settings/BaseOfSuccessSection';
 import { LawyersSection } from '../../../components/AdminComponents/Settings/LawyersSection';
 import { ClientReviewsSection } from '../../../components/AdminComponents/Settings/ClientReviewsSection';
+import SliderSection from '../../../components/AdminComponents/Settings/SliderSection';
+import { useTranslation } from 'react-i18next';
 
 //
 import React, { useState, useEffect } from "react";
@@ -58,6 +60,8 @@ const mapToBackendDto = (values) => ({
 export default function SettingsPage() {
     const queryClient = useQueryClient();
     const [hasUnsavedChanges, setHasUnsavedChanges] = useState(false);
+    const [activeTab, setActiveTab] = useState('settings');
+    const { t } = useTranslation();
 
     useUnsavedChanges(hasUnsavedChanges);
     useBlockNavigation(hasUnsavedChanges);
@@ -179,59 +183,11 @@ export default function SettingsPage() {
         );
     }
 
-    return (
-        <FormikProvider value={formik}>
-            <div className="min-h-screen bg-[#f4f5f3]">
-                {/* Header */}
-                <div className="bg-[#003a42] text-white shadow-lg sticky top-0 z-10">
-                    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
-                        <div className="flex justify-between items-center">
-                            <div>
-                                <h1 className="text-2xl font-bold">Homepage Settings</h1>
-                                <p className="text-gray-300 text-sm mt-1">Manage your website content</p>
-                            </div>
-                            <button
-                                onClick={() => formik.submitForm()}
-                                disabled={mutation.isLoading}
-                                type="button"
-                                className="flex items-center gap-2 px-6 py-3 bg-[#006b63] text-white rounded-lg hover:bg-[#007b73] transition-colors disabled:opacity-50 disabled:cursor-not-allowed font-medium shadow-md"
-                            >
-                                {mutation.isLoading ? (
-                                    <>
-                                        <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
-                                        Saving...
-                                    </>
-                                ) : (
-                                    <>
-                                        <Save size={20} />
-                                        Save Changes
-                                    </>
-                                )}
-                            </button>
-                        </div>
-                    </div>
-                </div>
-
-                {/* Messages */}
-                {mutation.isSuccess && (
-                    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-4">
-                        <div className="bg-green-50 border border-green-200 rounded-lg p-4 flex items-center gap-3">
-                            <CheckCircle className="text-green-600" size={24} />
-                            <p className="text-green-800 font-medium">Settings saved successfully!</p>
-                        </div>
-                    </div>
-                )}
-                {mutation.isError && (
-                    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-4">
-                        <div className="bg-red-50 border border-red-200 rounded-lg p-4 flex items-center gap-3">
-                            <AlertCircle className="text-red-600" size={24} />
-                            <p className="text-red-800 font-medium">Failed to save settings. Please try again.</p>
-                        </div>
-                    </div>
-                )}
-
-                {/* Main Form */}
-                <form onSubmit={formik.handleSubmit} className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8">
+    // Tab content based on active tab
+    const renderTabContent = () => {
+        if (activeTab === 'settings') {
+            return (
+                <form onSubmit={formik.handleSubmit} className="space-y-8">
                     <CompanySummarySection formik={formik} />
                     <JourneyMilestonesSection formik={formik} />
                     <CoreValuesSection formik={formik} />
@@ -249,17 +205,111 @@ export default function SettingsPage() {
                             {mutation.isLoading ? (
                                 <>
                                     <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
-                                    Saving...
+                                    {t('common.saving')}...
                                 </>
                             ) : (
                                 <>
                                     <Save size={20} />
-                                    Save All Changes
+                                    {t('common.saveAllChanges')}
                                 </>
                             )}
                         </button>
                     </div>
                 </form>
+            );
+        } else if (activeTab === 'sliders') {
+            return <SliderSection />;
+        }
+        return null;
+    };
+
+    return (
+        <FormikProvider value={formik}>
+            <div className="min-h-screen bg-[#f4f5f3]">
+                {/* Header */}
+                <div className="bg-[#003a42] text-white shadow-lg sticky top-0 z-10">
+                    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                        <div className="flex justify-between items-center py-4">
+                            <div>
+                                <h1 className="text-2xl font-bold">{t('Settings.title')}</h1>
+                                <p className="text-gray-300 text-sm mt-1">{t('Settings.subTitle')}</p>
+                            </div>
+                            {activeTab === 'settings' && (
+                                <button
+                                    onClick={() => formik.submitForm()}
+                                    disabled={mutation.isLoading}
+                                    type="button"
+                                    className="flex items-center gap-2 px-6 py-3 bg-[#006b63] text-white rounded-lg hover:bg-[#007b73] transition-colors disabled:opacity-50 disabled:cursor-not-allowed font-medium shadow-md"
+                                >
+                                    {mutation.isLoading ? (
+                                        <>
+                                            <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+                                            {t('common.saving')}...
+                                        </>
+                                    ) : (
+                                        <>
+                                            <Save size={20} />
+                                            {t('common.saveChanges')}
+                                        </>
+                                    )}
+                                </button>
+                            )}
+                        </div>
+                        
+                        {/* Tabs */}
+                        <div className="flex border-b border-[#006b63]">
+                            <button
+                                onClick={() => setActiveTab('settings')}
+                                className={`px-4 py-3 font-medium text-sm ${
+                                    activeTab === 'settings'
+                                        ? 'bg-[#006b63] text-white'
+                                        : 'text-gray-200 hover:bg-[#005a54]'
+                                }`}
+                            >
+                                {t('Settings.title')}
+                            </button>
+                            <button
+                                onClick={() => setActiveTab('sliders')}
+                                className={`px-4 py-3 font-medium text-sm ${
+                                    activeTab === 'sliders'
+                                        ? 'bg-[#006b63] text-white'
+                                        : 'text-gray-200 hover:bg-[#005a54]'
+                                }`}
+                            >
+                                {t('slider.manageSlider')}
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                {/* Messages */}
+                {mutation.isSuccess && (
+                    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-4">
+                        <div className="bg-green-50 border border-green-200 rounded-lg p-4 flex items-center gap-3">
+                            <CheckCircle className="text-green-600" size={24} />
+                            <p className="text-green-800 font-medium">
+                                {activeTab === 'settings' 
+                                    ? t('settings.savedSuccess') 
+                                    : t('slider.savedSuccess')}
+                            </p>
+                        </div>
+                    </div>
+                )}
+                {mutation.isError && (
+                    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-4">
+                        <div className="bg-red-50 border border-red-200 rounded-lg p-4 flex items-center gap-3">
+                            <AlertCircle className="text-red-600" size={24} />
+                            <p className="text-red-800 font-medium">
+                                {mutation.error.message || t('error.generic')}
+                            </p>
+                        </div>
+                    </div>
+                )}
+
+                {/* Main Content */}
+                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+                    {renderTabContent()}
+                </div>
 
                 <div className="h-16"></div>
             </div>
