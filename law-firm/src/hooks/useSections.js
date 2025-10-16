@@ -16,6 +16,8 @@ export function useSections() {
         queryKey: ["sections"],
         queryFn: fetchSections,
         staleTime: 1000 * 60 * 10,
-        refetchOnWindowFocus: false,
+        refetchOnWindowFocus: true,
     });
 }
+
+

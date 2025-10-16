@@ -10,7 +10,7 @@ import 'swiper/css/effect-fade';
 import Modal from '../Modals/Modal';
 import RequestService from '../Modals/RequestService/RequestService';
 import { MapPin, Phone, Mail } from 'lucide-react';
-import { useSliders } from '../../../hooks/useSliders';
+import { useSliders } from '../../../hooks/useHomePage';
 
 function Hero() {
     const requestServiceRef = useRef();
@@ -22,7 +22,6 @@ function Hero() {
     // Fetch sliders using React Query
     const { data: sliders = [], isLoading: loading } = useSliders();
 
-    console.log(sliders)
     //logo1 drop down 
     const openLogo1DropDown = () => {
         setIsLogo1DropDown(!isLogo1DropDown);
