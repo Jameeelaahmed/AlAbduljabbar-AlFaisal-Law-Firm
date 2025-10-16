@@ -1,25 +1,64 @@
 // components
 import { CompanySummarySection } from '../../../components/AdminComponents/Settings/CompanySummarySection';
-import { JourneyMilestonesSection } from '../../../components/AdminComponents/Settings/JourneyMilestonesSection'
-import { CoreValuesSection } from '../../../components/AdminComponents/Settings/CoreValuesSection'
-import { BaseOfSuccessSection } from '../../../components/AdminComponents/Settings/BaseOfSuccessSection'
-import { LawyersSection } from '../../../components/AdminComponents/Settings/LawyersSection'
-import { ClientReviewsSection } from '../../../components/AdminComponents/Settings/ClientReviewsSection'
+import { JourneyMilestonesSection } from '../../../components/AdminComponents/Settings/JourneyMilestonesSection';
+import { CoreValuesSection } from '../../../components/AdminComponents/Settings/CoreValuesSection';
+import { BaseOfSuccessSection } from '../../../components/AdminComponents/Settings/BaseOfSuccessSection';
+import { LawyersSection } from '../../../components/AdminComponents/Settings/LawyersSection';
+import { ClientReviewsSection } from '../../../components/AdminComponents/Settings/ClientReviewsSection';
+
 //
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useQueryClient, useQuery, useMutation } from "@tanstack/react-query";
 import { useFormik, FormikProvider } from "formik";
-import { AlertCircle, Save } from "lucide-react";
-import api from '../../../api/axiosInstance'
+import { AlertCircle, Save, CheckCircle } from "lucide-react";
+import api from '../../../api/axiosInstance';
 import { uploadPendingImages } from '../../../utils/imageUploadHelper';
 import { useUnsavedChanges, useBlockNavigation } from '../../../hooks/useUnsavedChanges';
 import { toast } from 'react-toastify';
+
+// Helper: Map Formik lowercase keys to backend PascalCase
+const mapToBackendDto = (values) => ({
+    EntitySettings: {
+        CompanySummary: values.entitySettings.companySummary,
+        JourneyMilestones: values.entitySettings.journeyMilestones,
+        CoreValues: values.entitySettings.coreValues.map(cv => ({
+            PhotoUrl: cv.photoUrl,
+            Title: cv.title,
+            Description: cv.description
+        })),
+        BaseOfOurSuccess: {
+            Headline: values.entitySettings.baseOfOurSuccess.headline,
+            Bases: values.entitySettings.baseOfOurSuccess.bases.map(base => ({
+                PhotoUrl: base.photoUrl,
+                Title: base.title,
+                Description: base.description
+            }))
+        }
+    },
+    Lawyers: values.lawyers.map(l => ({
+        Id: l.id,
+        PhotoUrl: l.photoUrl,
+        Name: l.name,
+        Position: l.position,
+        Specialization: l.specialization,
+        Description: l.description,
+        YearsOfExperience: l.yearsOfExperience,
+        LinkedIn: l.linkedIn,
+        Gmail: l.gmail
+    })),
+    ClientReviews: values.clientReviews.map(c => ({
+        Id: c.id,
+        Name: c.name,
+        ClientOf: c.clientOf,
+        Review: c.review
+    }))
+});
+
 // Main SettingsPage Component
 export default function SettingsPage() {
     const queryClient = useQueryClient();
     const [hasUnsavedChanges, setHasUnsavedChanges] = useState(false);
-    
-    // Warn about unsaved changes
+
     useUnsavedChanges(hasUnsavedChanges);
     useBlockNavigation(hasUnsavedChanges);
 
@@ -28,45 +67,12 @@ export default function SettingsPage() {
         queryKey: ['homepage'],
         queryFn: async () => {
             const { data: response } = await api.get('/api/Homepage');
-            console.log(response)
             if (!response.isSuccess) throw new Error('Failed to fetch data');
             return response.data;
         }
     });
 
-    // Update mutation
-    const mutation = useMutation({
-        mutationFn: async (values) => {
-            // Validate required fields
-            if (!values.entitySettings?.baseOfOurSuccess?.Headline || values.entitySettings.baseOfOurSuccess.Headline.trim() === '') {
-                // Mark field as touched to show error
-                formik.setFieldTouched('entitySettings.baseOfOurSuccess.Headline', true);
-                throw new Error('Please fill in the Headline field in the "Base of Our Success" section before saving.');
-            }
-            
-            // First, upload all pending images
-            await uploadPendingImages(values, formik.setFieldValue);
-            
-            // Then submit the form with image URLs wrapped in dto
-            const response = await api.put('/api/Homepage', { dto: values });
-            if (!response.data.isSuccess) {
-                const errorMsg = response.data.error?.description || 'Failed to update data';
-                throw new Error(errorMsg);
-            }
-            return response.data;
-        },
-        onSuccess: () => {
-            queryClient.invalidateQueries(['homepage']);
-            setHasUnsavedChanges(false);
-            toast.success('Settings saved successfully!');
-        },
-        onError: (error) => {
-            console.error('Save error:', error);
-            toast.error(error.message || 'Failed to save settings');
-        }
-    });
-
-    // Initialize Formik
+    // Formik
     const formik = useFormik({
         initialValues: {
             entitySettings: {
@@ -79,7 +85,7 @@ export default function SettingsPage() {
                 journeyMilestones: [],
                 coreValues: [],
                 baseOfOurSuccess: {
-                    Headline: '',
+                    headline: '',
                     bases: []
                 }
             },
@@ -87,35 +93,66 @@ export default function SettingsPage() {
             clientReviews: []
         },
         enableReinitialize: true,
-        onSubmit: async (values) => {
+        onSubmit: (values) => {
             mutation.mutate(values);
         }
     });
-    
-    // Track form changes
-    React.useEffect(() => {
-        if (formik.dirty) {
-            setHasUnsavedChanges(true);
-        }
+
+    // Track unsaved changes
+    useEffect(() => {
+        if (formik.dirty) setHasUnsavedChanges(true);
     }, [formik.dirty, formik.values]);
 
-    // Update formik values when data is fetched
-    React.useEffect(() => {
+    // Populate Formik when data is fetched
+    useEffect(() => {
         if (data) {
-            // Ensure baseOfOurSuccess has headline field
-            const updatedData = {
+            formik.setValues({
                 ...data,
                 entitySettings: {
                     ...data.entitySettings,
                     baseOfOurSuccess: {
-                        Headline: data.entitySettings?.baseOfOurSuccess?.Headline || '',
+                        headline: data.entitySettings?.baseOfOurSuccess?.headline || '',
                         bases: data.entitySettings?.baseOfOurSuccess?.bases || []
                     }
                 }
-            };
-            formik.setValues(updatedData);
+            });
         }
     }, [data]);
+
+    // Mutation for saving
+    const mutation = useMutation({
+        mutationFn: async (values) => {
+            // Validate required headline
+            if (!values.entitySettings?.baseOfOurSuccess?.headline?.trim()) {
+                formik.setFieldTouched('entitySettings.baseOfOurSuccess.headline', true);
+                throw new Error('Please fill in the headline field in the "Base of Our Success" section before saving.');
+            }
+
+            // Upload images first
+            await uploadPendingImages(values, formik.setFieldValue);
+
+            // Map to backend DTO
+            const dto = mapToBackendDto(values);
+
+            // Submit directly (no extra { dto })
+            const response = await api.put('/api/Homepage', dto);
+
+            if (!response.data.isSuccess) {
+                throw new Error(response.data.error?.description || 'Failed to update data');
+            }
+
+            return response.data;
+        },
+        onSuccess: () => {
+            queryClient.invalidateQueries(['homepage']);
+            setHasUnsavedChanges(false);
+            toast.success('Settings saved successfully!');
+        },
+        onError: (error) => {
+            console.error('Save error:', error);
+            toast.error(error.message || 'Failed to save settings');
+        }
+    });
 
     if (isLoading) {
         return (
@@ -154,7 +191,7 @@ export default function SettingsPage() {
                                 <p className="text-gray-300 text-sm mt-1">Manage your website content</p>
                             </div>
                             <button
-                                onClick={formik.handleSubmit}
+                                onClick={() => formik.submitForm()}
                                 disabled={mutation.isLoading}
                                 type="button"
                                 className="flex items-center gap-2 px-6 py-3 bg-[#006b63] text-white rounded-lg hover:bg-[#007b73] transition-colors disabled:opacity-50 disabled:cursor-not-allowed font-medium shadow-md"
@@ -175,7 +212,7 @@ export default function SettingsPage() {
                     </div>
                 </div>
 
-                {/* Success/Error Messages */}
+                {/* Messages */}
                 {mutation.isSuccess && (
                     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-4">
                         <div className="bg-green-50 border border-green-200 rounded-lg p-4 flex items-center gap-3">
@@ -184,7 +221,6 @@ export default function SettingsPage() {
                         </div>
                     </div>
                 )}
-
                 {mutation.isError && (
                     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-4">
                         <div className="bg-red-50 border border-red-200 rounded-lg p-4 flex items-center gap-3">
@@ -194,51 +230,37 @@ export default function SettingsPage() {
                     </div>
                 )}
 
-                {/* Main Content */}
-                <form onSubmit={formik.handleSubmit} className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-                    <div className="space-y-8">
-                        {/* Company Summary */}
-                        <CompanySummarySection formik={formik} />
+                {/* Main Form */}
+                <form onSubmit={formik.handleSubmit} className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8">
+                    <CompanySummarySection formik={formik} />
+                    <JourneyMilestonesSection formik={formik} />
+                    <CoreValuesSection formik={formik} />
+                    <BaseOfSuccessSection formik={formik} />
+                    <LawyersSection formik={formik} />
+                    <ClientReviewsSection formik={formik} />
 
-                        {/* Journey Milestones */}
-                        <JourneyMilestonesSection formik={formik} />
-
-                        {/* Core Values */}
-                        <CoreValuesSection formik={formik} />
-
-                        {/* Base of Success */}
-                        <BaseOfSuccessSection formik={formik} />
-
-                        {/* Lawyers */}
-                        <LawyersSection formik={formik} />
-
-                        {/* Client Reviews */}
-                        <ClientReviewsSection formik={formik} />
-
-                        {/* Bottom Save Button */}
-                        <div className="flex justify-end pt-6 border-t border-gray-200">
-                            <button
-                                type="submit"
-                                disabled={mutation.isLoading}
-                                className="flex items-center gap-2 px-8 py-3 bg-[#003a42] text-white rounded-lg hover:bg-[#004a52] transition-colors disabled:opacity-50 disabled:cursor-not-allowed font-medium shadow-lg"
-                            >
-                                {mutation.isLoading ? (
-                                    <>
-                                        <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
-                                        Saving...
-                                    </>
-                                ) : (
-                                    <>
-                                        <Save size={20} />
-                                        Save All Changes
-                                    </>
-                                )}
-                            </button>
-                        </div>
+                    {/* Bottom Save Button */}
+                    <div className="flex justify-end pt-6 border-t border-gray-200">
+                        <button
+                            type="submit"
+                            disabled={mutation.isLoading}
+                            className="flex items-center gap-2 px-8 py-3 bg-[#003a42] text-white rounded-lg hover:bg-[#004a52] transition-colors disabled:opacity-50 disabled:cursor-not-allowed font-medium shadow-lg"
+                        >
+                            {mutation.isLoading ? (
+                                <>
+                                    <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+                                    Saving...
+                                </>
+                            ) : (
+                                <>
+                                    <Save size={20} />
+                                    Save All Changes
+                                </>
+                            )}
+                        </button>
                     </div>
                 </form>
 
-                {/* Footer Spacer */}
                 <div className="h-16"></div>
             </div>
         </FormikProvider>

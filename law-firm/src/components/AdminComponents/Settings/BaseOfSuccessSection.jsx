@@ -1,7 +1,7 @@
+// BaseOfSuccessSection Component
 import { Plus, Trash2 } from 'lucide-react';
 import { ImageUpload } from './ImageUpload';
 
-// BaseOfSuccessSection Component
 export const BaseOfSuccessSection = ({ formik }) => {
     const bases = formik.values.entitySettings.baseOfOurSuccess.bases;
 
@@ -24,23 +24,22 @@ export const BaseOfSuccessSection = ({ formik }) => {
             <h2 className="text-xl font-semibold text-[#003a42] mb-4">Base of Our Success</h2>
             <div className="mb-6">
                 <label className="block text-sm font-medium text-gray-700 mb-2">
-                    Headline <span className="text-red-500">*</span>
+                    headline <span className="text-red-500">*</span>
                 </label>
                 <input
                     type="text"
-                    name="entitySettings.baseOfOurSuccess.Headline"
-                    value={formik.values.entitySettings.baseOfOurSuccess.Headline}
+                    name="entitySettings.baseOfOurSuccess.headline"
+                    value={formik.values.entitySettings.baseOfOurSuccess.headline}
                     onChange={formik.handleChange}
                     placeholder="Enter headline for base of success section"
                     required
-                    className={`w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-[#003a42] focus:border-transparent ${
-                        formik.touched.entitySettings?.baseOfOurSuccess?.Headline && !formik.values.entitySettings.baseOfOurSuccess.Headline
-                            ? 'border-red-500'
-                            : 'border-gray-300'
-                    }`}
+                    className={`w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-[#003a42] focus:border-transparent ${formik.touched.entitySettings?.baseOfOurSuccess?.headline && !formik.values.entitySettings.baseOfOurSuccess.headline
+                        ? 'border-red-500'
+                        : 'border-gray-300'
+                        }`}
                 />
-                {formik.touched.entitySettings?.baseOfOurSuccess?.Headline && !formik.values.entitySettings.baseOfOurSuccess.Headline && (
-                    <p className="mt-1 text-sm text-red-500">Headline is required</p>
+                {formik.touched.entitySettings?.baseOfOurSuccess?.headline && !formik.values.entitySettings.baseOfOurSuccess.headline && (
+                    <p className="mt-1 text-sm text-red-500">headline is required</p>
                 )}
             </div>
             <div className="flex justify-between items-center mb-4">
