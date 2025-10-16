@@ -105,6 +105,11 @@ function Header() {
                         </Link>
                     </li>
                     <li className={`pt-3 pb-3 pr-6 pl-6 rounded-full ${headerActive ? "hover:bg-secondary hover:text-white " : "hover:bg-primary hover:text-white"} transition-all`}>
+                        <Link to="consultations">
+                            <p>{t("Law Consultations")}</p>
+                        </Link>
+                    </li>
+                    <li className={`pt-3 pb-3 pr-6 pl-6 rounded-full ${headerActive ? "hover:bg-secondary hover:text-white " : "hover:bg-primary hover:text-white"} transition-all`}>
                         <Link>
                             <p>{t("landing.AboutUs")}</p>
                         </Link>

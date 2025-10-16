@@ -59,6 +59,13 @@ export const getConsultationById = async (consultationId) => {
     return data.data;
 };
 
+
+
+export const createConsultationRequest = async (data) => {
+    const res = await api.post(`/api/UserConsultations/Request`, data);
+    return res.data.data;
+}
+
 // Reject 
 export const rejectConsultation = async (id) => {
     if (!id) throw new Error('Consultation ID is required');
