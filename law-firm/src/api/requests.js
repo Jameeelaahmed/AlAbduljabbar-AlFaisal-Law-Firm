@@ -190,12 +190,11 @@ export const contactRequest = async (id) => {
 
 // Add request note/comment
 export const addRequestNote = async ({ requestId = null, content, consultationId = null }) => {
-    console.log(requestId, content);
 
     if (!requestId) throw new Error('Request ID is required');
     if (!content) throw new Error('Note content is required');
 
-    const { data: response } = await api.post(`/api/Notes`, { content, userServiceId: requestId, consultationId });
+    const { data: response } = await api.post(`/api/Notes/Create`, { content, userServiceId: requestId, consultationId });
 
     if (!response?.isSuccess) {
         throw new Error(response?.error?.description || "Failed to add note");
@@ -206,7 +205,6 @@ export const addRequestNote = async ({ requestId = null, content, consultationId
 
 export const getALLNotes = async ({ queryKey }) => {
     const [_key, { requestId = null, pageIndex = 1, pageSize = 5 }] = queryKey;
-    console.log(requestId)
     const { data: response } = await api.get(`/api/Notes/GetByUserServiceId/${requestId}`, { requestId, pageIndex, pageSize })
 
     if (!response?.isSuccess) {

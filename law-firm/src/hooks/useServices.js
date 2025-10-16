@@ -23,6 +23,7 @@ export const useServiceById = (id) => {
         queryKey: ["ServiceById", id, currentLang],
         queryFn: () => serviceApi.getServiceById(id),
         enabled: !!id,
+        retry: 3
     });
 }
 // 🔹 Get For Update Service By Id
