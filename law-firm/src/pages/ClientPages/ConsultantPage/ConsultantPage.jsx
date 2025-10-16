@@ -1,19 +1,33 @@
 import React, { useState, useCallback, memo, useMemo } from 'react';
+import { Check, BookOpen, ArrowLeft, ArrowRight } from 'lucide-react';
 import { useAllCategories } from '../../../hooks/useCategories';
 import { useGetAllConsultationTypes, useCreateConsultationRequest } from '../../../hooks/useConsultations';
 import { useTranslation } from 'react-i18next';
+
 const ConsultationTypesGrid = memo(function ConsultationTypesGrid({ types, onSelect }) {
+    const { t } = useTranslation();
+
     return (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-4">
             {types?.filter(t => t.isAvailable).map((type) => (
                 <button
                     key={type.id}
                     onClick={() => onSelect(type.id)}
-                    className="p-6 border-2 border-primary/10 rounded-xl hover:border-accent hover:shadow-md transition-all duration-200 text-left group"
+                    className="p-6 border-2 border-primary/10 rounded-xl hover:border-accent hover:shadow-lg transition-all duration-300 ltr:text-left rtl:text-right group bg-white hover:bg-accent/5 transform hover:-translate-y-1"
                 >
-                    <h3 className="font-semibold text-primary mb-2 group-hover:text-accent transition-colors">
-                        {type.name}
-                    </h3>
+                    <div className="flex items-start space-x-4">
+                        <div className="w-12 h-12 rounded-lg bg-accent/10 flex items-center justify-center group-hover:bg-accent/20 transition-colors">
+                            <Check className="w-6 h-6 text-accent" />
+                        </div>
+                        <div className="flex-1">
+                            <h3 className="font-semibold text-primary mb-2 group-hover:text-accent transition-colors text-lg">
+                                {type.name}
+                            </h3>
+                            <p className="text-text/60 text-sm group-hover:text-text/80">
+                                {t('Get expert advice for your legal matters')}
+                            </p>
+                        </div>
+                    </div>
                 </button>
             ))}
         </div>
@@ -22,22 +36,62 @@ const ConsultationTypesGrid = memo(function ConsultationTypesGrid({ types, onSel
 
 const CategoriesGrid = memo(function CategoriesGrid({ categories, selectedCategoryId, onChoose }) {
     return (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
             {categories?.map((categoryData) => (
                 <button
                     key={categoryData.id}
                     type="button"
                     onClick={() => onChoose(categoryData.id)}
-                    className={`p-4 rounded-lg border-2 text-left transition-all ${selectedCategoryId === categoryData.id
-                        ? 'border-accent bg-text/5'
-                        : 'border-text/10 hover:border-[#006b63]/50'
+                    className={`p-6 rounded-xl border-2 ltr:text-left rtl:text-right transition-all duration-300 transform hover:-translate-y-0.5 ${selectedCategoryId === categoryData.id
+                        ? 'border-accent bg-accent/5 shadow-md scale-[1.02]'
+                        : 'border-text/10 hover:border-accent/50 bg-white hover:shadow-md'
                         }`}
                 >
-                    <span className={`font-medium ${selectedCategoryId === categoryData.id ? 'text-accent' : 'text-primary'}`}>
-                        {categoryData.name}
-                    </span>
+                    <div className="flex items-center space-x-3">
+                        <div className={`w-3 h-3 rounded-full ${selectedCategoryId === categoryData.id ? 'bg-accent' : 'bg-text/30'
+                            }`} />
+                        <span className={`font-semibold text-lg ${selectedCategoryId === categoryData.id ? 'text-accent' : 'text-primary'
+                            }`}>
+                            {categoryData.name}
+                        </span>
+                    </div>
                 </button>
             ))}
+        </div>
+    );
+});
+
+const StepIndicator = memo(function StepIndicator({ steps, currentStep }) {
+    return (
+        <div className="flex items-center justify-center mb-12">
+            <div className="flex items-center space-x-4">
+                {steps.map((step, index) => (
+                    <React.Fragment key={step}>
+                        <div className="flex flex-col items-center">
+                            <div className={`w-12 h-12 rounded-full flex items-center justify-center text-base font-semibold border-2 transition-all duration-300 ${index === currentStep
+                                ? 'bg-accent border-accent text-white shadow-lg scale-110'
+                                : index < currentStep
+                                    ? 'bg-secondary border-secondary text-white'
+                                    : 'border-primary/20 text-primary/40 bg-white'
+                                }`}>
+                                {index < currentStep ? (
+                                    <Check className="w-5 h-5" />
+                                ) : (
+                                    index + 1
+                                )}
+                            </div>
+                            <span className={`mt-2 text-sm font-medium hidden sm:block ${index === currentStep ? 'text-accent' : 'text-text/60'
+                                }`}>
+                                {step}
+                            </span>
+                        </div>
+                        {index < steps.length - 1 && (
+                            <div className={`w-16 h-1 rounded-full transition-all duration-300 ${index < currentStep ? 'bg-secondary' : 'bg-text/20'
+                                }`} />
+                        )}
+                    </React.Fragment>
+                ))}
+            </div>
         </div>
     );
 });
@@ -50,12 +104,14 @@ const ConsultationPage = () => {
         description: '',
         categoryId: ''
     });
-    const { t } = useTranslation()
+    const { t } = useTranslation();
     const { data: categoriesData } = useAllCategories();
     const { data: consultationTypes } = useGetAllConsultationTypes();
-    const { mutate: createConsultation, isLoading: isCreating, error: createError } = useCreateConsultationRequest();
+    const { mutate: createConsultation, isLoading: isCreating } = useCreateConsultationRequest();
 
     const [activeStep, setActiveStep] = useState(0);
+
+    const steps = [t('Consultation Type'), t('Legal Area'), t('Case Details')];
 
     const goBack = useCallback(() => {
         setActiveStep((s) => Math.max(0, s - 1));
@@ -111,93 +167,92 @@ const ConsultationPage = () => {
         return found?.name || String(formData.consultationType);
     }, [consultationTypes, formData.consultationType]);
 
+    const isStepValid = useMemo(() => {
+        switch (activeStep) {
+            case 0: return formData.consultationType;
+            case 1: return formData.categoryId;
+            case 2: return formData.title && formData.description;
+            default: return false;
+        }
+    }, [activeStep, formData]);
+
     return (
-        <div className="min-h-screen bg-gradient-to-br from-[#f4f5f3] to-[#e8e9e7] py-12 px-4 sm:px-6 lg:px-8">
+        <div className="min-h-screen ltr:bg-gradient-to-br rtl:bg-gradient-to-bl from-slate-50 to-blue-50/30 py-12 px-4 sm:px-6 lg:px-8">
             <div className="max-w-6xl mx-auto mt-20">
                 {/* Header Section */}
                 <div className="text-center mb-16">
-                    <div className="inline-flex items-center justify-center w-20 h-20 rounded-full bg-[#003a42] mb-6">
-                        <svg className="w-10 h-10 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M19 21l-7-5-7 5V5a2 2 0 012-2h10a2 2 0 012 2v16z" />
-                        </svg>
+                    <div className="inline-flex items-center justify-center w-24 h-24 rounded-full ltr:bg-gradient-to-br rtl:bg-gradient-to-bl from-primary to-accent mb-8 shadow-lg">
+                        <BookOpen className="w-12 h-12 text-white" />
                     </div>
-                    <h1 className="text-4xl font-bold text-[#003a42] mb-4 font-serif">
+                    <h1 className="text-5xl font-bold text-primary mb-6 font-serif tracking-tight">
                         {t("Legal Consultation Request")}
                     </h1>
-                    <p className="text-lg text-[#1f1f1f] max-w-2xl mx-auto opacity-80">
+                    <p className="text-xl text-text max-w-3xl mx-auto opacity-80 leading-relaxed">
                         {t("Begin your legal journey with our expert team. Select your consultation type and provide case details below.")}
                     </p>
                 </div>
 
-                <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
-                    {/* Progress Sidebar */}
-                    <div className="lg:col-span-3">
-                        <div className="bg-white rounded-2xl shadow-sm border border-primary/10 p-6 sticky top-8">
-                            <h3 className="font-serif font-bold text-primary mb-6 text-lg">{t("Consultation Steps")}</h3>
-                            <div className="space-y-4">
-                                {[t('Consultation Type'), t('Legal Area'), t('Case Details')].map((step, index) => (
-                                    <div key={step} className="flex items-center space-x-3">
-                                        <div className={`w-8 h-8 rounded-full flex items-center justify-center text-sm font-semibold border-2 ${index === activeStep
-                                            ? 'bg-accent border-accent text-white'
-                                            : index < activeStep
-                                                ? 'bg-secondary border-secondary text-white'
-                                                : 'border-primary/30 text-primary/50'
-                                            }`}>
-                                            {index < activeStep ? '✓' : index + 1}
-                                        </div>
-                                        <span className={`font-medium ${index === activeStep ? 'text-primary' : 'text-text/60'
-                                            }`}>
-                                            {step}
-                                        </span>
-                                    </div>
-                                ))}
+                {/* Step Indicator */}
+                <StepIndicator steps={steps} currentStep={activeStep} />
+
+
+                <div className="bg-white rounded-2xl shadow-xl overflow-hidden border border-primary/10">
+                    {/* Step 1: Consultation Type Selection */}
+                    {activeStep === 0 && (
+                        <div className="p-10">
+                            <div className="mb-8">
+                                <h2 className="text-3xl font-serif font-bold text-primary mb-3">{t("Select Consultation Type")}</h2>
+                                <p className="text-text/70 text-lg">{t("Choose the type of consultation that best fits your needs")}</p>
                             </div>
 
+                            <ConsultationTypesGrid types={consultationTypes} onSelect={handleConsultationTypeSelect} />
                         </div>
-                    </div>
+                    )}
 
-                    {/* Main Form Content */}
-                    <div className="lg:col-span-9">
-                        <div className="bg-white rounded-2xl shadow-lg overflow-hidden">
-                            {/* Step 1: Consultation Type Selection */}
-                            {activeStep === 0 && (
-                                <div className="p-8">
-                                    <h2 className="text-2xl font-serif font-bold text-primary mb-2">{t("Select Consultation Type")}</h2>
-                                    <p className="text-text/70 mb-8">{t("Choose the type of consultation that best fits your needs")}</p>
-
-                                    <ConsultationTypesGrid types={consultationTypes} onSelect={handleConsultationTypeSelect} />
+                    {/* Step 2 & 3: Form Inputs */}
+                    {(activeStep === 1 || activeStep === 2) && (
+                        <form onSubmit={handleSubmit} className="p-10">
+                            {/* Selected Consultation Type Display */}
+                            {formData.consultationType && (
+                                <div className="mb-8 p-6 ltr:bg-gradient-to-r rtl:bg-gradient-to-l from-accent/5 to-accent/10 rounded-xl border border-accent/20">
+                                    <div className="flex items-center space-x-3">
+                                        <div className="w-8 h-8 rounded-full bg-accent/20 flex items-center justify-center">
+                                            <Check className="w-4 h-4 text-accent" />
+                                        </div>
+                                        <div>
+                                            <p className="text-sm text-secondary font-semibold">
+                                                {t("Selected consultation type:")} <span className="text-accent">{selectedConsultationTypeName || formData.consultationType}</span>
+                                            </p>
+                                        </div>
+                                    </div>
                                 </div>
                             )}
 
-                            {/* Step 2 & 3: Form Inputs */}
-                            {(activeStep === 1 || activeStep === 2) && (
-                                <form onSubmit={handleSubmit} className="p-8">
-                                    {/* Selected Consultation Type Display */}
-                                    {formData.consultationType && (
-                                        <div className="mb-6 p-4 bg-bg rounded-lg border border-text/20">
-                                            <p className="text-sm text-secondary">
-                                                <span className="font-semibold">{t("Selected:")}</span> {selectedConsultationTypeName || formData.consultationType}
-                                            </p>
+                            <div className="space-y-10">
+                                {/* Law Type Selection */}
+                                {activeStep >= 1 && (
+                                    <div>
+                                        <div className="mb-8">
+                                            <h2 className="text-3xl font-serif font-bold text-primary mb-3">{t("Area of Law")}</h2>
+                                            <p className="text-text/70 text-lg">{t("Select the legal area that matches your case")}</p>
                                         </div>
-                                    )}
+                                        <CategoriesGrid
+                                            categories={categoriesData}
+                                            selectedCategoryId={formData.categoryId}
+                                            onChoose={handleChooseCategory}
+                                        />
+                                    </div>
+                                )}
 
-
+                                {/* Case Details */}
+                                {activeStep >= 2 && (
                                     <div className="space-y-8">
-                                        {/* Law Type Selection */}
-                                        {activeStep >= 1 && (
-                                            <div>
-                                                <label htmlFor="lawType" className="block text-lg font-serif font-bold text-primary mb-4">
-                                                    {t("Area of Law *")}
-                                                </label>
-                                                <CategoriesGrid categories={categoriesData} selectedCategoryId={formData.categoryId} onChoose={handleChooseCategory} />
-                                            </div>
-                                        )}
+                                        <div>
+                                            <h2 className="text-3xl font-serif font-bold text-primary mb-8">{t("Case Details")}</h2>
 
-                                        {/* Case Details */}
-                                        {activeStep >= 2 && (
                                             <div className="space-y-6">
                                                 <div>
-                                                    <label htmlFor="title" className="block text-lg font-serif font-bold text-primary mb-3">
+                                                    <label htmlFor="title" className="block text-lg font-semibold text-primary mb-3">
                                                         {t("Case Title *")}
                                                     </label>
                                                     <input
@@ -208,12 +263,12 @@ const ConsultationPage = () => {
                                                         onChange={handleChange}
                                                         required
                                                         placeholder={t("e.g., Employment Contract Dispute")}
-                                                        className="w-full px-4 py-3 border-2 border-text/10 rounded-lg focus:border-accent focus:ring-2 focus:ring-accent/20 transition-all duration-200"
+                                                        className="w-full px-4 py-4 border-2 border-text/10 rounded-xl focus:border-accent focus:ring-4 focus:ring-accent/10 transition-all duration-200 text-lg"
                                                     />
                                                 </div>
 
                                                 <div>
-                                                    <label htmlFor="description" className="block text-lg font-serif font-bold text-[#003a42] mb-3">
+                                                    <label htmlFor="description" className="block text-lg font-semibold text-primary mb-3">
                                                         {t("Case Description *")}
                                                     </label>
                                                     <textarea
@@ -224,71 +279,63 @@ const ConsultationPage = () => {
                                                         onChange={handleChange}
                                                         required
                                                         placeholder={t("Please describe your legal situation in detail...")}
-                                                        className="w-full px-4 py-3 border-2 border-primary/10 rounded-lg focus:border-accent focus:ring-2 focus:ring-accent/20 transition-all duration-200 resize-none"
+                                                        className="w-full px-4 py-4 border-2 border-text/10 rounded-xl focus:border-accent focus:ring-4 focus:ring-accent/10 transition-all duration-200 resize-none text-lg leading-relaxed"
                                                     />
+                                                    <p className="text-sm text-text/60 mt-2">
+                                                        {t("Please include relevant dates, parties involved, and specific legal concerns")}
+                                                    </p>
                                                 </div>
-
-                                                {/* Back button visible on steps 1 and 2 */}
                                             </div>
-
-                                        )}
-                                        {/* Navigation Buttons */}
-                                        <div className="flex justify-between pt-6">
-                                            {activeStep > 0 && (
-                                                <div className="mb-6">
-                                                    <button
-                                                        type="button"
-                                                        onClick={goBack}
-                                                        className="px-4 py-2 border-2 border-primary text-primary rounded-lg hover:bg-primary hover:text-white transition-colors duration-200 font-semibold"
-                                                    >
-                                                        {t("Back")}
-                                                    </button>
-                                                </div>
-                                            )}
-                                            {/* Next on steps 0 and 1, Submit on final step (2) */}
-                                            {activeStep < 2 ? (
-                                                <button
-                                                    type="button"
-                                                    onClick={goNext}
-                                                    disabled={
-                                                        (activeStep === 0 && !formData.consultationType) ||
-                                                        (activeStep === 1 && !formData.categoryId)
-                                                    }
-                                                    className="px-8 py-3 bg-accent text-white rounded-lg hover:bg-accent transition-colors duration-200 font-semibold shadow-lg disabled:opacity-50 disabled:cursor-not-allowed"
-                                                >
-                                                    {t("Next")}
-                                                </button>
-                                            ) : (
-                                                <button
-                                                    type="submit"
-                                                    disabled={isCreating}
-                                                    className="px-8 py-3 bg-accent text-white rounded-lg hover:bg-accent transition-colors duration-200 font-semibold shadow-lg disabled:opacity-50"
-                                                >
-                                                    {isCreating ? t('Submitting...') : t('Submit Request')}
-                                                </button>
-                                            )}
                                         </div>
                                     </div>
-                                </form>
-                            )}
-                        </div>
+                                )}
 
-                        {/* Trust Indicators */}
-                        {/* <div className="mt-6 grid grid-cols-1 md:grid-cols-3 gap-4 text-center">
-                            <div className="bg-white rounded-xl p-4 shadow-sm border border-[#003a42]/5">
-                                <div className="text-accent font-bold text-lg">24h</div>
-                                <div className="text-sm text-text/70">Response Time</div>
+                                {/* Navigation Buttons */}
+                                <div className="flex justify-between items-center pt-8 border-t border-primary/10">
+                                    {activeStep > 0 && (
+                                        <button
+                                            type="button"
+                                            onClick={goBack}
+                                            className="px-8 py-4 border-2 border-primary text-primary rounded-xl hover:bg-primary hover:text-white transition-all duration-200 font-semibold text-lg flex items-center space-x-2"
+                                        >
+                                            <ArrowLeft className="w-5 h-5" />
+                                            <span>{t("Back")}</span>
+                                        </button>
+                                    )}
+
+                                    {activeStep < 2 ? (
+                                        <button
+                                            type="button"
+                                            onClick={goNext}
+                                            disabled={!isStepValid}
+                                            className="px-10 py-4 bg-accent text-white rounded-xl hover:bg-accent/90 transition-all duration-200 font-semibold text-lg shadow-lg disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none transform hover:scale-105 ltr:ml-auto rtl:mr-auto flex items-center space-x-2"
+                                        >
+                                            <span>{t("Continue")}</span>
+                                            <ArrowRight className="w-5 h-5" />
+                                        </button>
+                                    ) : (
+                                        <button
+                                            type="submit"
+                                            disabled={isCreating || !isStepValid}
+                                            className="px-12 py-4 ltr:bg-gradient-to-r rtl:bg-gradient-to-l from-accent to-accent/90 text-white rounded-xl hover:from-accent/90 hover:to-accent/80 transition-all duration-200 font-semibold text-lg shadow-lg disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none transform hover:scale-105 ltr:ml-auto rtl:mr-auto flex items-center space-x-2"
+                                        >
+                                            {isCreating ? (
+                                                <>
+                                                    <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin" />
+                                                    <span>{t('Submitting...')}</span>
+                                                </>
+                                            ) : (
+                                                <>
+                                                    <span>{t('Submit Request')}</span>
+                                                    <ArrowRight className="w-5 h-5" />
+                                                </>
+                                            )}
+                                        </button>
+                                    )}
+                                </div>
                             </div>
-                            <div className="bg-white rounded-xl p-4 shadow-sm border border-[#003a42]/5">
-                                <div className="text-accent font-bold text-lg">100%</div>
-                                <div className="text-sm text-text/70">Confidential</div>
-                            </div>
-                            <div className="bg-white rounded-xl p-4 shadow-sm border border-[#003a42]/5">
-                                <div className="text-accent font-bold text-lg">Free</div>
-                                <div className="text-sm text-text/70">Initial Assessment</div>
-                            </div>
-                        </div> */}
-                    </div>
+                        </form>
+                    )}
                 </div>
             </div>
         </div>
