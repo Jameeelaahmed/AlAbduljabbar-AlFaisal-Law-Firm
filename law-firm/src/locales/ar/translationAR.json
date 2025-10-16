@@ -406,5 +406,14 @@
   "Irreversible Action": "إجراء لا رجعة فيه",
   "This action cannot be undone.": "لا يمكن التراجع عن هذا الإجراء.",
   "faq": "الأسئلة الشائعة",
-  "add questions": "إضافة أسئلة"
+  "add questions": "إضافة أسئلة",
+  "consultationTypes": "أنواع الاستشارات",
+  "addType": "إضافة نوع",
+  "Add Consultation Type": "إضافة نوع استشارة",
+  "Type Name in English": "اسم النوع بالإنجليزية",
+  "Type Name in Arabic": "اسم النوع بالعربية",
+  "English type name is required": "اسم النوع بالإنجليزية مطلوب",
+  "Arabic type name is required": "اسم النوع بالعربية مطلوب",
+  "Update Consultation Type": "تحديث نوع الاستشارة",
+  "Save": "حفظ"
 }

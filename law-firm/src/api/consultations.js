@@ -22,6 +22,32 @@ export const getAllUserConsultations = async ({ queryKey }) => {
     };
 }
 
+export const createConsutationsTypes = async (data) => {
+    const res = await api.post(`/api/Consultations/Create`, data);
+    return res.data.data;
+}
+export const updateConsutationsTypes = async (id, data) => {
+    console.log("update", id, data);
+    const res = await api.put(`/api/Consultations/Update/${id}`, data);
+    return res.data.data;
+}
+export const getForUpdateConsutationsTypes = async (id) => {
+    const res = await api.get(`/api/Consultations/GetForUpdate/${id}`);
+    return res.data.data;
+}
+
+
+export const getAllConsutationsTypes = async () => {
+    const res = await api.get(`/api/Consultations/all`);
+    return res.data.data;
+};
+
+export const deleteConsutationsTypes = async (id) => {
+    const res = await api.delete(`api/Consultations/${id}`);
+    return res.data;
+};
+
+
 export const getConsultationById = async (consultationId) => {
     if (!consultationId) throw new Error('consultation ID is required');
     const { data } = await api.get(`/api/UserConsultations/${consultationId}`);
