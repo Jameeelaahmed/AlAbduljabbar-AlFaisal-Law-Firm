@@ -412,7 +412,7 @@
     "invalidCredentials": "Invalid email or password",
     "serverError": "Server error occurred. Please try again later",
     "emailAlreadyRegistered": "Email is already registered"
-  }
+  },
   "consultationTypes": "Consultation Types",
   "addType": "Add Type",
   "Add Consultation Type": "Add Consultation Type",

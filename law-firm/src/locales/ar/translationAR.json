@@ -411,7 +411,7 @@
     "invalidCredentials": "البريد الإلكتروني أو كلمة المرور غير صحيحة",
     "serverError": "حدث خطأ في الخادم. يرجى المحاولة مرة أخرى لاحقاً",
     "emailAlreadyRegistered": "البريد الإلكتروني مسجل بالفعل"
-  }
+  },
   "consultationTypes": "أنواع الاستشارات",
   "addType": "إضافة نوع",
   "Add Consultation Type": "إضافة نوع استشارة",

@@ -82,7 +82,7 @@ function GenericTable({ useDataHook, columns, actions, pageSize = 5, initialPage
 
     return (
         <div className="overflow-x-auto bg-white rounded-lg shadow p-4">
-            <table className="min-w-full text-right">
+            <table className="min-w-full text-right text-xs">
                 <thead>
                     <tr className="bg-gray-100">
                         {columns.map((col) => (
