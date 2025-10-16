@@ -152,6 +152,21 @@ function Sidebar() {
                                     </li>
                                     <li>
                                         <NavLink
+                                            to="consultationTypes"
+                                            className={({ isActive }) =>
+                                                `flex items-center gap-3 p-3 rounded-xl transition-all cursor-pointer ${!isSidebarOpen ? "justify-center" : ""
+                                                } ${isActive
+                                                    ? "bg-white/30 text-white shadow-lg"
+                                                    : "hover:bg-white/20"
+                                                }`
+                                            }
+                                        >
+                                            <Scale className="w-5 h-5 flex-shrink-0" />
+                                            {isSidebarOpen && <span className="text-sm font-medium">{t("consultationTypes")}</span>}
+                                        </NavLink>
+                                    </li>
+                                    <li>
+                                        <NavLink
                                             to="/admin/requests"
                                             className={({ isActive }) =>
                                                 `flex items-center gap-3 p-3 rounded-xl transition-all cursor-pointer ${!isSidebarOpen ? "justify-center" : ""

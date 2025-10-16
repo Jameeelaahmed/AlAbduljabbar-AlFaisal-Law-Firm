@@ -149,7 +149,10 @@
       "loading": "جاري التحميل...",
       "loadError": "حدث خطأ أثناء تحميل البيانات",
       "notFound": "لم يتم العثور على الطلب",
-      "noContent": "لا يوجد طلبات لعرضها"
+      "noContent": "لا يوجد طلبات لعرضها",
+      "requestRejectedSuccess": "تم رفض الطلب بنجاح",
+      "requestContactedSuccess": "تم تحديد الطلب كمكتمل التواصل بنجاح",
+      "requestResolvedSuccess": "تم حل الطلب بنجاح"
     },
     "Team": {
       "reviewTeam": "فريق المراجعة",
@@ -221,7 +224,10 @@
       "loading": "جاري التحميل...",
       "loadError": "حدث خطأ أثناء تحميل البيانات",
       "notFound": "لم يتم العثور على الاستشارة",
-      "noContent": "لا توجد استشارات لعرضها"
+      "noContent": "لا توجد استشارات لعرضها",
+      "requestRejectedSuccess": "تم رفض الطلب بنجاح",
+      "requestContactedSuccess": "تم تحديد الطلب كمكتمل التواصل بنجاح",
+      "requestResolvedSuccess": "تم حل الطلب بنجاح"
     },
     "Team": {
       "consultingTeam": "فريق الاستشارة",
@@ -406,4 +412,32 @@
     "serverError": "حدث خطأ في الخادم. يرجى المحاولة مرة أخرى لاحقاً",
     "emailAlreadyRegistered": "البريد الإلكتروني مسجل بالفعل"
   }
+  "consultationTypes": "أنواع الاستشارات",
+  "addType": "إضافة نوع",
+  "Add Consultation Type": "إضافة نوع استشارة",
+  "Type Name in English": "اسم النوع بالإنجليزية",
+  "Type Name in Arabic": "اسم النوع بالعربية",
+  "English type name is required": "اسم النوع بالإنجليزية مطلوب",
+  "Arabic type name is required": "اسم النوع بالعربية مطلوب",
+  "Update Consultation Type": "تحديث نوع الاستشارة",
+  "Save": "حفظ",
+  "Law Consultations": "الاستشارات القانونية",
+  "Legal Consultation Request": "طلب استشارة قانونية",
+  "Select Consultation Type": "اختر نوع الاستشارة",
+  "Select a type": "اختر نوعًا",
+  "Begin your legal journey with our expert team. Select your consultation type and provide case details below.": "ابدأ رحلتك القانونية مع فريقنا الخبير. اختر نوع الاستشارة وقدم تفاصيل القضية أدناه.",
+  "Consultation Type": "نوع الاستشارة",
+  "Legal Area": "المجال القانوني",
+  "Case Details": "تفاصيل القضية",
+  "Case Title *": "عنوان القضية *",
+  "e.g., Employment Contract Dispute": "مثال: نزاع عقد عمل",
+  "Case Description *": "وصف القضية *",
+  "Please describe your legal situation in detail...": "يرجى وصف وضعك القانوني بالتفصيل...",
+  "Next": "التالي",
+  "Back": "العودة",
+  "Consultation Steps": "خطوات الاستشارة",
+  "Area of Law": "المجال القانوني",
+  "Submit Request": "إرسال الطلب",
+  "Submitting...": "جاري الإرسال...",
+  "Selected consultation type:": "نوع الاستشارة المختار:"
 }

@@ -143,7 +143,10 @@
       "loading": "Loading...",
       "loadError": "Error loading data",
       "notFound": "Request not found",
-      "noContent": "No requests to show"
+      "noContent": "No requests to show",
+      "requestRejectedSuccess": "Request rejected successfully",
+      "requestContactedSuccess": "Request marked as contacted successfully",
+      "requestResolvedSuccess": "Request resolved successfully"
     },
     "Team": {
       "reviewTeam": "Review Team",
@@ -215,7 +218,10 @@
       "loading": "Loading...",
       "loadError": "An error occurred while loading data",
       "notFound": "Consultation not found",
-      "noContent": "No consultations to display"
+      "noContent": "No consultations to display",
+      "requestRejectedSuccess": "Request rejected successfully",
+      "requestContactedSuccess": "Request marked as contacted successfully",
+      "requestResolvedSuccess": "Request resolved successfully"
     },
     "Team": {
       "consultingTeam": "Consulting Team",
@@ -407,4 +413,32 @@
     "serverError": "Server error occurred. Please try again later",
     "emailAlreadyRegistered": "Email is already registered"
   }
+  "consultationTypes": "Consultation Types",
+  "addType": "Add Type",
+  "Add Consultation Type": "Add Consultation Type",
+  "Type Name in English": "Type Name in English",
+  "Type Name in Arabic": "Type Name in Arabic",
+  "English type name is required": "English type name is required",
+  "Arabic type name is required": "Arabic type name is required",
+  "Update Consultation Type": "Update Consultation Type",
+  "Save": "Save",
+  "Law Consultations": "Law Consultations",
+  "Legal Consultation Request": "Legal Consultation Request",
+  "Select Consultation Type": "Select Consultation Type",
+  "Select a type": "Select a type",
+  "Begin your legal journey with our expert team. Select your consultation type and provide case details below.": "Begin your legal journey with our expert team. Select your consultation type and provide case details below.",
+  "Consultation Type": "Consultation Type",
+  "Legal Area": "Legal Area",
+  "Case Details": "Case Details",
+  "Case Title *": "Case Title *",
+  "e.g., Employment Contract Dispute": "e.g., Employment Contract Dispute",
+  "Case Description *": "Case Description *",
+  "Please describe your legal situation in detail...": "Please describe your legal situation in detail...",
+  "Next": "Next",
+  "Back": "Back",
+  "Consultation Steps": "Consultation Steps",
+  "Area of Law": "Area of Law *",
+  "Submit Request": "Submit Request",
+  "Submitting...": "Submitting...",
+  "Selected consultation type:": "Selected consultation type:"
 }
