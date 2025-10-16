@@ -8,7 +8,6 @@ export const createService = async (data) => {
 };
 
 export const updateService = async (id, data) => {
-    console.log(data);
 
     const res = await api.put(`${API_URL}/Update/${id}`, data);
     return res.data.data;

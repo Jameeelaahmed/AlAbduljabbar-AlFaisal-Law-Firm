@@ -149,7 +149,10 @@
       "loading": "جاري التحميل...",
       "loadError": "حدث خطأ أثناء تحميل البيانات",
       "notFound": "لم يتم العثور على الطلب",
-      "noContent": "لا يوجد طلبات لعرضها"
+      "noContent": "لا يوجد طلبات لعرضها",
+      "requestRejectedSuccess": "تم رفض الطلب بنجاح",
+      "requestContactedSuccess": "تم تحديد الطلب كمكتمل التواصل بنجاح",
+      "requestResolvedSuccess": "تم حل الطلب بنجاح"
     },
     "Team": {
       "reviewTeam": "فريق المراجعة",
@@ -221,7 +224,10 @@
       "loading": "جاري التحميل...",
       "loadError": "حدث خطأ أثناء تحميل البيانات",
       "notFound": "لم يتم العثور على الاستشارة",
-      "noContent": "لا توجد استشارات لعرضها"
+      "noContent": "لا توجد استشارات لعرضها",
+      "requestRejectedSuccess": "تم رفض الطلب بنجاح",
+      "requestContactedSuccess": "تم تحديد الطلب كمكتمل التواصل بنجاح",
+      "requestResolvedSuccess": "تم حل الطلب بنجاح"
     },
     "Team": {
       "consultingTeam": "فريق الاستشارة",

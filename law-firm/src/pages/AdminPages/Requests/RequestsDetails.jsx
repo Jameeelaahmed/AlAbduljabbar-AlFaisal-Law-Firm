@@ -1,9 +1,8 @@
-import { useState } from 'react';
+import { useState, useMemo, useCallback } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import {
     useRequest,
     useNotes,
-    useUpdateRequest,
     useRejectRequest,
     useResolveRequest,
     useContactRequest
@@ -49,7 +48,6 @@ function RequestsDetails() {
     const { mutate: rejectRequest, isLoading: isRejecting } = useRejectRequest();
     const { mutate: resolveRequest, isLoading: isResolving } = useResolveRequest();
     const { mutate: contactRequest, isLoading: isContacting } = useContactRequest();
-    const { mutate: updateRequest, isLoading: isUpdating } = useUpdateRequest();
     const { mutate: addRequestNote, isLoading: isAddingNote } = useAddRequestNote();
 
     // Notes state
@@ -75,21 +73,24 @@ function RequestsDetails() {
     };
 
 
-    const getStatusLabel = (statusCode) => {
+    const getStatusLabel = useCallback((statusCode) => {
         switch (statusCode) {
             case 0: return t("Requests.Status.Pending");
             case 1: return t("Requests.Status.Contacted");
             case 2: return t("Requests.Status.Resolved");
             case 3: return t("Requests.Status.Rejected");
-            default: return t("Requests.Status.Unknown");
+            default: return t("Requests.Status.Pending");
         }
-    };
-    const statusColors = {
-        0: 'bg-pendingBg text-pending',
-        1: 'bg-inProgressBg text-inProgress',
-        2: 'bg-succeededBg text-succeeded',
-        3: 'bg-deniedBg text-denied',
-    };
+    }, [t]);
+    const statusColors = useMemo(
+        () => ({
+            0: 'bg-pendingBg text-pending',
+            1: 'bg-inProgressBg text-inProgress',
+            2: 'bg-succeededBg text-succeeded',
+            3: 'bg-deniedBg text-denied',
+        }),
+        []
+    );
 
     // Default timeline data for new requests or when API timeline is not available
     const defaultTimeline = [
@@ -150,7 +151,6 @@ function RequestsDetails() {
             </div>
         );
     }
-
     return (
         <div className="min-h-screen bg-gray-50 p-4 sm:p-6" dir="rtl">
             <div className="max-w-7xl mx-auto mb-4 sm:mb-6">
@@ -193,7 +193,7 @@ function RequestsDetails() {
                                         <div className="bg-gray-50 p-3 sm:p-4 rounded-md">
                                             <dt className="text-xs sm:text-sm text-gray-500">{t("Requests.ServiceType")}</dt>
                                             <dd className="mt-1 text-sm sm:text-base font-semibold text-gray-900">
-                                                {serviceData?.name || t("Requests.Service") + ` ${requestData.serviceID}`}
+                                                {serviceData?.name || t("Requests.ServiceType") + ` ${requestData.serviceID}`}
                                             </dd>
                                         </div>
 
@@ -205,6 +205,12 @@ function RequestsDetails() {
                                         <div className="bg-gray-50 p-3 sm:p-4 rounded-md">
                                             <dt className="text-xs sm:text-sm text-gray-500">{t("Requests.DueDate")}</dt>
                                             <dd className="mt-1 text-sm sm:text-base font-semibold text-gray-900">{requestData.dueDate}</dd>
+                                        </div>
+                                        <div className="bg-gray-50 p-3 sm:p-4 rounded-md sm:col-span-2">
+                                            <dt className="text-xs sm:text-sm text-gray-500">{t("Consultations.Description")}</dt>
+                                            <dd className="mt-1 text-sm sm:text-base text-gray-800 leading-relaxed whitespace-pre-line">
+                                                {requestData.description || t("Consultations.NoDescription")}
+                                            </dd>
                                         </div>
                                     </dl>
 
@@ -348,16 +354,16 @@ function RequestsDetails() {
                             <div className="mt-4 flex flex-col gap-2">
                                 <button
                                     onClick={handleAddNote}
-                                    disabled={isUpdating || !notes.trim()}
-                                    className={`w-full cursor-pointer inline-flex justify-center items-center gap-2 px-4 py-2 bg-primary text-white rounded-md hover:bg-primary/80 transition-colors duration-300 text-sm sm:text-base ${(isUpdating || !notes.trim()) ? 'opacity-50 cursor-not-allowed' : 'cursor-pointer'}`}
+                                    disabled={isAddingNote || !notes.trim()}
+                                    className={`w-full cursor-pointer inline-flex justify-center items-center gap-2 px-4 py-2 bg-primary text-white rounded-md hover:bg-primary/80 transition-colors duration-300 text-sm sm:text-base ${(isAddingNote || !notes.trim()) ? 'opacity-50 cursor-not-allowed' : 'cursor-pointer'}`}
                                 >
-                                    {isUpdating ? t("Requests.Actions.saving") : t("Requests.Actions.addNote")}
+                                    {isAddingNote ? t("Requests.Actions.saving") : t("Requests.Actions.addNote")}
                                 </button>
 
                                 <button
                                     onClick={() => setNotes('')}
-                                    disabled={isUpdating || !notes.trim()}
-                                    className={`w-full cursor-pointer inline-flex justify-center items-center gap-2 px-4 py-2 bg-white border border-gray-200 rounded-md text-xs sm:text-sm text-gray-700 hover:bg-gray-50 ${(isUpdating || !notes.trim()) ? 'opacity-50 cursor-not-allowed' : ''}`}
+                                    disabled={isAddingNote || !notes.trim()}
+                                    className={`w-full cursor-pointer inline-flex justify-center items-center gap-2 px-4 py-2 bg-white border border-gray-200 rounded-md text-xs sm:text-sm text-gray-700 hover:bg-gray-50 ${(isAddingNote || !notes.trim()) ? 'opacity-50 cursor-not-allowed' : ''}`}
                                 >
                                     {t("Requests.Actions.cancel")}
                                 </button>
@@ -369,7 +375,7 @@ function RequestsDetails() {
                             <h2 className="text-lg sm:text-xl font-bold text-gray-900 mb-4 sm:mb-6">{t("Requests.Notes.previous")}</h2>
 
                             <div className="space-y-3 sm:space-y-4">
-                                {!previousNotes || previousNotes.length === 0 ? (
+                                {!previousNotes?.data || previousNotes?.data.length === 0 ? (
                                     <div className="bg-gray-50 rounded-lg p-4 text-center">
                                         <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-gray-400 mx-auto mb-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
@@ -377,14 +383,35 @@ function RequestsDetails() {
                                         <p className="text-sm text-gray-500">{t("Requests.Notes.noPreviousNotes")}</p>
                                     </div>
                                 ) : (
-                                    previousNotes.map((item, index) => (
-                                        <div key={index} className="bg-gray-50 rounded-lg p-3 sm:p-4 border border-gray-200">
-                                            <div className="flex flex-col sm:flex-row sm:justify-between sm:items-start mb-2 gap-1 sm:gap-0">
-                                                <span className="text-xs sm:text-sm font-semibold text-gray-900">{item.author}</span>
-                                                <span className="text-xs text-gray-500">{item.date} - {item.time}</span>
+                                    previousNotes?.data?.map((item, index) => (
+                                        <div
+                                            key={item.id}
+                                            className="bg-gray-50 rounded-lg p-3 sm:p-4 border border-gray-200"
+                                        >
+                                            <div className="flex items-center justify-between mb-2">
+                                                <div className="flex items-center gap-2">
+                                                    {item.userPhoto ? (
+                                                        <img
+                                                            src={item.userPhoto}
+                                                            alt={item.userName}
+                                                            className="w-8 h-8 rounded-full object-cover"
+                                                        />
+                                                    ) : (
+                                                        <div className="w-8 h-8 rounded-full bg-gray-300 flex items-center justify-center text-gray-600 text-xs">
+                                                            {item.userName?.[0] ?? "?"}
+                                                        </div>
+                                                    )}
+                                                    <span className="text-sm font-semibold text-gray-900">{item.userName}</span>
+                                                </div>
+                                                <span className="text-xs text-gray-500">
+                                                    {new Date(item.createdAt).toLocaleDateString()} •{" "}
+                                                    {new Date(item.createdAt).toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })}
+                                                </span>
                                             </div>
-                                            <p className="text-xs sm:text-sm text-gray-700 leading-relaxed">{item.note}</p>
+
+                                            <p className="text-sm text-gray-700 leading-relaxed">{item.content}</p>
                                         </div>
+
                                     ))
                                 )}
                             </div>
