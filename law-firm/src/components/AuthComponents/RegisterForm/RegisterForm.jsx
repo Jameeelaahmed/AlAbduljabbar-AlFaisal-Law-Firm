@@ -2,6 +2,8 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom';
 import * as Yup from 'yup';
+import { toast } from 'react-toastify';
+import { useTranslation } from 'react-i18next';
 // files
 import { registerUser } from '../../../api/auth';
 // icons
@@ -9,14 +11,23 @@ import { Eye, EyeOff, User, Mail, Lock } from 'lucide-react';
 import { Formik, Field, Form, ErrorMessage } from 'formik';
 
 function RegisterForm() {
-    const [serverMessage, setServerMessage] = useState();
     const [showPassword, setShowPassword] = useState(false);
     const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+    const [errorMessage, setErrorMessage] = useState('');
     const navigate = useNavigate();
+    const { t } = useTranslation();
 
     return (
         <div className="flex items-center justify-center p-4">
             <div className="w-full max-w-md">
+                {errorMessage && (
+                    <div className="mb-4 p-4 bg-red-50 border border-red-200 rounded-lg">
+                        <p className="text-red-600 text-sm text-center font-medium">
+                            {errorMessage}
+                        </p>
+                    </div>
+                )}
+                
                 <Formik
                     initialValues={{ fullNameEn: '', fullNameAr: '', email: '', mobileNumber: '', whatsAppNumber: '', password: '', confirmPassword: '' }}
                     validationSchema={Yup.object({
@@ -44,17 +55,27 @@ function RegisterForm() {
                     })}
                     onSubmit={async (values, { setSubmitting, resetForm }) => {
                         try {
+                            setErrorMessage('');
                             const res = await registerUser(values);
-                            alert("Registered Successfully");
-                            navigate('login')
-                            resetForm();
-                            console.log("Response", res);
+                            if (res?.isSuccess) {
+                                toast.success("تم إنشاء الحساب بنجاح");
+                                resetForm();
+                                navigate('/login');
+                            }
                         }
                         catch (err) {
-                            setServerMessage(
-                                err.description
-                            )
-                            console.log(err.message);
+                            let errMsg;
+                            
+                            if (err.response?.status === 400) {
+                                errMsg = t('auth.emailAlreadyRegistered');
+                            } else {
+                                errMsg = err.response?.data?.error?.description 
+                                    || err.response?.data?.message 
+                                    || err.message;
+                            }
+                            
+                            setErrorMessage(errMsg);
+                            toast.error(errMsg);
                         } finally {
                             setSubmitting(false);
                         }
@@ -267,14 +288,6 @@ function RegisterForm() {
                     )}
                 </Formik>
             </div>
-
-            {
-                serverMessage && (
-                    <p className="text-center mt-3 text-sm font-medium text-[#7a5a21]">
-                        {serverMessage}
-                    </p>
-                )
-            }
         </div >
     )
 }

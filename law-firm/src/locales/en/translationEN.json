@@ -408,6 +408,11 @@
   "This action cannot be undone.": "This action cannot be undone.",
   "faq": "Frequently Asked Questions",
   "add questions": "Add Questions",
+  "auth": {
+    "invalidCredentials": "Invalid email or password",
+    "serverError": "Server error occurred. Please try again later",
+    "emailAlreadyRegistered": "Email is already registered"
+  }
   "consultationTypes": "Consultation Types",
   "addType": "Add Type",
   "Add Consultation Type": "Add Consultation Type",
