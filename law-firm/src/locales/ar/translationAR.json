@@ -19,7 +19,7 @@
     "settings": "الإعدادات",
     "logout": "تسجيل الخروج",
     "consultationTypes": "انواع الاستشارات",
-    "consultations": "الاستشارات"
+    "consultationsrequests": "طلبات الاستشارات"
   },
   "header": {
     "changeLanguage": "تغيير اللغة",
@@ -411,7 +411,7 @@
     "invalidCredentials": "البريد الإلكتروني أو كلمة المرور غير صحيحة",
     "serverError": "حدث خطأ في الخادم. يرجى المحاولة مرة أخرى لاحقاً",
     "emailAlreadyRegistered": "البريد الإلكتروني مسجل بالفعل"
-  }
+  },
   "consultationTypes": "أنواع الاستشارات",
   "addType": "إضافة نوع",
   "Add Consultation Type": "إضافة نوع استشارة",
@@ -439,5 +439,26 @@
   "Area of Law": "المجال القانوني",
   "Submit Request": "إرسال الطلب",
   "Submitting...": "جاري الإرسال...",
-  "Selected consultation type:": "نوع الاستشارة المختار:"
+  "Selected consultation type:": "نوع الاستشارة المختار:",
+  "Contact Our Legal Team": "اتصل بفريقنا القانوني",
+  "We're here to help with your legal needs. Reach out to schedule a consultation with one of our experienced attorneys.": "نحن هنا لمساعدتك في احتياجاتك القانونية. تواصل معنا لتحديد موعد استشارة مع أحد محامينا ذوي الخبرة.",
+  "Email": "البريد الإلكتروني",
+  "Cairo Office Mail": "البريد الإلكتروني لمكتب القاهرة",
+  "El Reyad Office Mail": "البريد الإلكتروني لمكتب الرياض",
+  "Cairo Office Number": "رقم مكتب القاهرة",
+  "El Reyad Office Number": "رقم مكتب الرياض",
+  "Address": "العنوان",
+  "Cairo Address": "عنوان مكتب القاهرة",
+  "El Reyad Address": "عنوان مكتب الرياض",
+  "Thank you for your message! We will get back to you shortly": "شكراً لرسالتك! سنعاود التواصل معك قريباً",
+  "There was an error sending your message. Please try again.": "حدث خطأ أثناء إرسال رسالتك. يرجى المحاولة مرة أخرى.",
+  "Email Address": "البريد الإلكتروني",
+  "Phone Number": "رقم الهاتف",
+  "Your Message": "رسالتك",
+  "Send Message": "إرسال الرسالة",
+  "Get In Touch": "تواصل معنا",
+  "Send Us a Message": "أرسل لنا رسالة",
+  "Please enter a valid email": "يرجى إدخال بريد إلكتروني صالح",
+  "Please enter a valid phone number": "يرجى إدخال رقم هاتف صالح",
+  "Please enter a longer message": "يرجى إدخال رسالة أطول"
 }

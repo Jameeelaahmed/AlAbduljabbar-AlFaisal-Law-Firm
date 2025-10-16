@@ -1,251 +1,250 @@
 import { useState } from 'react';
+import { useTranslation } from 'react-i18next';
+import { Formik, Field, Form, ErrorMessage } from 'formik';
+import * as Yup from 'yup';
+import { useCreateConatctUsForm } from '../../../hooks/useConactUsForm';
+import { Mail, Phone, MapPin, Clock } from 'lucide-react';
 
-function ContactUs() {
-    const [formData, setFormData] = useState({
-        name: '',
+const ContactUs = () => {
+    const { t, i18n } = useTranslation();
+    const [submitStatus, setSubmitStatus] = useState(null);
+    const isRtl = (i18n?.language || document.documentElement.dir) === "ar";
+    const createContactMutation = useCreateConatctUsForm();
+
+    const initialValues = {
         email: '',
-        phone: '',
-        caseType: '',
+        phoneNumber: '',
         message: ''
+    };
+
+    const validationSchema = Yup.object({
+        email: Yup.string().email(t('Please enter a valid email')).required(t('Email is required')),
+        phoneNumber: Yup.string().min(6, t('Please enter a valid phone number')).required(t('Phone number is required')),
+        message: Yup.string().min(10, t('Please enter a longer message')).required(t('Message is required'))
     });
 
-    const handleChange = (e) => {
-        setFormData({
-            ...formData,
-            [e.target.name]: e.target.value
-        });
+
+
+    const handleSubmit = async (values, { setSubmitting, resetForm }) => {
+        setSubmitStatus(null);
+        try {
+            // prefer mutateAsync if available
+            if (createContactMutation.mutateAsync) {
+                await createContactMutation.mutateAsync(values);
+            } else {
+                await new Promise((resolve, reject) =>
+                    createContactMutation.mutate(values, { onSuccess: resolve, onError: reject })
+                );
+            }
+            setSubmitStatus('success');
+            resetForm();
+        } catch (err) {
+            console.error('Contact form submit error:', err);
+            setSubmitStatus('error');
+        } finally {
+            setSubmitting(false);
+        }
     };
 
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        console.log('Form submitted:', formData);
-        setFormData({
-            name: '',
-            email: '',
-            phone: '',
-            caseType: '',
-            message: ''
-        });
-    };
+
+    const isSubmitting = createContactMutation.isLoading;
 
     return (
-        <div className="min-h-screen bg-[#f4f5f3] py-16 px-4">
-            <div className="max-w-6xl mx-auto">
-                {/* Header Section */}
-                <div className="text-center mb-16">
-                    <h1 className="text-4xl font-serif font-bold text-[#003a42] mb-4">
-                        Get Legal Consultation
-                    </h1>
-                    <p className="text-[#1f1f1f] text-lg max-w-2xl mx-auto">
-                        Contact our experienced legal team for professional advice and representation.
-                        We're here to help you navigate complex legal matters.
+        <div className="min-h-screen bg-[#f4f5f3]">
+
+            {/* Hero Section */}
+            <section className="bg-primary text-white pt-28 pb-16">
+                <div className="container mx-auto px-4 text-center">
+                    <h1 className="text-4xl md:text-5xl font-bold mb-4">{t("Contact Our Legal Team")}</h1>
+                    <p className="text-xl max-w-2xl mx-auto">
+                        {t("We're here to help with your legal needs. Reach out to schedule a consultation with one of our experienced attorneys.")}
                     </p>
                 </div>
+            </section>
 
-                <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
-                    {/* Contact Information */}
-                    <div className="space-y-8">
-                        <div className="bg-white rounded-2xl p-8 shadow-sm border border-[#7a5a21]/20">
-                            <h2 className="text-2xl font-serif font-semibold text-[#003a42] mb-6">
-                                Our Office
-                            </h2>
+            {/* Contact Section */}
+            <section className="py-16">
+                <div className="container mx-auto px-4">
+                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 max-w-6xl mx-auto">
 
-                            <div className="space-y-6">
-                                <div className="flex items-start space-x-4">
-                                    <div className="w-10 h-10 bg-[#006b63] rounded-full flex items-center justify-center flex-shrink-0">
-                                        <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
-                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
-                                        </svg>
+                        {/* Contact Information */}
+                        <div className="bg-white rounded-lg shadow-md p-6 lg:p-8 border-l-4 border-secondary">
+                            <h2 className="text-2xl font-bold text-primary mb-6">{t("Get In Touch")}</h2>
+
+                            <div className="grid gap-6 mb-6">
+                                <div className="flex items-start gap-4">
+                                    <div className="flex-shrink-0 bg-bg rounded-md p-2">
+                                        <Mail className="w-5 h-5 text-accent" />
                                     </div>
                                     <div>
-                                        <h3 className="font-semibold text-[#1f1f1f] mb-1">Main Office</h3>
-                                        <p className="text-[#1f1f1f]">123 Justice Avenue<br />Legal District, City 10101</p>
+                                        <div className="text-lg font-bold text-gray-700">{t("Email")}</div>
+                                        <div className="mt-1 text-gray-600 text-sm space-y-1">
+                                            <div>
+                                                <div className="font-semibold">{t("Cairo Office Mail")}</div>
+                                                <a href='mailto:aziz.nasr11@gmail.com'>aziz.nasr11@gmail.com</a>
+                                            </div>
+                                            <div>
+                                                <div className="font-semibold">{t("El Reyad Office Mail")}</div>
+                                                <a href='mailto:khedaib@malathegypt.com'>khedaib@malathegypt.com</a>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
 
-                                <div className="flex items-start space-x-4">
-                                    <div className="w-10 h-10 bg-[#006b63] rounded-full flex items-center justify-center flex-shrink-0">
-                                        <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
-                                        </svg>
+                                <div className="flex items-start gap-4">
+                                    <div className="flex-shrink-0 bg-bg rounded-md p-2">
+                                        <Phone className="w-5 h-5 text-secondary" />
                                     </div>
                                     <div>
-                                        <h3 className="font-semibold text-[#1f1f1f] mb-1">Phone</h3>
-                                        <p className="text-[#1f1f1f]">(555) 123-4567<br />(555) 123-4568</p>
+                                        <div className="text-lg font-bold text-gray-700">{t("Phone Number")}</div>
+                                        <div className="mt-1 text-gray-600 text-sm space-y-1">
+                                            <div>
+                                                <div className="font-semibold">{t("Cairo Office Number")}</div>
+                                                <div>01044947784 - 01005842307</div>
+                                            </div>
+                                            <div>
+                                                <div className="font-semibold">{t("Saudi Office Number")}</div>
+                                                <div>+0996 505 120 293</div>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
 
-                                <div className="flex items-start space-x-4">
-                                    <div className="w-10 h-10 bg-[#006b63] rounded-full flex items-center justify-center flex-shrink-0">
-                                        <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
-                                        </svg>
+                                <div className="flex items-start gap-4">
+                                    <div className="flex-shrink-0 bg-[#eef6ff] rounded-md p-2">
+                                        <MapPin className="w-5 h-5 text-[#2563eb]" />
                                     </div>
                                     <div>
-                                        <h3 className="font-semibold text-[#1f1f1f] mb-1">Email</h3>
-                                        <p className="text-[#1f1f1f]">contact@lawfirm.com<br />consultation@lawfirm.com</p>
+                                        <div className="text-lg font-bold text-gray-700">{t("Address")}</div>
+                                        <div className="mt-1 text-gray-600 text-sm space-y-3">
+                                            <div>
+                                                <div className="font-semibold">{t("Cairo Address")}</div>
+                                                <div>{isRtl ? "مصر - القاهره 20 شاراع الطيران - الدور الاول - شقه 2" : "Egypt - Cairo, 20 Al Tayaran St - 1st floor - Apt 2"}</div>
+                                            </div>
+                                            <div>
+                                                <div className="font-semibold">{t("El Reyad Address")}</div>
+                                                <div>{isRtl ? "السعوديه - الرياض - حي المروج - مركز الحياة سنتر - مبني B- الدور الاول - مكتب 5" : "Saudi Arabia - Riyadh - Al Muruj - Hayat Center - Building B - 1st floor - Office 5"}</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div className="border-t pt-6">
+                                <div className="flex items-center justify-between">
+                                    <h3 className="text-xl font-semibold text-primary">{t("Office Hours")}</h3>
+                                    <Clock className="w-5 h-5 text-gray-400" />
+                                </div>
+                                <div className="mt-3 space-y-2 text-gray-600 text-sm">
+                                    <div className="flex justify-between">
+                                        <span>Monday - Friday</span>
+                                        <span>9:00 AM - 6:00 PM</span>
+                                    </div>
+                                    <div className="flex justify-between">
+                                        <span>Saturday</span>
+                                        <span>10:00 AM - 2:00 PM</span>
+                                    </div>
+                                    <div className="flex justify-between">
+                                        <span>Sunday</span>
+                                        <span>Closed</span>
                                     </div>
                                 </div>
                             </div>
                         </div>
 
-                        {/* Practice Areas */}
-                        <div className="bg-white rounded-2xl p-8 shadow-sm border border-[#7a5a21]/20">
-                            <h2 className="text-2xl font-serif font-semibold text-[#003a42] mb-6">
-                                Practice Areas
-                            </h2>
-                            <div className="grid grid-cols-2 gap-3">
-                                {[
-                                    'Corporate Law',
-                                    'Litigation',
-                                    'Real Estate',
-                                    'Family Law',
-                                    'Criminal Defense',
-                                    'Immigration',
-                                    'Intellectual Property',
-                                    'Employment Law'
-                                ].map((area, index) => (
-                                    <div key={index} className="flex items-center space-x-2">
-                                        <div className="w-2 h-2 bg-[#006b63] rounded-full"></div>
-                                        <span className="text-[#1f1f1f] text-sm">{area}</span>
-                                    </div>
-                                ))}
-                            </div>
-                        </div>
-                    </div>
+                        {/* Contact Form (Formik) */}
+                        <div className="bg-white rounded-lg shadow-md p-8">
+                            <h2 className="text-2xl font-bold text-primary mb-6">{t("Send Us a Message")}</h2>
 
-                    {/* Contact Form */}
-                    <div className="bg-white rounded-2xl p-8 shadow-sm border border-[#7a5a21]/20">
-                        <h2 className="text-2xl font-serif font-semibold text-[#003a42] mb-2">
-                            Schedule a Consultation
-                        </h2>
-                        <p className="text-[#1f1f1f] mb-8">
-                            Fill out the form below and our legal team will get back to you within 24 hours.
-                        </p>
-
-                        <form onSubmit={handleSubmit} className="space-y-6">
-                            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                                <div>
-                                    <label htmlFor="name" className="block text-sm font-semibold text-[#003a42] mb-2">
-                                        Full Name *
-                                    </label>
-                                    <input
-                                        type="text"
-                                        id="name"
-                                        name="name"
-                                        value={formData.name}
-                                        onChange={handleChange}
-                                        required
-                                        className="w-full px-4 py-3 border border-[#7a5a21]/30 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#006b63] focus:border-transparent bg-[#f4f5f3]/50 transition-all"
-                                        placeholder="John Smith"
-                                    />
+                            {submitStatus === 'success' && (
+                                <div className="mb-6 p-4 bg-green-100 border border-green-400 text-green-700 rounded">
+                                    {t("Thank you for your message! We will get back to you shortly")}.
                                 </div>
+                            )}
 
-                                <div>
-                                    <label htmlFor="email" className="block text-sm font-semibold text-[#003a42] mb-2">
-                                        Email Address *
-                                    </label>
-                                    <input
-                                        type="email"
-                                        id="email"
-                                        name="email"
-                                        value={formData.email}
-                                        onChange={handleChange}
-                                        required
-                                        className="w-full px-4 py-3 border border-[#7a5a21]/30 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#006b63] focus:border-transparent bg-[#f4f5f3]/50 transition-all"
-                                        placeholder="john@example.com"
-                                    />
+                            {submitStatus === 'error' && (
+                                <div className="mb-6 p-4 bg-red-100 border border-red-400 text-red-700 rounded">
+                                    {t("There was an error sending your message. Please try again.")}
                                 </div>
-                            </div>
+                            )}
 
-                            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                                <div>
-                                    <label htmlFor="phone" className="block text-sm font-semibold text-[#003a42] mb-2">
-                                        Phone Number
-                                    </label>
-                                    <input
-                                        type="tel"
-                                        id="phone"
-                                        name="phone"
-                                        value={formData.phone}
-                                        onChange={handleChange}
-                                        className="w-full px-4 py-3 border border-[#7a5a21]/30 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#006b63] focus:border-transparent bg-[#f4f5f3]/50 transition-all"
-                                        placeholder="(555) 123-4567"
-                                    />
-                                </div>
-
-                                <div>
-                                    <label htmlFor="caseType" className="block text-sm font-semibold text-[#003a42] mb-2">
-                                        Case Type *
-                                    </label>
-                                    <select
-                                        id="caseType"
-                                        name="caseType"
-                                        value={formData.caseType}
-                                        onChange={handleChange}
-                                        required
-                                        className="w-full px-4 py-3 border border-[#7a5a21]/30 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#006b63] focus:border-transparent bg-[#f4f5f3]/50 transition-all"
-                                    >
-                                        <option value="">Select case type</option>
-                                        <option value="corporate">Corporate Law</option>
-                                        <option value="litigation">Litigation</option>
-                                        <option value="real-estate">Real Estate</option>
-                                        <option value="family">Family Law</option>
-                                        <option value="criminal">Criminal Defense</option>
-                                        <option value="immigration">Immigration</option>
-                                        <option value="other">Other</option>
-                                    </select>
-                                </div>
-                            </div>
-
-                            <div>
-                                <label htmlFor="message" className="block text-sm font-semibold text-[#003a42] mb-2">
-                                    Case Details *
-                                </label>
-                                <textarea
-                                    id="message"
-                                    name="message"
-                                    value={formData.message}
-                                    onChange={handleChange}
-                                    required
-                                    rows={5}
-                                    className="w-full px-4 py-3 border border-[#7a5a21]/30 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#006b63] focus:border-transparent bg-[#f4f5f3]/50 transition-all resize-vertical"
-                                    placeholder="Please describe your legal matter in detail..."
-                                />
-                            </div>
-
-                            <button
-                                type="submit"
-                                className="w-full bg-[#003a42] text-white py-4 px-6 rounded-xl font-semibold hover:bg-[#002a32] transform hover:scale-[1.02] focus:outline-none focus:ring-2 focus:ring-[#006b63] focus:ring-offset-2 transition-all duration-200"
+                            <Formik
+                                initialValues={initialValues}
+                                validationSchema={validationSchema}
+                                onSubmit={handleSubmit}
                             >
-                                Request Legal Consultation
-                            </button>
+                                {({ isSubmitting: formikSubmitting }) => (
+                                    <Form className="space-y-6">
+                                        <div>
+                                            <label htmlFor="email" className="block text-sm font-medium text-primary mb-2">
+                                                {t("Email Address *")}
+                                            </label>
+                                            <Field name="email">
+                                                {({ field }) => (
+                                                    <input
+                                                        {...field}
+                                                        type="email"
+                                                        id="email"
+                                                        className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-accent focus:border-transparent transition-all"
+                                                        placeholder="your.email@example.com"
+                                                    />
+                                                )}
+                                            </Field>
+                                            <ErrorMessage name="email" component="div" className="text-red-500 text-xs mt-1" />
+                                        </div>
 
-                            <p className="text-center text-sm text-[#1f1f1f]/70">
-                                By submitting this form, you agree to our privacy policy and terms of service.
-                            </p>
-                        </form>
+                                        <div>
+                                            <label htmlFor="phoneNumber" className="block text-sm font-medium text-primary mb-2">
+                                                {t("Phone Number *")}
+                                            </label>
+                                            <Field name="phoneNumber">
+                                                {({ field }) => (
+                                                    <input
+                                                        {...field}
+                                                        type="tel"
+                                                        id="phoneNumber"
+                                                        className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-accent focus:border-transparent transition-all"
+                                                        placeholder="(555) 123-4567"
+                                                    />
+                                                )}
+                                            </Field>
+                                            <ErrorMessage name="phoneNumber" component="div" className="text-red-500 text-xs mt-1" />
+                                        </div>
+
+                                        <div>
+                                            <label htmlFor="message" className="block text-sm font-medium text-primary mb-2">
+                                                {t("Your Message *")}
+                                            </label>
+                                            <Field name="message">
+                                                {({ field }) => (
+                                                    <textarea
+                                                        {...field}
+                                                        id="message"
+                                                        rows="6"
+                                                        className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-accent focus:border-transparent transition-all resize-vertical"
+                                                        placeholder="Please describe your legal issue or inquiry..."
+                                                    />
+                                                )}
+                                            </Field>
+                                            <ErrorMessage name="message" component="div" className="text-red-500 text-xs mt-1" />
+                                        </div>
+
+                                        <button
+                                            type="submit"
+                                            disabled={formikSubmitting || isSubmitting}
+                                            className="w-full bg-primary text-white py-3 px-6 rounded-lg font-semibold hover:bg-accent transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                                        >
+                                            {formikSubmitting || isSubmitting ? t("Sending...") : t('Send Message')}
+                                        </button>
+                                    </Form>
+                                )}
+                            </Formik>
+                        </div>
                     </div>
                 </div>
-
-                {/* Bottom CTA */}
-                <div className="text-center mt-16">
-                    <div className="bg-[#003a42] text-white rounded-2xl p-8 max-w-4xl mx-auto">
-                        <h2 className="text-2xl font-serif font-bold mb-4">
-                            Emergency Legal Assistance Available 24/7
-                        </h2>
-                        <p className="text-lg mb-6 opacity-90">
-                            For urgent legal matters, call our emergency hotline: <strong>(555) 911-LEGAL</strong>
-                        </p>
-                        <button className="bg-[#7a5a21] text-white px-8 py-3 rounded-xl font-semibold hover:bg-[#6a4a1a] transform hover:scale-105 transition-all duration-200">
-                            Emergency Contact
-                        </button>
-                    </div>
-                </div>
-            </div>
-        </div>
+            </section >
+        </div >
     );
-}
+};
 
 export default ContactUs;

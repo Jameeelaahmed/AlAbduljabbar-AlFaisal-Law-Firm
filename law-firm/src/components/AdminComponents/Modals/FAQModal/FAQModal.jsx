@@ -2,7 +2,7 @@ import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import { useCreateFaq, useUpdateFaq, useFaqForUpdate } from "../../../../hooks/useFAQ";
 
-function FAQModal({ onClose, initialValues = null, faqId = null }) {
+function FAQModal({ onClose, initialValues = null, faqId = null, faqCategoryId }) {
     // hooks must be called unconditionally
     const { mutateAsync: createFaq } = useCreateFaq();
     const { mutateAsync: updateFaq } = useUpdateFaq();
@@ -67,7 +67,8 @@ function FAQModal({ onClose, initialValues = null, faqId = null }) {
                             await updateFaq({ id, data: values });
                         } else {
                             console.log("creating faq payload:", values);
-                            await createFaq(values);
+                            const payload = { faqCategoryId: faqCategoryId, ...values }
+                            await createFaq(payload);
                         }
                         resetForm();
                         onClose();
