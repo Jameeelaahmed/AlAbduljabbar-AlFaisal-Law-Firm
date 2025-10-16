@@ -18,7 +18,7 @@
     "settings": "Settings",
     "logout": "Logout",
     "consultationTypes": "Consultation Types",
-    "consultations": "consultations"
+    "consultationsrequests": "Consultations Requests"
   },
   "header": {
     "changeLanguage": "Change language",
