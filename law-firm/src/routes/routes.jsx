@@ -21,6 +21,7 @@ const ForgetPassword = lazy(() => import('../pages/ForgetPassword/ForgetPassword
 const VerifyOTP = lazy(() => import("../pages/ForgetPassword/VerifyOTP"))
 const ResetPassword = lazy(() => import("../pages/ForgetPassword/ResetPasswordPage"))
 const FAQ = lazy(() => import("../pages/AdminPages/FAQ/FAQ"));
+const ConsultationTypes = lazy(() => import("../pages/AdminPages/ConsultationTypes/ConsultationTypes"));
 
 const ClientProfile = lazy(() => import("../pages/ClientPages/Profile/Profile"))
 // Admin Components
@@ -86,6 +87,16 @@ const routes = createBrowserRouter([
                     <ProtectedRoute allowedRoles={['Admin']}>
                         <Suspense fallback={<div>Loading Serivices...</div>}>
                             <AdminServices />
+                        </Suspense>
+                    </ProtectedRoute>
+                ),
+            },
+            {
+                path: "consultationTypes",
+                element: (
+                    <ProtectedRoute allowedRoles={['Admin']}>
+                        <Suspense fallback={<div>Loading Consultation Types...</div>}>
+                            <ConsultationTypes />
                         </Suspense>
                     </ProtectedRoute>
                 ),
