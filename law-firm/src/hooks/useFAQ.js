@@ -189,17 +189,13 @@ export const useDeleteFaqCategory = () => {
 
 // ✅ Fetch FAQ for update
 export const useFaqForUpdateFaqCategory = (id) => {
-    const { i18n } = useTranslation();
+    const { i18n } = useTranslation() // read language at render time
     const currentLang = i18n.language || localStorage.getItem('selectedLanguage') || 'ar'
-
     return useQuery({
-        queryKey: ['faqCategoryForUpdate', id, currentLang],
+        queryKey: ["faqCategoryForUpdate", id, currentLang],
         queryFn: () => getFaqCategoryForUpdate(id),
         enabled: !!id,
-        onError: (err) => {
-            toast.error(getErrorMessage(err))
-        },
-    })
+    });
 }
 
 // ✅ Update FAQ

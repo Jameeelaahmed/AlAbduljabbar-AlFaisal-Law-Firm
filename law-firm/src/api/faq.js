@@ -69,6 +69,6 @@ export const updateFaqCategory = async (id, data) => {
 };
 
 export const getFaqCategoryForUpdate = async (id) => {
-    const res = await api.get(`${API_URL}/GetForUpdate/${id}`);
+    const res = await api.get(`${API_URLCAt}/GetForUpdate/${id}`);
     return res.data.data;
 };
