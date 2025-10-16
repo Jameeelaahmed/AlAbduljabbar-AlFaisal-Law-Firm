@@ -1,11 +1,10 @@
 import { useTranslation } from "react-i18next";
-import { SquarePen } from "lucide-react";
 import { useRef, useState } from "react";
 import AddTypeModal from "../Modals/AddTypeModal/AddTypeModal";
 import Modal from '../Modals/Modal'
 import DeleteModal from "../Modals/DeleteModal/DeleteModal";
 import { useUpdateConsultaionType, useGetConsultationTypeForUpdate, useDeleteConsultationTypes } from "../../../hooks/useConsultations";
-import { Trash } from "lucide-react";
+import { Trash, SquarePen } from "lucide-react";
 function ConsultationTypeItems({ type }) {
     const {
         data: typeName,
