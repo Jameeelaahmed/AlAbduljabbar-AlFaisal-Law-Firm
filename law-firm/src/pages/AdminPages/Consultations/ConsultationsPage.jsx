@@ -51,15 +51,15 @@ export default function ConsultationsPage() {
                 ),
             },
             {
-                key: "userID",
+                key: "userName",
                 header: t("Consultations.User"),
             },
             {
-                key: "consultationID",
+                key: "consultationName",
                 header: t("Consultations.Type"),
             },
             {
-                key: "categoryID",
+                key: "categoryName",
                 header: t("Consultations.Category"),
             },
             {

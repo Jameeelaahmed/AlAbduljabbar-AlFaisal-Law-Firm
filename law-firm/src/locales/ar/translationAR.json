@@ -327,26 +327,23 @@
     "replayAnimation": "إعادة تشغيل الرسوم المتحركة"
   },
   "Settings": {
-    "title": "الملف الشخصي",
-    "subTitle": "إدارة حسابك وعرض طلباتك",
+    "title": "الإعدادات",
+    "subTitle": "إدارة محتوى الموقع",
+    "settings": "الإعدادات",
+    "savedSuccess": "تم حفظ الإعدادات بنجاح",
     "profile": "الملف الشخصي",
     "security": "الأمان",
-    "newRequest": "طلب جديد",
-    "MyRequests": "طلباتي",
-    "MyRequestsSubTitle": "إدارة طلباتك وعرضها",
-    "changePassword": "تغيير كلمة المرور",
-    "currentPassword": "كلمة المرور الحالية",
-    "newPassword": "كلمة المرور الجديدة",
-    "confirmNewPassword": "تأكيد كلمة المرور الجديدة",
-    "currentPasswordRequired": "كلمة المرور الحالية مطلوبة",
-    "newPasswordRequired": "كلمة المرور الجديدة مطلوبة",
+    "notifications": "الإشعارات",
+    "billing": "الفوترة"
+  },
+ 
+  "common": {
     "confirmPasswordRequired": "تأكيد كلمة المرور مطلوب",
     "passwordMinLength": "كلمة المرور يجب أن تكون 6 أحرف على الأقل",
     "passwordsNotMatch": "كلمات المرور غير متطابقة",
     "passwordChangedSuccess": "تم تغيير كلمة المرور بنجاح",
     "passwordChangeError": "حدث خطأ أثناء تغيير كلمة المرور",
     "saveChanges": "حفظ التغييرات",
-    "saving": "جاري الحفظ...",
     "passwordRequirements": "متطلبات كلمة المرور:",
     "passwordRequirement1": "يجب أن تكون 6 أحرف على الأقل",
     "passwordRequirement2": "يجب أن تتطابق كلمات المرور",
@@ -360,6 +357,16 @@
     "clearFilters": "إزالة عوامل التصفية",
     "clearAll": "إزالة الكل",
     "filtering": "تصفية"
+    , "add": "إضافة",
+    "update": "تحديث",
+    "cancel": "إلغاء",
+    "delete": "حذف",
+    "edit": "تعديل",
+    "save": "حفظ",
+    "saving": "جاري الحفظ...",
+    "actions": "الإجراءات",
+    "chooseFile": "اختر ملف",
+    "noFileChosen": "لم يتم اختيار ملف"
   },
   "ForgetPassword": {
     "title": "استعادة كلمة المرور",
@@ -440,6 +447,30 @@
   "Submit Request": "إرسال الطلب",
   "Submitting...": "جاري الإرسال...",
   "Selected consultation type:": "نوع الاستشارة المختار:",
+  "slider": {
+    "manageSlider":"إدارة السلايدر",
+    "formTitle": "إدارة السلايدر",
+    "listTitle": "السلايدرات الحالية",
+    "noSliders": "لا توجد سلايدرات. أضف سلايدرًا لتبدأ.",
+    "titleEn": "العنوان (بالإنجليزية)",
+    "titleAr": "العنوان (بالعربية)",
+    "descriptionEn": "الوصف (بالإنجليزية)",
+    "descriptionAr": "الوصف (بالعربية)",
+    "order": "ترتيب العرض",
+    "image": "صورة السلايدر",
+    "confirmDelete": "هل أنت متأكد من حذف هذا السلايدر؟ لا يمكن التراجع عن هذا الإجراء.",
+    "created": "تم إنشاء السلايدر بنجاح",
+    "updated": "تم تحديث السلايدر بنجاح",
+    "deleted": "تم حذف السلايدر بنجاح"
+  },
+  "validation": {
+    "required": "هذا الحقل مطلوب",
+    "positive": "يجب أن يكون الرقم موجبًا"
+  },
+  "error": {
+    "generic": "حدث خطأ. يرجى المحاولة مرة أخرى.",
+    "loadError": "حدث خطأ في تحميل البيانات"
+  },
   "Contact Our Legal Team": "اتصل بفريقنا القانوني",
   "We're here to help with your legal needs. Reach out to schedule a consultation with one of our experienced attorneys.": "نحن هنا لمساعدتك في احتياجاتك القانونية. تواصل معنا لتحديد موعد استشارة مع أحد محامينا ذوي الخبرة.",
   "Email": "البريد الإلكتروني",

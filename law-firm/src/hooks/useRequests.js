@@ -173,9 +173,9 @@ export function useAddRequestNote() {
     });
 }
 
-export function useNotes(requestId) {
+export function useNotes(requestId, consultationId) {
     return useQuery({
-        queryKey: ["notes", { requestId, pageIndex: 1, pageSize: 5 }],
+        queryKey: ["notes", { requestId, consultationId, pageIndex: 1, pageSize: 5 }],
         queryFn: getALLNotes,
         enabled: !!requestId,
     });
