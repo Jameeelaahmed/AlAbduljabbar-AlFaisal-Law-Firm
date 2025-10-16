@@ -191,7 +191,6 @@ export const contactRequest = async (id) => {
 // Add request note/comment
 export const addRequestNote = async ({ requestId = null, content, consultationId = null }) => {
 
-    if (!requestId) throw new Error('Request ID is required');
     if (!content) throw new Error('Note content is required');
 
     const { data: response } = await api.post(`/api/Notes/Create`, { content, userServiceId: requestId, consultationId });

@@ -9,7 +9,6 @@ import { useContactConsultation, useRejectConsultation, useResolveConsultation }
 import { useAddRequestNote } from '../../../hooks/useRequests';
 import { useConsultation } from '../../../hooks/useConsultations'
 import { useUserById } from '../../../hooks/useUsers';
-import { useServiceById } from '../../../hooks/useServices';
 import { useNotes } from '../../../hooks/useRequests';
 // hooks
 import { useState, useCallback, useMemo } from 'react';
@@ -33,7 +32,7 @@ export default function ConsultationDetailsPage() {
         data: previousNotes,
         isLoading: isFetchingNotes,
         error: notesError
-    } = useNotes(consultationId);
+    } = useNotes(null, consultationId);
 
     // Fetch related data
     const { data: userData } = useUserById(requestData?.userID);
@@ -127,7 +126,7 @@ export default function ConsultationDetailsPage() {
             </div>
         );
     }
-
+    console.log(requestData)
     return (
         <div className="min-h-screen bg-gray-50 p-4 sm:p-6" dir="rtl">
             <div className="max-w-7xl mx-auto mb-4 sm:mb-6">
@@ -173,8 +172,8 @@ export default function ConsultationDetailsPage() {
                                         <div className="bg-gray-50 p-3 sm:p-4 rounded-md">
                                             <dt className="text-xs sm:text-sm text-gray-500">{t("Consultations.Category")}</dt>
                                             <dd className="mt-1 text-sm sm:text-base font-semibold text-gray-900">
-                                                {requestData.categoryID
-                                                    ? `${t("Consultations.Category")} #${requestData.categoryID}`
+                                                {requestData
+                                                    ? `${requestData.categoryName}`
                                                     : t("Consultations.NoCategory")}
                                             </dd>
                                         </div>
@@ -184,7 +183,7 @@ export default function ConsultationDetailsPage() {
                                             <dt className="text-xs sm:text-sm text-gray-500">{t("Consultations.Type")}</dt>
                                             <dd className="mt-1 text-sm sm:text-base font-semibold text-gray-900">
                                                 {requestData.consultationID
-                                                    ? `${t("Consultations.Type")} #${requestData.consultationID}`
+                                                    ? `${requestData.consultationName}`
                                                     : t("Consultations.NoType")}
                                             </dd>
                                         </div>
@@ -297,7 +296,7 @@ export default function ConsultationDetailsPage() {
                                         <p className="text-sm text-gray-500">{t("Consultations.Notes.noPreviousNotes")}</p>
                                     </div>
                                 ) : (
-                                    previousNotes.map((item, index) => (
+                                    previousNotes?.map((item, index) => (
                                         <div key={index} className="bg-gray-50 rounded-lg p-3 sm:p-4 border border-gray-200">
                                             <div className="flex flex-col sm:flex-row sm:justify-between sm:items-start mb-2 gap-1 sm:gap-0">
                                                 <span className="text-xs sm:text-sm font-semibold text-gray-900">{item.author}</span>
