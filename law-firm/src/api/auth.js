@@ -2,7 +2,7 @@ import api from "./axiosInstance";
 
 export const registerUser = async (userData) => {
     try {
-        const response = await api.post("api/ApplicationUsers/Register", userData); // Keep the /Register endpoint
+        const response = await api.post("api/ApplicationUsers/Register", userData);
         return response.data;
     } catch (error) {
         console.error("Registration error:", error);

@@ -400,5 +400,10 @@
   "Irreversible Action": "إجراء لا رجعة فيه",
   "This action cannot be undone.": "لا يمكن التراجع عن هذا الإجراء.",
   "faq": "الأسئلة الشائعة",
-  "add questions": "إضافة أسئلة"
+  "add questions": "إضافة أسئلة",
+  "auth": {
+    "invalidCredentials": "البريد الإلكتروني أو كلمة المرور غير صحيحة",
+    "serverError": "حدث خطأ في الخادم. يرجى المحاولة مرة أخرى لاحقاً",
+    "emailAlreadyRegistered": "البريد الإلكتروني مسجل بالفعل"
+  }
 }
