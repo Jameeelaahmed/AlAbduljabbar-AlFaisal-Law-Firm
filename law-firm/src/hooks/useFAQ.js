@@ -26,6 +26,7 @@ export const useFaqs = () => {
         onError: (err) => {
             toast.error(getErrorMessage(err))
         },
+        retry: 3,
     })
 }
 

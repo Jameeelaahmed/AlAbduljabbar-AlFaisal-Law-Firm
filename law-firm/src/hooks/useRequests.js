@@ -18,6 +18,7 @@ import {
 } from "../api/requests";
 import { useAuthStore } from "../store/useAuthStore";
 import { toast } from "react-toastify";
+import { useTranslation } from "react-i18next";
 
 // Hook for fetching requests list with pagination and filters
 export function useRequests({ pageIndex = 1, pageSize = 5, status = null } = {}) {
@@ -120,13 +121,13 @@ export function useDeleteRequest() {
 // Hook for rejecting a request
 export function useRejectRequest() {
     const queryClient = useQueryClient();
-
+    const { t } = useTranslation();
     return useMutation({
         mutationFn: rejectRequest,
         onSuccess: (data, variables) => {
             queryClient.invalidateQueries(["requests"]);
             queryClient.invalidateQueries(["request", variables]);
-            toast.success("Request rejected successfully");
+            toast.success(t("Requests.Messages.requestRejectedSuccess"));
         },
     });
 }
@@ -134,13 +135,13 @@ export function useRejectRequest() {
 // Hook for resolving a request
 export function useResolveRequest() {
     const queryClient = useQueryClient();
-
+    const { t } = useTranslation();
     return useMutation({
         mutationFn: resolveRequest,
         onSuccess: (data, variables) => {
             queryClient.invalidateQueries(["requests"]);
             queryClient.invalidateQueries(["request", variables]);
-            toast.success("Request resolved successfully");
+            toast.success(t("Requests.Messages.requestResolvedSuccess"));
         },
     });
 }
@@ -148,13 +149,13 @@ export function useResolveRequest() {
 // Hook for marking a request as contacted
 export function useContactRequest() {
     const queryClient = useQueryClient();
-
+    const { t } = useTranslation();
     return useMutation({
         mutationFn: contactRequest,
         onSuccess: (data, variables) => {
             queryClient.invalidateQueries(["requests"]);
             queryClient.invalidateQueries(["request", variables]);
-            toast.success("Request marked as contacted");
+            toast.success(t("Requests.Messages.requestContactedSuccess"));
         },
     });
 }
