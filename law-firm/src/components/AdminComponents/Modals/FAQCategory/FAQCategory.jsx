@@ -2,15 +2,15 @@
 import { useTranslation } from "react-i18next";
 import { Formik, Field, Form, ErrorMessage } from "formik";
 import * as Yup from "yup";
-import { useCreateFaqCategory, useUpdateFaqCategory } from "../../../../hooks/useFAQ";
+import { useCreateFaqCategory, useUpdateFaqCategory, useFaqForUpdateFaqCategory } from "../../../../hooks/useFAQ";
 
-function FAQCategory({ onClose, faqCategoryId, facCatDataForUpdate }) {
+function FAQCategory({ onClose, faqCategoryId }) {
 
     const { t } = useTranslation();
 
     const createFAQCategoryMutation = useCreateFaqCategory();
     const updateFAQCategoryMutation = useUpdateFaqCategory();
-
+    const { data: facCatDataForUpdate } = useFaqForUpdateFaqCategory(faqCategoryId);
 
     // helper to call either mutateAsync or mutate with callbacks
     const callMutate = (mutation, payload) => {

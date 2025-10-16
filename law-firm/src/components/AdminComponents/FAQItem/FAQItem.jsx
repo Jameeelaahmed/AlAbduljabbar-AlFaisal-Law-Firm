@@ -5,7 +5,7 @@ import { Trash, ChevronDown, SquarePen, Plus } from "lucide-react";
 import Modal from "../Modals/Modal";
 import DeleteModal from "../Modals/DeleteModal/DeleteModal";
 import FAQModal from "../Modals/FAQModal/FAQModal";
-import { useDeleteFaq, useDeleteFaqCategory, useGetFaqByFaqCategoryId, useFaqForUpdateFaqCategory } from "../../../hooks/useFAQ";
+import { useDeleteFaq, useDeleteFaqCategory, useGetFaqByFaqCategoryId } from "../../../hooks/useFAQ";
 import FAQCategory from "../Modals/FAQCategory/FAQCategory";
 
 
@@ -13,7 +13,6 @@ function FAQItem({ faqCategoryData }) {
     const { t } = useTranslation();
     const [isExpanded, setIsExpanded] = useState(false);
     const { data: faqByFaqCategoryIdData } = useGetFaqByFaqCategoryId(faqCategoryData.id);
-
     const deleteRef = useRef();
     const editRef = useRef();
     const [isDeleting, setIsDeleting] = useState(false);
@@ -28,8 +27,6 @@ function FAQItem({ faqCategoryData }) {
     // Ensure hooks are called unconditionally (before any early return)
     const { mutateAsync: deleteFaq } = useDeleteFaq();
     const { mutateAsync: deleteFaqCategory } = useDeleteFaqCategory();
-    const { mutateAsunc: facCatDataForUpdate } = useFaqForUpdateFaqCategory(faqId);
-    console.log(facCatDataForUpdate);
 
     // * questions
     const questionsRef = useRef();
@@ -148,7 +145,7 @@ function FAQItem({ faqCategoryData }) {
                     <DeleteModal onClose={() => closeFaqCategoryDelete()} handleDeleteItem={() => handleDeleteFaqCategory()} isDeleting={isDeletingFaqCategory} />
                 </Modal>
                 <Modal ref={editFaqCategoryRef} onClose={() => closeFaqCategoryEdit()} title={t("Update Faq Category")}>
-                    <FAQCategory faqCategoryId={faqCategoryData.id} onClose={() => closeFaqCategoryEdit()} facCatDataForUpdate={facCatDataForUpdate} />
+                    <FAQCategory faqCategoryId={faqCategoryData.id} onClose={() => closeFaqCategoryEdit()} />
                 </Modal>
             </div>
 

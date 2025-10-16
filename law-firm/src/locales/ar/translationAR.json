@@ -336,7 +336,7 @@
     "notifications": "الإشعارات",
     "billing": "الفوترة"
   },
- 
+
   "common": {
     "confirmPasswordRequired": "تأكيد كلمة المرور مطلوب",
     "passwordMinLength": "كلمة المرور يجب أن تكون 6 أحرف على الأقل",
@@ -356,8 +356,8 @@
     "tryDifferentFilter": "جرّب تعديل عوامل التصفية للعثور على ما تبحث عنه.",
     "clearFilters": "إزالة عوامل التصفية",
     "clearAll": "إزالة الكل",
-    "filtering": "تصفية"
-    , "add": "إضافة",
+    "filtering": "تصفية",
+    "add": "إضافة",
     "update": "تحديث",
     "cancel": "إلغاء",
     "delete": "حذف",
@@ -447,8 +447,9 @@
   "Submit Request": "إرسال الطلب",
   "Submitting...": "جاري الإرسال...",
   "Selected consultation type:": "نوع الاستشارة المختار:",
+  "Update": "تحديث",
   "slider": {
-    "manageSlider":"إدارة السلايدر",
+    "manageSlider": "إدارة السلايدر",
     "formTitle": "إدارة السلايدر",
     "listTitle": "السلايدرات الحالية",
     "noSliders": "لا توجد سلايدرات. أضف سلايدرًا لتبدأ.",
