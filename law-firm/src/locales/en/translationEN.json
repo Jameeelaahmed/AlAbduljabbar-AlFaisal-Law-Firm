@@ -432,7 +432,8 @@
   "Next": "Next",
   "Back": "Back",
   "Consultation Steps": "Consultation Steps",
-  "Area of Law *": "Area of Law *",
+  "Area of Law": "Area of Law *",
   "Submit Request": "Submit Request",
-  "Submitting...": "Submitting..."
+  "Submitting...": "Submitting...",
+  "Selected consultation type:": "Selected consultation type:"
 }

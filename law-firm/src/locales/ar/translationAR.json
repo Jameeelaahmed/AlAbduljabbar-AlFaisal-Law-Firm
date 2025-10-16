@@ -431,7 +431,8 @@
   "Next": "التالي",
   "Back": "العودة",
   "Consultation Steps": "خطوات الاستشارة",
-  "Area of Law *": "المجال القانوني *",
+  "Area of Law": "المجال القانوني",
   "Submit Request": "إرسال الطلب",
-  "Submitting...": "جاري الإرسال..."
+  "Submitting...": "جاري الإرسال...",
+  "Selected consultation type:": "نوع الاستشارة المختار:"
 }
