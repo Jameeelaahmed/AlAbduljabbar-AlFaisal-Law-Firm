@@ -78,7 +78,7 @@ function GenericTable({ useDataHook, columns, actions, pageSize = 5, initialPage
         </div>
     </div>
     //!
-    if (isError) return <div className="text-center text-red-600 py-10">خطأ: {error?.message || "فشل تحميل البيانات"}</div>;
+    // if (isError) return <div className="text-center text-red-600 py-10">خطأ: {error?.message || "فشل تحميل البيانات"}</div>;
 
     return (
         <div className="overflow-x-auto bg-white rounded-lg shadow p-4">

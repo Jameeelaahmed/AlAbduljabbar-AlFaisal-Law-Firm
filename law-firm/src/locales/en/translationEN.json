@@ -143,7 +143,7 @@
       "loading": "Loading...",
       "loadError": "Error loading data",
       "notFound": "Request not found",
-      "noContent": "No requests to show",
+      "noContent": "No items to show",
       "requestRejectedSuccess": "Request rejected successfully",
       "requestContactedSuccess": "Request marked as contacted successfully",
       "requestResolvedSuccess": "Request resolved successfully"

@@ -31,7 +31,6 @@ function Sidebar() {
         }
         return true;
     });
-
     useEffect(() => {
         const handleResize = () => {
             const isLargeScreen = window.innerWidth >= 1024;
@@ -100,21 +99,54 @@ function Sidebar() {
                             {/* Requests link - always visible */}
                             {
                                 isCustomerService && (
-                                    <li>
-                                        <NavLink
-                                            to="/admin/requests"
-                                            className={({ isActive }) =>
-                                                `flex items-center gap-3 p-3 rounded-xl transition-all cursor-pointer ${!isSidebarOpen ? "justify-center" : ""
-                                                } ${isActive
-                                                    ? "bg-white/30 text-white shadow-lg"
-                                                    : "hover:bg-white/20"
-                                                }`
-                                            }
-                                        >
-                                            <CalendarCheck className="w-5 h-5 flex-shrink-0" />
-                                            {isSidebarOpen && <span className="text-sm font-medium">{t("sidebar.requests")}</span>}
-                                        </NavLink>
-                                    </li>
+                                    <>
+                                        <li>
+                                            <NavLink
+                                                to="/admin/requests"
+                                                className={({ isActive }) =>
+                                                    `flex items-center gap-3 p-3 rounded-xl transition-all cursor-pointer ${!isSidebarOpen ? "justify-center" : ""
+                                                    } ${isActive
+                                                        ? "bg-white/30 text-white shadow-lg"
+                                                        : "hover:bg-white/20"
+                                                    }`
+                                                }
+                                            >
+                                                <CalendarCheck className="w-5 h-5 flex-shrink-0" />
+                                                {isSidebarOpen && <span className="text-sm font-medium">{t("sidebar.requests")}</span>}
+                                            </NavLink>
+                                        </li>
+                                        <li>
+                                            <NavLink
+                                                to="/admin/consultationTypes"
+                                                className={({ isActive }) =>
+                                                    `flex items-center gap-3 p-3 rounded-xl transition-all cursor-pointer ${!isSidebarOpen ? "justify-center" : ""
+                                                    } ${isActive
+                                                        ? "bg-white/30 text-white shadow-lg"
+                                                        : "hover:bg-white/20"
+                                                    }`
+                                                }
+                                            >
+                                                <Share2 className="w-5 h-5 flex-shrink-0" />
+                                                {isSidebarOpen && <span className="text-sm font-medium">{t("consultationTypes")}</span>}
+                                            </NavLink>
+                                        </li>
+                                        <li>
+                                            <NavLink
+                                                to="/admin/law-consultations"
+                                                end
+                                                className={({ isActive }) =>
+                                                    `flex items-center gap-3 p-3 rounded-xl transition-all cursor-pointer ${!isSidebarOpen ? "justify-center" : ""
+                                                    } ${isActive
+                                                        ? "bg-white/30 text-white shadow-lg"
+                                                        : "hover:bg-white/20"
+                                                    }`
+                                                }
+                                            >
+                                                <Handshake className="w-5 h-5 flex-shrink-0" />
+                                                {isSidebarOpen && <span className="text-sm font-medium">{t("sidebar.consultationsrequests")}</span>}
+                                            </NavLink>
+                                        </li>
+                                    </>
                                 )}
                             {/* Admin-only navigation items */}
                             {!isCustomerService && (
