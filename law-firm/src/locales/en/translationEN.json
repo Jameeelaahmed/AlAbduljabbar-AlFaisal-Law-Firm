@@ -482,5 +482,6 @@
     "noMessages": "No contact messages found",
     "loading": "Loading messages...",
     "error": "Error loading messages"
-  }
+  },
+  "Procedures": "Procedures"
 }

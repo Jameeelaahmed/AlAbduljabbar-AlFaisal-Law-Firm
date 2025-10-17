@@ -39,23 +39,25 @@ export default function ContactsPage() {
                 key: "message",
                 header: t("Contacts.message"),
                 render: (message) => (
-                    <span className="line-clamp-2">{message}</span>
+                    <span className="truncate max-w-xs inline-block">
+                        {message.length > 20 ? `${message.substring(0, 50)}...` : message}
+                    </span>
                 ),
             },
         ],
         [t]
     );
-   const tableActions = useMemo(
-    () => [
-        {
-            label: t("Contacts.expandMessage"),
-            icon: <Info className="w-4 h-4" />,  // Add this line
-            onClick: (row) => handleExpandMessage(row.message),
-            className: "text-blue-500 hover:bg-blue-50",  // Changed to blue to match info theme
-        },
-    ],
-    [t, handleExpandMessage]);
-    
+    const tableActions = useMemo(
+        () => [
+            {
+                label: t("Contacts.expandMessage"),
+                icon: <Info className="w-4 h-4" />,
+                onClick: (row) => handleExpandMessage(row.message),
+                className: "text-blue-500 hover:bg-blue-50",
+            },
+        ],
+        [t, handleExpandMessage]);
+
     return (
         <div className="min-h-screen p-4 sm:p-6 bg-gray-50 shadow-lg">
             <Headline headlineLabel={t("Contacts.Management")} />
@@ -77,9 +79,9 @@ export default function ContactsPage() {
                 onClose={handleCloseModal}
             >
                 {selectedMessage && (
-                    <div className="p-6">
-                        <div className="bg-gray-50 p-4 rounded-lg">
-                            <p className="whitespace-pre-wrap">{selectedMessage}</p>
+                    <div className="p-6 w-full max-w-2xl">
+                        <div className="bg-gray-50 p-4 rounded-lg max-h-[60vh] overflow-y-auto">
+                            <p className="whitespace-pre-wrap break-words">{selectedMessage}</p>
                         </div>
                     </div>
                 )}

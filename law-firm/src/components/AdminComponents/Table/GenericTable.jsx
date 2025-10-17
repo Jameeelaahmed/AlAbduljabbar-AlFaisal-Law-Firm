@@ -88,7 +88,7 @@ function GenericTable({ useDataHook, columns, actions, pageSize = 5, initialPage
                         {columns.map((col) => (
                             <th key={col.key} className="p-3 text-primary">{col.header}</th>
                         ))}
-                        {actions && <th className="p-3 text-primary">الإجراءات</th>}
+                        {actions && <th className="p-3 text-primary">{t("Procedures")}</th>}
                     </tr>
                 </thead>
                 <tbody>
@@ -103,7 +103,6 @@ function GenericTable({ useDataHook, columns, actions, pageSize = 5, initialPage
                             <tr
                                 key={item.id || idx}
                                 className="border-b border-gray-300 hover:bg-gray-50 transition cursor-pointer"
-                                onClick={() => navigate(`${url}/${item.id}`)}
                             >
                                 {columns.map((col) => (
                                     <td key={col.key} className="p-3">
