@@ -14,7 +14,8 @@ import {
     Scale,
     CalendarCheck,
     HelpCircle,
-    Handshake
+    Handshake,
+    Share2
 } from "lucide-react";
 import { NavLink } from "react-router-dom";
 function Sidebar() {
@@ -161,7 +162,7 @@ function Sidebar() {
                                                 }`
                                             }
                                         >
-                                            <Scale className="w-5 h-5 flex-shrink-0" />
+                                            <Share2 className="w-5 h-5 flex-shrink-0" />
                                             {isSidebarOpen && <span className="text-sm font-medium">{t("consultationTypes")}</span>}
                                         </NavLink>
                                     </li>
@@ -193,7 +194,7 @@ function Sidebar() {
                                             }
                                         >
                                             <Handshake className="w-5 h-5 flex-shrink-0" />
-                                            {isSidebarOpen && <span className="text-sm font-medium transition-all duration-300">{t("sidebar.consultations")}</span>}
+                                            {isSidebarOpen && <span className="text-sm font-medium transition-all duration-300">{t("sidebar.consultationsrequests")}</span>}
                                         </NavLink>
                                     </li>
                                     <li>

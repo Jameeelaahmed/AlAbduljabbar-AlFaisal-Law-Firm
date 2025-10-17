@@ -19,7 +19,7 @@
     "settings": "الإعدادات",
     "logout": "تسجيل الخروج",
     "consultationTypes": "انواع الاستشارات",
-    "consultations": "الاستشارات"
+    "consultationsrequests": "طلبات الاستشارات"
   },
   "header": {
     "changeLanguage": "تغيير اللغة",
@@ -336,7 +336,7 @@
     "notifications": "الإشعارات",
     "billing": "الفوترة"
   },
- 
+
   "common": {
     "confirmPasswordRequired": "تأكيد كلمة المرور مطلوب",
     "passwordMinLength": "كلمة المرور يجب أن تكون 6 أحرف على الأقل",
@@ -356,8 +356,8 @@
     "tryDifferentFilter": "جرّب تعديل عوامل التصفية للعثور على ما تبحث عنه.",
     "clearFilters": "إزالة عوامل التصفية",
     "clearAll": "إزالة الكل",
-    "filtering": "تصفية"
-    , "add": "إضافة",
+    "filtering": "تصفية",
+    "add": "إضافة",
     "update": "تحديث",
     "cancel": "إلغاء",
     "delete": "حذف",
@@ -447,8 +447,9 @@
   "Submit Request": "إرسال الطلب",
   "Submitting...": "جاري الإرسال...",
   "Selected consultation type:": "نوع الاستشارة المختار:",
+  "Update": "تحديث",
   "slider": {
-    "manageSlider":"إدارة السلايدر",
+    "manageSlider": "إدارة السلايدر",
     "formTitle": "إدارة السلايدر",
     "listTitle": "السلايدرات الحالية",
     "noSliders": "لا توجد سلايدرات. أضف سلايدرًا لتبدأ.",
@@ -482,4 +483,25 @@
     "loading": "جاري تحميل الرسائل...",
     "error": "حدث خطأ في تحميل الرسائل"
   }
+  "Contact Our Legal Team": "اتصل بفريقنا القانوني",
+  "We're here to help with your legal needs. Reach out to schedule a consultation with one of our experienced attorneys.": "نحن هنا لمساعدتك في احتياجاتك القانونية. تواصل معنا لتحديد موعد استشارة مع أحد محامينا ذوي الخبرة.",
+  "Email": "البريد الإلكتروني",
+  "Cairo Office Mail": "البريد الإلكتروني لمكتب القاهرة",
+  "El Reyad Office Mail": "البريد الإلكتروني لمكتب الرياض",
+  "Cairo Office Number": "رقم مكتب القاهرة",
+  "El Reyad Office Number": "رقم مكتب الرياض",
+  "Address": "العنوان",
+  "Cairo Address": "عنوان مكتب القاهرة",
+  "El Reyad Address": "عنوان مكتب الرياض",
+  "Thank you for your message! We will get back to you shortly": "شكراً لرسالتك! سنعاود التواصل معك قريباً",
+  "There was an error sending your message. Please try again.": "حدث خطأ أثناء إرسال رسالتك. يرجى المحاولة مرة أخرى.",
+  "Email Address": "البريد الإلكتروني",
+  "Phone Number": "رقم الهاتف",
+  "Your Message": "رسالتك",
+  "Send Message": "إرسال الرسالة",
+  "Get In Touch": "تواصل معنا",
+  "Send Us a Message": "أرسل لنا رسالة",
+  "Please enter a valid email": "يرجى إدخال بريد إلكتروني صالح",
+  "Please enter a valid phone number": "يرجى إدخال رقم هاتف صالح",
+  "Please enter a longer message": "يرجى إدخال رسالة أطول"
 }

@@ -1,13 +1,13 @@
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import { useCreateFaq, useUpdateFaq, useFaqForUpdate } from "../../../../hooks/useFAQ";
-
-function FAQModal({ onClose, initialValues = null, faqId = null }) {
+import { useTranslation } from "react-i18next";
+function FAQModal({ onClose, faqId = null, faqCategoryId }) {
     // hooks must be called unconditionally
     const { mutateAsync: createFaq } = useCreateFaq();
     const { mutateAsync: updateFaq } = useUpdateFaq();
     const { data } = useFaqForUpdate(faqId);
-
+    const { t } = useTranslation();
     const fetchedRaw = data ?? null;
     const fetched =
         fetchedRaw && typeof fetchedRaw === "object"
@@ -20,30 +20,17 @@ function FAQModal({ onClose, initialValues = null, faqId = null }) {
             }
             : null;
 
-    const defaultValues = {
-        questionEn: "",
-        questionAr: "",
-        answerEn: "",
-        answerAr: "",
-    };
-
-    // prefer explicit initialValues prop, then fetched data (for editing), then defaults
+    // map fetched data into Formik initial values (works when fetched is null)
     const formInitialValues = {
-        id: initialValues?.id ?? fetched?.id ?? null,
-        questionEn: initialValues?.questionEn ?? fetched?.questionEn ?? defaultValues.questionEn,
-        questionAr: initialValues?.questionAr ?? fetched?.questionAr ?? defaultValues.questionAr,
-        answerEn: initialValues?.answerEn ?? fetched?.answerEn ?? defaultValues.answerEn,
-        answerAr: initialValues?.answerAr ?? fetched?.answerAr ?? defaultValues.answerAr,
+        id: fetched?.id ?? null,
+        questionEn: fetched?.questionEn ?? "",
+        questionAr: fetched?.questionAr ?? "",
+        answerEn: fetched?.answerEn ?? "",
+        answerAr: fetched?.answerAr ?? "",
     };
 
-    const isEdit =
-        Boolean(faqId) ||
-        Boolean(initialValues?.id) ||
-        Boolean(fetched?.id) ||
-        Boolean(
-            (initialValues || fetched) &&
-            Object.values(initialValues || fetched).some((v) => v !== null && v !== undefined && v !== "")
-        );
+    // determine edit mode: either an explicit faqId or an id in fetched data
+    const isEdit = Boolean(faqId) || Boolean(formInitialValues.id);
 
     const validationSchema = Yup.object().shape({
         questionEn: Yup.string().required("Required"),
@@ -55,19 +42,19 @@ function FAQModal({ onClose, initialValues = null, faqId = null }) {
     return (
         <div onClick={(e) => e.stopPropagation()}>
             <Formik
+                enableReinitialize
                 initialValues={formInitialValues}
                 validationSchema={validationSchema}
-                enableReinitialize
                 onSubmit={async (values, { setSubmitting, resetForm }) => {
                     setSubmitting(true);
                     try {
                         if (isEdit) {
-                            const id = faqId ?? initialValues?.id ?? fetched?.id;
-                            console.log("updating faq id:", id, "payload:", values);
+                            const id = faqId;
                             await updateFaq({ id, data: values });
                         } else {
                             console.log("creating faq payload:", values);
-                            await createFaq(values);
+                            const payload = { faqCategoryId: faqCategoryId, ...values }
+                            await createFaq(payload);
                         }
                         resetForm();
                         onClose();
@@ -151,14 +138,9 @@ function FAQModal({ onClose, initialValues = null, faqId = null }) {
                             <ErrorMessage name="answerAr" component="div" className="text-red-500 text-xs mt-1 font-medium" />
                         </div>
 
-                        <div className="flex justify-end gap-2 mt-2">
-                            <button type="button" onClick={onClose} className="px-3 py-2 bg-gray-100 rounded text-sm">
-                                Cancel
-                            </button>
-                            <button type="submit" disabled={isSubmitting} className={`px-3 py-2 rounded text-sm text-white ${isSubmitting ? "bg-gray-400" : "bg-primary hover:opacity-95"}`}>
-                                {isEdit ? "Update" : "Save"}
-                            </button>
-                        </div>
+                        <button type="submit" disabled={isSubmitting} className={`w-full px-3 py-2 rounded text-sm text-white ${isSubmitting ? "bg-gray-400" : "bg-primary hover:opacity-95"}`}>
+                            {isEdit ? t("Update") : t("Save")}
+                        </button>
                     </Form>
                 )}
             </Formik>

@@ -18,7 +18,7 @@
     "settings": "Settings",
     "logout": "Logout",
     "consultationTypes": "Consultation Types",
-    "consultations": "consultations"
+    "consultationsrequests": "Consultations Requests"
   },
   "header": {
     "changeLanguage": "Change language",
@@ -446,6 +446,7 @@
   "Drag and drop files here or click to browse": "Drag and drop files here or click to browse",
   "Submit Request": "Submit Request",
   "Submitting...": "Submitting...",
+  "Update": "Update",
   "slider": {
     "manageSlider": "Manage Slider",
     "formTitle": "Slider Management",
