@@ -198,6 +198,21 @@ function Sidebar() {
                                     </li>
                                     <li>
                                         <NavLink
+                                            to="/admin/users"
+                                            className={({ isActive }) =>
+                                                `flex items-center gap-3 p-3 rounded-xl transition-all cursor-pointer ${!isSidebarOpen ? "justify-center" : ""
+                                                } ${isActive
+                                                    ? "bg-white/30 text-white shadow-lg"
+                                                    : "hover:bg-white/20"
+                                                }`
+                                            }
+                                        >
+                                            <Users className="w-5 h-5 flex-shrink-0" />
+                                            {isSidebarOpen && <span className="text-sm font-medium">{t("sidebar.users")}</span>}
+                                        </NavLink>
+                                    </li>
+                                    <li>
+                                        <NavLink
                                             to="/admin/faq"
                                             className={({ isActive }) =>
                                                 `flex items-center gap-3 p-3 rounded-xl transition-all cursor-pointer ${!isSidebarOpen ? "justify-center" : ""
@@ -213,7 +228,7 @@ function Sidebar() {
                                     </li>
                                     <li>
                                         <NavLink
-                                            to="/admin/users"
+                                            to="/admin/contacts"
                                             className={({ isActive }) =>
                                                 `flex items-center gap-3 p-3 rounded-xl transition-all cursor-pointer ${!isSidebarOpen ? "justify-center" : ""
                                                 } ${isActive
@@ -222,10 +237,11 @@ function Sidebar() {
                                                 }`
                                             }
                                         >
-                                            <Users className="w-5 h-5 flex-shrink-0" />
-                                            {isSidebarOpen && <span className="text-sm font-medium">{t("sidebar.users")}</span>}
+                                            <HelpCircle className="w-5 h-5 flex-shrink-0" />
+                                            {isSidebarOpen && <span className="text-sm font-medium">{t("faq")}</span>}
                                         </NavLink>
                                     </li>
+
 
                                     <li>
                                         <NavLink
