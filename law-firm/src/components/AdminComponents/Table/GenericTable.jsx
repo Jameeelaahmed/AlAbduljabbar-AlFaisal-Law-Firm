@@ -119,9 +119,11 @@ function GenericTable({ useDataHook, columns, actions, pageSize = 5, initialPage
                                                     e.stopPropagation();
                                                     action.onClick(item, e);
                                                 }}
-                                                className={`px-4 py-2 text-sm rounded-lg border hover:bg-gray-100 shadow-sm cursor-pointer ${action.className || "text-gray-500"}`}
+                                                className={`px-3 py-1.5 text-sm rounded-lg border hover:bg-gray-100 shadow-sm cursor-pointer flex items-center gap-2 ${action.className || "text-gray-500"}`}
+                                                title={action.label}
                                             >
-                                                {action.label}
+                                                {action.icon && <span>{action.icon}</span>}
+                                                <span>{action.label}</span>
                                             </button>
                                         ))}
                                     </td>

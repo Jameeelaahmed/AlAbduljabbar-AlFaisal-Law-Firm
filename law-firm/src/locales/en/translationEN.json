@@ -471,5 +471,16 @@
     "generic": "An error occurred. Please try again.",
     "loadError": "Error loading data"
   },
-  "Selected consultation type:": "Selected consultation type:"
+  "Selected consultation type:": "Selected consultation type:",
+  "Contacts": {
+    "Management": "Contact Messages",
+    "email": "Email",
+    "phoneNumber": "Phone Number",
+    "message": "Message",
+    "expandMessage": "Expand Message",
+    "messageDetails": "Message Details",
+    "noMessages": "No contact messages found",
+    "loading": "Loading messages...",
+    "error": "Error loading messages"
+  }
 }

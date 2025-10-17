@@ -32,6 +32,8 @@ const AdminUsers = lazy(() => import("../pages/AdminPages/Users/Users"));
 const AdminServices = lazy(() => import("../pages/AdminPages/Services/Services"));
 const AdminConsultations = lazy(() => import("../pages/AdminPages/Consultations/ConsultationsPage"))
 const AdminConsultationDetails = lazy(() => import("../pages/AdminPages/Consultations/ConsultationDetailsPage"))
+const AdminContacts = lazy(() => import("../pages/AdminPages/Contacts/ContactsPage"));
+
 const routes = createBrowserRouter([
     {
         path: "/login",
@@ -171,6 +173,16 @@ const routes = createBrowserRouter([
                     </ProtectedRoute>
                 ),
             },
+            {
+                path: "contacts",
+                element: (
+                    <ProtectedRoute allowedRoles={['Admin']}>
+                        <Suspense fallback={<div>Loading Request Details...</div>}>
+                            < AdminContacts />
+                        </Suspense>
+                    </ProtectedRoute>
+                )
+            }
             //     ]
             // },
             // {
