@@ -6,7 +6,7 @@ import { useAuthStore } from '../../../store/useAuthStore';
 import {
     LayoutDashboard,
     Users,
-    FileText,
+    Headset,
     LogOut,
     X,
     ArrowLeft,
@@ -238,8 +238,8 @@ function Sidebar() {
                                                 }`
                                             }
                                         >
-                                            <HelpCircle className="w-5 h-5 flex-shrink-0" />
-                                            {isSidebarOpen && <span className="text-sm font-medium">{t("faq")}</span>}
+                                            <Headset className="w-5 h-5 flex-shrink-0" />
+                                            {isSidebarOpen && <span className="text-sm font-medium">{t("Contacts.Management")}</span>}
                                         </NavLink>
                                     </li>
 
