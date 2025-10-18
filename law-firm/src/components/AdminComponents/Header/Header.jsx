@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
 import i18n from '../../../i18n';
-import { Bell, Globe } from "lucide-react";
+import { Bell, Globe, User } from "lucide-react";
 import { useQueryClient } from "@tanstack/react-query";
 import { useAuthStore } from '../../../store/useAuthStore';
 
@@ -84,27 +84,25 @@ function Header() {
                                 className="flex items-center gap-2 px-2 py-1 rounded-full hover:bg-gray-100 transition cursor-pointer"
                                 aria-expanded={isMenuOpen}
                             >
-                                <img
-                                    src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=64&h=64&q=80"
-                                    alt="user avatar"
-                                    className="w-8 h-8 rounded-full object-cover"
-                                />
-                                <span className="hidden md:inline-block text-sm text-gray-800">Admin</span>
+                                <div className="w-8 h-8 rounded-full bg-gray-200 flex items-center justify-center">
+                                    <User className="w-5 h-5 text-gray-500" />
+                                </div>
+                                {/* <span className="hidden md:inline-block text-sm text-gray-800">Admin</span> */}
                                 <span className="text-gray-400 text-xs">{isMenuOpen ? '▴' : '▾'}</span>
                             </button>
 
                             {/* dropdown */}
                             {isMenuOpen && (
-                                <div className="absolute rtl:right-0 ltr:left-0 mt-2 w-44 bg-white rounded-lg shadow-lg border border-gray-100 overflow-hidden z-50">
+                                <div className={`absolute ${i18n.dir() === 'rtl' ? 'left-0' : 'right-0'} mt-2 w-48 bg-white rounded-md shadow-xl border border-gray-200 overflow-hidden z-50 transition-all duration-200 ease-in-out transform origin-top-${i18n.dir() === 'rtl' ? 'left' : 'right'}`}>
                                     <button
-                                        onClick={() => { /* navigate to profile */ }}
-                                        className="w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 cursor-pointer"
+                                        onClick={() => { Navigate('/profile') }}
+                                        className="w-full text-left px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50 cursor-pointer transition-colors duration-150 flex items-center space-x-2"
                                     >
                                         Profile
                                     </button>
                                     <button
                                         onClick={() => { /* navigate to settings */ }}
-                                        className="w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 cursor-pointer"
+                                        className="w-full text-left px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50 cursor-pointer transition-colors duration-150 flex items-center space-x-2"
                                     >
                                         Settings
                                     </button>

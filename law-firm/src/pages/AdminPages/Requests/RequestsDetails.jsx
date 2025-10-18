@@ -273,8 +273,8 @@ function RequestsDetails() {
                                 </div>
                             </div>
                         </section>
-
-                        <section className="bg-white rounded-lg shadow p-4 sm:p-6 border border-gray-200">
+                        {/* //! DELETED */}
+                        {/* <section className="bg-white rounded-lg shadow p-4 sm:p-6 border border-gray-200">
                             <h3 className="text-base sm:text-lg font-semibold text-gray-900 mb-3 sm:mb-4">{t("Requests.Timeline.title")}</h3>
                             <div className="flow-root">
                                 <ul className="-mb-8">
@@ -293,7 +293,7 @@ function RequestsDetails() {
                                     ))}
                                 </ul>
                             </div>
-                        </section>
+                        </section> */}
                     </div>
 
                     {/* Right: Actions & Status */}
