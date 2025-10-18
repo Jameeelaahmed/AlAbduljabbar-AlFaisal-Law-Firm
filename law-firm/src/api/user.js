@@ -80,3 +80,14 @@ export const deleteUser = async (userId) => {
     const { data } = await api.delete(`/api/ApplicationUsers/Delete/${userId}`);
     return data;
 };
+
+// Get current user information
+export const getUserInfo = async () => {
+    const { data: response } = await api.get('/api/Auth/GetUserInfo');
+    
+    if (!response?.isSuccess) {
+        throw new Error(response?.error?.description || 'Failed to fetch user information');
+    }
+    
+    return response.data;
+};
