@@ -18,9 +18,9 @@ export default function LawServicesManyCategories() {
     const requestService = useRef();
     const [service, setService] = useState({})
 
-    function handleOpenRequestService(serviceId, serviceName) {
+    function handleOpenRequestService(serviceId, serviceName, branchId) {
         requestService.current.open();
-        setService({ serviceId, serviceName })
+        setService({ serviceId, serviceName, branchId })
     }
 
     function handleCloseRequestService() {
@@ -279,7 +279,7 @@ export default function LawServicesManyCategories() {
                                                 </div>
 
                                                 <div className="flex gap-3 pt-5 border-t border-gray-200 mt-auto">
-                                                    <button onClick={() => handleOpenRequestService(service.id, service.name)} className="flex-1 cursor-pointer ltr:bg-gradient-to-r rtl:bg-gradient-to-l from-[#003a42] to-[#006b63] text-white py-3 px-4 rounded-xl font-semibold hover:shadow-xl transform hover:-translate-y-0.5 transition-all duration-200 group/btn">
+                                                    <button onClick={() => handleOpenRequestService(service.id, service.name, service.branchId)} className="flex-1 cursor-pointer ltr:bg-gradient-to-r rtl:bg-gradient-to-l from-[#003a42] to-[#006b63] text-white py-3 px-4 rounded-xl font-semibold hover:shadow-xl transform hover:-translate-y-0.5 transition-all duration-200 group/btn">
                                                         <span className="flex items-center justify-center gap-2 ltr:flex-row rtl:flex-row-reverse">
                                                             <span className="ltr:order-1 rtl:order-2">{t("Request Service")}</span>
                                                             <ArrowRight className="w-4 h-4 text-white ltr:ml-1 rtl:mr-1 transition-transform duration-200 ltr:group-hover/btn:translate-x-1 rtl:group-hover/btn:-translate-x-1 ltr:rotate-0 rtl:rotate-180" />

@@ -5,18 +5,36 @@ import { useTranslation } from "react-i18next";
 import { useCreateRequest } from "../../../../hooks/useRequests";
 import { useAllServices } from "../../../../hooks/useServices";
 import { X } from "lucide-react";
+import { useMemo } from "react";
 
 function RequestService({ onClose, service }) {
-    const { data: services = [], isLoading: servicesLoading } = useAllServices();
+    const { data: services = [] } = useAllServices();
     const createRequest = useCreateRequest();
     const { t } = useTranslation();
-
+    console.log('====================================');
+    console.log(service);
+    console.log('====================================');
     const validationSchema = Yup.object({
         title: Yup.string().trim().required(t("Title is required")).min(3, t("Too short")),
         description: Yup.string().trim().required("Description is required").min(5, "Too short"),
         serviceId: Yup.string().required(t("Please select a service")),
         files: Yup.array().of(Yup.string()).max(4, t("You can upload up to 4 files")),
+        branchId: Yup.string().required(t("Please select a branch")),
     });
+
+    // Derive available branches based on the service.branchId rule:
+    // 1 -> only Cairo, 2 -> only Riyadh, 3 -> both
+    const availableBranches = useMemo(() => {
+        const code = Number(service?.branchId ?? service?.branch ?? 0);
+        const branches = [];
+        if (code === 1) branches.push({ id: "1", name: t("Cairo Office") ?? "Cairo" });
+        else if (code === 2) branches.push({ id: "2", name: t("El Reyad Office") ?? "Riyadh" });
+        else if (code === 3) {
+            branches.push({ id: "1", name: t("Cairo Office") ?? "Cairo" });
+            branches.push({ id: "2", name: t("El Reyad Office") ?? "Riyadh" });
+        }
+        return branches;
+    }, [service, t]);
 
     const handleSubmit = async (values, { resetForm, setSubmitting }) => {
         try {
@@ -24,11 +42,12 @@ function RequestService({ onClose, service }) {
             const payload = {
                 title: values.title,
                 description: values.description,
-                serviceId: service?.serviceId,
+                serviceId: service?.serviceId ?? values.serviceId,
                 photo1url: "",
                 photo2url: "",
                 photo3url: "",
                 photo4url: "",
+                branchId: values.branchId || (service?.branchId ?? ""),
             };
 
             if (Array.isArray(values.files)) {
@@ -62,8 +81,9 @@ function RequestService({ onClose, service }) {
     const initialValues = {
         title: "",
         description: "",
-        serviceId: services?.[0]?.id ?? "",
+        serviceId: service?.serviceId ?? services?.[0]?.id ?? "",
         files: [],
+        branchId: availableBranches?.[0]?.id ?? "",
     };
 
     return (
@@ -101,6 +121,26 @@ function RequestService({ onClose, service }) {
                             )}
                         </Field>
                         <ErrorMessage name="title" component="div" className="text-red-500 text-xs mt-1 font-medium" />
+                    </div>
+
+                    {/* Branch select (based on service.branchId) */}
+                    <div className="space-y-2">
+                        <label htmlFor="branchId" className="flex items-center gap-2 text-sm font-semibold text-primary">
+                            {t("Branch")}
+                        </label>
+                        <Field as="select" name="branchId" id="branchId"
+                            className={`w-full px-4 py-3 border rounded-lg focus:outline-none focus:ring-2 transition-all duration-300 ${errors.branchId && touched.branchId
+                                ? "border-red-300 focus:ring-red-200 bg-red-50"
+                                : "border-gray-300 focus:ring-primary focus:border-primary"
+                                }`}
+                        >
+                            {availableBranches.length === 0 ? (
+                                <option value="">{t("No branches available")}</option>
+                            ) : (
+                                availableBranches.map(b => <option key={b.id} value={b.id}>{b.name}</option>)
+                            )}
+                        </Field>
+                        <ErrorMessage name="branchId" component="div" className="text-red-500 text-xs mt-1 font-medium" />
                     </div>
 
                     {/* File uploads (up to 4) */}

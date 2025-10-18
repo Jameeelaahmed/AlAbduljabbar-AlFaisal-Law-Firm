@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Scale } from 'lucide-react';
 import { Swiper, SwiperSlide } from 'swiper/react';
@@ -7,24 +7,26 @@ import 'swiper/css';
 import 'swiper/css/pagination';
 import 'swiper/css/navigation';
 import 'swiper/css/effect-fade';
-import Modal from '../Modals/Modal';
-import RequestService from '../Modals/RequestService/RequestService';
+import { Link } from 'react-router-dom';
 import { MapPin, Phone, Mail } from 'lucide-react';
 import { useSliders } from '../../../hooks/useHomePage';
 
 function Hero() {
-    const requestServiceRef = useRef();
     const { t, i18n } = useTranslation();
     const isRtl = i18n?.language === 'ar';
     const [isLogo1DropDown, setIsLogo1DropDown] = useState(false);
     const [isLogo2DropDown, setIsLogo2DropDown] = useState(false);
+
+    // add refs to detect outside clicks
+    const logo1Ref = useRef(null);
+    const logo2Ref = useRef(null);
 
     // Fetch sliders using React Query
     const { data: sliders = [], isLoading: loading } = useSliders();
 
     //logo1 drop down 
     const openLogo1DropDown = () => {
-        setIsLogo1DropDown(!isLogo1DropDown);
+        setIsLogo1DropDown(prev => !prev);
     };
 
     const closeLogo1DropDown = () => {
@@ -33,20 +35,41 @@ function Hero() {
 
     //logo2 drop down 
     const openLogo2DropDown = () => {
-        setIsLogo2DropDown(!isLogo2DropDown);
+        setIsLogo2DropDown(prev => !prev);
     };
 
     const closeLogo2DropDown = () => {
         setIsLogo2DropDown(false);
     };
 
-    function openRequestService() {
-        requestServiceRef.current.open();
-    }
+    // close dropdowns on outside click or on scroll
+    useEffect(() => {
+        const handler = (e) => {
+            const target = e.target;
+            if (logo1Ref.current && !logo1Ref.current.contains(target)) {
+                setIsLogo1DropDown(false);
+            }
+            if (logo2Ref.current && !logo2Ref.current.contains(target)) {
+                setIsLogo2DropDown(false);
+            }
+        };
 
-    function closeRequestService() {
-        requestServiceRef.current.close();
-    }
+        const onScroll = () => {
+            setIsLogo1DropDown(false);
+            setIsLogo2DropDown(false);
+        };
+
+        // pointerdown covers mouse/touch/pen; also listen to touchstart for older devices
+        document.addEventListener('pointerdown', handler);
+        document.addEventListener('touchstart', handler);
+        window.addEventListener('scroll', onScroll, { passive: true });
+
+        return () => {
+            document.removeEventListener('pointerdown', handler);
+            document.removeEventListener('touchstart', handler);
+            window.removeEventListener('scroll', onScroll);
+        };
+    }, []);
 
     return (
         <div className="min-h-screen relative flex items-center justify-center bg-primary overflow-hidden">
@@ -60,10 +83,13 @@ function Hero() {
             }}></div>
 
             {/* Logo Section */}
-            <div className="hidden lg:block absolute top-0 rtl:right-0 ltr:left-0 z-40">
+            <div
+                ref={logo1Ref}
+                className="hidden lg:block absolute top-0 rtl:right-0 ltr:left-0 z-40"
+                onClick={openLogo1DropDown}
+            >
                 <div className='relative cursor-pointer hover:scale-105 transition-transform duration-300'>
-                    <div className={`flex flex-col justify-center items-center p-4 backdrop-blur-xl shadow-2xl rtl:rounded-tl-3xl rtl:rounded-bl-3xl ltr:rounded-tr-3xl ltr:rounded-br-3xl border-primary border-3`}
-                        onClick={openLogo1DropDown}>
+                    <div className={`flex flex-col justify-center items-center p-4 backdrop-blur-xl shadow-2xl rtl:rounded-tl-3xl rtl:rounded-bl-3xl ltr:rounded-tr-3xl ltr:rounded-br-3xl border-primary border-3`}>
                         <img className='w-[55px]' src='logo1.png' alt="logo1" />
                         <p className='font-bold text-lg text-white'>العبد الجبار </p>
                         <span className={`text-white`}>محامون و مستشاورن</span>
@@ -98,10 +124,13 @@ function Hero() {
             </div>
 
             {/* The other Logo */}
-            <div className="hidden lg:block absolute top-0 rtl:left-0 ltr:right-0 z-40">
+            <div
+                ref={logo2Ref}
+                className="hidden lg:block absolute top-0 rtl:left-0 ltr:right-0 z-40"
+                onClick={openLogo2DropDown}
+            >
                 <div className='relative cursor-pointer hover:scale-105 transition-transform duration-300'>
-                    <div className={`flex flex-col justify-center items-center p-4 backdrop-blur-xl shadow-2xl rtl:rounded-tr-3xl rtl:rounded-br-3xl ltr:rounded-tl-3xl ltr:rounded-bl-3xl border-primary border-3`}
-                        onClick={openLogo2DropDown}>
+                    <div className={`flex flex-col justify-center items-center p-4 backdrop-blur-xl shadow-2xl rtl:rounded-tr-3xl rtl:rounded-br-3xl ltr:rounded-tl-3xl ltr:rounded-bl-3xl border-primary border-3`}>
                         <img className='w-[55px]' src="Logo2.png" alt="logo2" />
                         <p className='font-bold text-lg text-white'>العبد الجبار و الفيصل </p>
                         <span className={`text-white`}>محامون و مستشاورن</span>
@@ -210,15 +239,14 @@ function Hero() {
                                                 </p>
 
                                                 {/* CTA Button */}
-                                                <div className={`pt-4 flex ${isRtl ? 'lg:justify-end' : 'lg:justify-start'} justify-center`}>
+                                                <Link to='servicespage' className={`pt-4 flex ${isRtl ? 'lg:justify-end' : 'lg:justify-start'} justify-center`}>
                                                     <button
-                                                        onClick={openRequestService}
                                                         className="group relative px-10 py-5 bg-secondary hover:bg-accent text-white text-lg font-bold rounded-xl transition-all duration-300 shadow-2xl hover:shadow-secondary/50 hover:scale-105 overflow-hidden"
                                                     >
                                                         <span className="relative z-10">{t("RequestService")}</span>
                                                         <div className="absolute inset-0 bg-gradient-to-r from-accent to-secondary opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
                                                     </button>
-                                                </div>
+                                                </Link>
                                             </div>
 
                                             {/* Image Side (Desktop Only) */}
@@ -266,24 +294,19 @@ function Hero() {
                                     }
                                 </p>
 
-                                <div className={`pt-4 flex ${isRtl ? 'lg:justify-end' : 'lg:justify-start'} justify-center`}>
+                                <Link to='servicespage' className={`pt-4 flex ${isRtl ? 'lg:justify-end' : 'lg:justify-start'} justify-center`}>
                                     <button
-                                        onClick={openRequestService}
                                         className="group relative px-10 py-5 bg-secondary hover:bg-accent text-white text-lg font-bold rounded-xl transition-all duration-300 shadow-2xl hover:shadow-secondary/50 hover:scale-105 overflow-hidden"
                                     >
                                         <span className="relative z-10">{t("RequestService")}</span>
                                         <div className="absolute inset-0 bg-gradient-to-r from-accent to-secondary opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
                                     </button>
-                                </div>
+                                </Link>
                             </div>
                         </div>
                     </div>
                 )}
             </div>
-
-            <Modal ref={requestServiceRef} onClose={closeRequestService} title={t("RequestService")}>
-                <RequestService onClose={closeRequestService} />
-            </Modal>
 
             {/* Enhanced Custom Swiper Styles */}
             <style jsx>{`
