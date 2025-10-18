@@ -239,7 +239,7 @@ function Hero() {
                                                 </p>
 
                                                 {/* CTA Button */}
-                                                <Link to='servicespage' className={`pt-4 flex ${isRtl ? 'lg:justify-end' : 'lg:justify-start'} justify-center`}>
+                                                <Link to='servicespage' className={`pt-4 flex lg:justify-start justify-center`}>
                                                     <button
                                                         className="group relative px-10 py-5 bg-secondary hover:bg-accent text-white text-lg font-bold rounded-xl transition-all duration-300 shadow-2xl hover:shadow-secondary/50 hover:scale-105 overflow-hidden"
                                                     >
@@ -289,12 +289,12 @@ function Hero() {
 
                                 <p className="text-2xl md:text-3xl text-white/95 leading-relaxed font-light tracking-wide drop-shadow-lg">
                                     {isRtl
-                                        ? "شركة محاماة سعودية مصرية - خبرة تمتد ١٥ عاماً في تقديم الحلول القانونية"
-                                        : "Saudi-Egyptian Law Firm - 15 Years of Excellence in Legal Solutions"
+                                        ? "شركة محاماة سعودية مصرية - خبرة تمتد 6 اعوام في تقديم الحلول القانونية"
+                                        : "Saudi-Egyptian Law Firm - 6 Years of Excellence in Legal Solutions"
                                     }
                                 </p>
 
-                                <Link to='servicespage' className={`pt-4 flex ${isRtl ? 'lg:justify-end' : 'lg:justify-start'} justify-center`}>
+                                <Link to='servicespage' className={`pt-4 flex lg:justify-end justify-center`}>
                                     <button
                                         className="group relative px-10 py-5 bg-secondary hover:bg-accent text-white text-lg font-bold rounded-xl transition-all duration-300 shadow-2xl hover:shadow-secondary/50 hover:scale-105 overflow-hidden"
                                     >

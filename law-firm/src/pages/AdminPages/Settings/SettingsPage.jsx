@@ -177,8 +177,8 @@ export default function SettingsPage() {
                         finishedCases: 0,
                         successRate: 0
                     },
-                    journeyMilestones: data.entitySettings?.journeyMilestones?.length 
-                        ? data.entitySettings.journeyMilestones 
+                    journeyMilestones: data.entitySettings?.journeyMilestones?.length
+                        ? data.entitySettings.journeyMilestones
                         : [{
                             year: new Date().getFullYear(),
                             titleEn: '',
@@ -186,8 +186,8 @@ export default function SettingsPage() {
                             descriptionEn: '',
                             descriptionAr: ''
                         }],
-                    coreValues: data.entitySettings?.coreValues?.length 
-                        ? data.entitySettings.coreValues 
+                    coreValues: data.entitySettings?.coreValues?.length
+                        ? data.entitySettings.coreValues
                         : [{
                             photoUrl: '',
                             titleEn: '',
@@ -198,8 +198,8 @@ export default function SettingsPage() {
                     baseOfOurSuccess: {
                         headlineEn: data.entitySettings?.baseOfOurSuccess?.headlineEn || '',
                         headlineAr: data.entitySettings?.baseOfOurSuccess?.headlineAr || '',
-                        bases: data.entitySettings?.baseOfOurSuccess?.bases?.length 
-                            ? data.entitySettings.baseOfOurSuccess.bases 
+                        bases: data.entitySettings?.baseOfOurSuccess?.bases?.length
+                            ? data.entitySettings.baseOfOurSuccess.bases
                             : [{
                                 photoUrl: '',
                                 titleEn: '',
@@ -209,8 +209,8 @@ export default function SettingsPage() {
                             }]
                     }
                 },
-                lawyers: data.lawyers?.length 
-                    ? data.lawyers 
+                lawyers: data.lawyers?.length
+                    ? data.lawyers
                     : [{
                         id: 0,
                         photoUrl: '',
@@ -226,8 +226,8 @@ export default function SettingsPage() {
                         linkedIn: '',
                         gmail: ''
                     }],
-                clientReviews: data.clientReviews?.length 
-                    ? data.clientReviews 
+                clientReviews: data.clientReviews?.length
+                    ? data.clientReviews
                     : [{
                         id: 0,
                         nameEn: '',
@@ -245,16 +245,16 @@ export default function SettingsPage() {
     const mutation = useMutation({
         mutationFn: async (values) => {
             // Validate required fields
-            if (!values.entitySettings?.baseOfOurSuccess?.headlineEn?.trim() || 
+            if (!values.entitySettings?.baseOfOurSuccess?.headlineEn?.trim() ||
                 !values.entitySettings?.baseOfOurSuccess?.headlineAr?.trim()) {
                 formik.setFieldTouched('entitySettings.baseOfOurSuccess.headlineEn', true);
                 formik.setFieldTouched('entitySettings.baseOfOurSuccess.headlineAr', true);
                 throw new Error('Please fill in both English and Arabic headline fields in the "Base of Our Success" section before saving.');
             }
-            
+
             // Validate base items
-            if (values.entitySettings?.baseOfOurSuccess?.bases?.some(base => 
-                !base.titleEn?.trim() || !base.titleAr?.trim() || 
+            if (values.entitySettings?.baseOfOurSuccess?.bases?.some(base =>
+                !base.titleEn?.trim() || !base.titleAr?.trim() ||
                 !base.descriptionEn?.trim() || !base.descriptionAr?.trim()
             )) {
                 throw new Error('Please fill in all required fields in the "Base of Our Success" section.');
@@ -383,26 +383,24 @@ export default function SettingsPage() {
                                 </button>
                             )}
                         </div>
-                        
+
                         {/* Tabs */}
                         <div className="flex border-b border-[#006b63]">
                             <button
                                 onClick={() => setActiveTab('settings')}
-                                className={`px-4 py-3 font-medium text-sm ${
-                                    activeTab === 'settings'
+                                className={`px-4 py-3 font-medium text-sm ${activeTab === 'settings'
                                         ? 'bg-[#006b63] text-white'
                                         : 'text-gray-200 hover:bg-[#005a54]'
-                                }`}
+                                    }`}
                             >
                                 {t('Settings.title')}
                             </button>
                             <button
                                 onClick={() => setActiveTab('sliders')}
-                                className={`px-4 py-3 font-medium text-sm ${
-                                    activeTab === 'sliders'
+                                className={`px-4 py-3 font-medium text-sm ${activeTab === 'sliders'
                                         ? 'bg-[#006b63] text-white'
                                         : 'text-gray-200 hover:bg-[#005a54]'
-                                }`}
+                                    }`}
                             >
                                 {t('slider.manageSlider')}
                             </button>
@@ -416,8 +414,8 @@ export default function SettingsPage() {
                         <div className="bg-green-50 border border-green-200 rounded-lg p-4 flex items-center gap-3">
                             <CheckCircle className="text-green-600" size={24} />
                             <p className="text-green-800 font-medium">
-                                {activeTab === 'settings' 
-                                    ? t('settings.savedSuccess') 
+                                {activeTab === 'settings'
+                                    ? t('settings.savedSuccess')
                                     : t('slider.savedSuccess')}
                             </p>
                         </div>
