@@ -74,20 +74,6 @@
     "Delete": "Delete",
     "Deleting...": "Deleting..."
   },
-  "Dashboard": {
-    "Dashboard": "Dashboard",
-    "Requests by Branch": "Requests by Branch",
-    "Total Requests": "Total Requests",
-    "Current Services": "Current Services",
-    "Clients": "Clients",
-    "Customer Service": "Customer Service",
-    "Most Active Requests": "Most Active Requests",
-    "Date": "Date",
-    "Activity": "Activity",
-    "Client": "Client",
-    "Branch": "Branch",
-    "Count": "Count"
-  },
   "Requests": {
     "RequestDetails": "Request Details",
     "RequestList": "Request List",
@@ -336,6 +322,25 @@
     "security": "Security",
     "notifications": "Notifications",
     "billing": "Billing"
+  },
+  "Dashboard": {
+    "Dashboard": "Dashboard",
+    "Total Requests": "Total Requests",
+    "Active Requests": "Active Requests",
+    "Total Users": "Total Users",
+    "Customer Service": "Customer Service",
+    "Most Active Requests": "Most Active Requests",
+    "Requests by Branch": "Requests by Branch",
+    "Date": "Date",
+    "Title": "Title",
+    "Client": "Client",
+    "Branch": "Branch",
+    "Notes": "Notes",
+    "Count": "Count",
+    "No active requests found": "No active requests found",
+    "No branch data available": "No branch data available",
+    "Current Services": "Current Services",
+    "Clients": "Clients"
   },
   "common": {
     "add": "Add",

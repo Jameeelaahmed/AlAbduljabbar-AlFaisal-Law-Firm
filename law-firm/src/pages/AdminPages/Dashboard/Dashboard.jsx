@@ -1,139 +1,206 @@
-import { useMemo, useState } from "react";
+import { useMemo } from "react";
 import { useTranslation } from "react-i18next";
+import { useDashboard } from "../../../hooks/useDashBoard";
+import { Skeleton } from "@mui/material";
 
 /**
  * Dashboard page
- * - Replace the mock data / counts with your real hooks (e.g. useAllRequests, useAllServices, useAllClients)
- * - Keeps RTL/LTR alignment based on i18n language (assumes "ar" = RTL)
+ * Displays key metrics and recent activity for the admin dashboard
+ * - Uses real data from the API via useDashboard hook
+ * - Supports RTL/LTR based on i18n language ("ar" = RTL)
  */
 function Dashboard() {
     const { t, i18n } = useTranslation();
     const isRtl = (i18n?.language || document.documentElement.dir) === "ar";
+    const { data: dashboardData, isLoading, isError } = useDashboard();
 
-    // TODO: replace these mocks with real data from your hooks / API
-    const [requests] = useState([
-        { id: 1, title: "طلب تسجيل شركة", client: "أحمد علي", branch: 2, status: "Open", date: "2024-01-15T10:00:00Z", activityCount: 8 },
-        { id: 2, title: "تحديث بيانات الخدمة", client: "نور محمد", branch: 1, status: "Closed", date: "2024-01-14T15:30:00Z", activityCount: 5 },
-        { id: 3, title: "استشارة قانونية", client: "سالم عبد", branch: [1, 2], status: "In Progress", date: "2024-01-13T09:15:00Z", activityCount: 12 },
-        { id: 4, title: "طلب دعم", client: "ليلى حسن", branch: 1, status: "Open", date: "2024-01-12T02:45:00Z", activityCount: 3 },
-        { id: 5, title: "انشاء تقرير", client: "خالد عمر", branch: 2, status: "Closed", date: "2024-01-11T11:20:00Z", activityCount: 7 },
-    ]);
-    const [services] = useState([
-        { id: 1, name: "تأسيس شركة" },
-        { id: 2, name: "استشارات" },
-        { id: 3, name: "خدمات توثيق" },
-    ]);
-    const [clients] = useState([
-        { id: 1, name: "أحمد علي" },
-        { id: 2, name: "نور محمد" },
-        { id: 3, name: "سالم عبد" },
-        { id: 4, name: "ليلى حسن" },
-    ]);
-    const [customerServiceAgents] = useState([
-        { id: 1, name: "Agent 1" },
-        { id: 2, name: "Agent 2" }
-    ]);
-
-    const totalRequests = requests.length;
-    const currentServices = services.length;
-    const totalClients = clients.length;
-    const customerServiceCount = customerServiceAgents.length;
-
-    // normalize branch to numbers -> label
-    const branchLabel = (raw) => {
-        if (raw == null) return "unknown";
-        if (Array.isArray(raw)) {
-            const has1 = raw.includes(1) || raw.includes("1");
-            const has2 = raw.includes(2) || raw.includes("2");
-            if (has1 && has2) return "Both";
-            if (has1) return "Egypt";
-            if (has2) return "Saudi";
-            return String(raw);
-        }
-        const s = String(raw).trim();
-        if (s === "1") return "Egypt";
-        if (s === "2") return "Saudi";
-        if (s === "3") return "Both";
-        return s;
+    // Get branch name with localization
+    const getBranchName = (branchId) => {
+        const branches = {
+            1: isRtl ? "مصر" : "Egypt",
+            2: isRtl ? "المملكة العربية السعودية" : "Saudi Arabia",
+            3: isRtl ? "كلاهما" : "Both"
+        };
+        return branches[branchId] || branchId;
     };
 
-    const branchCounts = useMemo(() => {
-        const counts = { Egypt: 0, Saudi: 0, Both: 0 };
-        requests.forEach((r) => {
-            const label = branchLabel(r.branch);
-            if (label === "Egypt") counts.Egypt++;
-            else if (label === "Saudi") counts.Saudi++;
-            else if (label === "Both") counts.Both++;
-        });
-        return counts;
-    }, [requests]);
-
-    // most active requests by activityCount desc
-    const mostActive = useMemo(() => {
-        return [...requests].sort((a, b) => (b.activityCount || 0) - (a.activityCount || 0)).slice(0, 6);
-    }, [requests]);
-
-    const formatDate = (iso) => {
+    // Format date based on current locale
+    const formatDate = (isoString) => {
+        if (!isoString) return '';
         try {
-            const d = new Date(iso);
-            return d.toLocaleString(i18n.language || undefined);
-        } catch {
-            return iso;
+            const options = {
+                year: 'numeric',
+                month: 'short',
+                day: 'numeric',
+                hour: '2-digit',
+                minute: '2-digit'
+            };
+            return new Date(isoString).toLocaleString(i18n.language || 'en-US', options);
+        } catch (e) {
+            console.error('Error formatting date:', e);
+            return isoString;
         }
     };
+
+    // Calculate branch statistics
+    const branchStats = useMemo(() => {
+        if (!dashboardData?.branchesRequestsAnalysis) return {};
+        
+        return dashboardData.branchesRequestsAnalysis.reduce((acc, branch) => {
+            acc[branch.branchId] = {
+                name: getBranchName(branch.branchId),
+                count: branch.totalRequests
+            };
+            return acc;
+        }, {});
+    }, [dashboardData]);
+
+    // Get total requests across all branches
+    const totalRequests = useMemo(() => {
+        if (!dashboardData?.branchesRequestsAnalysis) return 0;
+        return dashboardData.branchesRequestsAnalysis.reduce((sum, branch) => sum + branch.totalRequests, 0);
+    }, [dashboardData]);
 
     const containerAlign = isRtl ? "text-right" : "text-left";
 
+    // Loading state
+    if (isLoading) {
+        return (
+            <div className={`p-6 bg-gray-50 min-h-screen ${containerAlign}`}>
+                <Skeleton variant="text" width="30%" height={40} className="mb-6" />
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
+                    {[1, 2, 3, 4].map((i) => (
+                        <Skeleton key={i} variant="rectangular" height={100} className="rounded" />
+                    ))}
+                </div>
+                <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                    <div className="lg:col-span-2">
+                        <Skeleton variant="rectangular" height={400} className="rounded" />
+                    </div>
+                    <div>
+                        <Skeleton variant="rectangular" height={400} className="rounded" />
+                    </div>
+                </div>
+            </div>
+        );
+    }
+
+    // Error state
+    if (isError || !dashboardData) {
+        return (
+            <div className={`p-6 bg-gray-50 min-h-screen ${containerAlign}`}>
+                <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative" role="alert">
+                    <strong className="font-bold">{t('Error')}: </strong>
+                    <span className="block sm:inline">{t('Failed to load dashboard data. Please try again later.')}</span>
+                </div>
+            </div>
+        );
+    }
+
     return (
         <div className={`p-6 bg-gray-50 min-h-screen ${containerAlign}`}>
-            <div className={`flex items-center justify-between mb-6 `}>
+            <div className={`flex items-center justify-between mb-6`}>
                 <h1 className="text-2xl font-semibold">{t("Dashboard.Dashboard") || (isRtl ? "لوحة التحكم" : "Dashboard")}</h1>
             </div>
 
-            {/* stats */}
+            {/* Stats */}
             <div className={`grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-6`}>
-                <StatCard label={t("Dashboard.Total Requests")} value={totalRequests} />
-                <StatCard label={t("Dashboard.Current Services")} value={currentServices} />
-                <StatCard label={t("Dashboard.Clients")} value={totalClients} />
-                <StatCard label={t("Dashboard.Customer Service")} value={customerServiceCount} />
+                <StatCard 
+                    label={t("Dashboard.Total Requests")} 
+                    value={dashboardData.totalRequests || 0} 
+                />
+                <StatCard 
+                    label={t("Dashboard.Active Requests")} 
+                    value={dashboardData.activeRequests || 0} 
+                />
+                <StatCard 
+                    label={t("Dashboard.Total Users")} 
+                    value={dashboardData.totalUsers || 0} 
+                />
+                <StatCard 
+                    label={t("Dashboard.Customer Service")} 
+                    value={dashboardData.totalCustomerServices || 0} 
+                />
             </div>
 
-            {/* main content: table + branch summary */}
+            {/* Main content: table + branch summary */}
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                {/* Most Active Requests */}
                 <div className="lg:col-span-2 bg-white shadow rounded p-4">
                     <h2 className="font-medium mb-4">{t("Dashboard.Most Active Requests")}</h2>
-                    <div className="overflow-x-auto">
-                        <table className="min-w-full table-auto">
-                            <thead>
-                                <tr className="text-sm text-gray-500 border-b">
-                                    <th className="py-2 px-3">{t("Dashboard.Date")}</th>
-                                    <th className="py-2 px-3">{t("Dashboard.Activity")}</th>
-                                    <th className="py-2 px-3">{t("Dashboard.Client")}</th>
-                                    <th className="py-2 px-3">{t("Dashboard.Branch")}</th>
-                                    <th className="py-2 px-3 text-right">{t("Dashboard.Count")}</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {mostActive.map((r) => (
-                                    <tr key={r.id} className="text-sm text-gray-700 border-b last:border-b-0">
-                                        <td className="py-3 px-3 align-top">{formatDate(r.date)}</td>
-                                        <td className="py-3 px-3 align-top">{r.title}</td>
-                                        <td className="py-3 px-3 align-top">{r.client}</td>
-                                        <td className="py-3 px-3 align-top">{isRtl ? (branchLabel(r.branch) === "Egypt" ? "مصر" : branchLabel(r.branch) === "Saudi" ? "المملكة العربية السعودية" : "كلاهما") : branchLabel(r.branch)}</td>
-                                        <td className="py-3 px-3 align-top text-right">{r.activityCount ?? "-"}</td>
+                    {dashboardData.mostActiveRequests?.length > 0 ? (
+                        <div className="overflow-x-auto">
+                            <table className="min-w-full table-auto">
+                                <thead>
+                                    <tr className="text-sm text-gray-500 border-b">
+                                        <th className="py-2 px-3">{t("Dashboard.Date")}</th>
+                                        <th className="py-2 px-3">{t("Dashboard.Title")}</th>
+                                        <th className="py-2 px-3">{t("Dashboard.Client")}</th>
+                                        <th className="py-2 px-3">{t("Dashboard.Branch")}</th>
+                                        <th className="py-2 px-3 text-right">{t("Dashboard.Notes")}</th>
                                     </tr>
-                                ))}
-                            </tbody>
-                        </table>
-                    </div>
+                                </thead>
+                                <tbody>
+                                    {dashboardData.mostActiveRequests.map((request) => (
+                                        <tr key={request.id} className="text-sm text-gray-700 border-b last:border-b-0 hover:bg-gray-50">
+                                            <td className="py-3 px-3 align-top whitespace-nowrap">
+                                                {formatDate(request.createdAt)}
+                                            </td>
+                                            <td className="py-3 px-3 align-top max-w-xs truncate" title={request.title}>
+                                                {request.title}
+                                            </td>
+                                            <td className="py-3 px-3 align-top">
+                                                <div className="flex items-center">
+                                                    {request.userPhoto && (
+                                                        <img 
+                                                            src={request.userPhoto} 
+                                                            alt={request.userName} 
+                                                            className="w-6 h-6 rounded-full mr-2"
+                                                            onError={(e) => {
+                                                                e.target.onerror = null;
+                                                                e.target.style.display = 'none';
+                                                            }}
+                                                        />
+                                                    )}
+                                                    <span>{request.userName || 'N/A'}</span>
+                                                </div>
+                                            </td>
+                                            <td className="py-3 px-3 align-top">
+                                                {getBranchName(request.branchId)}
+                                            </td>
+                                            <td className="py-3 px-3 align-top text-right">
+                                                {request.notesCount || 0}
+                                            </td>
+                                        </tr>
+                                    ))}
+                                </tbody>
+                            </table>
+                        </div>
+                    ) : (
+                        <div className="text-center py-8 text-gray-500">
+                            {t("No active requests found")}
+                        </div>
+                    )}
                 </div>
 
+                {/* Branch Statistics */}
                 <div className="bg-white shadow rounded p-4">
                     <h3 className="font-medium mb-4">{t("Dashboard.Requests by Branch")}</h3>
                     <div className="space-y-4">
-                        <BarRow label={"Saudi"} count={branchCounts.Saudi} max={totalRequests} color="bg-amber-700" />
-                        <BarRow label={"Egypt"} count={branchCounts.Egypt} max={totalRequests} color="bg-emerald-700" />
-                        <BarRow label={"Both"} count={branchCounts.Both} max={totalRequests} color="bg-slate-400" />
+                        {dashboardData.branchesRequestsAnalysis?.map((branch) => (
+                            <BarRow 
+                                key={branch.branchId}
+                                label={getBranchName(branch.branchId)}
+                                count={branch.totalRequests}
+                                max={totalRequests}
+                                color={branch.branchId === 1 ? 'bg-emerald-700' : branch.branchId === 2 ? 'bg-amber-700' : 'bg-slate-400'}
+                            />
+                        ))}
+                        {(!dashboardData.branchesRequestsAnalysis || dashboardData.branchesRequestsAnalysis.length === 0) && (
+                            <div className="text-center py-4 text-gray-500">
+                                {t("No branch data available")}
+                            </div>
+                        )}
                     </div>
                 </div>
             </div>
@@ -143,28 +210,43 @@ function Dashboard() {
 
 /* Small presentational components */
 
-function StatCard({ label, value }) {
+function StatCard({ label, value, icon: Icon }) {
     return (
-        <div className="bg-white rounded shadow p-4 flex items-center justify-between">
+        <div className="bg-white rounded-lg shadow p-5 flex items-center justify-between border border-gray-100 hover:shadow-md transition-shadow duration-200">
             <div>
-                <div className="text-sm text-gray-500">{label}</div>
-                <div className="text-2xl font-semibold mt-1">{value}</div>
+                <div className="text-sm text-gray-500 font-medium">{label}</div>
+                <div className="text-2xl font-bold mt-1 text-gray-800">
+                    {value?.toLocaleString() || '0'}
+                </div>
             </div>
-            <div className="text-gray-200 text-3xl font-bold opacity-30 select-none">{/* decorative */}</div>
+            {Icon && (
+                <div className="p-3 rounded-full bg-blue-50 text-blue-600">
+                    <Icon className="w-6 h-6" />
+                </div>
+            )}
         </div>
     );
 }
 
-function BarRow({ label, count, max = 1, color = "bg-emerald-500" }) {
+function BarRow({ label, count = 0, max = 1, color = "bg-emerald-500" }) {
     const pct = max > 0 ? Math.round((count / max) * 100) : 0;
+    
     return (
         <div>
             <div className="flex items-center justify-between text-sm text-gray-600 mb-1">
-                <div>{label}</div>
-                <div className="font-semibold">{count}</div>
+                <span className="font-medium">{label}</span>
+                <div className="flex items-center">
+                    <span className="font-semibold mr-1">{count}</span>
+                    <span className="text-xs text-gray-400">
+                        ({pct}%)
+                    </span>
+                </div>
             </div>
-            <div className="w-full h-3 bg-gray-200 rounded overflow-hidden">
-                <div className={`${color} h-full`} style={{ width: `${pct}%` }} />
+            <div className="w-full h-2.5 bg-gray-100 rounded-full overflow-hidden">
+                <div 
+                    className={`${color} h-full transition-all duration-500 ease-out`} 
+                    style={{ width: `${pct}%` }}
+                />
             </div>
         </div>
     );
