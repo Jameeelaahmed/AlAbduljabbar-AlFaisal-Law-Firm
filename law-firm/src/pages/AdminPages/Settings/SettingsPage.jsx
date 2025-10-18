@@ -18,41 +18,59 @@ import { uploadPendingImages } from '../../../utils/imageUploadHelper';
 import { useUnsavedChanges, useBlockNavigation } from '../../../hooks/useUnsavedChanges';
 import { toast } from 'react-toastify';
 
-// Helper: Map Formik lowercase keys to backend PascalCase
+// Helper: Map Formik values to match the new API structure
 const mapToBackendDto = (values) => ({
-    EntitySettings: {
-        CompanySummary: values.entitySettings.companySummary,
-        JourneyMilestones: values.entitySettings.journeyMilestones,
-        CoreValues: values.entitySettings.coreValues.map(cv => ({
-            PhotoUrl: cv.photoUrl,
-            Title: cv.title,
-            Description: cv.description
+    entitySettings: {
+        companySummary: values.entitySettings.companySummary,
+        journeyMilestones: values.entitySettings.journeyMilestones.map(milestone => ({
+            year: milestone.year,
+            titleEn: milestone.titleEn,
+            titleAr: milestone.titleAr,
+            descriptionEn: milestone.descriptionEn,
+            descriptionAr: milestone.descriptionAr
         })),
-        BaseOfOurSuccess: {
-            Headline: values.entitySettings.baseOfOurSuccess.headline,
-            Bases: values.entitySettings.baseOfOurSuccess.bases.map(base => ({
-                PhotoUrl: base.photoUrl,
-                Title: base.title,
-                Description: base.description
+        coreValues: values.entitySettings.coreValues.map(cv => ({
+            photoUrl: cv.photoUrl,
+            titleEn: cv.titleEn,
+            titleAr: cv.titleAr,
+            descriptionEn: cv.descriptionEn,
+            descriptionAr: cv.descriptionAr
+        })),
+        baseOfOurSuccess: {
+            headlineEn: values.entitySettings.baseOfOurSuccess.headlineEn,
+            headlineAr: values.entitySettings.baseOfOurSuccess.headlineAr,
+            bases: values.entitySettings.baseOfOurSuccess.bases.map(base => ({
+                photoUrl: base.photoUrl,
+                titleEn: base.titleEn,
+                titleAr: base.titleAr,
+                descriptionEn: base.descriptionEn,
+                descriptionAr: base.descriptionAr
             }))
         }
     },
-    Lawyers: values.lawyers.map(l => ({
-        Id: l.id,
-        PhotoUrl: l.photoUrl,
-        Name: l.name,
-        Position: l.position,
-        Specialization: l.specialization,
-        Description: l.description,
-        YearsOfExperience: l.yearsOfExperience,
-        LinkedIn: l.linkedIn,
-        Gmail: l.gmail
+    lawyers: values.lawyers.map(lawyer => ({
+        id: lawyer.id,
+        photoUrl: lawyer.photoUrl,
+        nameEn: lawyer.nameEn,
+        nameAr: lawyer.nameAr,
+        positionEn: lawyer.positionEn,
+        positionAr: lawyer.positionAr,
+        specializationEn: lawyer.specializationEn,
+        specializationAr: lawyer.specializationAr,
+        descriptionEn: lawyer.descriptionEn,
+        descriptionAr: lawyer.descriptionAr,
+        yearsOfExperience: lawyer.yearsOfExperience,
+        linkedIn: lawyer.linkedIn,
+        gmail: lawyer.gmail
     })),
-    ClientReviews: values.clientReviews.map(c => ({
-        Id: c.id,
-        Name: c.name,
-        ClientOf: c.clientOf,
-        Review: c.review
+    clientReviews: values.clientReviews.map(review => ({
+        id: review.id,
+        nameEn: review.nameEn,
+        nameAr: review.nameAr,
+        clientOfEn: review.clientOfEn,
+        clientOfAr: review.clientOfAr,
+        reviewEn: review.reviewEn,
+        reviewAr: review.reviewAr
     }))
 });
 
@@ -86,15 +104,56 @@ export default function SettingsPage() {
                     finishedCases: 0,
                     successRate: 0
                 },
-                journeyMilestones: [],
-                coreValues: [],
+                journeyMilestones: [{
+                    year: new Date().getFullYear(),
+                    titleEn: '',
+                    titleAr: '',
+                    descriptionEn: '',
+                    descriptionAr: ''
+                }],
+                coreValues: [{
+                    photoUrl: '',
+                    titleEn: '',
+                    titleAr: '',
+                    descriptionEn: '',
+                    descriptionAr: ''
+                }],
                 baseOfOurSuccess: {
-                    headline: '',
-                    bases: []
+                    headlineEn: '',
+                    headlineAr: '',
+                    bases: [{
+                        photoUrl: '',
+                        titleEn: '',
+                        titleAr: '',
+                        descriptionEn: '',
+                        descriptionAr: ''
+                    }]
                 }
             },
-            lawyers: [],
-            clientReviews: []
+            lawyers: [{
+                id: 0,
+                photoUrl: '',
+                nameEn: '',
+                nameAr: '',
+                positionEn: '',
+                positionAr: '',
+                specializationEn: '',
+                specializationAr: '',
+                descriptionEn: '',
+                descriptionAr: '',
+                yearsOfExperience: 0,
+                linkedIn: '',
+                gmail: ''
+            }],
+            clientReviews: [{
+                id: 0,
+                nameEn: '',
+                nameAr: '',
+                clientOfEn: '',
+                clientOfAr: '',
+                reviewEn: '',
+                reviewAr: ''
+            }]
         },
         enableReinitialize: true,
         onSubmit: (values) => {
@@ -111,14 +170,73 @@ export default function SettingsPage() {
     useEffect(() => {
         if (data) {
             formik.setValues({
-                ...data,
                 entitySettings: {
-                    ...data.entitySettings,
+                    companySummary: data.entitySettings?.companySummary || {
+                        yearsOfExperience: 0,
+                        satisfiedClients: 0,
+                        finishedCases: 0,
+                        successRate: 0
+                    },
+                    journeyMilestones: data.entitySettings?.journeyMilestones?.length 
+                        ? data.entitySettings.journeyMilestones 
+                        : [{
+                            year: new Date().getFullYear(),
+                            titleEn: '',
+                            titleAr: '',
+                            descriptionEn: '',
+                            descriptionAr: ''
+                        }],
+                    coreValues: data.entitySettings?.coreValues?.length 
+                        ? data.entitySettings.coreValues 
+                        : [{
+                            photoUrl: '',
+                            titleEn: '',
+                            titleAr: '',
+                            descriptionEn: '',
+                            descriptionAr: ''
+                        }],
                     baseOfOurSuccess: {
-                        headline: data.entitySettings?.baseOfOurSuccess?.headline || '',
-                        bases: data.entitySettings?.baseOfOurSuccess?.bases || []
+                        headlineEn: data.entitySettings?.baseOfOurSuccess?.headlineEn || '',
+                        headlineAr: data.entitySettings?.baseOfOurSuccess?.headlineAr || '',
+                        bases: data.entitySettings?.baseOfOurSuccess?.bases?.length 
+                            ? data.entitySettings.baseOfOurSuccess.bases 
+                            : [{
+                                photoUrl: '',
+                                titleEn: '',
+                                titleAr: '',
+                                descriptionEn: '',
+                                descriptionAr: ''
+                            }]
                     }
-                }
+                },
+                lawyers: data.lawyers?.length 
+                    ? data.lawyers 
+                    : [{
+                        id: 0,
+                        photoUrl: '',
+                        nameEn: '',
+                        nameAr: '',
+                        positionEn: '',
+                        positionAr: '',
+                        specializationEn: '',
+                        specializationAr: '',
+                        descriptionEn: '',
+                        descriptionAr: '',
+                        yearsOfExperience: 0,
+                        linkedIn: '',
+                        gmail: ''
+                    }],
+                clientReviews: data.clientReviews?.length 
+                    ? data.clientReviews 
+                    : [{
+                        id: 0,
+                        nameEn: '',
+                        nameAr: '',
+                        clientOfEn: '',
+                        clientOfAr: '',
+                        reviewEn: '',
+                        reviewAr: ''
+                    }]
             });
         }
     }, [data]);
@@ -126,10 +244,20 @@ export default function SettingsPage() {
     // Mutation for saving
     const mutation = useMutation({
         mutationFn: async (values) => {
-            // Validate required headline
-            if (!values.entitySettings?.baseOfOurSuccess?.headline?.trim()) {
-                formik.setFieldTouched('entitySettings.baseOfOurSuccess.headline', true);
-                throw new Error('Please fill in the headline field in the "Base of Our Success" section before saving.');
+            // Validate required fields
+            if (!values.entitySettings?.baseOfOurSuccess?.headlineEn?.trim() || 
+                !values.entitySettings?.baseOfOurSuccess?.headlineAr?.trim()) {
+                formik.setFieldTouched('entitySettings.baseOfOurSuccess.headlineEn', true);
+                formik.setFieldTouched('entitySettings.baseOfOurSuccess.headlineAr', true);
+                throw new Error('Please fill in both English and Arabic headline fields in the "Base of Our Success" section before saving.');
+            }
+            
+            // Validate base items
+            if (values.entitySettings?.baseOfOurSuccess?.bases?.some(base => 
+                !base.titleEn?.trim() || !base.titleAr?.trim() || 
+                !base.descriptionEn?.trim() || !base.descriptionAr?.trim()
+            )) {
+                throw new Error('Please fill in all required fields in the "Base of Our Success" section.');
             }
 
             // Upload images first

@@ -1,9 +1,9 @@
 import api from "./axiosInstance"
 export const getAllUserConsultations = async ({ queryKey }) => {
-    const [_key, { pageIndex = 1, pageSize = 5 }] = queryKey
+    const [_key, { pageIndex = 1, pageSize = 5, status= null }] = queryKey
 
     const { data: response } = await api.get("/api/UserConsultations/All", {
-        params: { pageIndex, pageSize },
+        params: { pageIndex, pageSize , status},
     });
 
     console.log(response);

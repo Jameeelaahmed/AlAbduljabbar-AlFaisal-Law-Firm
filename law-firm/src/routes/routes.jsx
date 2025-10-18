@@ -3,6 +3,7 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { lazy, Suspense } from "react";
 import ProtectedRoute from "./ProtectedRoutes";
 import VerifyOtpGuard from "./VerifyOtpGuard";
+import GuestOnlyGuard from "./GuestOnlyGuard";
 //layout components
 
 import AdminLayout from "../layouts/AdminLayout";
@@ -203,33 +204,33 @@ const routes = createBrowserRouter([
         children: [
             {
                 path: '/', element:
-                    // <ProtectedRoute allowedRoles={['User']}>
-                    <Landing />
-                // </ProtectedRoute>
+                    <GuestOnlyGuard>
+                        <Landing />
+                    </GuestOnlyGuard>
             },
             {
                 path: '/servicespage', element:
-                    // <ProtectedRoute allowedRoles={['User']}>
-                    <LawServicesPage />
-                // </ProtectedRoute>
+                    <GuestOnlyGuard>
+                        <LawServicesPage />
+                    </GuestOnlyGuard>
             },
             {
                 path: '/FAQClient', element:
-                    // <ProtectedRoute allowedRoles={['User']}>
-                    <FAQPage />
-                // </ProtectedRoute>
+                    <GuestOnlyGuard>
+                        <FAQPage />
+                    </GuestOnlyGuard>
             },
             {
                 path: '/consultations', element:
-                    // <ProtectedRoute allowedRoles={['User']}>
-                    <ConsultantPage />
-                // </ProtectedRoute>
+                    <GuestOnlyGuard>
+                        <ConsultantPage />
+                    </GuestOnlyGuard>
             },
             {
                 path: '/contactus', element:
-                    // <ProtectedRoute allowedRoles={['User']}>
-                    <ContactUs />
-                // </ProtectedRoute>
+                    <GuestOnlyGuard>
+                        <ContactUs />
+                    </GuestOnlyGuard>
             },
 
             {

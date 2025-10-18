@@ -71,7 +71,7 @@ function Requests() {
                 ),
             },
         ],
-        [t] // 🧠 only re-run if translation function changes (like language switch)
+        [t] 
     );
 
     const tableActions = useMemo(
@@ -82,7 +82,7 @@ function Requests() {
                 className: "text-gray-500 hover:bg-gray-50",
             },
         ],
-        [t, navigate] // 🧠 both are stable, but safe to include
+        [t, navigate] 
     );
 
     return (
