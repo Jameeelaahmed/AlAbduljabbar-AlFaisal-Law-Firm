@@ -1,111 +1,87 @@
 import { useTranslation } from "react-i18next";
 import { Users, Award, TrendingUp, Scale, HeartHandshake } from "lucide-react";
 import { Link } from "react-router-dom";
+import { useHomePage } from "../../../hooks/useHomePage";
+
 function OurCompany() {
-    const { i18n } = useTranslation?.() ?? { t: (s) => s, i18n: { language: "ar" } };
-    const isRtl = (i18n?.language || document.documentElement.dir) === "ar";
+    const { data } = useHomePage();
 
-    const milestones = [
-        {
-            year: "2008",
-            title: isRtl ? "بداية الرحلة" : "Our Beginning",
-            description: isRtl
-                ? "تأسيس الشركة بمكتب صغير وطموح كبير لتقديم خدمات قانونية متميزة"
-                : "Founded with a small office and big ambitions to deliver exceptional legal services"
-        },
-        {
-            year: "2012",
-            title: isRtl ? "التوسع الإقليمي" : "Regional Expansion",
-            description: isRtl
-                ? "فتح أول مكتب دولي وبناء سمعة قوية في مجال المحاماة الدولية"
-                : "Opened first international office and built strong reputation in international law"
-        },
-        {
-            year: "2018",
-            title: isRtl ? "التميز القانوني" : "Legal Excellence",
-            description: isRtl
-                ? "فوز بجائزة أفضل شركة محاماة وحصول فريقنا على اعترافات متعددة"
-                : "Awarded Best Law Firm and multiple recognitions for our legal team"
-        },
-        {
-            year: "2024",
-            title: isRtl ? "الريادة المستمرة" : "Continued Leadership",
-            description: isRtl
-                ? "مواصلة الريادة في تقديم حلول قانونية مبتكرة لعملائنا حول العالم"
-                : "Continuing to lead with innovative legal solutions for clients worldwide"
-        }
-    ];
+    // Safe access with defaults
+    const entity = data?.entitySettings ?? {};
+    const milestones = entity?.journeyMilestones ?? [];
+    const coreValues = entity?.coreValues ?? [];
+    const summary = entity?.companySummary ?? {};
 
-    const values = [
-        {
-            icon: Scale,
-            title: isRtl ? "العدالة" : "Justice",
-            description: isRtl
-                ? "نسعى لتحقيق العدالة في كل قضية نتعامل معها"
-                : "We pursue justice in every case we handle"
-        },
-        {
-            icon: HeartHandshake,
-            title: isRtl ? "الثقة" : "Trust",
-            description: isRtl
-                ? "نبني علاقات قائمة على الثقة والشفافية مع عملائنا"
-                : "We build relationships based on trust and transparency"
-        },
-        {
-            icon: Award,
-            title: isRtl ? "التميز" : "Excellence",
-            description: isRtl
-                ? "نلتزم بأعلى معايير الجودة في خدماتنا القانونية"
-                : "We commit to the highest standards of legal service quality"
-        },
-        {
-            icon: Users,
-            title: isRtl ? "العملاء أولاً" : "Clients First",
-            description: isRtl
-                ? "نضع مصالح عملائنا في مقدمة أولوياتنا"
-                : "Our clients' interests are our top priority"
-        }
-    ];
+    // Map string icon names to actual components
+    const ICON_MAP = {
+        users: Users,
+        award: Award,
+        trendingup: TrendingUp,
+        trending_up: TrendingUp,
+        scale: Scale,
+        hearthandshake: HeartHandshake,
+        heart_handshake: HeartHandshake,
+        handshake: HeartHandshake,
+    };
 
-    const stats = [
-        { number: "15+", label: isRtl ? "سنوات من الخبرة" : "Years Experience" },
-        { number: "500+", label: isRtl ? "عميل راضٍ" : "Satisfied Clients" },
-        { number: "1000+", label: isRtl ? "قضية منجزة" : "Cases Handled" },
-        { number: "98%", label: isRtl ? "معدل النجاح" : "Success Rate" }
-    ];
+    const { i18n } = useTranslation();
+    const isRtl = String(i18n?.language || document?.documentElement?.dir || "ar")
+        .toLowerCase()
+        .startsWith("ar");
 
     return (
         <section className={`py-16 bg-bg rtl:text-right ltr:text-left`}>
             <div className="container mx-auto px-4 sm:px-6 lg:px-8">
                 {/* Header */}
                 <div className="max-w-4xl mx-auto mb-16 text-center">
-                    <div className="inline-flex items-center gap-2 px-4 py-2 bg--primary/10 text-primary rounded-lg text-sm font-medium mb-6">
+                    <div className="inline-flex items-center gap-2 px-4 py-2 bg-primary/10 text-primary rounded-lg text-sm font-medium mb-6">
                         <TrendingUp size={18} />
                         {isRtl ? "رحلتنا" : "Our Journey"}
                     </div>
                     <h1 className="text-4xl md:text-5xl font-bold text-text mb-6">
-                        {isRtl ? "شركة المحاماة: قصة تمتد 15 عاماً" : "The Law Firm: A 15-Year Journey"}
+                        {isRtl ? "شركة المحاماة: قصة تمتد 6 اعوام" : "The Law Firm: A 6-Years Journey"}
                     </h1>
                     <p className="text-lg text-gray-600 leading-relaxed max-w-3xl mx-auto">
                         {isRtl
                             ? "من مكتب صغير إلى شركة محاماة رائدة، نحن نسير برؤية واضحة ورسالة ثابتة لخدمة العدالة"
-                            : "From a small office to a leading law firm, we walk with clear vision and steadfast mission to serve justice"
-                        }
+                            : "From a small office to a leading law firm, we walk with clear vision and steadfast mission to serve justice"}
                     </p>
                 </div>
 
                 {/* Stats Section */}
                 <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mb-16 max-w-4xl mx-auto">
-                    {stats.map((stat, index) => (
-                        <div key={index} className="text-center bg-white rounded-2xl p-6 shadow-sm border border-secondary/10">
-                            <div className="text-2xl md:text-3xl font-bold text-primary mb-2">
-                                {stat.number}
-                            </div>
-                            <div className="text-sm text-gray-600 font-medium">
-                                {stat.label}
-                            </div>
+                    <div className="text-center bg-white rounded-2xl p-6 shadow-sm border border-secondary/10">
+                        <div className="text-2xl md:text-3xl font-bold text-primary mb-2">
+                            {summary?.yearsOfExperience ?? 0}
                         </div>
-                    ))}
+                        <div className="text-sm text-gray-600 font-medium">
+                            {isRtl ? "سنوات من الخبرة" : "Years Experience"}
+                        </div>
+                    </div>
+                    <div className="text-center bg-white rounded-2xl p-6 shadow-sm border border-secondary/10">
+                        <div className="text-2xl md:text-3xl font-bold text-primary mb-2">
+                            {summary?.satisfiedClients ?? 0}
+                        </div>
+                        <div className="text-sm text-gray-600 font-medium">
+                            {isRtl ? "عميل راضٍ" : "Satisfied Clients"}
+                        </div>
+                    </div>
+                    <div className="text-center bg-white rounded-2xl p-6 shadow-sm border border-secondary/10">
+                        <div className="text-2xl md:text-3xl font-bold text-primary mb-2">
+                            {summary?.finishedCases ?? 0}
+                        </div>
+                        <div className="text-sm text-gray-600 font-medium">
+                            {isRtl ? "قضية منجزة" : "Cases Handled"}
+                        </div>
+                    </div>
+                    <div className="text-center bg-white rounded-2xl p-6 shadow-sm border border-secondary/10">
+                        <div className="text-2xl md:text-3xl font-bold text-primary mb-2">
+                            {(summary?.successRate ?? 0)}%
+                        </div>
+                        <div className="text-sm text-gray-600 font-medium">
+                            {isRtl ? "معدل النجاح" : "Success Rate"}
+                        </div>
+                    </div>
                 </div>
 
                 {/* Timeline Section */}
@@ -115,21 +91,28 @@ function OurCompany() {
                     </h2>
                     <div className="relative">
                         {/* Timeline line */}
-                        <div className="absolute left-1/2 transform -translate-x-1/2 w-1 h-full bg-secondary/20 hidden md:block"></div>
+                        <div className="absolute rtl:left-1/2 ltr:right-1/2 transform rtl:-translate-x-1/2 ltr:translate-x-1/2 w-1 h-full bg-secondary/20 hidden md:block"></div>
 
-                        {milestones.map((milestone, index) => (
-                            <div key={index} className={`flex flex-col md:flex-row items-center mb-12 ${index % 2 === 0 ? 'md:flex-row' : 'md:flex-row-reverse'}`}>
+                        {milestones?.map((milestone, index) => (
+                            <div
+                                key={index}
+                                className={`flex flex-col md:flex-row items-center mb-12 ${index % 2 === 0 ? "md:flex-row" : "md:flex-row-reverse"
+                                    }`}
+                            >
                                 {/* Content */}
-                                <div className={`md:w-1/2 ${index % 2 === 0 ? 'md:pr-12' : 'md:pl-12'} mb-6 md:mb-0`}>
+                                <div
+                                    className={`md:w-1/2 ${index % 2 === 0
+                                        ? "rtl:md:pr-12 ltr:md:pl-12"
+                                        : "rtl:md:pl-12 ltr:md:pr-12"
+                                        } mb-6 md:mb-0`}
+                                >
                                     <div className="bg-white rounded-2xl p-6 shadow-sm border border-secondary/10 hover:shadow-md transition-shadow duration-300">
-                                        <div className="text-2xl font-bold text-primary mb-2">
-                                            {milestone.year}
-                                        </div>
+                                        <div className="text-2xl font-bold text-primary mb-2">{milestone?.year}</div>
                                         <h3 className="text-xl font-semibold text-text mb-3">
-                                            {milestone.title}
+                                            {isRtl ? milestone?.titleAr : milestone?.titleEn}
                                         </h3>
                                         <p className="text-gray-600 leading-relaxed">
-                                            {milestone.description}
+                                            {isRtl ? milestone?.descriptionAr : milestone?.descriptionEn}
                                         </p>
                                     </div>
                                 </div>
@@ -150,19 +133,31 @@ function OurCompany() {
                         {isRtl ? "قيمنا الأساسية" : "Our Core Values"}
                     </h2>
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-                        {values.map((value, index) => (
-                            <div key={index} className="text-center bg-white rounded-2xl p-6 shadow-sm border border-secondary/10 hover:shadow-md transition-all duration-300">
-                                <div className="w-14 h-14 bg-[var(--color-secondary)]/10 rounded-2xl flex items-center justify-center mx-auto mb-4">
-                                    <value.icon size={24} className="text-secondary" />
+                        {coreValues?.map((value, index) => {
+                            let IconComp = value?.icon;
+                            if (typeof IconComp === "string") {
+                                IconComp = ICON_MAP[IconComp.toLowerCase()];
+                            }
+                            // Fallback icon if not resolvable
+                            IconComp = IconComp || Scale;
+
+                            return (
+                                <div
+                                    key={index}
+                                    className="text-center bg-white rounded-2xl p-6 shadow-sm border border-secondary/10 hover:shadow-md transition-all duration-300"
+                                >
+                                    <div className="w-14 h-14 bg-[var(--color-secondary)]/10 rounded-2xl flex items-center justify-center mx-auto mb-4">
+                                        <IconComp size={24} className="text-secondary" />
+                                    </div>
+                                    <h3 className="text-lg font-semibold text-text mb-3">
+                                        {isRtl ? value?.titleAr : value?.titleEn}
+                                    </h3>
+                                    <p className="text-gray-600 text-sm leading-relaxed">
+                                        {isRtl ? value?.descriptionAr : value?.descriptionEn}
+                                    </p>
                                 </div>
-                                <h3 className="text-lg font-semibold text-text mb-3">
-                                    {value.title}
-                                </h3>
-                                <p className="text-gray-600 text-sm leading-relaxed">
-                                    {value.description}
-                                </p>
-                            </div>
-                        ))}
+                            );
+                        })}
                     </div>
                 </div>
 
@@ -175,14 +170,19 @@ function OurCompany() {
                         <p className="text-gray-600 mb-6">
                             {isRtl
                                 ? "اكتشف كيف يمكننا مساعدتك في رحلتك القانونية"
-                                : "Discover how we can assist you in your legal journey"
-                            }
+                                : "Discover how we can assist you in your legal journey"}
                         </p>
                         <div className="flex flex-col sm:flex-row gap-3 justify-center">
-                            <Link to="servicespage" className="px-6 cursor-pointer py-3 bg-primary hover:bg-accent text-white font-medium rounded-lg transition-colors duration-300">
+                            <Link
+                                to="servicespage"
+                                className="px-6 cursor-pointer py-3 bg-primary hover:bg-accent text-white font-medium rounded-lg transition-colors duration-300"
+                            >
                                 {isRtl ? "اطلب خدمة" : "Request a Service"}
                             </Link>
-                            <Link to="consultations" className="px-6 cursor-pointer py-3 border border-[var(--color-secondary)] text-[var(--color-secondary)] hover:bg-[var(--color-secondary)] hover:text-white font-medium rounded-lg transition-all duration-300">
+                            <Link
+                                to="consultations"
+                                className="px-6 cursor-pointer py-3 border border-[var(--color-secondary)] text-[var(--color-secondary)] hover:bg-[var(--color-secondary)] hover:text-white font-medium rounded-lg transition-all duration-300"
+                            >
                                 {isRtl ? "اطلب استشارة" : "Request Consultation"}
                             </Link>
                         </div>
