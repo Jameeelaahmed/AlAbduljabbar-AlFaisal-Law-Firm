@@ -149,13 +149,13 @@ function OurOffices() {
                         </p>
                         <div className="flex flex-col sm:flex-row gap-3 justify-center">
                             <Link
-                                to="/contact"
+                                to="/contactus"
                                 className="px-6 py-3 bg-[var(--color-primary)] hover:bg-[var(--color-accent)] text-white font-medium rounded-lg transition-colors duration-300"
                             >
                                 {isRtl ? "اتصل بنا" : "Contact Us"}
                             </Link>
                             <Link
-                                to="/services"
+                                to="/servicespage"
                                 className="px-6 py-3 border border-[var(--color-secondary)] text-[var(--color-secondary)] hover:bg-[var(--color-secondary)] hover:text-white font-medium rounded-lg transition-all duration-300"
                             >
                                 {isRtl ? "خدماتنا" : "Our Services"}

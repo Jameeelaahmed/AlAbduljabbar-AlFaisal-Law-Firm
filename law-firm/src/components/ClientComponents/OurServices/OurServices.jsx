@@ -1,6 +1,8 @@
 import { Link } from "react-router-dom";
 import { useAllCategories } from "../../../hooks/useCategories";
 import { useTranslation } from "react-i18next";
+import { useGetServicesByCategoryId } from "../../../hooks/useServices";
+
 function OurServices() {
     const { data: categories = [], isLoading } = useAllCategories();
     const { i18n } = useTranslation?.() ?? { t: (s) => s, i18n: { language: "ar" } };
@@ -34,6 +36,74 @@ function OurServices() {
     }
 
     const visible = Array.isArray(categories) ? categories.slice(0, 3) : [];
+
+    // New: card that fetches services per-category and shows the count
+    const CategoryCard = ({ cat, index }) => {
+        const categoryId = cat.id ?? cat._id ?? cat.value ?? cat.categoryId ?? null;
+
+        const {
+            data: servicesRaw,
+            isLoading: servicesLoading,
+            isError: servicesError,
+        } = useGetServicesByCategoryId(categoryId);
+
+        const services =
+            Array.isArray(servicesRaw) ? servicesRaw : (servicesRaw?.data ?? servicesRaw?.services ?? []);
+        const count = Array.isArray(services) ? services.length : 0;
+
+        return (
+            <article
+                key={cat.id ?? cat.name}
+                className="group relative bg-white rounded-3xl shadow-xl hover:shadow-2xl transition-all duration-500 hover:-translate-y-2 border border-gray-100 overflow-hidden"
+                style={{
+                    animationDelay: `${index * 100}ms`,
+                    animation: 'fadeInUp 0.6s ease-out forwards'
+                }}
+            >
+                {/* Gradient Overlay */}
+                <div className="absolute inset-0 bg-gradient-to-br from-white to-gray-50 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+
+                {/* Background Pattern */}
+                <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-bl from-primary/5 to-accent/5 rounded-full -translate-y-16 translate-x-16 group-hover:scale-150 transition-transform duration-700" />
+
+                <div className="relative p-8 h-full flex flex-col">
+                    {/* Icon/Emoji Placeholder */}
+                    <div className="w-14 h-14 mb-6 rounded-2xl bg-gradient-to-br from-primary to-accent flex items-center justify-center text-white font-bold text-lg shadow-lg group-hover:scale-110 transition-transform duration-300">
+                        {cat.name?.charAt(0)}
+                    </div>
+
+                    {/* Content */}
+                    <div className="flex-1">
+                        <h3 className="text-2xl font-bold text-gray-800 group-hover:text-gray-900 mb-4 leading-tight transition-colors duration-300">
+                            {cat.name}
+                        </h3>
+
+                        {cat.description && (
+                            <p className="text-gray-600 leading-relaxed mb-6 line-clamp-3 group-hover:text-gray-700 transition-colors duration-300">
+                                {cat.description}
+                            </p>
+                        )}
+                    </div>
+
+                    {/* Footer */}
+                    <div className="flex items-center justify-between pt-6 border-t border-gray-100 group-hover:border-gray-200 transition-colors duration-300">
+                        <div className="flex items-center space-x-2">
+                            <svg className="w-5 h-5 text-[var(--color-secondary)]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
+                            </svg>
+                            <span className="text-sm font-semibold text-[var(--color-secondary)]">
+                                {servicesLoading
+                                    ? (isRtl ? "..." : "...")
+                                    : servicesError
+                                        ? (isRtl ? "خطأ" : "Error")
+                                        : `${count} ${isRtl ? "خدمات" : "services"}`}
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </article>
+        );
+    };
 
     if (!visible.length) {
         return (
@@ -108,71 +178,14 @@ function OurServices() {
                 {/* Cards Grid */}
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
                     {visible.map((cat, index) => (
-                        <article
-                            key={cat.id ?? cat.name}
-                            className="group relative bg-white rounded-3xl shadow-xl hover:shadow-2xl transition-all duration-500 hover:-translate-y-2 border border-gray-100 overflow-hidden"
-                            style={{
-                                animationDelay: `${index * 100}ms`,
-                                animation: 'fadeInUp 0.6s ease-out forwards'
-                            }}
-                        >
-                            {/* Gradient Overlay */}
-                            <div className="absolute inset-0 bg-gradient-to-br from-white to-gray-50 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-
-                            {/* Background Pattern */}
-                            <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-bl from-primary/5 to-accent/5 rounded-full -translate-y-16 translate-x-16 group-hover:scale-150 transition-transform duration-700" />
-
-                            <div className="relative p-8 h-full flex flex-col">
-                                {/* Icon/Emoji Placeholder */}
-                                <div className="w-14 h-14 mb-6 rounded-2xl bg-gradient-to-br from-primary to-accent flex items-center justify-center text-white font-bold text-lg shadow-lg group-hover:scale-110 transition-transform duration-300">
-                                    {cat.name.charAt(0)}
-                                </div>
-
-                                {/* Content */}
-                                <div className="flex-1">
-                                    <h3 className="text-2xl font-bold text-gray-800 group-hover:text-gray-900 mb-4 leading-tight transition-colors duration-300">
-                                        {cat.name}
-                                    </h3>
-
-                                    {cat.description && (
-                                        <p className="text-gray-600 leading-relaxed mb-6 line-clamp-3 group-hover:text-gray-700 transition-colors duration-300">
-                                            {cat.description}
-                                        </p>
-                                    )}
-                                </div>
-
-                                {/* Footer */}
-                                <div className="flex items-center justify-between pt-6 border-t border-gray-100 group-hover:border-gray-200 transition-colors duration-300">
-                                    <div className="flex items-center space-x-2">
-                                        <svg className="w-5 h-5 text-[var(--color-secondary)]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
-                                        </svg>
-                                        <span className="text-sm font-semibold text-[var(--color-secondary)]">
-                                            {Array.isArray(cat.services)
-                                                ? cat.services.length
-                                                : cat.servicesCount ?? 0}{" "}
-                                            services
-                                        </span>
-                                    </div>
-                                    <Link
-                                        to={`/services?category=${cat.id}`}
-                                        className="flex items-center space-x-2 px-4 py-2 bg-gray-100 hover:bg-primary text-gray-700 hover:text-white font-semibold rounded-full transition-all duration-300 group-hover:shadow-lg"
-                                    >
-                                        <span>Explore</span>
-                                        <svg className="w-4 h-4 group-hover:translate-x-1 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
-                                        </svg>
-                                    </Link>
-                                </div>
-                            </div>
-                        </article>
+                        <CategoryCard key={cat.id ?? cat.name ?? index} cat={cat} index={index} />
                     ))}
                 </div>
 
                 {/* CTA Section */}
                 <div className="text-center">
                     <Link
-                        to="/services"
+                        to="/servicespage"
                         className="inline-flex items-center space-x-3 px-8 py-4 bg-gradient-to-r from-primary to-accent hover:from-accent hover:to-primary text-white font-bold rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105"
                     >
                         <span>View All Services</span>

@@ -3,7 +3,7 @@ import i18n from '../../../i18n';
 import { Bell, Globe, User } from "lucide-react";
 import { useQueryClient } from "@tanstack/react-query";
 import { useAuthStore } from '../../../store/useAuthStore';
-
+import { Navigate } from 'react-router-dom';
 function Header() {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
     const queryClient = useQueryClient();
