@@ -2,12 +2,12 @@ import { useState } from 'react';
 import { ChevronDown, ChevronUp, Search } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { useGetFaqByFaqCategoryId, useFaqCategory } from '../../../hooks/useFAQ';
+
 const FAQPage = () => {
     const [openItems, setOpenItems] = useState(new Set());
     const [searchTerm, setSearchTerm] = useState('');
     const { t } = useTranslation();
 
-    // replace hardcoded faqData with categories fetched from hook
     const {
         data: categories = [],
         isLoading: categoriesLoading,
@@ -15,15 +15,11 @@ const FAQPage = () => {
 
     const toggleItem = (index) => {
         const newOpenItems = new Set(openItems);
-        if (newOpenItems.has(index)) {
-            newOpenItems.delete(index);
-        } else {
-            newOpenItems.add(index);
-        }
+        if (newOpenItems.has(index)) newOpenItems.delete(index);
+        else newOpenItems.add(index);
         setOpenItems(newOpenItems);
     };
 
-    // helper component so we can call useGetFaqByFaqCategoryId per category (valid hook usage)
     const CategorySection = ({ category, categoryIndex }) => {
         const categoryId = category.id ?? category._id ?? category.value ?? null;
         const title = category.name ?? category.category ?? category.title ?? '';
@@ -34,7 +30,6 @@ const FAQPage = () => {
             isError: faqsError
         } = useGetFaqByFaqCategoryId(categoryId);
 
-        // normalize faq list shape (support array or { data: [...] })
         const faqs = Array.isArray(faqsRaw) ? faqsRaw : (faqsRaw?.data ?? []);
 
         const filteredQuestions = faqs.filter(item =>
@@ -42,7 +37,6 @@ const FAQPage = () => {
             (item.answer ?? '').toLowerCase().includes(searchTerm.toLowerCase())
         );
 
-        // NOTE: do NOT return null here — always render the category header and show loading/empty states
         return (
             <div key={categoryIndex} className="bg-white rounded-2xl shadow-sm border border-text/20 overflow-hidden">
                 {/* Category Header */}
@@ -55,11 +49,11 @@ const FAQPage = () => {
                 {/* Questions */}
                 <div className="divide-y divide-[#7a5a21]/10">
                     {faqsLoading ? (
-                        <div className="px-6 py-6 text-gray-500">Loading...</div>
+                        <div className="px-6 py-6 text-gray-500">{t("Loading...")}</div>
                     ) : faqsError ? (
-                        <div className="px-6 py-6 text-red-500">Failed to load FAQs.</div>
+                        <div className="px-6 py-6 text-red-500">{t("Failed to load FAQs.")}</div>
                     ) : filteredQuestions.length === 0 ? (
-                        <div className="px-6 py-6 text-gray-500">No questions found.</div>
+                        <div className="px-6 py-6 text-gray-500">{t("No questions found.")}</div>
                     ) : (
                         filteredQuestions.map((item, itemIndex) => {
                             const globalIndex = `${categoryIndex}-${itemIndex}`;
@@ -75,11 +69,7 @@ const FAQPage = () => {
                                             {item.question}
                                         </span>
                                         <div className="flex-shrink-0 w-6 h-6 flex items-center justify-center bg-accent rounded-full text-white">
-                                            {isOpen ? (
-                                                <ChevronUp className="w-4 h-4" />
-                                            ) : (
-                                                <ChevronDown className="w-4 h-4" />
-                                            )}
+                                            {isOpen ? <ChevronUp className="w-4 h-4" /> : <ChevronDown className="w-4 h-4" />}
                                         </div>
                                     </button>
 
@@ -101,45 +91,46 @@ const FAQPage = () => {
         );
     };
 
-    // map categories -> render CategorySection; keep filtering behavior so empty categories are removed
     const renderedSections = categories?.map((category, idx) => (
         <CategorySection key={category.id ?? idx} category={category} categoryIndex={idx} />
     ));
 
     return (
-        <div className="min-h-screen bg-bg py-12 px-4 sm:px-6 lg:px-8">
-            <div className="max-w-4xl mx-auto">
-                {/* Header */}
-                <div className="text-center mb-16">
-                    <h1 className="text-4xl font-bold text-[#1f1f1f] mb-4">
+        <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100">
+            {/* Hero header (same style as Contact Us hero) */}
+            <section className="bg-primary text-white pt-28 pb-16">
+                <div className="container mx-auto px-4 text-center">
+                    <h1 className="text-4xl md:text-5xl font-bold mb-4">
                         {t("Frequently Asked Questions")}
                     </h1>
-                    <p className="text-lg text-gray-600 max-w-2xl mx-auto">
+                    <p className="text-xl max-w-2xl mx-auto">
                         {t("Find quick answers to common questions about our platform, features, and services.")}
                     </p>
                 </div>
+            </section>
 
+            {/* Main content */}
+            <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
                 {/* Search Bar */}
-                <div className="mb-12">
+                <div className="mb-8">
                     <div className="relative max-w-2xl mx-auto">
-                        <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
+                        <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 w-5 h-5" />
                         <input
                             type="text"
-                            placeholder="Search FAQs..."
+                            placeholder={t("Search FAQs...")}
                             value={searchTerm}
                             onChange={(e) => setSearchTerm(e.target.value)}
-                            className="w-full pl-12 pr-4 py-4 border border-gray-200 rounded-xl focus:ring-2 focus:ring-[#006b63] focus:border-transparent bg-white text-[#1f1f1f] placeholder-gray-400 transition-all duration-200"
+                            className="w-full pl-12 pr-4 py-4 border border-gray-200 rounded-xl bg-white text-[#1f1f1f] placeholder-gray-400 focus:ring-4 focus:ring-[#7a5a21]/20 focus:border-transparent transition-all"
                         />
                     </div>
                 </div>
 
                 {/* FAQ Sections */}
                 <div className="space-y-8">
-                    {/* while categories are loading, keep visual structure (you can replace with loader if desired) */}
                     {!categoriesLoading && renderedSections}
                 </div>
 
-                {/* Still have questions section */}
+                {/* Still have questions */}
                 <div className="mt-16 text-center bg-white rounded-2xl p-8 border border-text/20">
                     <h3 className="text-2xl font-bold text-text mb-4">
                         {t("Still have questions?")}
@@ -159,20 +150,12 @@ const FAQPage = () => {
             </div>
 
             <style jsx>{`
-        @keyframes fade-in {
-          from {
-            opacity: 0;
-            transform: translateY(-10px);
-          }
-          to {
-            opacity: 1;
-            transform: translateY(0);
-          }
-        }
-        .animate-fade-in {
-          animation: fade-in 0.3s ease-out;
-        }
-      `}</style>
+                @keyframes fade-in {
+                  from { opacity: 0; transform: translateY(-10px); }
+                  to { opacity: 1; transform: translateY(0); }
+                }
+                .animate-fade-in { animation: fade-in 0.3s ease-out; }
+            `}</style>
         </div>
     );
 };
