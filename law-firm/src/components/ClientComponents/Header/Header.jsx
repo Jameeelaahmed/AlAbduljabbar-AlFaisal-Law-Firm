@@ -89,36 +89,31 @@ function Header() {
             <div className={`fixed w-full ${!headerActive && "flex justify-center items-center top-12"} transition-all z-50 ${headerActive && "shadow-2xl"}`}>
                 {/* Desktop Navigation */}
                 <ul className={`hidden lg:flex justify-around  bg-white ${!headerActive && "rounded-full"} pr-4 pl-4 pt-2 pb-2 items-center`}>
-                    <li className={`pt-3 pb-3 pr-6 pl-6 rounded-full ${headerActive ? "hover:bg-secondary hover:text-white " : "hover:bg-primary hover:text-white"} transition-all`}>
-                        <Link>
+                    <Link to='/'>
+                        <li className={`pt-3 pb-3 pr-6 pl-6 rounded-full ${headerActive ? "hover:bg-secondary hover:text-white " : "hover:bg-primary hover:text-white"} transition-all`}>
                             <p>{t("landing.Home")}</p>
-                        </Link>
-                    </li>
-                    <li className={`pt-3 pb-3 pr-6 pl-6 rounded-full ${headerActive ? "hover:bg-secondary hover:text-white " : "hover:bg-primary hover:text-white"} transition-all`}>
-                        <Link to="servicespage" >
+                        </li>
+                    </Link>
+                    <Link to="servicespage" >
+                        <li className={`pt-3 pb-3 pr-6 pl-6 rounded-full ${headerActive ? "hover:bg-secondary hover:text-white " : "hover:bg-primary hover:text-white"} transition-all`}>
                             <p>{t("landing.OurLawServices")}</p>
-                        </Link>
-                    </li>
-                    <li className={`pt-3 pb-3 pr-6 pl-6 rounded-full ${headerActive ? "hover:bg-secondary hover:text-white " : "hover:bg-primary hover:text-white"} transition-all`}>
-                        <Link to="FAQClient">
+                        </li>
+                    </Link>
+                    <Link to="FAQClient">
+                        <li className={`pt-3 pb-3 pr-6 pl-6 rounded-full ${headerActive ? "hover:bg-secondary hover:text-white " : "hover:bg-primary hover:text-white"} transition-all`}>
                             <p>{t("landing.FAQ")}</p>
-                        </Link>
-                    </li>
-                    <li className={`pt-3 pb-3 pr-6 pl-6 rounded-full ${headerActive ? "hover:bg-secondary hover:text-white " : "hover:bg-primary hover:text-white"} transition-all`}>
-                        <Link to="consultations">
+                        </li>
+                    </Link>
+                    <Link to="consultations">
+                        <li className={`pt-3 pb-3 pr-6 pl-6 rounded-full ${headerActive ? "hover:bg-secondary hover:text-white " : "hover:bg-primary hover:text-white"} transition-all`}>
                             <p>{t("Law Consultations")}</p>
-                        </Link>
-                    </li>
-                    <li className={`pt-3 pb-3 pr-6 pl-6 rounded-full ${headerActive ? "hover:bg-secondary hover:text-white " : "hover:bg-primary hover:text-white"} transition-all`}>
-                        <Link>
-                            <p>{t("landing.AboutUs")}</p>
-                        </Link>
-                    </li>
-                    <li className={`pt-3 pb-3 pr-6 pl-6 rounded-full ${headerActive ? "hover:bg-secondary hover:text-white " : "hover:bg-primary hover:text-white"} transition-all`}>
-                        <Link to="contactus">
+                        </li>
+                    </Link>
+                    <Link to="contactus">
+                        <li className={`pt-3 pb-3 pr-6 pl-6 rounded-full ${headerActive ? "hover:bg-secondary hover:text-white " : "hover:bg-primary hover:text-white"} transition-all`}>
                             <p>{t("landing.ContactUs")}</p>
-                        </Link>
-                    </li>
+                        </li>
+                    </Link>
                     {/* Desktop Auth Section */}
                     <div className='hidden lg:flex gap-2 items-center relative'>
                         {(isAuthenticated && role == 'User') ? (
@@ -219,11 +214,11 @@ function Header() {
                                 )}
                             </>
                         ) : (
-                            <div className={`font-bold ${headerActive ? 'text-white' : 'text-primary'}mr-3 ml-3`}>
-                                <Link to='login'>
+                            <Link to='login'>
+                                <div className={`font-bold ${headerActive ? 'text-white' : 'text-primary'} pt-3 pb-3 pr-6 pl-6`}>
                                     {t("landing.Login")}
-                                </Link>
-                            </div>
+                                </div>
+                            </Link>
                         )}
                     </div>
                 </ul>
@@ -240,31 +235,31 @@ function Header() {
                 < div className="pt-20 pb-6 px-6" >
                     {/* Mobile Navigation */}
                     < ul className='flex flex-col space-y-2' >
-                        <li className='py-3 px-4 rounded text-secondary hover:bg-primary hover:text-white transition-all'>
-                            <Link onClick={toggleMobileMenu}>
+                        <Link to='/' onClick={toggleMobileMenu}>
+                            <li className='py-3 px-4 rounded text-secondary hover:bg-primary hover:text-white transition-all'>
                                 <p>{t("landing.Home")}</p>
-                            </Link>
-                        </li>
-                        <li className='py-3 px-4 rounded text-secondary hover:bg-primary hover:text-white transition-all'>
-                            <Link to="servicespage" onClick={toggleMobileMenu}>
+                            </li>
+                        </Link>
+                        <Link to="servicespage" onClick={toggleMobileMenu}>
+                            <li className='py-3 px-4 rounded text-secondary hover:bg-primary hover:text-white transition-all'>
                                 <p>{t("landing.OurLawServices")}</p>
-                            </Link>
-                        </li>
-                        <li className='py-3 px-4 rounded text-secondary hover:bg-primary hover:text-white transition-all'>
-                            <Link to="FAQClient" onClick={toggleMobileMenu}>
+                            </li>
+                        </Link>
+                        <Link to="consultations" onClick={toggleMobileMenu}>
+                            <li className='py-3 px-4 rounded text-secondary hover:bg-primary hover:text-white transition-all'>
+                                <p>{t("Law Consultations")}</p>
+                            </li>
+                        </Link>
+                        <Link to="FAQClient" onClick={toggleMobileMenu}>
+                            <li className='py-3 px-4 rounded text-secondary hover:bg-primary hover:text-white transition-all'>
                                 <p>{t("landing.FAQ")}</p>
-                            </Link>
-                        </li>
-                        <li className='py-3 px-4 rounded text-secondary hover:bg-primary hover:text-white transition-all'>
-                            <Link onClick={toggleMobileMenu}>
-                                <p>{t("landing.AboutUs")}</p>
-                            </Link>
-                        </li>
-                        <li className='py-3 px-4 rounded text-secondary hover:bg-primary hover:text-white transition-all'>
-                            <Link onClick={toggleMobileMenu}>
+                            </li>
+                        </Link>
+                        <Link to='contactus' onClick={toggleMobileMenu}>
+                            <li className='py-3 px-4 rounded text-secondary hover:bg-primary hover:text-white transition-all'>
                                 <p>{t("landing.ContactUs")}</p>
-                            </Link>
-                        </li>
+                            </li>
+                        </Link>
                     </ ul >
 
                     {/* Mobile Auth Section */}

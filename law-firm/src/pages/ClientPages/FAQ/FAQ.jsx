@@ -11,7 +11,6 @@ const FAQPage = () => {
     const {
         data: categories = [],
         isLoading: categoriesLoading,
-        isError: categoriesError
     } = useFaqCategory();
 
     const toggleItem = (index) => {

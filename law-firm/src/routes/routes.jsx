@@ -13,6 +13,7 @@ import UnAuthorized from "../pages/UnAuthorized";
 import LawServicesPage from "../pages/ClientPages/ServicesPage/ServicesPage";
 import FAQPage from "../pages/ClientPages/FAQ/FAQ";
 import ContactUs from "../pages/ClientPages/ContactUs/ContactUs";
+import LoadingPage from "../pages/LoadingPage/LoadingPage";
 
 //lazy loaded components
 const LoginRegister = lazy(() => import("../pages/AuthPages/LoginRegisterPage/LoginRegisterPage"));
@@ -156,7 +157,7 @@ const routes = createBrowserRouter([
             {
                 path: "law-consultations",
                 element: (
-                    <ProtectedRoute allowedRoles={['Admin','CustomerService']}>
+                    <ProtectedRoute allowedRoles={['Admin', 'CustomerService']}>
                         <Suspense fallback={<div>Loading Settings...</div>}>
                             <AdminConsultations />
                         </Suspense>
@@ -166,7 +167,7 @@ const routes = createBrowserRouter([
             {
                 path: "law-consultations/:consultationId",
                 element: (
-                    <ProtectedRoute allowedRoles={['Admin','CustomerService']}>
+                    <ProtectedRoute allowedRoles={['Admin', 'CustomerService']}>
                         <Suspense fallback={<div>Loading Request Details...</div>}>
                             < AdminConsultationDetails />
                         </Suspense>
@@ -194,7 +195,11 @@ const routes = createBrowserRouter([
     },
     {
         path: '/',
-        element: <ClientLayout />,
+        element: (
+            <Suspense fallback={<LoadingPage />}>
+                <ClientLayout />
+            </Suspense>
+        ),
         children: [
             {
                 path: '/', element:
