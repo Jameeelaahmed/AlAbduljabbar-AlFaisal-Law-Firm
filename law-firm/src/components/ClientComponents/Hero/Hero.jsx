@@ -224,7 +224,7 @@ function Hero() {
                                                 </div>
 
                                                 {/* Title */}
-                                                <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold leading-tight text-white drop-shadow-2xl">
+                                                <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold leading-tight text-white drop-shadow-2xl">
                                                     {isRtl ? slider.title : slider.title}
                                                 </h1>
 
@@ -234,7 +234,7 @@ function Hero() {
                                                 </div>
 
                                                 {/* Description */}
-                                                <p className="text-2xl md:text-3xl text-white/95 leading-relaxed font-light tracking-wide drop-shadow-lg">
+                                                <p className="text-xl md:text-2xl lg:text-3xl text-white/95 leading-relaxed font-light tracking-wide drop-shadow-lg">
                                                     {isRtl ? slider.description : slider.description}
                                                 </p>
 

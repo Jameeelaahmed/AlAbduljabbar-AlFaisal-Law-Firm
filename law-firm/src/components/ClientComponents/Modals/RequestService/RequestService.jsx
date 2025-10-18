@@ -4,16 +4,12 @@ import { toast } from "react-toastify";
 import { useTranslation } from "react-i18next";
 import { useCreateRequest } from "../../../../hooks/useRequests";
 import { useAllServices } from "../../../../hooks/useServices";
-import { X } from "lucide-react";
 import { useMemo } from "react";
 
 function RequestService({ onClose, service }) {
     const { data: services = [] } = useAllServices();
     const createRequest = useCreateRequest();
     const { t } = useTranslation();
-    console.log('====================================');
-    console.log(service);
-    console.log('====================================');
     const validationSchema = Yup.object({
         title: Yup.string().trim().required(t("Title is required")).min(3, t("Too short")),
         description: Yup.string().trim().required("Description is required").min(5, "Too short"),

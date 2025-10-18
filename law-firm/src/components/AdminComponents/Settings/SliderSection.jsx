@@ -36,8 +36,15 @@ const SliderSection = () => {
         const formData = { ...values };
 
         if (imageFile) {
-          // Handle image upload here if needed
+          // Upload new image
           formData.imageUrl = await uploadImage(imageFile, 'slider');
+        } else if (editingId) {
+          // Keep existing image URL when editing
+          const existingSlider = sliders?.find(s => s.id === editingId);
+          formData.imageUrl = existingSlider?.imageUrl || '';
+        } else {
+          // New slider without image - send empty string
+          formData.imageUrl = '';
         }
 
         if (editingId) {
