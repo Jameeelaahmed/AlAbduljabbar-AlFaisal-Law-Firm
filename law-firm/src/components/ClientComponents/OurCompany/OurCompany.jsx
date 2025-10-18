@@ -1,7 +1,6 @@
-import React from "react";
 import { useTranslation } from "react-i18next";
 import { Users, Award, TrendingUp, Scale, HeartHandshake } from "lucide-react";
-
+import { Link } from "react-router-dom";
 function OurCompany() {
     const { i18n } = useTranslation?.() ?? { t: (s) => s, i18n: { language: "ar" } };
     const isRtl = (i18n?.language || document.documentElement.dir) === "ar";
@@ -180,12 +179,12 @@ function OurCompany() {
                             }
                         </p>
                         <div className="flex flex-col sm:flex-row gap-3 justify-center">
-                            <button className="px-6 cursor-pointer py-3 bg-primary hover:bg-accent text-white font-medium rounded-lg transition-colors duration-300">
-                                {isRtl ? "تعرف على فريقنا" : "Meet Our Team"}
-                            </button>
-                            <button className="px-6 cursor-pointer py-3 border border-[var(--color-secondary)] text-[var(--color-secondary)] hover:bg-[var(--color-secondary)] hover:text-white font-medium rounded-lg transition-all duration-300">
+                            <Link to="servicespage" className="px-6 cursor-pointer py-3 bg-primary hover:bg-accent text-white font-medium rounded-lg transition-colors duration-300">
+                                {isRtl ? "اطلب خدمة" : "Request a Service"}
+                            </Link>
+                            <Link to="consultations" className="px-6 cursor-pointer py-3 border border-[var(--color-secondary)] text-[var(--color-secondary)] hover:bg-[var(--color-secondary)] hover:text-white font-medium rounded-lg transition-all duration-300">
                                 {isRtl ? "اطلب استشارة" : "Request Consultation"}
-                            </button>
+                            </Link>
                         </div>
                     </div>
                 </div>

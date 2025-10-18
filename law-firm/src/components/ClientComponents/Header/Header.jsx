@@ -4,7 +4,7 @@ import i18n from "../../../i18n";
 import { useEffect } from "react";
 import { useTranslation } from 'react-i18next'
 import { useState } from "react";
-import { Link } from 'react-router-dom'
+import { Link, NavLink } from 'react-router-dom';
 import { useLocation } from "react-router-dom";
 // components
 import { useAuthStore } from "../../../store/useAuthStore";
@@ -89,31 +89,67 @@ function Header() {
             <div className={`fixed w-full ${!headerActive && "flex justify-center items-center top-12"} transition-all z-50 ${headerActive && "shadow-2xl"}`}>
                 {/* Desktop Navigation */}
                 <ul className={`hidden lg:flex justify-around  bg-white ${!headerActive && "rounded-full"} pr-4 pl-4 pt-2 pb-2 items-center`}>
-                    <Link to='/'>
-                        <li className={`pt-3 pb-3 pr-6 pl-6 rounded-full ${headerActive ? "hover:bg-secondary hover:text-white " : "hover:bg-primary hover:text-white"} transition-all`}>
-                            <p>{t("landing.Home")}</p>
-                        </li>
-                    </Link>
-                    <Link to="servicespage" >
-                        <li className={`pt-3 pb-3 pr-6 pl-6 rounded-full ${headerActive ? "hover:bg-secondary hover:text-white " : "hover:bg-primary hover:text-white"} transition-all`}>
-                            <p>{t("landing.OurLawServices")}</p>
-                        </li>
-                    </Link>
-                    <Link to="FAQClient">
-                        <li className={`pt-3 pb-3 pr-6 pl-6 rounded-full ${headerActive ? "hover:bg-secondary hover:text-white " : "hover:bg-primary hover:text-white"} transition-all`}>
-                            <p>{t("landing.FAQ")}</p>
-                        </li>
-                    </Link>
-                    <Link to="consultations">
-                        <li className={`pt-3 pb-3 pr-6 pl-6 rounded-full ${headerActive ? "hover:bg-secondary hover:text-white " : "hover:bg-primary hover:text-white"} transition-all`}>
-                            <p>{t("Law Consultations")}</p>
-                        </li>
-                    </Link>
-                    <Link to="contactus">
-                        <li className={`pt-3 pb-3 pr-6 pl-6 rounded-full ${headerActive ? "hover:bg-secondary hover:text-white " : "hover:bg-primary hover:text-white"} transition-all`}>
-                            <p>{t("landing.ContactUs")}</p>
-                        </li>
-                    </Link>
+                    <li>
+                        <NavLink
+                            to="/"
+                            end
+                            className={({ isActive }) =>
+                                `pt-3 pb-3 pr-6 pl-6 rounded-full transition-all
+                                 ${headerActive ? "hover:bg-secondary hover:text-white" : "hover:bg-primary hover:text-white"}
+                                 ${isActive ? (headerActive ? "bg-secondary text-white" : "bg-primary text-white") : ""}`
+                            }
+                        >
+                            {t("landing.Home")}
+                        </NavLink>
+                    </li>
+                    <li>
+                        <NavLink
+                            to="servicespage"
+                            className={({ isActive }) =>
+                                `pt-3 pb-3 pr-6 pl-6 rounded-full transition-all
+                                 ${headerActive ? "hover:bg-secondary hover:text-white" : "hover:bg-primary hover:text-white"}
+                                 ${isActive ? (headerActive ? "bg-secondary text-white" : "bg-primary text-white") : ""}`
+                            }
+                        >
+                            {t("landing.OurLawServices")}
+                        </NavLink>
+                    </li>
+                    <li>
+                        <NavLink
+                            to="FAQClient"
+                            className={({ isActive }) =>
+                                `pt-3 pb-3 pr-6 pl-6 rounded-full transition-all
+                                 ${headerActive ? "hover:bg-secondary hover:text-white" : "hover:bg-primary hover:text-white"}
+                                 ${isActive ? (headerActive ? "bg-secondary text-white" : "bg-primary text-white") : ""}`
+                            }
+                        >
+                            {t("landing.FAQ")}
+                        </NavLink>
+                    </li>
+                    <li>
+                        <NavLink
+                            to="consultations"
+                            className={({ isActive }) =>
+                                `pt-3 pb-3 pr-6 pl-6 rounded-full transition-all
+                                 ${headerActive ? "hover:bg-secondary hover:text-white" : "hover:bg-primary hover:text-white"}
+                                 ${isActive ? (headerActive ? "bg-secondary text-white" : "bg-primary text-white") : ""}`
+                            }
+                        >
+                            {t("Law Consultations")}
+                        </NavLink>
+                    </li>
+                    <li>
+                        <NavLink
+                            to="contactus"
+                            className={({ isActive }) =>
+                                `pt-3 pb-3 pr-6 pl-6 rounded-full transition-all
+                                 ${headerActive ? "hover:bg-secondary hover:text-white" : "hover:bg-primary hover:text-white"}
+                                 ${isActive ? (headerActive ? "bg-secondary text-white" : "bg-primary text-white") : ""}`
+                            }
+                        >
+                            {t("landing.ContactUs")}
+                        </NavLink>
+                    </li>
                     {/* Desktop Auth Section */}
                     <div className='hidden lg:flex gap-2 items-center relative'>
                         {(isAuthenticated && role == 'User') ? (
@@ -214,11 +250,16 @@ function Header() {
                                 )}
                             </>
                         ) : (
-                            <Link to='login'>
-                                <div className={`font-bold ${headerActive ? 'text-white' : 'text-primary'} pt-3 pb-3 pr-6 pl-6`}>
-                                    {t("landing.Login")}
-                                </div>
-                            </Link>
+                            <NavLink
+                                to="/login"
+                                className={({ isActive }) =>
+                                    `pt-3 pb-3 pr-6 pl-6 rounded-full font-bold transition-all
+                                     ${headerActive ? "hover:bg-secondary hover:text-white" : "hover:bg-primary hover:text-white"}
+                                     ${isActive ? (headerActive ? "bg-secondary text-white" : "bg-primary text-white") : "text-primary"}`
+                                }
+                            >
+                                {t("landing.Login")}
+                            </NavLink>
                         )}
                     </div>
                 </ul>
@@ -227,40 +268,74 @@ function Header() {
             </div >
 
             {/* Mobile Slide Menu */}
-            < div className={`
+            <div className={`
                 fixed top-0 rtl:right-0 ltr:left-0 w-full bg-white ${headerActive && "bg-primary/50"} z-50 shadow-lg transform transition-transform duration-300 ease-in-out lg:hidden
                 ${isMobileMenuOpen ? 'translate-y-0' : '-translate-y-full'}
             `}>
-                {/* Mobile menu content with top padding to account for fixed header */}
-                < div className="pt-20 pb-6 px-6" >
-                    {/* Mobile Navigation */}
-                    < ul className='flex flex-col space-y-2' >
-                        <Link to='/' onClick={toggleMobileMenu}>
-                            <li className='py-3 px-4 rounded text-secondary hover:bg-primary hover:text-white transition-all'>
-                                <p>{t("landing.Home")}</p>
-                            </li>
-                        </Link>
-                        <Link to="servicespage" onClick={toggleMobileMenu}>
-                            <li className='py-3 px-4 rounded text-secondary hover:bg-primary hover:text-white transition-all'>
-                                <p>{t("landing.OurLawServices")}</p>
-                            </li>
-                        </Link>
-                        <Link to="consultations" onClick={toggleMobileMenu}>
-                            <li className='py-3 px-4 rounded text-secondary hover:bg-primary hover:text-white transition-all'>
-                                <p>{t("Law Consultations")}</p>
-                            </li>
-                        </Link>
-                        <Link to="FAQClient" onClick={toggleMobileMenu}>
-                            <li className='py-3 px-4 rounded text-secondary hover:bg-primary hover:text-white transition-all'>
-                                <p>{t("landing.FAQ")}</p>
-                            </li>
-                        </Link>
-                        <Link to='contactus' onClick={toggleMobileMenu}>
-                            <li className='py-3 px-4 rounded text-secondary hover:bg-primary hover:text-white transition-all'>
-                                <p>{t("landing.ContactUs")}</p>
-                            </li>
-                        </Link>
-                    </ ul >
+                <div className="pt-20 pb-6 px-6">
+                    <ul className='flex flex-col space-y-2'>
+                        <li>
+                            <NavLink
+                                to="/"
+                                end
+                                onClick={toggleMobileMenu}
+                                className={({ isActive }) =>
+                                    `block py-3 px-4 rounded transition-all
+                                     ${isActive ? 'bg-primary text-white' : 'text-secondary hover:bg-primary hover:text-white'}`
+                                }
+                            >
+                                {t("landing.Home")}
+                            </NavLink>
+                        </li>
+                        <li>
+                            <NavLink
+                                to="servicespage"
+                                onClick={toggleMobileMenu}
+                                className={({ isActive }) =>
+                                    `block py-3 px-4 rounded transition-all
+                                     ${isActive ? 'bg-primary text-white' : 'text-secondary hover:bg-primary hover:text-white'}`
+                                }
+                            >
+                                {t("landing.OurLawServices")}
+                            </NavLink>
+                        </li>
+                        <li>
+                            <NavLink
+                                to="consultations"
+                                onClick={toggleMobileMenu}
+                                className={({ isActive }) =>
+                                    `block py-3 px-4 rounded transition-all
+                                     ${isActive ? 'bg-primary text-white' : 'text-secondary hover:bg-primary hover:text-white'}`
+                                }
+                            >
+                                {t("Law Consultations")}
+                            </NavLink>
+                        </li>
+                        <li>
+                            <NavLink
+                                to="FAQClient"
+                                onClick={toggleMobileMenu}
+                                className={({ isActive }) =>
+                                    `block py-3 px-4 rounded transition-all
+                                     ${isActive ? 'bg-primary text-white' : 'text-secondary hover:bg-primary hover:text-white'}`
+                                }
+                            >
+                                {t("landing.FAQ")}
+                            </NavLink>
+                        </li>
+                        <li>
+                            <NavLink
+                                to="contactus"
+                                onClick={toggleMobileMenu}
+                                className={({ isActive }) =>
+                                    `block py-3 px-4 rounded transition-all
+                                     ${isActive ? 'bg-primary text-white' : 'text-secondary hover:bg-primary hover:text-white'}`
+                                }
+                            >
+                                {t("landing.ContactUs")}
+                            </NavLink>
+                        </li>
+                    </ul>
 
                     {/* Mobile Auth Section */}
                     <div div className='mt-6 pt-4 border-t border-gray-200' >
