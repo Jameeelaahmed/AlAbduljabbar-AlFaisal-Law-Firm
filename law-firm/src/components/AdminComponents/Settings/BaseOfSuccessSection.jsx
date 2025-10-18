@@ -134,7 +134,7 @@ export const BaseOfSuccessSection = ({ formik }) => {
                             {/* English Title */}
                             <div>
                                 <label className="block text-sm font-medium text-gray-700 mb-2">
-                                    {t('common.delete')} *
+                                    {t('common.titleEn')} *
                                 </label>
                                 <input
                                     type="text"

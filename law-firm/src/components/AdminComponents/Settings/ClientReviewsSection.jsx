@@ -83,7 +83,7 @@ export const ClientReviewsSection = ({ formik }) => {
                                     onChange={formik.handleChange}
                                     className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#003a42] focus:border-transparent text-right"
                                     dir="rtl"
-                                    placeholder="اسم العميل"
+                                    placeholder={t('Settings.clientReviews.nameArPlaceholder')}
                                     required
                                 />
                             </div>
@@ -115,7 +115,7 @@ export const ClientReviewsSection = ({ formik }) => {
                                     onChange={formik.handleChange}
                                     className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#003a42] focus:border-transparent text-right"
                                     dir="rtl"
-                                    placeholder="عميل لـ"
+                                    placeholder={t('Settings.clientReviews.clientOfArPlaceholder')}
                                 />
                             </div>
                         </div>
@@ -131,7 +131,7 @@ export const ClientReviewsSection = ({ formik }) => {
                                 onChange={formik.handleChange}
                                 rows={3}
                                 className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#003a42] focus:border-transparent"
-                                placeholder={t('settings.clientReviews.enterReviewEn')}
+                                placeholder={t('Settings.clientReviews.reviewEnPlaceholder')}
                                 required
                             />
                         </div>
@@ -148,7 +148,7 @@ export const ClientReviewsSection = ({ formik }) => {
                                 rows={3}
                                 className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#003a42] focus:border-transparent text-right"
                                 dir="rtl"
-                                placeholder="أدخل رأي العميل بالعربية"
+                                placeholder={t('Settings.clientReviews.reviewArPlaceholder')}
                                 required
                             />
                         </div>
