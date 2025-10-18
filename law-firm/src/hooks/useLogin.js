@@ -43,8 +43,10 @@ export const useLogin = () => {
                 // ✅ Redirect based on role
                 if (lastRole === "Admin") {
                     navigate("/admin");
+                } else if (lastRole === "CustomerService") {
+                    navigate("/admin/requests");
                 } else {
-                    navigate("/");
+                    navigate('/');
                 }
             } else {
                 console.error("❌ Login failed:", data?.error?.description || data);
