@@ -74,70 +74,55 @@ export default function LawServicesManyCategories() {
 
     return (
         <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100">
-            {/* Enhanced Header */}
-            <div className="bg-gradient-to-br from-[#003a42] via-[#006b63] to-[#003a42] text-white pt-24 pb-16 px-4 sm:px-6 lg:px-8 relative overflow-hidden">
-                {/* Background Pattern */}
-                <div className="absolute inset-0 opacity-10">
-                    <div className="absolute inset-0 bg-[radial-gradient(circle_at_1px_1px,_rgba(255,255,255,0.15)_1px,_transparent_0)] bg-[length:20px_20px]"></div>
-                </div>
-
-                <div className="max-w-7xl mx-auto text-center relative z-10">
-                    <div className="inline-flex items-center gap-2 bg-white/10 backdrop-blur-sm rounded-full px-4 py-2 mb-6 border border-white/20">
-                        <span className="w-2 h-2 bg-[#7a5a21] rounded-full animate-pulse"></span>
-                        <span className="text-sm font-medium">{t("Legal Services")}</span>
-                    </div>
-
-                    <h1 className="text-5xl md:text-7xl font-serif font-bold mb-6 leading-tight">
-                        {t("Legal Services")}
-                    </h1>
-                    <p className="text-xl md:text-2xl opacity-90 max-w-4xl mx-auto mb-12 leading-relaxed font-light">
+            {/* Header (match Contact Us hero style) */}
+            <section className="bg-primary text-white pt-28 pb-16">
+                <div className="container mx-auto px-4 text-center">
+                    <h1 className="text-4xl md:text-5xl font-bold mb-4">{t("Legal Services")}</h1>
+                    <p className="text-xl max-w-2xl mx-auto">
                         {t("Comprehensive legal expertise across practice areas. Find the specialized counsel you need for your unique situation.")}
                     </p>
-
-                    {/* Enhanced Search Bar */}
-                    <div className="max-w-3xl mx-auto mb-8">
-                        <div className="relative group">
-                            <div className="absolute -inset-1 ltr:bg-gradient-to-r rtl:bg-gradient-to-l from-[#7a5a21] to-[#006b63] rounded-2xl blur opacity-25 group-hover:opacity-75 transition duration-1000 group-hover:duration-200"></div>
-                            <div className="relative">
-                                <input
-                                    type="text"
-                                    placeholder={t("Search legal services, expertise, or practice areas...")}
-                                    value={searchTerm}
-                                    onChange={(e) => setSearchTerm(e.target.value)}
-                                    className="w-full px-8 py-5 rounded-2xl text-white focus:outline-none focus:ring-4 focus:ring-[#7a5a21] focus:ring-opacity-50 shadow-2xl text-lg placeholder-white"
-                                />
-                                <Search className="w-7 h-7 text-[#7a5a21] absolute ltr:right-8 rtl:left-8 top-1/2 transform -translate-y-1/2" />
-                            </div>
-                        </div>
-                        {searchTerm && (
-                            <div className="text-center mt-4">
-                                <button
-                                    onClick={() => setSearchTerm('')}
-                                    className="text-white/80 cursor-pointer hover:text-white text-sm font-medium inline-flex items-center gap-2 transition-colors"
-                                >
-                                    {t("Clear search")}
-                                    <span className="bg-white/20 rounded-full px-2 py-1 text-xs">{t("ESC")}</span>
-                                </button>
-                            </div>
-                        )}
-                    </div>
                 </div>
-            </div>
+            </section>
 
             {/* Main Content */}
-            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 -mt-8 relative z-20">
+            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 relative z-20">
+                {/* Search Bar (moved here to match Contact hero layout) */}
+                <div className="max-w-3xl mx-auto mb-8">
+                    <div className="relative">
+                        <input
+                            type="text"
+                            placeholder={t("Search legal services, expertise, or practice areas...")}
+                            value={searchTerm}
+                            onChange={(e) => setSearchTerm(e.target.value)}
+                            className="w-full px-8 py-5 rounded-2xl border border-gray-200 bg-white text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-4 focus:ring-secondary/30 shadow"
+                        />
+                        <Search className="w-7 h-7 text-secondary absolute ltr:right-8 rtl:left-8 top-1/2 transform -translate-y-1/2" />
+                    </div>
+                    {searchTerm && (
+                        <div className="text-center mt-4">
+                            <button
+                                onClick={() => setSearchTerm('')}
+                                className="text-gray-600 hover:text-gray-900 text-sm font-medium inline-flex items-center gap-2 transition-colors cursor-pointer"
+                            >
+                                {t("Clear search")}
+                                <span className="bg-gray-100 rounded-full px-2 py-1 text-xs">{t("ESC")}</span>
+                            </button>
+                        </div>
+                    )}
+                </div>
+
                 {/* Enhanced Controls Bar */}
                 <div className="bg-white rounded-2xl shadow-xl border border-gray-200 p-6 mb-8">
                     <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-6">
                         {/* Branch Filter */}
                         <div className="flex items-center gap-4">
                             <div className="flex items-center gap-3 bg-gray-50 rounded-xl p-3">
-                                <MapPin className="w-5 h-5 text-[#003a42]" />
-                                <label className="text-sm font-semibold text-[#003a42]">{t("Office Location")}</label>
+                                <MapPin className="w-5 h-5 text-primary" />
+                                <label className="text-sm font-semibold text-primary">{t("Office Location")}</label>
                                 <select
                                     value={branch}
                                     onChange={(e) => handleBranchChange(Number(e.target.value))}
-                                    className="px-4 py-2 rounded-lg border-0 bg-white shadow-sm focus:ring-2 focus:ring-[#7a5a21] focus:border-transparent font-medium"
+                                    className="px-4 py-2 rounded-lg border-0 bg-white shadow-sm focus:ring-2 focus:ring-secondary focus:border-transparent font-medium"
                                 >
                                     <option value={1}>{t("Cairo")}</option>
                                     <option value={2}>{t("Saudi Arabia")}</option>
@@ -148,14 +133,14 @@ export default function LawServicesManyCategories() {
                         {/* Results Info */}
                         <div className="flex items-center gap-6">
                             <div className="text-center">
-                                <h2 className="text-2xl font-bold text-[#003a42] font-serif">
+                                <h2 className="text-2xl font-bold text-primary font-serif">
                                     {currentCategory?.name}
                                 </h2>
                                 <p className="text-sm text-gray-600 mt-1">
                                     {currentCategory?.description}
                                 </p>
                             </div>
-                            <div className="ltr:bg-gradient-to-r rtl:bg-gradient-to-l from-[#003a42] to-[#006b63] text-white px-4 py-3 rounded-xl shadow-lg">
+                            <div className="ltr:bg-gradient-to-r rtl:bg-gradient-to-l from-primary to-accent text-white px-4 py-3 rounded-xl shadow-lg">
                                 <span className="font-bold text-lg">{filteredServices.length}</span>
                                 <span className="text-sm font-medium ltr:ml-1 rtl:mr-1">{t("services available")}</span>
                             </div>
@@ -166,7 +151,7 @@ export default function LawServicesManyCategories() {
                 <div className="flex flex-col lg:flex-row gap-8">
                     <div className="lg:w-96 flex-shrink-0"> {/* Increased width */}
                         <div className="bg-white rounded-2xl shadow-xl border border-gray-200 sticky top-8 overflow-hidden">
-                            <div className="p-6 border-b border-gray-200 bg-gradient-to-r from-[#003a42] to-[#006b63] text-white">
+                            <div className="p-6 border-b border-gray-200 bg-gradient-to-r from-primary to-accent text-white">
                                 <h3 className="font-bold text-lg flex items-center gap-3 mb-2">
                                     <Menu className="w-5 h-5" />
                                     {t("Practice Areas")} ({visibleCategories.length})
@@ -191,14 +176,14 @@ export default function LawServicesManyCategories() {
                                             key={category.id}
                                             onClick={() => setActiveCategory(category.id)}
                                             className={`p-3 rounded-xl cursor-pointer transition-all duration-200 group ltr:text-left rtl:text-right ${activeCategory === category.id
-                                                ? 'ltr:bg-gradient-to-r rtl:bg-gradient-to-l from-[#003a42] to-[#006b63] text-white shadow-lg'
+                                                ? 'ltr:bg-gradient-to-r rtl:bg-gradient-to-l from-primary to-accent text-white shadow-lg'
                                                 : 'text-gray-700 hover:bg-gray-50 hover:shadow-md border border-transparent hover:border-gray-200'
                                                 }`}
                                         >
                                             <div className="flex items-start justify-between mb-1">
                                                 <span className={`text-xs font-semibold ${category.branchId === 3
-                                                    ? 'text-[#7a5a21]'
-                                                    : 'text-[#006b63]'
+                                                    ? 'text-secondary'
+                                                    : 'text-accent'
                                                     }`}>
                                                     {category.branchId === 3 ? t('Both') : branch === 1 ? t('Cairo') : t('KSA')}
                                                 </span>
@@ -232,13 +217,13 @@ export default function LawServicesManyCategories() {
                                 <div className="flex gap-4 justify-center">
                                     <button
                                         onClick={() => setSearchTerm('')}
-                                        className="bg-[#003a42] cursor-pointer text-white px-8 py-3 rounded-xl font-semibold hover:bg-[#002a32] transition-all duration-200 shadow-lg hover:shadow-xl transform hover:-translate-y-0.5"
+                                        className="bg-primary cursor-pointer text-white px-8 py-3 rounded-xl font-semibold hover:bg-[#002a32] transition-all duration-200 shadow-lg hover:shadow-xl transform hover:-translate-y-0.5"
                                     >
                                         {t("Clear Search")}
                                     </button>
                                     <button
                                         onClick={() => setActiveCategory(visibleCategories[0]?.id ?? null)}
-                                        className="border-2 border-[#003a42] cursor-pointer text-[#003a42] px-8 py-3 rounded-xl font-semibold hover:bg-[#003a42] hover:text-white transition-all duration-200"
+                                        className="border-2 border-primary cursor-pointer text-primary px-8 py-3 rounded-xl font-semibold hover:bg-primary hover:text-white transition-all duration-200"
                                     >
                                         {t("View All Services")}
                                     </button>
@@ -258,7 +243,7 @@ export default function LawServicesManyCategories() {
                                             <div className="p-6 flex-1 flex flex-col">
                                                 {/* Header */}
                                                 <div className="flex items-start justify-between mb-4">
-                                                    <h3 className="text-xl font-bold text-[#003a42] group-hover:text-[#006b63] transition-colors duration-300 leading-tight line-clamp-2 min-h-[3rem]">
+                                                    <h3 className="text-xl font-bold text-primary group-hover:text-accent transition-colors duration-300 leading-tight line-clamp-2 min-h-[3rem]">
                                                         {service.name}
                                                     </h3>
                                                 </div>
@@ -266,20 +251,20 @@ export default function LawServicesManyCategories() {
                                                 {/* Services List - Flexible height */}
                                                 <div className="space-y-3 mb-6 flex-1">
                                                     {subs.slice(0, 4).map((sub, idx) => (
-                                                        <div key={idx} className="flex items-center text-sm text-gray-700 group/item hover:text-[#003a42] transition-colors duration-200">
-                                                            <div className="w-2 h-2 bg-[#006b63] rounded-full ltr:mr-3 rtl:ml-3 group-hover/item:scale-150 transition-transform duration-200"></div>
+                                                        <div key={idx} className="flex items-center text-sm text-gray-700 group/item hover:text-primary transition-colors duration-200">
+                                                            <div className="w-2 h-2 bg-accent rounded-full ltr:mr-3 rtl:ml-3 group-hover/item:scale-150 transition-transform duration-200"></div>
                                                             <span className="flex-1 line-clamp-1">{sub.name || sub.title || 'Legal Service'}</span>
                                                         </div>
                                                     ))}
                                                     {subs.length > 4 && (
-                                                        <div className="text-sm text-[#7a5a21] font-semibold bg-[#7a5a21]/5 rounded-lg px-3 py-2 text-center">
+                                                        <div className="text-sm text-secondary font-semibold bg-secondary/5 rounded-lg px-3 py-2 text-center">
                                                             +{subs.length - 4} {t("additional services")}
                                                         </div>
                                                     )}
                                                 </div>
 
                                                 <div className="flex gap-3 pt-5 border-t border-gray-200 mt-auto">
-                                                    <button onClick={() => handleOpenRequestService(service.id, service.name, service.branchId)} className="flex-1 cursor-pointer ltr:bg-gradient-to-r rtl:bg-gradient-to-l from-[#003a42] to-[#006b63] text-white py-3 px-4 rounded-xl font-semibold hover:shadow-xl transform hover:-translate-y-0.5 transition-all duration-200 group/btn">
+                                                    <button onClick={() => handleOpenRequestService(service.id, service.name, service.branchId)} className="flex-1 cursor-pointer ltr:bg-gradient-to-r rtl:bg-gradient-to-l from-primary to-accent text-white py-3 px-4 rounded-xl font-semibold hover:shadow-xl transform hover:-translate-y-0.5 transition-all duration-200 group/btn">
                                                         <span className="flex items-center justify-center gap-2 ltr:flex-row rtl:flex-row-reverse">
                                                             <span className="ltr:order-1 rtl:order-2">{t("Request Service")}</span>
                                                             <ArrowRight className="w-4 h-4 text-white ltr:ml-1 rtl:mr-1 transition-transform duration-200 ltr:group-hover/btn:translate-x-1 rtl:group-hover/btn:-translate-x-1 ltr:rotate-0 rtl:rotate-180" />

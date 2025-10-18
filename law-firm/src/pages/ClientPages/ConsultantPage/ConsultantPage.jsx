@@ -177,21 +177,20 @@ const ConsultationPage = () => {
     }, [activeStep, formData]);
 
     return (
-        <div className="min-h-screen ltr:bg-gradient-to-br rtl:bg-gradient-to-bl from-slate-50 to-blue-50/30 py-12 px-4 sm:px-6 lg:px-8">
-            <div className="max-w-6xl mx-auto mt-20">
-                {/* Header Section */}
-                <div className="text-center mb-16">
-                    <div className="inline-flex items-center justify-center w-24 h-24 rounded-full ltr:bg-gradient-to-br rtl:bg-gradient-to-bl from-primary to-accent mb-8 shadow-lg">
-                        <BookOpen className="w-12 h-12 text-white" />
-                    </div>
-                    <h1 className="text-5xl font-bold text-primary mb-6 font-serif tracking-tight">
+        <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100">
+            {/* Hero header (same style as Contact Us hero) */}
+            <section className="bg-primary text-white pt-28 pb-16">
+                <div className="container mx-auto px-4 text-center">
+                    <h1 className="text-4xl md:text-5xl font-bold mb-4">
                         {t("Legal Consultation Request")}
                     </h1>
-                    <p className="text-xl text-text max-w-3xl mx-auto opacity-80 leading-relaxed">
+                    <p className="text-xl max-w-2xl mx-auto">
                         {t("Begin your legal journey with our expert team. Select your consultation type and provide case details below.")}
                     </p>
                 </div>
+            </section>
 
+            <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
                 {/* Step Indicator */}
                 <StepIndicator steps={steps} currentStep={activeStep} />
 
