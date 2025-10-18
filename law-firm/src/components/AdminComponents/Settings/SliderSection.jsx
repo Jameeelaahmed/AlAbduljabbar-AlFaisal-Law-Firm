@@ -5,6 +5,7 @@ import { useTranslation } from 'react-i18next';
 import { Plus, Trash2, Edit, X, Save } from 'lucide-react';
 import useSliders from '../../../hooks/useSliders';
 import { toast } from 'react-toastify';
+import { uploadImage } from '../../../api/upload';
 
 const SliderSection = () => {
   const { t } = useTranslation();
@@ -36,7 +37,7 @@ const SliderSection = () => {
 
         if (imageFile) {
           // Handle image upload here if needed
-          formData.imageUrl = await uploadImage(imageFile);
+          formData.imageUrl = await uploadImage(imageFile, 'slider');
         }
 
         if (editingId) {
@@ -227,7 +228,7 @@ const SliderSection = () => {
               <button
                 type="button"
                 onClick={handleCancel}
-                className="inline-flex items-center px-4 py-2 border border-gray-300 shadow-sm text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500"
+                className="inline-flex items-center px-4 py-2 bg-red-500 border border-transparent shadow-sm text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500"
               >
                 <X className="h-4 w-4 mr-2" />
                 {t('common.cancel')}
@@ -235,7 +236,7 @@ const SliderSection = () => {
             )}
             <button
               type="submit"
-              className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-primary-600 hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500"
+              className="inline-flex items-center gap-2 px-2 py-2 bg-primary border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-primary-600 hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500 cursor-pointer"
             >
               <Save className="h-4 w-4 mr-2" />
               {editingId ? t('common.update') : t('common.add')}
