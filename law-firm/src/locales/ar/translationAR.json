@@ -87,7 +87,11 @@
     "Activity": "النشاط",
     "Client": "العميل",
     "Branch": "الفرع",
-    "Count": "العدد"
+    "Count": "العدد",
+    "Notes": "الملاحظات",
+    "Title": "العنوان",
+    "Total Users": "إجمالي المستخدمين",
+    "Active Requests": "الطلبات النشطة"
   },
   "Requests": {
     "RequestDetails": "تفاصيل الطلب",
