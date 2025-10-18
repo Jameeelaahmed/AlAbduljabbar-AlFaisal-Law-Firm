@@ -33,10 +33,10 @@ const SliderSection = () => {
     onSubmit: async (values, { resetForm }) => {
       try {
         const formData = { ...values };
-        
+
         if (imageFile) {
           // Handle image upload here if needed
-          // formData.imageUrl = await uploadImage(imageFile);
+          formData.imageUrl = await uploadImage(imageFile);
         }
 
         if (editingId) {

@@ -7,9 +7,9 @@ import { getConsultationById } from "../api/consultations";
 import { rejectConsultation, contactConsultation, resolveConsultation } from "../api/consultations";
 
 
-export function useConsultations({ pageIndex = 1, pageSize = 5 } = {}) {
+export function useConsultations({ pageIndex = 1, pageSize = 5, status = null } = {}) {
     return useQuery({
-        queryKey: ["consultations", { pageIndex, pageSize }],
+        queryKey: ["consultations", { pageIndex, pageSize, status }],
         queryFn: getAllUserConsultations,
         keepPreviousData: true,
     });
@@ -21,23 +21,18 @@ export const useCreateConsultationRequest = () => {
     return useMutation({
         mutationFn: consultationsApi.createConsultationRequest,
 
-        // 🔹 Optimistic update (optional)
         onMutate: async (newRequest) => {
             await queryClient.cancelQueries(["consultations"]);
 
             const previousRequests = queryClient.getQueryData(["consultations"]);
-
-            // Optimistically update UI
             queryClient.setQueryData(["consultations"], (old = []) => [
                 ...old,
                 { ...newRequest, id: Date.now(), isPending: true },
             ]);
 
-            // Return rollback context
             return { previousRequests };
         },
 
-        // 🔹 If error happens → rollback
         onError: (error, newRequest, context) => {
             if (context?.previousRequests) {
                 queryClient.setQueryData(["consultations"], context.previousRequests);
@@ -45,16 +40,11 @@ export const useCreateConsultationRequest = () => {
             console.error("Error creating consultation:", error);
         },
 
-        // 🔹 When success → refetch or update cache
-        onSuccess: (data) => {
-            // Option 1: refetch consultations list
+        onSuccess: () => {
             queryClient.invalidateQueries(["consultations"]);
             toast.success("Consultation Request Sent Successfully")
-            // Option 2 (optional): directly add new data to cache
-            // queryClient.setQueryData(["consultations"], (old = []) => [...old, data]);
         },
 
-        // 🔹 Always runs after success/error
         onSettled: () => {
             queryClient.invalidateQueries(["consultations"]);
         },
