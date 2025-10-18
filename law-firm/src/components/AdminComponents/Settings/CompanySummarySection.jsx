@@ -1,11 +1,17 @@
-    export const CompanySummarySection = ({ formik }) => {
+import { useTranslation } from 'react-i18next';
+
+export const CompanySummarySection = ({ formik }) => {
+        const { t } = useTranslation();
+        
         return (
             <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
-                <h2 className="text-xl font-semibold text-[#003a42] mb-4">Company Summary</h2>
+                <h2 className="text-xl font-semibold text-[#003a42] mb-4">
+                    {t('Settings.companySummary.title')}
+                </h2>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div>
                         <label className="block text-sm font-medium text-gray-700 mb-2">
-                            Years of Experience
+                            {t('Settings.companySummary.yearsOfExperience')}
                         </label>
                         <input
                             type="number"
@@ -17,7 +23,7 @@
                     </div>
                     <div>
                         <label className="block text-sm font-medium text-gray-700 mb-2">
-                            Satisfied Clients
+                            {t('Settings.companySummary.satisfiedClients')}
                         </label>
                         <input
                             type="number"
@@ -29,7 +35,7 @@
                     </div>
                     <div>
                         <label className="block text-sm font-medium text-gray-700 mb-2">
-                            Finished Cases
+                            {t('Settings.companySummary.finishedCases')}
                         </label>
                         <input
                             type="number"
@@ -41,7 +47,7 @@
                     </div>
                     <div>
                         <label className="block text-sm font-medium text-gray-700 mb-2">
-                            Success Rate (%)
+                            {t('Settings.companySummary.successRate')}
                         </label>
                         <input
                             type="number"
