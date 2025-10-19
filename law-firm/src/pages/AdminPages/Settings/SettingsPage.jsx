@@ -18,6 +18,7 @@ import api from '../../../api/axiosInstance';
 import { uploadPendingImages } from '../../../utils/imageUploadHelper';
 import { useUnsavedChanges, useBlockNavigation } from '../../../hooks/useUnsavedChanges';
 import { toast } from 'react-toastify';
+import { Loading } from '../../../components/Common/Loading';
 
 // Helper: Map Formik values to match the new API structure
 const mapToBackendDto = (values) => ({
@@ -354,12 +355,7 @@ export default function SettingsPage() {
 
     if (isLoading) {
         return (
-            <div className="min-h-screen bg-[#f4f5f3] flex items-center justify-center">
-                <div className="text-center">
-                    <div className="w-16 h-16 border-4 border-[#003a42] border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
-                    <p className="text-gray-600">Loading settings...</p>
-                </div>
-            </div>
+            <Loading />
         );
     }
 

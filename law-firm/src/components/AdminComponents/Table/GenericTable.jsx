@@ -1,5 +1,12 @@
+<<<<<<< Updated upstream
 import { useState, useEffect } from "react";
 import { useTranslation } from "react-i18next";
+=======
+import { useNavigate } from "react-router-dom";
+import React, { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
+import { Loading } from '../../Common/Loading';
+>>>>>>> Stashed changes
 
 function GenericTable({ useDataHook, columns, actions, pageSize = 5, initialPage = 1, filters = {}, url = null }) {
     const [currentPage, setCurrentPage] = useState(initialPage);
@@ -37,45 +44,9 @@ function GenericTable({ useDataHook, columns, actions, pageSize = 5, initialPage
         if (!lastPageReached) setCurrentPage((p) => p + 1);
     };
 
-    //!
-    if (isLoading) return <div className="fixed inset-0 bg-bg flex flex-col items-center justify-center z-50">
-        <div className="animate-pulse flex flex-col items-center justify-center space-y-8">
-
-            <div className="relative">
-                <div className="absolute inset-0 rounded-full bg-accent animate-ping-slow opacity-20"></div>
-                <div className="w-20 h-20 rounded-full bg-gradient-to-br from-primary to-accent animate-pulse-slow shadow-lg"></div>
-                <div className="absolute top-2 left-2 w-4 h-4 rounded-full bg-white opacity-30 animate-pulse-fast"></div>
-            </div>
-
-            <div className="text-center space-y-4">
-                <h2 className="text-2xl font-bold text-primary animate-pulse-slow">LOADING</h2>
-                <div className="flex space-x-1 justify-center">
-                    <div className="w-2 h-2 bg-secondary rounded-full animate-bounce"></div>
-                    <div className="w-2 h-2 bg-secondary rounded-full animate-bounce" style={{ animationDelay: '0.1s' }}></div>
-                    <div className="w-2 h-2 bg-secondary rounded-full animate-bounce" style={{ animationDelay: '0.2s' }}></div>
-                </div>
-            </div>
-
-            <div className="w-64 h-2 bg-gray-200 rounded-full overflow-hidden">
-                <div className="h-full bg-gradient-to-r from-primary to-accent animate-shimmer"></div>
-            </div>
-
-            <div className="absolute inset-0 opacity-5 pointer-events-none">
-                <div className="grid grid-cols-8 gap-4 w-full h-full">
-                    <div className="bg-primary rounded"></div>
-                    <div className="bg-accent rounded"></div>
-                    <div className="bg-secondary rounded"></div>
-                    <div className="bg-primary rounded"></div>
-                    <div className="bg-accent rounded"></div>
-                    <div className="bg-secondary rounded"></div>
-                    <div className="bg-primary rounded"></div>
-                    <div className="bg-accent rounded"></div>
-                </div>
-            </div>
-
-        </div>
-    </div>
-    //!
+    if (isLoading) {
+        return <Loading />;
+    }
     // if (isError) return <div className="text-center text-red-600 py-10">خطأ: {error?.message || "فشل تحميل البيانات"}</div>;
 
     return (

@@ -4,19 +4,20 @@ import { useAuthStore } from '../store/useAuthStore';
 const GuestOnlyGuard = ({ children }) => {
     const { isAuthenticated, user } = useAuthStore();
     
-    const restrictedRoles = ['CustomerService'];
-    const allowedRoles = ['User', 'Admin'];
-    
+    // If user is authenticated, redirect based on role
     if (isAuthenticated && user?.lastRole) {
-        if (restrictedRoles.includes(user.lastRole)) {
-            return <Navigate to="/unauthorized" replace />;
+        switch(user.lastRole) {
+            case 'Admin':
+                return <Navigate to="/admin" replace />;
+            case 'CustomerService':
+                return <Navigate to="/admin/requests" replace />;
+            case 'User':
+            default:
+                return <Navigate to="/" replace />;
         }
-        if (allowedRoles.includes(user.lastRole)) {
-            return children;
-        }
-        return <Navigate to="/" replace />;
     }
     
+    // If not authenticated, render the children
     return children;
 };
 

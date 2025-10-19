@@ -1,7 +1,7 @@
 import { useMemo } from "react";
 import { useTranslation } from "react-i18next";
 import { useDashboard } from "../../../hooks/useDashBoard";
-import { Skeleton } from "@mui/material";
+import { Loading } from "../../../components/Common/Loading";
 
 /**
  * Dashboard page
@@ -66,34 +66,7 @@ function Dashboard() {
     // Loading state
     if (isLoading) {
         return (
-            <div className={`p-6 bg-gray-50 min-h-screen ${containerAlign}`}>
-                <Skeleton variant="text" width="30%" height={40} className="mb-6" />
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
-                    {[1, 2, 3, 4].map((i) => (
-                        <Skeleton key={i} variant="rectangular" height={100} className="rounded" />
-                    ))}
-                </div>
-                <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-                    <div className="lg:col-span-2">
-                        <Skeleton variant="rectangular" height={400} className="rounded" />
-                    </div>
-                    <div>
-                        <Skeleton variant="rectangular" height={400} className="rounded" />
-                    </div>
-                </div>
-            </div>
-        );
-    }
-
-    // Error state
-    if (isError || !dashboardData) {
-        return (
-            <div className={`p-6 bg-gray-50 min-h-screen ${containerAlign}`}>
-                <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative" role="alert">
-                    <strong className="font-bold">{t('Error')}: </strong>
-                    <span className="block sm:inline">{t('Failed to load dashboard data. Please try again later.')}</span>
-                </div>
-            </div>
+            <Loading />
         );
     }
 

@@ -106,7 +106,7 @@ const SliderSection = () => {
   };
 
   if (isLoading) return <div>Loading...</div>;
-
+  console.log("sliders",sliders)
   return (
     <div className="space-y-6">
       <div className="bg-white p-6 rounded-lg shadow">
