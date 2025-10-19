@@ -8,11 +8,15 @@ const Header = lazy(() => import("../components/ClientComponents/Header/Header")
 
 function ClientLayout() {
     return (
-        <>
+        <div className="min-h-screen flex flex-col">
             <Header />
-            <Outlet />
-            <Footer />
-        </>
+            <main className="flex-1">
+                <Outlet />
+            </main>
+            <div className="mt-auto">
+                <Footer />
+            </div>
+        </div>
     )
 }
 

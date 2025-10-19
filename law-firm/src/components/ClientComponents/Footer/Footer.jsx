@@ -16,7 +16,6 @@ function Footer() {
 
     const quickLinks = [
         { name: t("landing.Home") || "الرئيسية", path: "/" },
-        { name: t("landing.AboutUs") || "من نحن", path: "/about" },
         { name: t("landing.OurLawServices") || "خدماتنا", path: "/services" },
         { name: t("landing.ContactUs") || "اتصل بنا", path: "/contact" }
     ];
