@@ -9,9 +9,10 @@ import SliderSection from '../../../components/AdminComponents/Settings/SliderSe
 import { useTranslation } from 'react-i18next';
 
 //
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { useQueryClient, useQuery, useMutation } from "@tanstack/react-query";
 import { useFormik, FormikProvider } from "formik";
+import * as Yup from 'yup';
 import { AlertCircle, Save, CheckCircle } from "lucide-react";
 import api from '../../../api/axiosInstance';
 import { uploadPendingImages } from '../../../utils/imageUploadHelper';
@@ -72,6 +73,70 @@ const mapToBackendDto = (values) => ({
         reviewEn: review.reviewEn,
         reviewAr: review.reviewAr
     }))
+});
+
+// Add this validation schema before the SettingsPage component
+const validationSchema = Yup.object({
+    entitySettings: Yup.object({
+        companySummary: Yup.object({
+            yearsOfExperience: Yup.number()
+                .required('Years of experience is required')
+                .min(0, 'Must be greater than or equal to 0'),
+            satisfiedClients: Yup.number()
+                .required('Satisfied clients is required')
+                .min(0, 'Must be greater than or equal to 0'),
+            finishedCases: Yup.number()
+                .required('Finished cases is required')
+                .min(0, 'Must be greater than or equal to 0'),
+            successRate: Yup.number()
+                .required('Success rate is required')
+                .min(0, 'Must be greater than or equal to 0')
+                .max(100, 'Must be less than or equal to 100')
+        }),
+        journeyMilestones: Yup.array().of(
+            Yup.object({
+                year: Yup.number()
+                    .typeError('Year must be a number')
+                    .required('Year is required')
+                    .min(1900, 'Must be >= 1900')
+                    .max(2100, 'Must be <= 2100'),
+                titleEn: Yup.string().trim().required('English title is required'),
+                titleAr: Yup.string().trim().required('Arabic title is required'),
+                descriptionEn: Yup.string().trim().required('English description is required'),
+                descriptionAr: Yup.string().trim().required('Arabic description is required')
+            })
+        ),
+        coreValues: Yup.array().of(
+            Yup.object({
+                titleEn: Yup.string().trim().required('English title is required'),
+                titleAr: Yup.string().trim().required('Arabic title is required'),
+                descriptionEn: Yup.string().trim().required('English description is required'),
+                descriptionAr: Yup.string().trim().required('Arabic description is required')
+            })
+        ),
+        baseOfOurSuccess: Yup.object({
+            headlineEn: Yup.string().required('English headline is required'),
+            headlineAr: Yup.string().required('Arabic headline is required'),
+            bases: Yup.array().of(
+                Yup.object({
+                    titleEn: Yup.string().required('English title is required'),
+                    titleAr: Yup.string().required('Arabic title is required'),
+                    descriptionEn: Yup.string().required('English description is required'),
+                    descriptionAr: Yup.string().required('Arabic description is required')
+                })
+            )
+        })
+    }),
+    clientReviews: Yup.array().of(
+        Yup.object({
+            nameEn: Yup.string().trim().required('English name is required'),
+            nameAr: Yup.string().trim().required('Arabic name is required'),
+            reviewEn: Yup.string().trim().required('English review is required'),
+            reviewAr: Yup.string().trim().required('Arabic review is required'),
+            clientOfEn: Yup.string(),
+            clientOfAr: Yup.string()
+        })
+    )
 });
 
 // Main SettingsPage Component
@@ -155,6 +220,7 @@ export default function SettingsPage() {
                 reviewAr: ''
             }]
         },
+        validationSchema: validationSchema,
         enableReinitialize: true,
         onSubmit: (values) => {
             mutation.mutate(values);
@@ -355,7 +421,7 @@ export default function SettingsPage() {
         <FormikProvider value={formik}>
             <div className="min-h-screen bg-[#f4f5f3]">
                 {/* Header */}
-                <div className="bg-[#003a42] text-white shadow-lg sticky top-0 z-10">
+                <div className="bg-primary text-white shadow-lg sticky top-0 z-10">
                     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                         <div className="flex justify-between items-center py-4">
                             <div>
@@ -389,8 +455,8 @@ export default function SettingsPage() {
                             <button
                                 onClick={() => setActiveTab('settings')}
                                 className={`px-4 py-3 font-medium text-sm ${activeTab === 'settings'
-                                        ? 'bg-[#006b63] text-white'
-                                        : 'text-gray-200 hover:bg-[#005a54]'
+                                    ? 'bg-[#006b63] text-white'
+                                    : 'text-gray-200 hover:bg-[#005a54]'
                                     }`}
                             >
                                 {t('Settings.title')}
@@ -398,8 +464,8 @@ export default function SettingsPage() {
                             <button
                                 onClick={() => setActiveTab('sliders')}
                                 className={`px-4 py-3 font-medium text-sm ${activeTab === 'sliders'
-                                        ? 'bg-[#006b63] text-white'
-                                        : 'text-gray-200 hover:bg-[#005a54]'
+                                    ? 'bg-[#006b63] text-white'
+                                    : 'text-gray-200 hover:bg-[#005a54]'
                                     }`}
                             >
                                 {t('slider.manageSlider')}

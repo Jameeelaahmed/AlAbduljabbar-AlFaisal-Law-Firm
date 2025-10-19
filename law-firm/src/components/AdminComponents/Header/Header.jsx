@@ -41,7 +41,7 @@ function Header() {
     }, []);
 
     return (
-        <nav className="sticky top-0 z-50 bg-white/70 backdrop-blur-sm border-b border-gray-100 shadow-lg">
+        <nav className="sticky top-0 z-30 bg-white/70 backdrop-blur-sm border-b border-gray-100 shadow-lg">
             <div className="max-w-screen-xl mx-auto px-4">
                 <div className="flex items-center justify-between h-16">
                     {/* Left: brand / title */}
