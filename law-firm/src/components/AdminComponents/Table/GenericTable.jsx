@@ -1,12 +1,6 @@
-<<<<<<< Updated upstream
 import { useState, useEffect } from "react";
 import { useTranslation } from "react-i18next";
-=======
-import { useNavigate } from "react-router-dom";
-import React, { useEffect, useState } from 'react';
-import { useTranslation } from 'react-i18next';
 import { Loading } from '../../Common/Loading';
->>>>>>> Stashed changes
 
 function GenericTable({ useDataHook, columns, actions, pageSize = 5, initialPage = 1, filters = {}, url = null }) {
     const [currentPage, setCurrentPage] = useState(initialPage);
