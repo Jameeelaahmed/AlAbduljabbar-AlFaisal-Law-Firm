@@ -58,11 +58,12 @@ function Sidebar() {
             {/* Sidebar */}
             <div
                 className={`
-                    bg-primary text-gray-200 min-h-screen flex flex-col
-                    transition-all duration-300
-                    ${isSidebarOpen ? "w-64" : "w-20"}
-                    ${isSidebarOpen ? "fixed top-0 ltr:left-0 rtl:right-0 h-screen z-40 lg:sticky lg:top-0" : "sticky top-0"}
-                `}
+    bg-primary text-gray-200 min-h-screen flex flex-col
+    transition-all duration-300
+    ${isSidebarOpen ? "w-64" : "w-20"}
+    ${isSidebarOpen ? "fixed lg:sticky" : "sticky"} 
+    top-0 ltr:left-0 rtl:right-0 h-screen z-40  
+`}
             >
                 {/* Header and Navigation Container */}
                 <div className="p-6 flex-1 flex flex-col overflow-hidden">

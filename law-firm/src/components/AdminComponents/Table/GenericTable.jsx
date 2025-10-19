@@ -1,14 +1,12 @@
-import { useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { useTranslation } from "react-i18next";
 
 function GenericTable({ useDataHook, columns, actions, pageSize = 5, initialPage = 1, filters = {}, url = null }) {
     const [currentPage, setCurrentPage] = useState(initialPage);
     const [lastPageReached, setLastPageReached] = useState(false);
-    const navigate = useNavigate();
     const { t } = useTranslation();
     // Fetch data from hook
-    const { data, isLoading, isError, error } = useDataHook({
+    const { data, isLoading } = useDataHook({
         searchTerm: filters.search || "",
         branchId: filters.branch || null,
         role: filters.role || null,

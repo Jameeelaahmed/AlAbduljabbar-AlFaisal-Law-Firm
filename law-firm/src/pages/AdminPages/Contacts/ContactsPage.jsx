@@ -5,13 +5,11 @@ import Modal from "../../../components/AdminComponents/Modals/Modal";
 // hooks
 import { useState, useMemo, useCallback, useRef } from "react";
 import { useTranslation } from "react-i18next";
-import { useNavigate } from "react-router-dom";
 import { useContacts } from "../../../hooks/useContacts";
 import { Info } from "lucide-react";
 
 export default function ContactsPage() {
     const { t } = useTranslation();
-    const navigate = useNavigate();
     const [selectedMessage, setSelectedMessage] = useState(null);
     const modalRef = useRef(null);
 
