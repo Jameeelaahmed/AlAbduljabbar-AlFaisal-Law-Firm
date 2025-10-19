@@ -7,6 +7,7 @@ import Headline from "../../../components/AdminComponents/Headline/Headline";
 import Modal from "../../../components/AdminComponents/Modals/Modal";
 import AddCategory from "../../../components/AdminComponents/Modals/AddCategory/AddCategory";
 import CategoryItem from "../../../components/AdminComponents/CategoryItem/CategoryItem";
+import { Loading } from "../../../components/Common/Loading";
 // components
 
 function Services() {
@@ -20,7 +21,7 @@ function Services() {
         categoryModalRef.current.close();
     }
 
-    const { data: categoriesResponse } = useAllCategories();
+    const { data: categoriesResponse , isLoading } = useAllCategories();
 
     const categories = categoriesResponse || [];
 
@@ -92,6 +93,12 @@ function Services() {
         });
     }, [categories, search, selectedCategoryFilter, selectedBranchFilter]);
     // --- end added filtering/search state ---
+
+    if (isLoading) {
+        return (
+            <Loading />
+        );
+    }
 
     return (
         <div className='min-h-screen p-4 sm:p-6 bg-gray-50 shadow-lg'>
