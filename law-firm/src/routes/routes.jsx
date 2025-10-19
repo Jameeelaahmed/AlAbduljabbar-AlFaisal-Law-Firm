@@ -3,6 +3,7 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { lazy, Suspense } from "react";
 import ProtectedRoute from "./ProtectedRoutes";
 import VerifyOtpGuard from "./VerifyOtpGuard";
+import ExcludeRoles from "./ExcludeRoles";
 import GuestOnlyGuard from "./GuestOnlyGuard";
 //layout components
 
@@ -39,11 +40,19 @@ const AdminContacts = lazy(() => import("../pages/AdminPages/Contacts/ContactsPa
 const routes = createBrowserRouter([
     {
         path: "/login",
-        element: <LoginRegister />,
+        element: (
+            <GuestOnlyGuard>
+                <LoginRegister />
+            </GuestOnlyGuard>
+        ),
     },
     {
         path: "forget-password",
-        element: <ForgetPassword />
+        element: (
+            <GuestOnlyGuard>
+                <ForgetPassword />
+            </GuestOnlyGuard>
+        )
     },
     {
         path: "verify-otp",
@@ -71,7 +80,9 @@ const routes = createBrowserRouter([
         path: '/admin',
         element:
             <ProtectedRoute allowedRoles={['Admin', 'CustomerService']}>
-                <AdminLayout />
+                <Suspense fallback={<LoadingPage />}>
+                    <AdminLayout />
+                </Suspense>
             </ProtectedRoute>
         ,
         children: [
@@ -79,9 +90,7 @@ const routes = createBrowserRouter([
                 path: "",
                 element: (
                     <ProtectedRoute allowedRoles={['Admin']}>
-                        <Suspense fallback={<div>Loading Dashboard...</div>}>
-                            <Dashboard />
-                        </Suspense>
+                        <Dashboard />
                     </ProtectedRoute>
                 ),
             },
@@ -89,9 +98,7 @@ const routes = createBrowserRouter([
                 path: "services",
                 element: (
                     <ProtectedRoute allowedRoles={['Admin']}>
-                        <Suspense fallback={<div>Loading Serivices...</div>}>
-                            <AdminServices />
-                        </Suspense>
+                        <AdminServices />
                     </ProtectedRoute>
                 ),
             },
@@ -99,9 +106,7 @@ const routes = createBrowserRouter([
                 path: "consultationTypes",
                 element: (
                     <ProtectedRoute allowedRoles={['Admin']}>
-                        <Suspense fallback={<div>Loading Consultation Types...</div>}>
-                            <ConsultationTypes />
-                        </Suspense>
+                        <ConsultationTypes />
                     </ProtectedRoute>
                 ),
             },
@@ -109,9 +114,7 @@ const routes = createBrowserRouter([
                 path: "faq",
                 element: (
                     <ProtectedRoute allowedRoles={['Admin']}>
-                        <Suspense fallback={<div>Loading Faq...</div>}>
-                            <FAQ />
-                        </Suspense>
+                        <FAQ />
                     </ProtectedRoute>
                 ),
             },
@@ -119,9 +122,7 @@ const routes = createBrowserRouter([
                 path: "settings",
                 element: (
                     <ProtectedRoute allowedRoles={['Admin']}>
-                        <Suspense fallback={<div>Loading Settings...</div>}>
-                            <AdminSettings />
-                        </Suspense>
+                        <AdminSettings />
                     </ProtectedRoute>
                 ),
             },
@@ -129,9 +130,7 @@ const routes = createBrowserRouter([
                 path: "requests",
                 element: (
                     <ProtectedRoute allowedRoles={['Admin', 'CustomerService']}>
-                        <Suspense fallback={<div>Loading Settings...</div>}>
-                            <AdminRequests />
-                        </Suspense>
+                        <AdminRequests />
                     </ProtectedRoute>
                 ),
             },
@@ -139,9 +138,7 @@ const routes = createBrowserRouter([
                 path: "requests/:requestId",
                 element: (
                     <ProtectedRoute allowedRoles={['Admin', 'CustomerService']}>
-                        <Suspense fallback={<div>Loading Request Details...</div>}>
-                            <AdminRequestDetails />
-                        </Suspense>
+                        <AdminRequestDetails />
                     </ProtectedRoute>
                 ),
             },
@@ -149,9 +146,7 @@ const routes = createBrowserRouter([
                 path: "users",
                 element: (
                     <ProtectedRoute allowedRoles={['Admin']}>
-                        <Suspense fallback={<div>Loading Settings...</div>}>
-                            <AdminUsers />
-                        </Suspense>
+                        <AdminUsers />
                     </ProtectedRoute>
                 ),
             },
@@ -159,9 +154,7 @@ const routes = createBrowserRouter([
                 path: "law-consultations",
                 element: (
                     <ProtectedRoute allowedRoles={['Admin', 'CustomerService']}>
-                        <Suspense fallback={<div>Loading Settings...</div>}>
-                            <AdminConsultations />
-                        </Suspense>
+                        <AdminConsultations />
                     </ProtectedRoute>
                 ),
             },
@@ -169,9 +162,7 @@ const routes = createBrowserRouter([
                 path: "law-consultations/:consultationId",
                 element: (
                     <ProtectedRoute allowedRoles={['Admin', 'CustomerService']}>
-                        <Suspense fallback={<div>Loading Request Details...</div>}>
-                            < AdminConsultationDetails />
-                        </Suspense>
+                        <AdminConsultationDetails />
                     </ProtectedRoute>
                 ),
             },
@@ -179,9 +170,7 @@ const routes = createBrowserRouter([
                 path: "contacts",
                 element: (
                     <ProtectedRoute allowedRoles={['Admin']}>
-                        <Suspense fallback={<div>Loading Request Details...</div>}>
-                            < AdminContacts />
-                        </Suspense>
+                        <AdminContacts />
                     </ProtectedRoute>
                 )
             }
@@ -204,33 +193,33 @@ const routes = createBrowserRouter([
         children: [
             {
                 path: '/', element:
-                    <GuestOnlyGuard>
+                    <ExcludeRoles>
                         <Landing />
-                    </GuestOnlyGuard>
+                    </ExcludeRoles>
             },
             {
                 path: '/servicespage', element:
-                    <GuestOnlyGuard>
+                    <ExcludeRoles>
                         <LawServicesPage />
-                    </GuestOnlyGuard>
+                    </ExcludeRoles>
             },
             {
                 path: '/FAQClient', element:
-                    <GuestOnlyGuard>
+                    <ExcludeRoles>
                         <FAQPage />
-                    </GuestOnlyGuard>
+                    </ExcludeRoles>
             },
             {
                 path: '/consultations', element:
-                    <GuestOnlyGuard>
+                    <ExcludeRoles>
                         <ConsultantPage />
-                    </GuestOnlyGuard>
+                    </ExcludeRoles>
             },
             {
                 path: '/contactus', element:
-                    <GuestOnlyGuard>
+                    <ExcludeRoles>
                         <ContactUs />
-                    </GuestOnlyGuard>
+                    </ExcludeRoles>
             },
 
             {
