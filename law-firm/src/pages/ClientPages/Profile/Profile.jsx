@@ -8,6 +8,7 @@ import Security from './Security';
 import Requests from './requests';
 import { useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useUserInfo } from '../../../hooks/useUserInfo';
 
 export default function Profile() {
     const { t } = useTranslation();
@@ -35,9 +36,33 @@ export default function Profile() {
         }
     }, []);
 
-    const user = useAuthStore().user;
-    const isNotClient = user?.lastRole !== "User";
-    const { data: requests } = useRequestsByUserId({ userId: user.id, pageIndex: 1, pageSize: 5 });
+    const { data: userData, isLoading, error } = useUserInfo();
+    const user = userData // Access the nested data object
+    console.log(user)
+    const isNotClient = user?.role !== "User";
+    const { data: requests } = useRequestsByUserId({ 
+        userId: user?.id, 
+        pageIndex: 1, 
+        pageSize: 5 
+    });
+
+    if (isLoading) {
+        return (
+            <div className="min-h-screen bg-bg p-4 md:p-6 flex items-center justify-center">
+                <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-primary"></div>
+            </div>
+        );
+    }
+
+    if (error) {
+        return (
+            <div className="min-h-screen bg-bg p-4 md:p-6 flex items-center justify-center">
+                <div className="text-red-500 text-center">
+                    <p>Error loading user data: {error.message}</p>
+                </div>
+            </div>
+        );
+    }
     return (
         <>
             <div className="min-h-screen bg-bg p-4 md:p-6">
@@ -76,7 +101,7 @@ export default function Profile() {
                     {activeTab === 'profile' && (
                         <>
                             {isNotClient ? (
-                                // 🧱 Non-client layout (Admin / Customer Service)
+                                // Non-client layout (Admin / Customer Service)
                                 <div className="max-w-2xl mx-auto">
                                     <div className="bg-white rounded-2xl shadow-lg border border-gray-200 p-6">
                                         {/* Profile Info for Admin / Customer Service */}
@@ -93,38 +118,49 @@ export default function Profile() {
                                                 )}
                                             </div>
                                             <h2 className="text-2xl font-bold text-primary text-center">{user.name}</h2>
-                                            <p className="text-gray-600 text-center mt-1">{user.lastRole}#${user.id}</p>
+                                            <p className="text-gray-600 text-center mt-1">{user.role} #{user.id}</p>
+                                            {user.branchName && (
+                                                <p className="text-gray-500 text-sm mt-1">{user.branchName}</p>
+                                            )}
                                         </div>
 
                                         <div className="space-y-4">
                                             <div className="flex items-center gap-3 p-3 bg-gray-50 rounded-lg">
-                                                <Mail className="w-5 h-5 text-primary" />
-                                                <div>
+                                                <Mail className="w-5 h-5 text-primary flex-shrink-0" />
+                                                <div className="min-w-0">
                                                     <p className="text-sm text-gray-600">Email</p>
-                                                    <p className="text-primary font-medium">{user.email}</p>
+                                                    <p className="text-primary font-medium truncate">{user.email}</p>
                                                 </div>
                                             </div>
 
                                             <div className="flex items-center gap-3 p-3 bg-gray-50 rounded-lg">
-                                                <Shield className="w-5 h-5 text-primary" />
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-primary flex-shrink-0">
+                                                    <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/>
+                                                </svg>
+                                                <div>
+                                                    <p className="text-sm text-gray-600">Mobile Number</p>
+                                                    <p className="text-primary font-medium">{user.mobileNumber || 'Not provided'}</p>
+                                                </div>
+                                            </div>
+
+                                            <div className="flex items-center gap-3 p-3 bg-gray-50 rounded-lg">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-primary flex-shrink-0">
+                                                    <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/>
+                                                </svg>
+                                                <div>
+                                                    <p className="text-sm text-gray-600">WhatsApp Number</p>
+                                                    <p className="text-primary font-medium">{user.whatsAppNumber || user.mobileNumber || 'Not provided'}</p>
+                                                </div>
+                                            </div>
+
+                                            <div className="flex items-center gap-3 p-3 bg-gray-50 rounded-lg">
+                                                <Shield className="w-5 h-5 text-primary flex-shrink-0" />
                                                 <div>
                                                     <p className="text-sm text-gray-600">Role</p>
-                                                    <p className="text-primary font-medium">{user.lastRole}</p>
-                                                </div>
-                                            </div>
-
-                                            <div className="flex items-center gap-3 p-3 bg-gray-50 rounded-lg">
-                                                <Calendar className="w-5 h-5 text-primary" />
-                                                <div>
-                                                    <p className="text-sm text-gray-600">Member since</p>
-                                                    <p className="text-primary font-medium">{user.joinDate}</p>
+                                                    <p className="text-primary font-medium capitalize">{user.role?.toLowerCase()}</p>
                                                 </div>
                                             </div>
                                         </div>
-
-                                        <button className="w-full mt-6 px-4 py-3 bg-primary text-white rounded-lg font-semibold hover:bg-accent transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl">
-                                            Edit Profile
-                                        </button>
                                     </div>
                                 </div>
                             ) : (
