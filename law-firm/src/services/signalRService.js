@@ -5,8 +5,13 @@ class SignalRService {
   constructor() {
     this.connection = null;
     this.connectionPromise = null;
-    this.hubUrl = 'https://alabduljabbarandalfaisalapi.runasp.net/notificationhub';
+    this.hubUrl = import.meta.env.VITE_SIGNALR_URL;
     this.listeners = new Set();
+
+    if (!this.hubUrl) {
+      console.error('SignalR URL is not configured. Please set VITE_SIGNALR_URL in your environment variables.');
+      throw new Error('SignalR URL is not configured');
+    }
   }
 
   // Initialize or reuse the SignalR connection
@@ -46,24 +51,26 @@ class SignalRService {
         this.connectionPromise = null;
       });
 
-      // Listen for user notifications (from Notify)
+      // ---- Event listeners ----
+
+      // User notifications (Notify)
       this.connection.on('Notify', (notificationJson) => {
         console.log('[SignalR] Received user notification:', notificationJson);
         this._processNotification(notificationJson, false);
       });
 
-      // Listen for staff notifications (from NotifyStaff)
+      // Staff notifications (NotifyStaff)
       this.connection.on('NotifyStaff', (notificationJson) => {
         console.log('[SignalR] Received staff notification:', notificationJson);
         this._processNotification(notificationJson, true);
       });
 
-      // Optional: Group messages (if your backend uses ReceiveMessage)
+      // Group message (optional)
       this.connection.on('ReceiveMessage', (user, message) => {
         console.log('[SignalR] Group message received:', { user, message });
       });
-
-      // Start connection
+      
+      // ---- Start connection ----
       this.connection
         .start()
         .then(() => {
@@ -83,25 +90,50 @@ class SignalRService {
   // Handle both Notify & NotifyStaff events
   _processNotification(notificationJson, isStaffNotification) {
     try {
-      console.log('[SignalR] Received notification:', notificationJson);
       const notification =
         typeof notificationJson === 'string'
           ? JSON.parse(notificationJson)
           : notificationJson;
 
+      console.log('[SignalR] Processing notification:', notification);
+
+      const {
+        Id,
+        Title,
+        Message,
+        Type,
+        userServiceId,
+        userConsultationId,
+        noteId,
+      } = notification;
+
       const formatted = {
-        id: notification.Id || Date.now(),
-        title: notification.Title || 'New notification',
-        message: notification.Message || notification.Title || 'New Notification',
-        type: notification.Type || 'info',
+        id: Id || Date.now(),
+        title: Title || 'New notification',
+        message: Message || Title || 'New Notification',
+        type: (Type || 'info').toLowerCase(),
         isStaffNotification,
+        userServiceId,
+        userConsultationId,
+        noteId,
         timestamp: new Date().toISOString(),
       };
 
-      // Show toast
-      this._showToast(formatted);
+      // Show context-based message
+      if (formatted.userServiceId) {
+        console.log(`[SignalR] Service request notification (ID: ${formatted.userServiceId})`);
+        this._showToast({ ...formatted, message: `تم تقديم طلب خدمة جديد (رقم: ${formatted.userServiceId})` });
+      } else if (formatted.userConsultationId) {
+        console.log(`[SignalR] Consultation notification (ID: ${formatted.userConsultationId})`);
+        this._showToast({ ...formatted, message: `تم تقديم طلب استشارة جديد (رقم: ${formatted.userConsultationId})` });
+      } else if (formatted.noteId) {
+        console.log(`[SignalR] Note notification (ID: ${formatted.noteId})`);
+        this._showToast({ ...formatted, message: 'تم إضافة ملاحظة جديدة لطلبك' });
+      } else {
+        this._showToast(formatted);
+      }
 
-      // Notify all subscribers (for app-level updates)
+      // Notify all app subscribers
       this.listeners.forEach((listener) => {
         try {
           listener(formatted);
@@ -114,28 +146,16 @@ class SignalRService {
     }
   }
 
-  // Display toast notification
+  // Toast display
   _showToast(notification) {
-    const icons = {
-      success: '',
-      error: '',
-      warning: '',
-      info: '',
-      success: '✅',
-      error: '❌',
-      warning: '⚠️',
-      info: 'ℹ️',
-    };
-
     toast(notification.message, {
       duration: 5000,
       position: 'top-right',
-      icon: icons[notification.type] || '🔔',
       className: `notification-toast notification-${notification.type}`,
     });
   }
 
-  // Subscribe to new notifications (e.g., for storing or displaying in UI)
+  // Subscribe to new notifications
   addListener(listener) {
     this.listeners.add(listener);
     return () => this.listeners.delete(listener);
@@ -152,6 +172,6 @@ class SignalRService {
   }
 }
 
-// Export a singleton
+// Export singleton
 const signalRService = new SignalRService();
 export default signalRService;

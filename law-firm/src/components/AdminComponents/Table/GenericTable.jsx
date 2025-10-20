@@ -16,7 +16,6 @@ function GenericTable({ useDataHook, columns, actions, pageSize = 5, initialPage
         pageSize,
     });
 
-    console.log("data", data)
     const items = data?.data || [];
     const currentItemCount = items.length;
     const indexOfFirstRecord = (currentPage - 1) * pageSize;
