@@ -10,17 +10,11 @@ import UserOnlyGuard from "./UserOnlyGuard";
 
 import AdminLayout from "../layouts/AdminLayout";
 import ClientLayout from "../layouts/ClientLayout";
-const Dashboard = lazy(() => import("../pages/AdminPages/Dashboard/Dashboard"));
-import NotFoundPage from "../pages/NotFoundPage";
 import UnAuthorized from "../pages/UnAuthorized";
-import LawServicesPage from "../pages/ClientPages/ServicesPage/ServicesPage";
-import FAQPage from "../pages/ClientPages/FAQ/FAQ";
-import ContactUs from "../pages/ClientPages/ContactUs/ContactUs";
-import AdminContacts from "../pages/AdminPages/Contacts/ContactsPage";
-const AdminProfile = lazy(() => import("../pages/AdminPages/Profile/AdminProfile"));
-import LoadingPage from "../pages/LoadingPage/LoadingPage";
 
-//lazy loaded components
+// lazy loaded components
+const Dashboard = lazy(() => import("../pages/AdminPages/Dashboard/Dashboard"));
+const AdminProfile = lazy(() => import("../pages/AdminPages/Profile/AdminProfile"));
 const LoginRegister = lazy(() => import("../pages/AuthPages/LoginRegisterPage/LoginRegisterPage"));
 const Landing = lazy(() => import("../pages/ClientPages/Landing/Landing"));
 const ForgetPassword = lazy(() => import('../pages/ForgetPassword/ForgetPasswordPage'))
@@ -39,12 +33,27 @@ const AdminServices = lazy(() => import("../pages/AdminPages/Services/Services")
 const AdminConsultations = lazy(() => import("../pages/AdminPages/Consultations/ConsultationsPage"))
 const AdminConsultationDetails = lazy(() => import("../pages/AdminPages/Consultations/ConsultationDetailsPage"))
 
+// Newly lazy-loaded pages
+const NotFoundPage = lazy(() => import("../pages/NotFoundPage"));
+const LawServicesPage = lazy(() => import("../pages/ClientPages/ServicesPage/ServicesPage"));
+const FAQPage = lazy(() => import("../pages/ClientPages/FAQ/FAQ"));
+const ContactUs = lazy(() => import("../pages/ClientPages/ContactUs/ContactUs"));
+const AdminContacts = lazy(() => import("../pages/AdminPages/Contacts/ContactsPage"));
+const LoadingPage = lazy(() => import("../pages/LoadingPage/LoadingPage"));
+
+// Simple inline fallback to avoid suspending the fallback itself
+const InlineLoader = () => (
+    <div className="w-full py-10 text-center text-gray-500">Loading...</div>
+);
+
 const routes = createBrowserRouter([
     {
         path: "/login",
         element: (
             <GuestOnlyGuard>
-                <LoginRegister />
+                <Suspense fallback={<InlineLoader />}>
+                    <LoginRegister />
+                </Suspense>
             </GuestOnlyGuard>
         ),
     },
@@ -52,7 +61,9 @@ const routes = createBrowserRouter([
         path: "forget-password",
         element: (
             <GuestOnlyGuard>
-                <ForgetPassword />
+                <Suspense fallback={<InlineLoader />}>
+                    <ForgetPassword />
+                </Suspense>
             </GuestOnlyGuard>
         )
     },
@@ -60,7 +71,9 @@ const routes = createBrowserRouter([
         path: "verify-otp",
         element: (
             <VerifyOtpGuard>
-                <VerifyOTP />
+                <Suspense fallback={<InlineLoader />}>
+                    <VerifyOTP />
+                </Suspense>
             </VerifyOtpGuard>
         )
     },
@@ -68,7 +81,9 @@ const routes = createBrowserRouter([
         path: "reset-password",
         element: (
             <VerifyOtpGuard>
-                <ResetPassword />
+                <Suspense fallback={<InlineLoader />}>
+                    <ResetPassword />
+                </Suspense>
             </VerifyOtpGuard>
         )
     },
@@ -82,7 +97,7 @@ const routes = createBrowserRouter([
         path: '/admin',
         element:
             <ProtectedRoute allowedRoles={['Admin', 'CustomerService']}>
-                <Suspense fallback={<LoadingPage />}>
+                <Suspense fallback={<InlineLoader />}>
                     <AdminLayout />
                 </Suspense>
             </ProtectedRoute>
@@ -92,7 +107,9 @@ const routes = createBrowserRouter([
                 path: "",
                 element: (
                     <ProtectedRoute allowedRoles={['Admin']}>
-                        <Dashboard />
+                        <Suspense fallback={<InlineLoader />}>
+                            <Dashboard />
+                        </Suspense>
                     </ProtectedRoute>
                 ),
             },
@@ -100,7 +117,9 @@ const routes = createBrowserRouter([
                 path: "services",
                 element: (
                     <ProtectedRoute allowedRoles={['Admin']}>
-                        <AdminServices />
+                        <Suspense fallback={<InlineLoader />}>
+                            <AdminServices />
+                        </Suspense>
                     </ProtectedRoute>
                 ),
             },
@@ -108,7 +127,9 @@ const routes = createBrowserRouter([
                 path: "consultationTypes",
                 element: (
                     <ProtectedRoute allowedRoles={['Admin']}>
-                        <ConsultationTypes />
+                        <Suspense fallback={<InlineLoader />}>
+                            <ConsultationTypes />
+                        </Suspense>
                     </ProtectedRoute>
                 ),
             },
@@ -116,7 +137,9 @@ const routes = createBrowserRouter([
                 path: "faq",
                 element: (
                     <ProtectedRoute allowedRoles={['Admin']}>
-                        <FAQ />
+                        <Suspense fallback={<InlineLoader />}>
+                            <FAQ />
+                        </Suspense>
                     </ProtectedRoute>
                 ),
             },
@@ -124,7 +147,9 @@ const routes = createBrowserRouter([
                 path: "settings",
                 element: (
                     <ProtectedRoute allowedRoles={['Admin']}>
-                        <AdminSettings />
+                        <Suspense fallback={<InlineLoader />}>
+                            <AdminSettings />
+                        </Suspense>
                     </ProtectedRoute>
                 ),
             },
@@ -132,7 +157,9 @@ const routes = createBrowserRouter([
                 path: "requests",
                 element: (
                     <ProtectedRoute allowedRoles={['Admin', 'CustomerService']}>
-                        <AdminRequests />
+                        <Suspense fallback={<InlineLoader />}>
+                            <AdminRequests />
+                        </Suspense>
                     </ProtectedRoute>
                 ),
             },
@@ -140,7 +167,9 @@ const routes = createBrowserRouter([
                 path: "requests/:requestId",
                 element: (
                     <ProtectedRoute allowedRoles={['Admin', 'CustomerService']}>
-                        <AdminRequestDetails />
+                        <Suspense fallback={<InlineLoader />}>
+                            <AdminRequestDetails />
+                        </Suspense>
                     </ProtectedRoute>
                 ),
             },
@@ -148,7 +177,9 @@ const routes = createBrowserRouter([
                 path: "users",
                 element: (
                     <ProtectedRoute allowedRoles={['Admin']}>
-                        <AdminUsers />
+                        <Suspense fallback={<InlineLoader />}>
+                            <AdminUsers />
+                        </Suspense>
                     </ProtectedRoute>
                 ),
             },
@@ -156,7 +187,9 @@ const routes = createBrowserRouter([
                 path: "law-consultations",
                 element: (
                     <ProtectedRoute allowedRoles={['Admin', 'CustomerService']}>
-                        <AdminConsultations />
+                        <Suspense fallback={<InlineLoader />}>
+                            <AdminConsultations />
+                        </Suspense>
                     </ProtectedRoute>
                 ),
             },
@@ -164,7 +197,9 @@ const routes = createBrowserRouter([
                 path: "law-consultations/:consultationId",
                 element: (
                     <ProtectedRoute allowedRoles={['Admin', 'CustomerService']}>
-                        <AdminConsultationDetails />
+                        <Suspense fallback={<InlineLoader />}>
+                            <AdminConsultationDetails />
+                        </Suspense>
                     </ProtectedRoute>
                 ),
             },
@@ -172,7 +207,9 @@ const routes = createBrowserRouter([
                 path: "contacts",
                 element: (
                     <ProtectedRoute allowedRoles={['Admin']}>
-                        <AdminContacts />
+                        <Suspense fallback={<InlineLoader />}>
+                            <AdminContacts />
+                        </Suspense>
                     </ProtectedRoute>
                 ),
             },
@@ -180,7 +217,9 @@ const routes = createBrowserRouter([
                 path: "profile",
                 element: (
                     <ProtectedRoute allowedRoles={['Admin', 'CustomerService']}>
-                        <AdminProfile />
+                        <Suspense fallback={<InlineLoader />}>
+                            <AdminProfile />
+                        </Suspense>
                     </ProtectedRoute>
                 ),
             },
@@ -190,7 +229,7 @@ const routes = createBrowserRouter([
     {
         path: '/',
         element: (
-            <Suspense fallback={<LoadingPage />}>
+            <Suspense fallback={<InlineLoader />}>
                 <ClientLayout />
             </Suspense>
         ),
@@ -198,31 +237,41 @@ const routes = createBrowserRouter([
             {
                 path: '/', element:
                     <ExcludeRoles>
-                        <Landing />
+                        <Suspense fallback={<InlineLoader />}>
+                            <Landing />
+                        </Suspense>
                     </ExcludeRoles>
             },
             {
                 path: '/servicespage', element:
                     <ExcludeRoles>
-                        <LawServicesPage />
+                        <Suspense fallback={<InlineLoader />}>
+                            <LawServicesPage />
+                        </Suspense>
                     </ExcludeRoles>
             },
             {
                 path: '/FAQClient', element:
                     <ExcludeRoles>
-                        <FAQPage />
+                        <Suspense fallback={<InlineLoader />}>
+                            <FAQPage />
+                        </Suspense>
                     </ExcludeRoles>
             },
             {
                 path: '/consultations', element:
                     <ExcludeRoles>
-                        <ConsultantPage />
+                        <Suspense fallback={<InlineLoader />}>
+                            <ConsultantPage />
+                        </Suspense>
                     </ExcludeRoles>
             },
             {
                 path: '/contactus', element:
                     <ExcludeRoles>
-                        <ContactUs />
+                        <Suspense fallback={<InlineLoader />}>
+                            <ContactUs />
+                        </Suspense>
                     </ExcludeRoles>
             },
 
@@ -230,7 +279,9 @@ const routes = createBrowserRouter([
                 path: '/profile',
                 element: (
                     <UserOnlyGuard>
-                        <ClientProfile />
+                        <Suspense fallback={<InlineLoader />}>
+                            <ClientProfile />
+                        </Suspense>
                     </UserOnlyGuard>
                 )
             }
@@ -239,7 +290,11 @@ const routes = createBrowserRouter([
     // catch-all 404 route (must be last)
     {
         path: "*",
-        element: <NotFoundPage />
+        element: (
+            <Suspense fallback={<InlineLoader />}>
+                <NotFoundPage />
+            </Suspense>
+        )
     }
 ])
 
