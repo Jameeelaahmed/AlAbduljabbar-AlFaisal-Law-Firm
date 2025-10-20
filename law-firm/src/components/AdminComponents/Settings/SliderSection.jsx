@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { useTranslation } from 'react-i18next';
@@ -6,13 +6,24 @@ import { Plus, Trash2, Edit, X, Save } from 'lucide-react';
 import useSliders from '../../../hooks/useSliders';
 import { toast } from 'react-toastify';
 import { uploadImage } from '../../../api/upload';
+import { Loading } from '../../Common/Loading';
 
 const SliderSection = () => {
   const { t } = useTranslation();
-  const { sliders, isLoading, createSlider, updateSlider, deleteSlider } = useSliders();
+  const { 
+    sliders, 
+    isLoading, 
+    createSlider, 
+    updateSlider, 
+    deleteSlider, 
+    fetchSliderById 
+  } = useSliders();
+  
   const [editingId, setEditingId] = useState(null);
   const [imageFile, setImageFile] = useState(null);
   const [imagePreview, setImagePreview] = useState('');
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isLoadingSlider, setIsLoadingSlider] = useState(false);
 
   const validationSchema = Yup.object({
     titleEn: Yup.string().required(t('validation.required')),
@@ -29,29 +40,37 @@ const SliderSection = () => {
       descriptionEn: '',
       descriptionAr: '',
       order: 1,
+      imageUrl: ''
     },
     validationSchema,
     onSubmit: async (values, { resetForm }) => {
       try {
-        const formData = { ...values };
-
+        setIsSubmitting(true);
+        
+        // If there's a new image file, upload it first
         if (imageFile) {
-          // Upload new image
-          formData.imageUrl = await uploadImage(imageFile, 'slider');
-        } else if (editingId) {
-          // Keep existing image URL when editing
-          const existingSlider = sliders?.find(s => s.id === editingId);
-          formData.imageUrl = existingSlider?.imageUrl || '';
-        } else {
-          // New slider without image - send empty string
-          formData.imageUrl = '';
+          try {
+            // uploadImage now returns the full URL directly
+            values.imageUrl = await uploadImage(imageFile, 'slider');
+            console.log('Image uploaded successfully:', values.imageUrl);
+          } catch (error) {
+            console.error('Error uploading image:', error);
+            toast.error(error.message || t('error.imageUploadFailed'));
+            return;
+          }
+        } else if (editingId && !values.imageUrl) {
+          // If editing but no new image and no existing image URL
+          toast.error(t('validation.imageRequired'));
+          return;
         }
 
+        console.log('Submitting slider data:', values);
+
         if (editingId) {
-          await updateSlider.mutateAsync({ id: editingId, ...formData });
+          await updateSlider.mutateAsync({ id: editingId, ...values });
           toast.success(t('slider.updated'));
         } else {
-          await createSlider.mutateAsync(formData);
+          await createSlider.mutateAsync(values);
           toast.success(t('slider.created'));
         }
 
@@ -60,22 +79,39 @@ const SliderSection = () => {
         setImageFile(null);
         setImagePreview('');
       } catch (error) {
+        console.error('Error submitting form:', error);
         toast.error(error.response?.data?.message || t('error.generic'));
+      } finally {
+        setIsSubmitting(false);
       }
     },
   });
 
-  const handleEdit = (slider) => {
-    setEditingId(slider.id);
-    formik.setValues({
-      titleEn: slider.titleEn || '',
-      titleAr: slider.titleAr || slider.title || '',
-      descriptionEn: slider.descriptionEn || '',
-      descriptionAr: slider.descriptionAr || slider.description || '',
-      order: slider.order || 1,
-    });
-    if (slider.imageUrl) {
-      setImagePreview(slider.imageUrl);
+  const handleEdit = async (slider) => {
+    try {
+      setIsLoadingSlider(true);
+      setEditingId(slider.id);
+      
+      // Fetch the latest slider data
+      const sliderData = await fetchSliderById(slider.id);
+      
+      formik.setValues({
+        titleEn: sliderData.titleEn || '',
+        titleAr: sliderData.titleAr || '',
+        descriptionEn: sliderData.descriptionEn || '',
+        descriptionAr: sliderData.descriptionAr || '',
+        order: sliderData.order || 1,
+        imageUrl: sliderData.imageUrl || ''
+      });
+      
+      if (sliderData.imageUrl) {
+        setImagePreview(sliderData.imageUrl);
+      }
+    } catch (error) {
+      console.error('Error loading slider data:', error);
+      toast.error(t('error.fetchSliderFailed'));
+    } finally {
+      setIsLoadingSlider(false);
     }
   };
 
@@ -84,6 +120,7 @@ const SliderSection = () => {
     setEditingId(null);
     setImageFile(null);
     setImagePreview('');
+    setIsSubmitting(false);
   };
 
   const handleDelete = async (id) => {
@@ -105,7 +142,9 @@ const SliderSection = () => {
     }
   };
 
-  if (isLoading) return <div>Loading...</div>;
+  if (isLoading || isLoadingSlider) {
+    return <Loading />;
+  }
   console.log("sliders",sliders)
   return (
     <div className="space-y-6">
@@ -243,10 +282,25 @@ const SliderSection = () => {
             )}
             <button
               type="submit"
-              className="inline-flex items-center gap-2 px-2 py-2 bg-primary border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-primary-600 hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500 cursor-pointer"
+              disabled={isSubmitting}
+              className="bg-primary inline-flex items-center gap-2 px-2 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-primary-600 hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500 disabled:opacity-50 disabled:cursor-not-allowed"
             >
-              <Save className="h-4 w-4 mr-2" />
-              {editingId ? t('common.update') : t('common.add')}
+              {isSubmitting ? (
+                <span className="flex items-center">
+                  <Loading className="h-4 w-4 mr-2" />
+                  {editingId ? t('common.updating') : t('common.creating')}
+                </span>
+              ) : editingId ? (
+                <>
+                  <Save className="h-4 w-4 mr-2" />
+                  {t('common.update')}
+                </>
+              ) : (
+                <>
+                  <Plus className="h-4 w-4 mr-2" />
+                  {t('common.add')}
+                </>
+              )}
             </button>
           </div>
         </form>

@@ -21,9 +21,33 @@ export const useSliders = () => {
   // Create slider
   const createSlider = useMutation({
     mutationFn: async (sliderData) => {
-      console.log(sliderData);
-      const { data } = await api.post('/api/Sliders/Create', sliderData);
-      return data;
+      console.log('Creating slider with data:', sliderData);
+      try {
+        // Prepare the payload with PascalCase field names
+        const payload = {
+          TitleEn: sliderData.titleEn,
+          TitleAr: sliderData.titleAr,
+          DescriptionEn: sliderData.descriptionEn,
+          DescriptionAr: sliderData.descriptionAr,
+          Order: sliderData.order,
+          ImageUrl: sliderData.imageUrl // This should already be a string URL from the upload
+        };
+        
+        console.log('Sending slider payload:', JSON.stringify(payload, null, 2));
+        const { data } = await api.post('/api/Sliders/Create', payload);
+        console.log('Slider created successfully:', data);
+        return data;
+      } catch (error) {
+        console.error('Error creating slider:', error.response?.data || error.message);
+        // Extract and format validation errors if they exist
+        if (error.response?.data?.errors) {
+          const errorMessages = Object.entries(error.response.data.errors)
+            .map(([field, errors]) => `${field}: ${errors.join(', ')}`)
+            .join('\n');
+          throw new Error(`Validation failed: ${errorMessages}`);
+        }
+        throw error;
+      }
     },
     onSuccess: () => {
       queryClient.invalidateQueries(['sliders']);
@@ -33,8 +57,32 @@ export const useSliders = () => {
   // Update slider
   const updateSlider = useMutation({
     mutationFn: async ({ id, ...sliderData }) => {
-      const { data } = await api.put(`/api/Sliders/${id}`, sliderData);
-      return data;
+      try {
+        // Prepare the payload with PascalCase field names
+        const payload = {
+          TitleEn: sliderData.titleEn,
+          TitleAr: sliderData.titleAr,
+          DescriptionEn: sliderData.descriptionEn,
+          DescriptionAr: sliderData.descriptionAr,
+          Order: sliderData.order,
+          ImageUrl: sliderData.imageUrl // This should already be a string URL from the upload
+        };
+
+        console.log('Updating slider with payload:', JSON.stringify(payload, null, 2));
+        const { data } = await api.put(`/api/Sliders/${id}`, payload);
+        console.log('Slider updated successfully:', data);
+        return data;
+      } catch (error) {
+        console.error('Error updating slider:', error.response?.data || error.message);
+        // Extract and format validation errors if they exist
+        if (error.response?.data?.errors) {
+          const errorMessages = Object.entries(error.response.data.errors)
+            .map(([field, errors]) => `${field}: ${errors.join(', ')}`)
+            .join('\n');
+          throw new Error(`Validation failed: ${errorMessages}`);
+        }
+        throw error;
+      }
     },
     onSuccess: () => {
       queryClient.invalidateQueries(['sliders']);
@@ -52,6 +100,20 @@ export const useSliders = () => {
     },
   });
 
+  // Fetch a single slider by ID
+  const fetchSliderById = async (id) => {
+    try {
+      const { data } = await api.get(`/api/Sliders/update/${id}`);
+      if (data.isSuccess) {
+        return data.data; // Return the slider data
+      }
+      throw new Error(data.error?.description || 'Failed to fetch slider');
+    } catch (error) {
+      console.error('Error fetching slider:', error);
+      throw error;
+    }
+  };
+
   return {
     sliders,
     isLoading,
@@ -59,6 +121,7 @@ export const useSliders = () => {
     createSlider,
     updateSlider,
     deleteSlider,
+    fetchSliderById,
   };
 };
 

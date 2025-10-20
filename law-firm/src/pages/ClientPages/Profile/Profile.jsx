@@ -9,33 +9,13 @@ import Requests from './requests';
 import { useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useUserInfo } from '../../../hooks/useUserInfo';
+import Loading from '../../../components/Common/Loading';
 
 export default function Profile() {
     const { t } = useTranslation();
     const navigate = useNavigate();
     const changePasswordMutation = useChangePassword();
     const [activeTab, setActiveTab] = useState('profile');
-
-    const getStatusLabel = useCallback((statusCode) => {
-        switch (statusCode) {
-            case 0: return t("Requests.Status.Pending");
-            case 1: return t("Requests.Status.Contacted");
-            case 2: return t("Requests.Status.Resolved");
-            case 3: return t("Requests.Status.Rejected");
-            default: return t("Requests.Status.Pending");
-        }
-    }, [t]);
-
-    const getStatusStyles = useCallback((statusCode) => {
-        switch (statusCode) {
-            case 0: return "bg-pendingBg text-pending";
-            case 1: return "bg-inProgressBg text-inProgress";
-            case 2: return "bg-succeededBg text-succeeded";
-            case 3: return "bg-deniedBg text-denied";
-            default: return "bg-gray-400 text-white";
-        }
-    }, []);
-
     const { data: userData, isLoading, error } = useUserInfo();
     const user = userData // Access the nested data object
     console.log(user)
@@ -47,21 +27,7 @@ export default function Profile() {
     });
 
     if (isLoading) {
-        return (
-            <div className="min-h-screen bg-bg p-4 md:p-6 flex items-center justify-center">
-                <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-primary"></div>
-            </div>
-        );
-    }
-
-    if (error) {
-        return (
-            <div className="min-h-screen bg-bg p-4 md:p-6 flex items-center justify-center">
-                <div className="text-red-500 text-center">
-                    <p>Error loading user data: {error.message}</p>
-                </div>
-            </div>
-        );
+        return <Loading />
     }
     return (
         <>
@@ -249,7 +215,7 @@ export default function Profile() {
                     )}
                     {/* Security Tab Content */}
                     {activeTab === 'security' && (
-                        <Security changePasswordMutation={changePasswordMutation} getStatusLabel={getStatusLabel} getStatusStyles={getStatusStyles} />
+                        <Security changePasswordMutation={changePasswordMutation}/>
                     )}
                 </div>
             </div>

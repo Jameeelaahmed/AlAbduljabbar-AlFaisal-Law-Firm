@@ -45,7 +45,6 @@ export function useRequestsByBranch({ pageIndex = 1, pageSize = 5, status = null
 export function useRequestsByRole({ pageIndex = 1, pageSize = 5, status = null } = {}) {
     const { user } = useAuthStore();
     const isCustomerService = user?.lastRole === "CustomerService";
-    console.log("user branch", user?.branchId)
     if (isCustomerService) {
         return useRequestsByBranch({
             pageIndex,

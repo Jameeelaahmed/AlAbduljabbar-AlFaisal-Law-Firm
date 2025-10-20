@@ -1,52 +1,42 @@
 // components
-//TODO 
-//!replace me 
-import { useUpdateRequest } from '../../../hooks/useRequests';
-//TODO
 
 // custom
 import { useContactConsultation, useRejectConsultation, useResolveConsultation } from '../../../hooks/useConsultations';
 import { useAddRequestNote } from '../../../hooks/useRequests';
 import { useConsultation } from '../../../hooks/useConsultations'
-import { useUserById } from '../../../hooks/useUsers';
 import { useNotes } from '../../../hooks/useRequests';
 // hooks
 import { useState, useCallback, useMemo } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { useTranslation } from 'react-i18next';
+import Loading from '../../../components/Common/Loading';
 
 export default function ConsultationDetailsPage() {
     const { t } = useTranslation();
-    const { consultationId } = useParams();
+    const { consultationId: userConsultationId } = useParams();
     const navigate = useNavigate();
-
+    console.log("ConsultationId", userConsultationId)
     // Fetch request data
     const {
         data: requestData,
         isLoading,
         error
-    } = useConsultation(consultationId);
+    } = useConsultation(userConsultationId);
 
     const {
         data: previousNotes,
         isLoading: isFetchingNotes,
         error: notesError
-    } = useNotes(null, consultationId);
-
-    // Fetch related data
-    const { data: userData } = useUserById(requestData?.userID);
-
-    //TODO render notes
+    } = useNotes(null, userConsultationId);
 
     //TODO Mutations 
-    //!replace me
     const { mutate: rejectConsultation, isLoading: isRejecting } = useRejectConsultation();
     const { mutate: resolveConsultation, isLoading: isResolving } = useResolveConsultation();
     const { mutate: contactConsultation, isLoading: isContacting } = useContactConsultation();
     const { mutate: addRequestNote, isLoading: isAddingNote } = useAddRequestNote();
 
-    //TODO
+
 
     //* Local States And Functions
     const [notes, setNotes] = useState('');
@@ -55,7 +45,7 @@ export default function ConsultationDetailsPage() {
         if (!notes.trim()) return;
 
         addRequestNote(
-            { requestId: null, content: notes.trim(), consultationId },
+            { requestId: null, content: notes.trim(), userConsultationId },
             {
                 onSuccess: () => {
                     toast.success(t("Requests.NoteAdded"));
@@ -91,27 +81,25 @@ export default function ConsultationDetailsPage() {
 
     if (isLoading) {
         return (
-            <div className="min-h-screen bg-gray-50 p-4 sm:p-6 flex items-center justify-center" dir="rtl">
-                <div className="text-lg text-gray-600">{t("Requests.Messages.loading")}</div>
-            </div>
+            <Loading />
         );
     }
 
-    if (error) {
-        return (
-            <div className="min-h-screen bg-gray-50 p-4 sm:p-6 flex flex-col items-center justify-center gap-4" dir="rtl">
-                <div className="text-lg text-red-600">
-                    {error.message || t("Requests.Messages.loadError")}
-                </div>
-                <button
-                    onClick={() => navigate('/admin/requests')}
-                    className="px-4 py-2 bg-primary cursor-pointer text-white rounded-md hover:bg-primary/80"
-                >
-                    {t("Requests.Actions.back")}
-                </button>
-            </div>
-        );
-    }
+    // if (error) {
+    //     return (
+    //         <div className="min-h-screen bg-gray-50 p-4 sm:p-6 flex flex-col items-center justify-center gap-4" dir="rtl">
+    //             <div className="text-lg text-red-600">
+    //                 {error.message || t("Requests.Messages.loadError")}
+    //             </div>
+    //             <button
+    //                 onClick={() => navigate('/admin/requests')}
+    //                 className="px-4 py-2 bg-primary cursor-pointer text-white rounded-md hover:bg-primary/80"
+    //             >
+    //                 {t("Requests.Actions.back")}
+    //             </button>
+    //         </div>
+    //     );
+    // }
 
     if (!requestData) {
         return (
@@ -126,7 +114,6 @@ export default function ConsultationDetailsPage() {
             </div>
         );
     }
-    console.log(requestData)
     return (
         <div className="min-h-screen bg-gray-50 p-4 sm:p-6" dir="rtl">
             <div className="max-w-7xl mx-auto mb-4 sm:mb-6">
@@ -134,7 +121,7 @@ export default function ConsultationDetailsPage() {
                     <div>
                         <h1 className="text-xl sm:text-2xl lg:text-3xl font-extrabold text-gray-900">{t("Consultations.ConsultationDetails")}</h1>
                         <p className="text-sm sm:text-base text-gray-600">
-                            #{requestData.id} — {userData?.fullName || t("Requests.Client") + ` ${requestData.userID}`}
+                            #{requestData.id} — {requestData?.userName || t("Requests.Client") + ` ${requestData.userID}`}
                         </p>
                     </div>
 

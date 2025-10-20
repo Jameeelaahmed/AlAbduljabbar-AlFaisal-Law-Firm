@@ -1,11 +1,13 @@
 import { useState, useEffect, useRef } from 'react';
 import i18n from '../../../i18n';
-import { Bell, Globe, User } from "lucide-react";
+import { Globe, User } from "lucide-react";
 import { useQueryClient } from "@tanstack/react-query";
 import { useAuthStore } from '../../../store/useAuthStore';
-import { Navigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
+import NotificationBell from '../../Common/NotificationBell';
 function Header() {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
+    const navigate = useNavigate();
     const queryClient = useQueryClient();
     const menuRef = useRef(null);
     const logout = useAuthStore((state) => state.logout)
@@ -68,14 +70,9 @@ function Header() {
                         </button>
 
                         {/* Notifications */}
-                        <button
-                            type="button"
-                            className="relative p-2 rounded-full text-gray-600 hover:bg-gray-100 transition cursor-pointer"
-                            aria-label="Notifications"
-                        >
-                            <Bell className="w-5 h-5" />
-                            <span className="absolute top-0 right-0 w-2 h-2 bg-red-500 rounded-full ring-1 ring-white" />
-                        </button>
+                        <div className="relative p-2 rounded-full text-gray-600 hover:bg-gray-100 transition cursor-pointer">
+                            <NotificationBell />
+                        </div>
 
                         {/* User menu */}
                         <div className="relative" ref={menuRef}>
@@ -95,13 +92,19 @@ function Header() {
                             {isMenuOpen && (
                                 <div className={`absolute ${i18n.dir() === 'rtl' ? 'left-0' : 'right-0'} mt-2 w-48 bg-white rounded-md shadow-xl border border-gray-200 overflow-hidden z-50 transition-all duration-200 ease-in-out transform origin-top-${i18n.dir() === 'rtl' ? 'left' : 'right'}`}>
                                     <button
-                                        onClick={() => { Navigate('/profile') }}
+                                        onClick={() => {
+                                            setIsMenuOpen(false);
+                                            navigate('/admin/profile');
+                                        }}
                                         className="w-full text-left px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50 cursor-pointer transition-colors duration-150 flex items-center space-x-2"
                                     >
                                         Profile
                                     </button>
                                     <button
-                                        onClick={() => { /* navigate to settings */ }}
+                                        onClick={() => {
+                                            setIsMenuOpen(false);
+                                            navigate('/admin/settings');
+                                        }}
                                         className="w-full text-left px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50 cursor-pointer transition-colors duration-150 flex items-center space-x-2"
                                     >
                                         Settings
