@@ -109,6 +109,10 @@ export const createRequest = async (requestData) => {
         throw new Error(response?.error?.description || "Failed to create request");
     }
 
+    // Notifications are handled automatically by the backend NotificationService
+    // The backend will call NotifyStaff method which sends notifications to Admin and CustomerService users
+    // No need to make additional API calls for notifications
+
     return response.data;
 };
 
@@ -198,6 +202,10 @@ export const addRequestNote = async ({ requestId = null, content, consultationId
     if (!response?.isSuccess) {
         throw new Error(response?.error?.description || "Failed to add note");
     }
+
+    // Notifications are handled automatically by the backend NotificationService
+    // The backend will call Notify method which sends notifications to the specific user
+    // No need to make additional API calls for notifications
 
     return response.data;
 };

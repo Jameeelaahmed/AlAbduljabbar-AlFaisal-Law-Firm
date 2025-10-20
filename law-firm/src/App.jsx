@@ -4,13 +4,14 @@ import RoutesPages from "./routes/routes";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 // import { useAutoLogout } from "./hooks/useAutoLogout";
+import { NotificationProvider } from "./contexts/NotificationContext";
+
 function App() {
   // useHydrateAuth();
   // useAutoLogout();
 
   return (
-
-    <>
+    <NotificationProvider>
       <RoutesPages />
       <ToastContainer
         position="top-right"
@@ -23,8 +24,7 @@ function App() {
         draggable
         pauseOnHover
       />
-    </>
-
+    </NotificationProvider>
   )
 }
 

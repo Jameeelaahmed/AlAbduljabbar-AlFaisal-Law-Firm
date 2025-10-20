@@ -63,6 +63,10 @@ export const getConsultationById = async (consultationId) => {
 
 export const createConsultationRequest = async (data) => {
     const res = await api.post(`/api/UserConsultations/Request`, data);
+    
+    // Notifications are handled automatically by the backend NotificationService
+    // The backend will call NotifyStaff method which sends notifications to Admin and CustomerService users
+    
     return res.data.data;
 }
 
