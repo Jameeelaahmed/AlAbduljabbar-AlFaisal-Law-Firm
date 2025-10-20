@@ -10,17 +10,37 @@ export const uploadImage = async (file, folderName = 'images') => {
     const formData = new FormData();
     formData.append('file', file);
 
-    const response = await api.post(`/api/General/UploadFile?FolderName=${folderName}`, formData, {
-        headers: {
-            'Content-Type': 'multipart/form-data',
-        },
-    });
+    try {
+        const response = await api.post(`/api/General/UploadFile?FolderName=${folderName}`, formData, {
+            headers: {
+                'Content-Type': 'multipart/form-data',
+            },
+        });
 
-    // API returns: { isSuccess: true, data: { url: "string" }, error: {...}, status: 1 }
-    if (response.data.isSuccess) {
-        return response.data.data;
-    } else {
-        throw new Error(response.data.error?.description || 'Upload failed');
+        // API returns: { isSuccess: true, data: { url: "string" }, error: {...}, status: 1 }
+        if (response.data.isSuccess) {
+            // Ensure we return the full URL
+            const imageUrl = response.data.data?.url || '';
+            
+            // If the URL is already a full URL, return it as is
+            if (imageUrl.startsWith('http')) {
+                return imageUrl;
+            }
+            
+            // Otherwise, construct the full URL using the base URL from the axios instance
+            const baseUrl = api.defaults.baseURL || window.location.origin;
+            const fullUrl = imageUrl.startsWith('/') 
+                ? `${baseUrl}${imageUrl}`
+                : `${baseUrl}/${imageUrl}`;
+                
+            console.log('Uploaded image URL:', fullUrl);
+            return fullUrl;
+        } else {
+            throw new Error(response.data.error?.description || 'Upload failed');
+        }
+    } catch (error) {
+        console.error('Error uploading image:', error);
+        throw error;
     }
 };
 

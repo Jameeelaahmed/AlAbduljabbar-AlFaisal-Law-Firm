@@ -348,6 +348,7 @@
     "passwordRequirements": "متطلبات كلمة المرور:",
     "passwordRequirement1": "8 أحرف على الأقل",
     "passwordRequirement2": "تتضمن حرف كبير واحد على الأقل، وحرف صغير واحد، ورقم واحد",
+    "saveChanges": "حفظ التغييرات",
     "profile": "الملف الشخصي",
     "security": "الأمان",
     "notifications": "الإشعارات",
