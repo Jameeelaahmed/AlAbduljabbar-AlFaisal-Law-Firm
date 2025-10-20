@@ -4,49 +4,16 @@ import { useTranslation } from 'react-i18next';
 import { useChangePassword } from '../../../hooks/useChangePassword';
 import { useUserInfo } from '../../../hooks/useUserInfo';
 import Security from '../../ClientPages/Profile/Security';
+import Loading from '../../../components/Common/Loading';
 
 export default function AdminProfile() {
     const { t } = useTranslation();
     const changePasswordMutation = useChangePassword();
     const [activeTab, setActiveTab] = useState('profile');
-    const { data: user, isLoading, error } = useUserInfo();
-    
-    const getStatusLabel = useCallback((statusCode) => {
-        switch (statusCode) {
-            case 0: return t("Requests.Status.Pending");
-            case 1: return t("Requests.Status.Contacted");
-            case 2: return t("Requests.Status.Resolved");
-            case 3: return t("Requests.Status.Rejected");
-            default: return t("Requests.Status.Pending");
-        }
-    }, [t]);
-
-    const getStatusStyles = useCallback((statusCode) => {
-        switch (statusCode) {
-            case 0: return "bg-pendingBg text-pending";
-            case 1: return "bg-inProgressBg text-inProgress";
-            case 2: return "bg-succeededBg text-succeeded";
-            case 3: return "bg-deniedBg text-denied";
-            default: return "bg-gray-400 text-white";
-        }
-    }, []);
+    const { data: user, isLoading } = useUserInfo();
 
     if (isLoading) {
-        return (
-            <div className="min-h-screen bg-bg p-4 md:p-6 flex items-center justify-center">
-                <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-primary"></div>
-            </div>
-        );
-    }
-
-    if (error) {
-        return (
-            <div className="min-h-screen bg-bg p-4 md:p-6 flex items-center justify-center">
-                <div className="text-red-500 text-center">
-                    <p>Error loading admin profile: {error.message}</p>
-                </div>
-            </div>
-        );
+        return <Loading />;
     }
 
     return (
