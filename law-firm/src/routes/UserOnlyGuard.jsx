@@ -5,7 +5,8 @@ import { Loading } from '../components/Common/Loading';
 export default function UserOnlyGuard({ children }) {
     const location = useLocation();
     const { data: userData, isLoading } = useUserInfo();
-    const user = userData?.data;
+    const user = userData;
+    console.log(userData);
 
     if (isLoading) {
         return (
