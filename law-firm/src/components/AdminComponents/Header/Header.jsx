@@ -1,9 +1,10 @@
 import { useState, useEffect, useRef } from 'react';
 import i18n from '../../../i18n';
-import { Bell, Globe, User } from "lucide-react";
+import { Globe, User } from "lucide-react";
 import { useQueryClient } from "@tanstack/react-query";
 import { useAuthStore } from '../../../store/useAuthStore';
 import { Navigate } from 'react-router-dom';
+import NotificationBell from '../../Common/NotificationBell';
 function Header() {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
     const queryClient = useQueryClient();
@@ -68,14 +69,9 @@ function Header() {
                         </button>
 
                         {/* Notifications */}
-                        <button
-                            type="button"
-                            className="relative p-2 rounded-full text-gray-600 hover:bg-gray-100 transition cursor-pointer"
-                            aria-label="Notifications"
-                        >
-                            <Bell className="w-5 h-5" />
-                            <span className="absolute top-0 right-0 w-2 h-2 bg-red-500 rounded-full ring-1 ring-white" />
-                        </button>
+                        <div className="relative p-2 rounded-full text-gray-600 hover:bg-gray-100 transition cursor-pointer">
+                            <NotificationBell />
+                        </div>
 
                         {/* User menu */}
                         <div className="relative" ref={menuRef}>

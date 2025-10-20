@@ -13,6 +13,8 @@ import { LogOut, Menu, X, User, ChevronDown, Globe, UserCircle } from 'lucide-re
 // imgs
 import logo1 from '../../../assets/Logos/Logo1.png'
 import logo2 from '../../../assets/Logos/Logo2.png'
+// notification
+import NotificationBell from '../../Common/NotificationBell'
 
 function Header() {
     const { t } = useTranslation();
@@ -155,24 +157,31 @@ function Header() {
                         {(isAuthenticated && role == 'User') ? (
                             <>
                                 {/* User Dropdown */}
-                                <div className="relative">
-                                    <button
-                                        onClick={toggleDesktopDropdown}
-                                        className="flex items-center cursor-pointer bg-primary gap-2 py-2 px-3 text-white hover:bg-secondary rounded-3xl transition-all"
-                                    >
-                                        <UserCircle />
-                                        <ChevronDown
-                                            size={16}
-                                            className={`transform transition-transform ${isDesktopDropdownOpen ? 'rotate-180' : ''}`}
-                                        />
-                                    </button>
+                                <div className="flex items-center gap-2">
+                                    {/* Notification Bell */}
+                                    <div className="relative p-2 rounded-full text-white bg-primary hover:bg-secondary transition cursor-pointer">
+                                        <NotificationBell />
+                                    </div>
+                                    
+                                    {/* User Menu */}
+                                    <div className="relative">
+                                        <button
+                                            onClick={toggleDesktopDropdown}
+                                            className="flex items-center cursor-pointer bg-primary gap-2 py-2 px-3 text-white hover:bg-secondary rounded-3xl transition-all"
+                                        >
+                                            <UserCircle />
+                                            <ChevronDown
+                                                size={16}
+                                                className={`transform transition-transform ${isDesktopDropdownOpen ? 'rotate-180' : ''}`}
+                                            />
+                                        </button>
 
-                                    {/* Dropdown Menu */}
-                                    <div className={`
-                                    absolute ${!headerActive && "rtl:left-1/2 rtl:-translate-x-1/2 ltr:right-1/2 ltr:translate-x-1/2"} ltr:right-0 rtl:left-0 mt-5 w-66 bg-white rounded-lg shadow-lg border border-gray-200 py-2 z-60
-                                    transform transition-transform duration-300 ease-in-out origin-top
-                                    ${isDesktopDropdownOpen ? 'scale-y-100 opacity-100' : 'scale-y-0 opacity-0'}
-                                    `}>
+                                        {/* Dropdown Menu */}
+                                        <div className={`
+                                        absolute ${!headerActive && "rtl:left-1/2 rtl:-translate-x-1/2 ltr:right-1/2 ltr:translate-x-1/2"} ltr:right-0 rtl:left-0 mt-5 w-66 bg-white rounded-lg shadow-lg border border-gray-200 py-2 z-60
+                                        transform transition-transform duration-300 ease-in-out origin-top
+                                        ${isDesktopDropdownOpen ? 'scale-y-100 opacity-100' : 'scale-y-0 opacity-0'}
+                                        `}>
                                         {/* Styled user header */}
                                         <div
                                             className="px-4 py-3 border-b border-gray-100"
@@ -239,6 +248,7 @@ function Header() {
                                             <span>{t("landing.Logout")}</span>
                                         </button>
                                     </div>
+                                </div>
                                 </div>
 
                                 {/* Click outside to close dropdown */}
