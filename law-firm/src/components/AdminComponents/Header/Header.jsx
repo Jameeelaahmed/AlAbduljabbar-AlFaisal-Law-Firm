@@ -94,7 +94,7 @@ function Header() {
                                     <button
                                         onClick={() => {
                                             setIsMenuOpen(false);
-                                            navigate('/profile');
+                                            navigate('/admin/profile');
                                         }}
                                         className="w-full text-left px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50 cursor-pointer transition-colors duration-150 flex items-center space-x-2"
                                     >

@@ -5,6 +5,7 @@ import ProtectedRoute from "./ProtectedRoutes";
 import VerifyOtpGuard from "./VerifyOtpGuard";
 import ExcludeRoles from "./ExcludeRoles";
 import GuestOnlyGuard from "./GuestOnlyGuard";
+import UserOnlyGuard from "./UserOnlyGuard";
 //layout components
 
 import AdminLayout from "../layouts/AdminLayout";
@@ -15,6 +16,8 @@ import UnAuthorized from "../pages/UnAuthorized";
 import LawServicesPage from "../pages/ClientPages/ServicesPage/ServicesPage";
 import FAQPage from "../pages/ClientPages/FAQ/FAQ";
 import ContactUs from "../pages/ClientPages/ContactUs/ContactUs";
+import AdminContacts from "../pages/AdminPages/Contacts/ContactsPage";
+const AdminProfile = lazy(() => import("../pages/AdminPages/Profile/AdminProfile"));
 import LoadingPage from "../pages/LoadingPage/LoadingPage";
 
 //lazy loaded components
@@ -35,7 +38,6 @@ const AdminUsers = lazy(() => import("../pages/AdminPages/Users/Users"));
 const AdminServices = lazy(() => import("../pages/AdminPages/Services/Services"));
 const AdminConsultations = lazy(() => import("../pages/AdminPages/Consultations/ConsultationsPage"))
 const AdminConsultationDetails = lazy(() => import("../pages/AdminPages/Consultations/ConsultationDetailsPage"))
-const AdminContacts = lazy(() => import("../pages/AdminPages/Contacts/ContactsPage"));
 
 const routes = createBrowserRouter([
     {
@@ -172,14 +174,16 @@ const routes = createBrowserRouter([
                     <ProtectedRoute allowedRoles={['Admin']}>
                         <AdminContacts />
                     </ProtectedRoute>
-                )
-            }
-            //     ]
-            // },
-            // {
-            //     path: '/support',
-            //     element: <AdminLayout />,
-            //     children: [
+                ),
+            },
+            {
+                path: "profile",
+                element: (
+                    <ProtectedRoute allowedRoles={['Admin', 'CustomerService']}>
+                        <AdminProfile />
+                    </ProtectedRoute>
+                ),
+            },
 
         ]
     },
@@ -224,7 +228,11 @@ const routes = createBrowserRouter([
 
             {
                 path: '/profile',
-                element: <ClientProfile />
+                element: (
+                    <UserOnlyGuard>
+                        <ClientProfile />
+                    </UserOnlyGuard>
+                )
             }
         ]
     },
