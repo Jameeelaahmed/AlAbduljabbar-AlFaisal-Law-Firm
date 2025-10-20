@@ -331,6 +331,7 @@
     "passwordRequirements": "Password Requirements:",
     "passwordRequirement1": "At least 8 characters long",
     "passwordRequirement2": "Include at least one uppercase letter, one lowercase letter, and one number",
+    "saveChanges": "Save Changes",
     "profile": "Profile",
     "security": "Security",
     "notifications": "Notifications",
