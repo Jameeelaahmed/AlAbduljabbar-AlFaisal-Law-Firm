@@ -27,7 +27,7 @@ function RegisterForm() {
                         </p>
                     </div>
                 )}
-                
+
                 <Formik
                     initialValues={{ fullNameEn: '', fullNameAr: '', email: '', mobileNumber: '', whatsAppNumber: '', password: '', confirmPassword: '' }}
                     validationSchema={Yup.object({
@@ -65,15 +65,15 @@ function RegisterForm() {
                         }
                         catch (err) {
                             let errMsg;
-                            
+
                             if (err.response?.status === 400) {
                                 errMsg = t('auth.emailAlreadyRegistered');
                             } else {
-                                errMsg = err.response?.data?.error?.description 
-                                    || err.response?.data?.message 
+                                errMsg = err.response?.data?.error?.description
+                                    || err.response?.data?.message
                                     || err.message;
                             }
-                            
+
                             setErrorMessage(errMsg);
                             toast.error(errMsg);
                         } finally {
@@ -94,17 +94,19 @@ function RegisterForm() {
                                         {({ field }) => (
                                             <input
                                                 {...field}
+                                                id="fullNameEn"
                                                 type="text"
-                                                className={`w-full px-4 py-3 border rounded-lg focus:outline-none focus:ring-2 transition-all duration-300 ${errors.fullNameEn && touched.fullNameEn
+                                                className={`w-full px-4 py-3 border rounded-lg focus:outline-none focus:ring-2 transition-all duration-300 text-gray-900 placeholder-gray-400 bg-white ${errors.fullNameEn && touched.fullNameEn
                                                     ? 'border-red-300 focus:ring-red-200 bg-red-50'
                                                     : 'border-gray-300 focus:ring-primary focus:border-primary'
                                                     }`}
                                                 placeholder="أدخل اسمك الكامل باللغه الانجليزيه"
                                                 dir="auto"
+                                                autoComplete="name"
                                             />
                                         )}
                                     </Field>
-                                    <ErrorMessage name="fullNameAr" component="div" className="text-red-500 text-xs mt-1 font-medium" />
+                                    <ErrorMessage name="fullNameEn" component="div" className="text-red-500 text-xs mt-1 font-medium" />
                                 </div>
 
                                 <div className="space-y-2">
@@ -200,29 +202,29 @@ function RegisterForm() {
                             {/* Password */}
                             <div className="space-y-2">
                                 <label htmlFor="password" className="flex items-center gap-2 text-sm font-semibold text-primary">
-                                    <Lock className="w-4 h-4 text-secondary" />
-                                    كلمة المرور
+                                    <Lock className="w-4 h-4 text-secondary" /> كلمة المرور
                                 </label>
                                 <div className="relative">
                                     <Field name="password">
                                         {({ field }) => (
                                             <input
                                                 {...field}
+                                                id="password"
                                                 type={showPassword ? 'text' : 'password'}
-                                                className={`w-full pl-4 pr-12 py-3 border rounded-lg focus:outline-none focus:ring-2 transition-all duration-300 ${errors.password && touched.password
+                                                className={`w-full pl-4 pr-12 py-3 border rounded-lg focus:outline-none focus:ring-2 transition-all duration-300 text-gray-900 placeholder-gray-400 bg-white ${errors.password && touched.password
                                                     ? 'border-red-300 focus:ring-red-200 bg-red-50'
                                                     : 'border-gray-300 focus:ring-primary focus:border-primary'
                                                     }`}
                                                 placeholder="أدخل كلمة مرور قوية"
                                                 dir="ltr"
-                                                style={{ WebkitTextSecurity: showPassword ? 'none' : 'disc' }}
+                                                autoComplete="new-password"
                                             />
                                         )}
                                     </Field>
                                     <button
                                         type="button"
                                         onClick={() => setShowPassword(!showPassword)}
-                                        className="absolute cursor-pointer right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-primary transition-colors"
+                                        className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-primary transition-colors"
                                     >
                                         {showPassword ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
                                     </button>
@@ -236,28 +238,29 @@ function RegisterForm() {
                             {/* Confirm Password */}
                             <div className="space-y-2">
                                 <label htmlFor="confirmPassword" className="flex items-center gap-2 text-sm font-semibold text-primary">
-                                    <Lock className="w-4 h-4 text-secondary" />
-                                    تأكيد كلمة المرور
+                                    <Lock className="w-4 h-4 text-secondary" /> تأكيد كلمة المرور
                                 </label>
                                 <div className="relative">
                                     <Field name="confirmPassword">
                                         {({ field }) => (
                                             <input
                                                 {...field}
+                                                id="confirmPassword"
                                                 type={showConfirmPassword ? 'text' : 'password'}
-                                                className={`w-full pl-4 pr-12 py-3 border rounded-lg focus:outline-none focus:ring-2 transition-all duration-300 ${errors.confirmPassword && touched.confirmPassword
+                                                className={`w-full pl-4 pr-12 py-3 border rounded-lg focus:outline-none focus:ring-2 transition-all duration-300 text-gray-900 placeholder-gray-400 bg-white ${errors.confirmPassword && touched.confirmPassword
                                                     ? 'border-red-300 focus:ring-red-200 bg-red-50'
                                                     : 'border-gray-300 focus:ring-primary focus:border-primary'
                                                     }`}
                                                 placeholder="أعد إدخال كلمة المرور"
                                                 dir="ltr"
+                                                autoComplete="new-password"
                                             />
                                         )}
                                     </Field>
                                     <button
                                         type="button"
                                         onClick={() => setShowConfirmPassword(!showConfirmPassword)}
-                                        className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600 transition-colors"
+                                        className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600 transition-colors"
                                     >
                                         {showConfirmPassword ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
                                     </button>
