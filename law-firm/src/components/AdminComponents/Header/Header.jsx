@@ -55,7 +55,7 @@ function Header() {
                         </div>
                         <div className="hidden sm:block">
                             <h1 className="text-sm font-semibold text-gray-800">{t("Admin Panel")}</h1>
-                            <p className="text-xs text-gray-500">{t("Dashboard")}</p>
+                            <p className="text-xs text-gray-500">{t("sidebar.dashboard")}</p>
                         </div>
                     </div>
 
@@ -109,7 +109,7 @@ function Header() {
                                         }}
                                         className="w-full text-left px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50 cursor-pointer transition-colors duration-150 flex items-center space-x-2"
                                     >
-                                        {t("Settings")}
+                                        {t("sidebar.settings")}
                                     </button>
                                     <div className="border-t border-gray-100" />
                                     <button
