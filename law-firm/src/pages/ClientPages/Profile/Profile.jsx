@@ -1,12 +1,10 @@
 import React, { useState } from 'react';
-import { User, Mail, Shield, Calendar, Plus } from 'lucide-react';
+import { User, Mail, Shield, Calendar, Plus, Phone, MessageSquare } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { useChangePassword } from '../../../hooks/useChangePassword';
-import { useAuthStore } from '../../../store/useAuthStore';
 import { useRequestsByUserId } from '../../../hooks/useRequests';
 import Security from './Security';
 import Requests from './requests';
-import { useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useUserInfo } from '../../../hooks/useUserInfo';
 import Loading from '../../../components/Common/Loading';
@@ -17,13 +15,13 @@ export default function Profile() {
     const changePasswordMutation = useChangePassword();
     const [activeTab, setActiveTab] = useState('profile');
     const { data: userData, isLoading, error } = useUserInfo();
-    const user = userData // Access the nested data object
+    const user = userData
     console.log(user)
     const isNotClient = user?.role !== "User";
-    const { data: requests } = useRequestsByUserId({ 
-        userId: user?.id, 
-        pageIndex: 1, 
-        pageSize: 5 
+    const { data: requests } = useRequestsByUserId({
+        userId: user?.id,
+        pageIndex: 1,
+        pageSize: 5
     });
 
     if (isLoading) {
@@ -101,7 +99,7 @@ export default function Profile() {
 
                                             <div className="flex items-center gap-3 p-3 bg-gray-50 rounded-lg">
                                                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-primary flex-shrink-0">
-                                                    <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/>
+                                                    <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z" />
                                                 </svg>
                                                 <div>
                                                     <p className="text-sm text-gray-600">Mobile Number</p>
@@ -111,7 +109,7 @@ export default function Profile() {
 
                                             <div className="flex items-center gap-3 p-3 bg-gray-50 rounded-lg">
                                                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-primary flex-shrink-0">
-                                                    <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/>
+                                                    <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z" />
                                                 </svg>
                                                 <div>
                                                     <p className="text-sm text-gray-600">WhatsApp Number</p>
@@ -135,10 +133,10 @@ export default function Profile() {
                                     <div className="lg:col-span-1 space-y-6">
                                         {/* Profile Card */}
                                         <div className="bg-white rounded-2xl shadow-lg border border-gray-200 p-6">
-                                            {/* Profile Picture */}
+                                            {/* Profile Info */}
                                             <div className="flex flex-col items-center mb-6">
                                                 <div className="w-32 h-32 bg-primary/10 rounded-full flex items-center justify-center mb-4">
-                                                    {user.profilePicture ? (
+                                                    {user?.profilePicture ? (
                                                         <img
                                                             src={user.profilePicture}
                                                             alt={user.name}
@@ -148,43 +146,60 @@ export default function Profile() {
                                                         <User className="w-16 h-16 text-primary" />
                                                     )}
                                                 </div>
-                                                <h2 className="text-2xl font-bold text-primary text-center">{user.name}</h2>
-                                                <p className="text-gray-600 text-center mt-1">{user.lastRole}#{user.id}</p>
+                                                <h2 className="text-2xl font-bold text-primary text-center">{user?.name}</h2>
+                                                <p className="text-gray-600 text-center mt-1">
+                                                    {user?.role} #{user?.id}
+                                                </p>
+                                                {user?.branchName && (
+                                                    <p className="text-gray-500 text-sm mt-1">{user.branchName}</p>
+                                                )}
                                             </div>
 
-                                            {/* User Details */}
                                             <div className="space-y-4">
                                                 <div className="flex items-center gap-3 p-3 bg-gray-50 rounded-lg">
-                                                    <Mail className="w-5 h-5 text-primary" />
-                                                    <div>
+                                                    <Mail className="w-5 h-5 text-primary flex-shrink-0" />
+                                                    <div className="min-w-0">
                                                         <p className="text-sm text-gray-600">Email</p>
-                                                        <p className="text-primary font-medium">{user.email}</p>
+                                                        <p className="text-primary font-medium truncate">{user?.email}</p>
                                                     </div>
                                                 </div>
 
                                                 <div className="flex items-center gap-3 p-3 bg-gray-50 rounded-lg">
-                                                    <Shield className="w-5 h-5 text-primary" />
+                                                    <Phone className="w-5 h-5 text-primary flex-shrink-0" />
+                                                    <div>
+                                                        <p className="text-sm text-gray-600">Mobile Number</p>
+                                                        <p className="text-primary font-medium">{user?.mobileNumber || 'Not provided'}</p>
+                                                    </div>
+                                                </div>
+
+                                                <div className="flex items-center gap-3 p-3 bg-gray-50 rounded-lg">
+                                                    <MessageSquare className="w-5 h-5 text-primary flex-shrink-0" />
+                                                    <div>
+                                                        <p className="text-sm text-gray-600">WhatsApp Number</p>
+                                                        <p className="text-primary font-medium">{user?.whatsAppNumber || user?.mobileNumber || 'Not provided'}</p>
+                                                    </div>
+                                                </div>
+
+                                                <div className="flex items-center gap-3 p-3 bg-gray-50 rounded-lg">
+                                                    <Shield className="w-5 h-5 text-primary flex-shrink-0" />
                                                     <div>
                                                         <p className="text-sm text-gray-600">Role</p>
-                                                        <p className="text-primary font-medium">{user.lastRole}</p>
+                                                        <p className="text-primary font-medium capitalize">{user?.role?.toLowerCase()}</p>
                                                     </div>
                                                 </div>
 
-                                                <div className="flex items-center gap-3 p-3 bg-gray-50 rounded-lg">
-                                                    <Calendar className="w-5 h-5 text-primary" />
-                                                    <div>
-                                                        <p className="text-sm text-gray-600">Member since</p>
-                                                        <p className="text-primary font-medium">{user.joinDate}</p>
+                                                {user?.createdAt && (
+                                                    <div className="flex items-center gap-3 p-3 bg-gray-50 rounded-lg">
+                                                        <Calendar className="w-5 h-5 text-primary flex-shrink-0" />
+                                                        <div>
+                                                            <p className="text-sm text-gray-600">Member Since</p>
+                                                            <p className="text-primary font-medium">
+                                                                {new Date(user.createdAt).toLocaleDateString()}
+                                                            </p>
+                                                        </div>
                                                     </div>
-                                                </div>
+                                                )}
                                             </div>
-
-                                            {/* Edit Profile Button */}
-                                            {/* //TODO
-                                    <button className="w-full mt-6 px-4 py-3 bg-primary text-white rounded-lg font-semibold hover:bg-accent transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl">
-                                        Edit Profile
-                                    </button>
-                                    //TODO */}
                                         </div>
                                     </div>
 
@@ -215,7 +230,7 @@ export default function Profile() {
                     )}
                     {/* Security Tab Content */}
                     {activeTab === 'security' && (
-                        <Security changePasswordMutation={changePasswordMutation}/>
+                        <Security changePasswordMutation={changePasswordMutation} />
                     )}
                 </div>
             </div>

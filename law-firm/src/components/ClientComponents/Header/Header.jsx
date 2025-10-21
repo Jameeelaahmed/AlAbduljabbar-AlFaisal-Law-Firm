@@ -162,7 +162,7 @@ function Header() {
                                     <div className="relative p-2 rounded-full text-white bg-primary hover:bg-secondary transition cursor-pointer">
                                         <NotificationBell />
                                     </div>
-                                    
+
                                     {/* User Menu */}
                                     <div className="relative">
                                         <button
@@ -182,73 +182,73 @@ function Header() {
                                         transform transition-transform duration-300 ease-in-out origin-top
                                         ${isDesktopDropdownOpen ? 'scale-y-100 opacity-100' : 'scale-y-0 opacity-0'}
                                         `}>
-                                        {/* Styled user header */}
-                                        <div
-                                            className="px-4 py-3 border-b border-gray-100"
-                                            dir={currentLang === "ar" ? "rtl" : "ltr"}
-                                        >
-                                            <div className="flex items-center gap-3">
-                                                <UserCircle className="w-8 h-8 text-primary" />
-                                                <div className="min-w-0">
-                                                    <p className="text-sm text-gray-800 truncate">
-                                                        {t("landing.Hello")}{" "}
-                                                        <span className="font-semibold">{name}</span>
-                                                    </p>
+                                            {/* Styled user header */}
+                                            <div
+                                                className="px-4 py-3 border-b border-gray-100"
+                                                dir={currentLang === "ar" ? "rtl" : "ltr"}
+                                            >
+                                                <div className="flex items-center gap-3">
+                                                    <UserCircle className="w-8 h-8 text-primary" />
+                                                    <div className="min-w-0">
+                                                        <p className="text-sm text-gray-800 truncate">
+                                                            {t("landing.Hello")}{" "}
+                                                            <span className="font-semibold">{name}</span>
+                                                        </p>
+                                                    </div>
                                                 </div>
                                             </div>
-                                        </div>
 
-                                        {/* Profile Link */}
-                                        <Link
-                                            to="/profile"
-                                            onClick={() => closeDesktopDropdown()}
-                                            className="flex items-center gap-2 px-4 py-2 text-gray-700 hover:bg-gray-100 transition-all"
-                                        >
-                                            <User size={16} />
-                                            <span>{t("landing.Profile")}</span>
-                                        </Link>
-
-                                        {/* Language toggle switcher */}
-                                        <div className="flex items-center justify-between px-4 py-2">
-                                            <div className="flex items-center gap-x-3">
-                                                <Globe className="w-4 h-4 text-text" />
-                                                <span className="text-sm text-text">
-                                                    {currentLang === "ar" ? "العربية" : "English"}
-                                                </span>
-                                            </div>
-                                            <button
-                                                className={`relative w-12 h-6 cursor-pointer rounded-full transition-colors duration-200 focus:outline-none ${currentLang === "ar"
-                                                    ? "bg-primary"
-                                                    : "bg-secondary"
-                                                    }`}
-                                                onClick={() => handleLanguageChange(currentLang === "ar" ? "en" : "ar")}
-                                                aria-label="Toggle language"
+                                            {/* Profile Link */}
+                                            <Link
+                                                to="/profile"
+                                                onClick={() => closeDesktopDropdown()}
+                                                className="flex items-center gap-2 px-4 py-2 text-gray-700 hover:bg-gray-100 transition-all"
                                             >
-                                                <span
-                                                    className={`absolute top-0.5 left-0.5 w-5 h-5 rounded-full bg-white shadow transition-transform duration-200 ${currentLang === "ar"
-                                                        ? "translate-x-6"
-                                                        : "translate-x-0"
+                                                <User size={16} />
+                                                <span>{t("landing.Profile")}</span>
+                                            </Link>
+
+                                            {/* Language toggle switcher */}
+                                            <div className="flex items-center justify-between px-4 py-2">
+                                                <div className="flex items-center gap-x-3">
+                                                    <Globe className="w-4 h-4 text-text" />
+                                                    <span className="text-sm text-text">
+                                                        {currentLang === "ar" ? "العربية" : "English"}
+                                                    </span>
+                                                </div>
+                                                <button
+                                                    className={`relative w-12 h-6 cursor-pointer rounded-full transition-colors duration-200 focus:outline-none ${currentLang === "ar"
+                                                        ? "bg-primary"
+                                                        : "bg-secondary"
                                                         }`}
-                                                />
+                                                    onClick={() => handleLanguageChange(currentLang === "ar" ? "en" : "ar")}
+                                                    aria-label="Toggle language"
+                                                >
+                                                    <span
+                                                        className={`absolute top-0.5 left-0.5 w-5 h-5 rounded-full bg-white shadow transition-transform duration-200 ${currentLang === "ar"
+                                                            ? "translate-x-6"
+                                                            : "translate-x-0"
+                                                            }`}
+                                                    />
+                                                </button>
+                                            </div>
+
+                                            {/* Divider */}
+                                            <div className="border-t border-gray-200 my-1"></div>
+
+                                            {/* Logout */}
+                                            <button
+                                                onClick={() => {
+                                                    handleLogout();
+                                                    closeDesktopDropdown();
+                                                }}
+                                                className="w-full flex cursor-pointer items-center gap-2 px-4 py-2 text-red-600 hover:bg-red-50 transition-all"
+                                            >
+                                                <LogOut size={16} />
+                                                <span>{t("landing.Logout")}</span>
                                             </button>
                                         </div>
-
-                                        {/* Divider */}
-                                        <div className="border-t border-gray-200 my-1"></div>
-
-                                        {/* Logout */}
-                                        <button
-                                            onClick={() => {
-                                                handleLogout();
-                                                closeDesktopDropdown();
-                                            }}
-                                            className="w-full flex cursor-pointer items-center gap-2 px-4 py-2 text-red-600 hover:bg-red-50 transition-all"
-                                        >
-                                            <LogOut size={16} />
-                                            <span>{t("landing.Logout")}</span>
-                                        </button>
                                     </div>
-                                </div>
                                 </div>
 
                                 {/* Click outside to close dropdown */}

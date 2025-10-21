@@ -465,6 +465,10 @@
       "enterReviewAr": "أدخل الرأي بالعربية"
     }
   },
+  "Common": {
+    "notProvided": "غير متوفر",
+    "notSpecified": "غير محدد"
+  },
   "common": {
     "addBase": "إضافة قاعدة",
     "saveAllChanges": "حفظ جميع التغييرات",
@@ -613,6 +617,38 @@
     "created": "تم إنشاء السلايدر بنجاح",
     "updated": "تم تحديث السلايدر بنجاح",
     "deleted": "تم حذف السلايدر بنجاح"
+  },
+  "ClientRequests": {
+    "requestedBy": "مقدم الطلب",
+    "notes": "الملاحظات",
+    "notes_plural": "ملاحظات",
+    "requestDetails": "تفاصيل الطلب",
+    "backToRequests": "العودة إلى طلباتي",
+    "requestedOn": "تم الطلب في",
+    "requestType": "نوع الطلب",
+    "description": "الوصف",
+    "adminNote": "ملاحظة المسؤول",
+    "attachments": {
+      "title": "المرفقات",
+      "noAttachments": "لا توجد مرفقات متاحة",
+      "download": "تحميل"
+    },
+    "activity": "النشاط",
+    "statusUpdated": "تم تحديث الحالة إلى",
+    "requestCreated": "تم إنشاء الطلب",
+    "notesSection": "الملاحظات السابقة",
+    "note": "ملاحظة",
+    "notesPlural": "ملاحظات",
+    "noNotesYet": "لا توجد ملاحظات بعد",
+    "noNotesDescription": "لا توجد ملاحظات لهذا الطلب حتى الآن.",
+    "anonymous": "مجهول",
+    "status": {
+      "pending": "قيد الانتظار",
+      "contacted": "تم التواصل",
+      "resolved": "تم الحل",
+      "rejected": "مرفوض",
+      "unknown": "غير معروف"
+    }
   },
   "validation": {
     "required": "هذا الحقل مطلوب",
