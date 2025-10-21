@@ -52,7 +52,6 @@ function FAQModal({ onClose, faqId = null, faqCategoryId }) {
                             const id = faqId;
                             await updateFaq({ id, data: values });
                         } else {
-                            console.log("creating faq payload:", values);
                             const payload = { faqCategoryId: faqCategoryId, ...values }
                             await createFaq(payload);
                         }

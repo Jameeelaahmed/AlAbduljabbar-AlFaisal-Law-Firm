@@ -28,8 +28,6 @@ function RequestsDetails() {
 
     const {
         data: previousNotes,
-        isLoading: isFetchingNotes,
-        error: notesError
     } = useNotes(requestId);
 
 
@@ -93,26 +91,26 @@ function RequestsDetails() {
     );
 
     // Default timeline data for new requests or when API timeline is not available
-    const defaultTimeline = [
-        {
-            status: getStatusLabel(0),
-            date: new Date(requestData?.createdAt).toLocaleDateString('ar-SA'),
-            time: new Date(requestData?.createdAt).toLocaleTimeString('ar-SA'),
-            by: t("Requests.Timeline.system")
-        },
-        {
-            status: getStatusLabel(1),
-            date: new Date(requestData?.createdAt).toLocaleDateString('ar-SA'),
-            time: new Date(new Date(requestData?.createdAt).getTime() + 1800000).toLocaleTimeString('ar-SA'), // 30 minutes later
-            by: t("Requests.Team.reviewTeam")
-        },
-        {
-            status: getStatusLabel(2),
-            date: new Date(requestData?.createdAt).toLocaleDateString('ar-SA'),
-            time: new Date(new Date(requestData?.createdAt).getTime() + 3600000).toLocaleTimeString('ar-SA'), // 1 hour later
-            by: t("Requests.Team.supervisor")
-        }
-    ];
+    // const defaultTimeline = [
+    //     {
+    //         status: getStatusLabel(0),
+    //         date: new Date(requestData?.createdAt).toLocaleDateString('ar-SA'),
+    //         time: new Date(requestData?.createdAt).toLocaleTimeString('ar-SA'),
+    //         by: t("Requests.Timeline.system")
+    //     },
+    //     {
+    //         status: getStatusLabel(1),
+    //         date: new Date(requestData?.createdAt).toLocaleDateString('ar-SA'),
+    //         time: new Date(new Date(requestData?.createdAt).getTime() + 1800000).toLocaleTimeString('ar-SA'), // 30 minutes later
+    //         by: t("Requests.Team.reviewTeam")
+    //     },
+    //     {
+    //         status: getStatusLabel(2),
+    //         date: new Date(requestData?.createdAt).toLocaleDateString('ar-SA'),
+    //         time: new Date(new Date(requestData?.createdAt).getTime() + 3600000).toLocaleTimeString('ar-SA'), // 1 hour later
+    //         by: t("Requests.Team.supervisor")
+    //     }
+    // ];
 
     if (isLoading) {
         return (
@@ -236,7 +234,7 @@ function RequestsDetails() {
                                                             <div className="flex items-center gap-3">
                                                                 <svg
                                                                     xmlns="http://www.w3.org/2000/svg"
-                                                                    className="h-4 w-4 sm:h-5 sm:w-5 text-gray-500 flex-shrink-0"
+                                                                    className="h-4 w-4 sm:h-5 sm:w-5 text-gray-500 shrink-0"
                                                                     viewBox="0 0 20 20"
                                                                     fill="currentColor"
                                                                 >
@@ -273,27 +271,6 @@ function RequestsDetails() {
                                 </div>
                             </div>
                         </section>
-                        {/* //! DELETED */}
-                        {/* <section className="bg-white rounded-lg shadow p-4 sm:p-6 border border-gray-200">
-                            <h3 className="text-base sm:text-lg font-semibold text-gray-900 mb-3 sm:mb-4">{t("Requests.Timeline.title")}</h3>
-                            <div className="flow-root">
-                                <ul className="-mb-8">
-                                    {(requestData.timeline?.length > 0 ? requestData.timeline : defaultTimeline).map((event, idx) => (
-                                        <li key={idx} className="mb-6 sm:mb-8">
-                                            <div className="relative pb-6 sm:pb-8">
-                                                <span className={`absolute -right-2 sm:-right-3 top-1 w-3 h-3 sm:w-3.5 sm:h-3.5 rounded-full ring-2 sm:ring-4 ring-white ${idx === 0 ? 'bg-primary' : 'bg-gray-500'}`} />
-                                                <div className="ml-8 sm:ml-10 pr-3 sm:pr-4">
-                                                    <p className="text-xs sm:text-sm font-semibold text-gray-900">{event.status}</p>
-                                                    <p className="text-xs text-gray-500">
-                                                        {event.date} {event.time ? `${event.time} •` : '•'} {t("Requests.Timeline.by")} {event.by}
-                                                    </p>
-                                                </div>
-                                            </div>
-                                        </li>
-                                    ))}
-                                </ul>
-                            </div>
-                        </section> */}
                     </div>
 
                     {/* Right: Actions & Status */}
@@ -383,7 +360,7 @@ function RequestsDetails() {
                                         <p className="text-sm text-gray-500">{t("Requests.Notes.noPreviousNotes")}</p>
                                     </div>
                                 ) : (
-                                    previousNotes?.data?.map((item, index) => (
+                                    previousNotes?.data?.map((item) => (
                                         <div
                                             key={item.id}
                                             className="bg-gray-50 rounded-lg p-3 sm:p-4 border border-gray-200"

@@ -119,7 +119,7 @@ export default function NotFoundPage() {
                     </div>
 
                     {/* Page Not Found Text */}
-                    <div className="text-2xl md:text-3xl font-semibold text-gray-600 mt-4 min-h-[2rem]">
+                    <div className="text-2xl md:text-3xl font-semibold text-gray-600 mt-4 min-h-8">
                         {displayedText}
                     </div>
 

@@ -21,7 +21,7 @@ export const ClientReviewsSection = ({ formik }) => {
                 {({ push, remove }) => (
                     <div >
                         <div className="flex justify-between items-center mb-6">
-                            <h2 className="text-xl font-semibold text-[#003a42]">
+                            <h2 className="text-xl font-semibold text-primary">
                                 {t('Settings.clientReviews.title')}
                             </h2>
                             <button
@@ -37,7 +37,7 @@ export const ClientReviewsSection = ({ formik }) => {
                                     })
                                 }
                                 type="button"
-                                className="flex items-center gap-2 px-4 py-2 bg-[#003a42] text-white rounded-lg hover:bg-[#004a52] transition-colors text-sm"
+                                className="flex items-center gap-2 px-4 py-2 bg-primary text-white rounded-lg hover:bg-[#004a52] transition-colors text-sm"
                             >
                                 <Plus size={16} />
                                 {t('Settings.clientReviews.addReview')}

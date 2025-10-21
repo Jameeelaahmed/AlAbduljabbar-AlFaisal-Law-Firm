@@ -63,7 +63,13 @@
     "Clear": "Clear",
     "Change Category Name": "Change Category Name",
     "Update Service": "Update Service",
-    "Sub-services": "Sub-services"
+    "Sub-services": "Sub-services",
+    "Services updated successfully": "Services updated successfully",
+    "Service Name in English": "Service Name in English",
+    "Service Name in Arabic": "Service Name in Arabic",
+    "Service Name in English is required": "Service Name in English is required",
+    "Service Name in Arabic is required": "Service Name in Arabic is required",
+    "Loading...": "Loading..."
   },
   "Add Category": {
     "Category Name in English is required": "Category Name in English is required",
@@ -225,6 +231,8 @@
   },
   "Users": {
     "Users": "Users",
+    "Management": "User Management",
+    "searchPlaceholder": "Search users by name or email...",
     "User deleted successfully": "User deleted successfully",
     "Failed to delete user": "Failed to delete user",
     "User updated successfully": "User updated successfully",
@@ -336,7 +344,7 @@
     "security": "Security",
     "notifications": "Notifications",
     "billing": "Billing",
-    
+
     "companySummary": {
       "title": "Company Summary",
       "yearsOfExperience": "Years of Experience",
@@ -344,7 +352,7 @@
       "finishedCases": "Finished Cases",
       "successRate": "Success Rate %"
     },
-    
+
     "journeyMilestones": {
       "title": "Journey Milestones",
       "year": "Year",
@@ -360,7 +368,7 @@
       "enterDescriptionEn": "Enter description in English",
       "enterDescriptionAr": "Enter description in Arabic"
     },
-    
+
     "coreValues": {
       "title": "Core Values",
       "value": "Value",
@@ -376,7 +384,7 @@
       "enterDescriptionEn": "Enter description in English",
       "enterDescriptionAr": "Enter description in Arabic"
     },
-    
+
     "baseOfOurSuccess": {
       "title": "Base of Our Success",
       "headlineEn": "Headline (English)",
@@ -397,7 +405,7 @@
       "enterDescriptionEn": "Enter description in English",
       "enterDescriptionAr": "Enter description in Arabic"
     },
-    
+
     "lawyers": {
       "title": "Lawyers",
       "addLawyer": "Add Lawyer",
@@ -427,7 +435,7 @@
       "enterDescriptionEn": "Enter description in English",
       "enterDescriptionAr": "Enter description in Arabic"
     },
-    
+
     "clientReviews": {
       "title": "Client Reviews",
       "addReview": "Add Review",
@@ -711,6 +719,14 @@
     "loading": "Loading messages...",
     "error": "Error loading messages"
   },
+  "pagination": {
+    "showing": "Showing",
+    "to": "to",
+    "of": "of",
+    "records": "records",
+    "previous": "Previous",
+    "next": "Next"
+  },
   "Contact Our Legal Team": "Contact our legal team",
   "We're here to help with your legal needs. Reach out to schedule a consultation with one of our experienced attorneys.": "We're here to help with your legal needs. Reach out to schedule a consultation with one of our experienced attorneys.",
   "Email": "Email",
@@ -732,5 +748,49 @@
   "Please enter a valid email": "Please enter a valid email",
   "Please enter a valid phone number": "Please enter a valid phone number",
   "Please enter a longer message": "Please enter a longer message",
-  "Procedures": "Procedures"
+  "Procedures": "Procedures",
+  "Admin Panel": "Admin Panel",
+  "Profile": "Profile",
+  "Logout": "Logout",
+  "Are you sure you want to delete this user?": "Are you sure you want to delete this user?",
+  "Deleting...": "Deleting...",
+  "Delete User": "Delete User",
+  "Cancel": "Cancel",
+  "Click to select image": "Click to select image",
+  "Supported formats: JPG, PNG, GIF. Max size: 5MB": "Supported formats: JPG, PNG, GIF. Max size: 5MB",
+  "UpdateUser": "Update User",
+  "AddNewUser": "Add New User",
+  "Mobile Number": "Mobile Number",
+  "WhatsApp Number": "WhatsApp Number",
+  "Role": "Role",
+  "Member since": "Member since",
+  "Footer": {
+    "BrandTitle": "AlAbduljabbar & AlFaisal",
+    "BrandSubtitle": "Law Firm & Legal Consultations",
+    "Description": "A Saudi-Egyptian law firm providing integrated legal solutions that blend heritage with modern practice",
+    "QuickLinks": "Quick Links",
+    "Contact": "Contact Information",
+    "ServicesTitle": "Our Services",
+    "RiyadhTitle": "Riyadh, Saudi Arabia",
+    "RiyadhAddress": "Al Olaya, Riyadh - 12214",
+    "CairoTitle": "Cairo, Egypt",
+    "CairoAddress": "Zamalek, Cairo - 11211",
+    "CompanyName": "AlAbduljabbar & AlFaisal Law Firm",
+    "Copyright": "All rights reserved.",
+    "PrivacyPolicy": "Privacy Policy",
+    "TermsOfService": "Terms of Service",
+    "Sitemap": "Sitemap",
+    "Social": {
+      "LinkedIn": "LinkedIn",
+      "Twitter": "Twitter",
+      "Facebook": "Facebook",
+      "Instagram": "Instagram"
+    },
+    "Services": {
+      "CommercialLaw": "Commercial Law",
+      "RealEstateLaw": "Real Estate Law",
+      "CorporateLaw": "Corporate Law",
+      "InternationalArbitration": "International Arbitration"
+    }
+  }
 }

@@ -361,7 +361,7 @@ export default function SettingsPage() {
 
     if (error) {
         return (
-            <div className="min-h-screen bg-[#f4f5f3] flex items-center justify-center p-4">
+            <div className="min-h-screen bg-bg flex items-center justify-center p-4">
                 <div className="bg-white rounded-lg shadow-lg p-6 max-w-md w-full">
                     <div className="flex items-center gap-3 text-red-600 mb-4">
                         <AlertCircle size={24} />
@@ -390,7 +390,7 @@ export default function SettingsPage() {
                         <button
                             type="submit"
                             disabled={mutation.isLoading}
-                            className="flex items-center gap-2 px-8 py-3 bg-[#003a42] text-white rounded-lg hover:bg-[#004a52] transition-colors disabled:opacity-50 disabled:cursor-not-allowed font-medium shadow-lg"
+                            className="flex items-center gap-2 px-8 py-3 bg-primary text-white rounded-lg hover:bg-primary transition-colors disabled:opacity-50 disabled:cursor-not-allowed font-medium shadow-lg"
                         >
                             {mutation.isLoading ? (
                                 <>
@@ -415,7 +415,7 @@ export default function SettingsPage() {
 
     return (
         <FormikProvider value={formik}>
-            <div className="min-h-screen bg-[#f4f5f3]">
+            <div className="min-h-screen bg-bg">
                 {/* Header */}
                 <div className="bg-primary text-white shadow-lg sticky top-0 z-10">
                     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -429,7 +429,7 @@ export default function SettingsPage() {
                                     onClick={() => formik.submitForm()}
                                     disabled={mutation.isLoading}
                                     type="button"
-                                    className="flex items-center gap-2 px-6 py-3 bg-[#006b63] text-white rounded-lg hover:bg-[#007b73] transition-colors disabled:opacity-50 disabled:cursor-not-allowed font-medium shadow-md"
+                                    className="flex items-center gap-2 px-6 py-3 bg-accent text-white rounded-lg hover:bg-[#007b73] transition-colors disabled:opacity-50 disabled:cursor-not-allowed font-medium shadow-md"
                                 >
                                     {mutation.isLoading ? (
                                         <>
@@ -447,12 +447,12 @@ export default function SettingsPage() {
                         </div>
 
                         {/* Tabs */}
-                        <div className="flex border-b border-[#006b63]">
+                        <div className="flex border-b border-accent">
                             <button
                                 onClick={() => setActiveTab('settings')}
                                 className={`px-4 py-3 font-medium text-sm ${activeTab === 'settings'
-                                    ? 'bg-[#006b63] text-white'
-                                    : 'text-gray-200 hover:bg-[#005a54]'
+                                    ? 'bg-accent text-white'
+                                    : 'text-gray-200 hover:bg-accent'
                                     }`}
                             >
                                 {t('Settings.title')}
@@ -460,8 +460,8 @@ export default function SettingsPage() {
                             <button
                                 onClick={() => setActiveTab('sliders')}
                                 className={`px-4 py-3 font-medium text-sm ${activeTab === 'sliders'
-                                    ? 'bg-[#006b63] text-white'
-                                    : 'text-gray-200 hover:bg-[#005a54]'
+                                    ? 'bg-accent text-white'
+                                    : 'text-gray-200 hover:bg-accent'
                                     }`}
                             >
                                 {t('slider.manageSlider')}

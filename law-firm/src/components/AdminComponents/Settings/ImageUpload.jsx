@@ -1,10 +1,11 @@
 import { Upload, X } from 'lucide-react';
 import { useState, useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 import { toast } from 'react-toastify';
 
 export const ImageUpload = ({ name, value, onChange, label = "Image" }) => {
     const [preview, setPreview] = useState('');
-
+    const { t } = useTranslation();
     // Update preview when value prop changes
     useEffect(() => {
         if (value) {
@@ -43,7 +44,7 @@ export const ImageUpload = ({ name, value, onChange, label = "Image" }) => {
         // Create local preview immediately
         const objectUrl = URL.createObjectURL(file);
         setPreview(objectUrl);
-        
+
         // Pass the File object to the form
         onChange(file);
     };
@@ -56,12 +57,12 @@ export const ImageUpload = ({ name, value, onChange, label = "Image" }) => {
     return (
         <div>
             <label className="block text-sm font-medium text-gray-700 mb-2">{label}</label>
-            
+
             {preview ? (
                 <div className="relative inline-block">
-                    <img 
-                        src={preview} 
-                        alt="Preview" 
+                    <img
+                        src={preview}
+                        alt="Preview"
                         className="w-32 h-32 object-cover rounded-lg border border-gray-300"
                     />
                     <button
@@ -87,14 +88,14 @@ export const ImageUpload = ({ name, value, onChange, label = "Image" }) => {
                     >
                         <Upload size={20} className="text-gray-400" />
                         <span className="text-sm text-gray-600">
-                            Click to select image
+                            {t("Click to select image")}
                         </span>
                     </label>
                 </div>
             )}
-            
+
             <p className="mt-1 text-xs text-gray-500">
-                Supported formats: JPG, PNG, GIF. Max size: 5MB
+                {t("Supported formats: JPG, PNG, GIF. Max size: 5MB")}
             </p>
         </div>
     );

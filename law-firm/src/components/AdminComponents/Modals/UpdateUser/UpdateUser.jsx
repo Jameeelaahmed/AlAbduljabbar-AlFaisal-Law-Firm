@@ -9,7 +9,7 @@ function UpdateUser({ userId, onSuccess, onFailure }) {
     const { data: user, isLoading } = useGetUserForUpdate(userId);
     const { mutateAsync: updateUser, isLoading: isUpdating } = useUpdateUser();
 
-    if (isLoading || !user) return <div className="text-center p-6">جاري التحميل...</div>;
+    if (isLoading || !user) return <div className="text-center p-6">{t("Loading...")}</div>;
 
     return (
         <div className="flex items-center justify-center p-4" onClick={(e) => e.stopPropagation()}>

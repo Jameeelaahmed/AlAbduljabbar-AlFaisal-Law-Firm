@@ -177,7 +177,7 @@ const ConsultationPage = () => {
     }, [activeStep, formData]);
 
     return (
-        <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100">
+        <div className="min-h-screen bg-linear-to-br from-gray-50 to-gray-100">
             {/* Hero header (same style as Contact Us hero) */}
             <section className="bg-primary text-white pt-28 pb-16">
                 <div className="container mx-auto px-4 text-center">
@@ -193,8 +193,6 @@ const ConsultationPage = () => {
             <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
                 {/* Step Indicator */}
                 <StepIndicator steps={steps} currentStep={activeStep} />
-
-
                 <div className="bg-white rounded-2xl shadow-xl overflow-hidden border border-primary/10">
                     {/* Step 1: Consultation Type Selection */}
                     {activeStep === 0 && (
@@ -213,7 +211,7 @@ const ConsultationPage = () => {
                         <form onSubmit={handleSubmit} className="p-10">
                             {/* Selected Consultation Type Display */}
                             {formData.consultationType && (
-                                <div className="mb-8 p-6 ltr:bg-gradient-to-r rtl:bg-gradient-to-l from-accent/5 to-accent/10 rounded-xl border border-accent/20">
+                                <div className="mb-8 p-6 ltr:bg-linear-to-r rtl:bg-linear-to-l from-accent/5 to-accent/10 rounded-xl border border-accent/20">
                                     <div className="flex items-center space-x-3">
                                         <div className="w-8 h-8 rounded-full bg-accent/20 flex items-center justify-center">
                                             <Check className="w-4 h-4 text-accent" />
@@ -316,7 +314,7 @@ const ConsultationPage = () => {
                                         <button
                                             type="submit"
                                             disabled={isCreating || !isStepValid}
-                                            className="px-12 py-4 ltr:bg-gradient-to-r rtl:bg-gradient-to-l from-accent to-accent/90 text-white rounded-xl hover:from-accent/90 hover:to-accent/80 transition-all duration-200 font-semibold text-lg shadow-lg disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none transform hover:scale-105 ltr:ml-auto rtl:mr-auto flex items-center space-x-2"
+                                            className="px-12 py-4 ltr:bg-linear-to-r rtl:bg-linear-to-l from-accent to-accent/90 text-white rounded-xl hover:from-accent/90 hover:to-accent/80 transition-all duration-200 font-semibold text-lg shadow-lg disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none transform hover:scale-105 ltr:ml-auto rtl:mr-auto flex items-center space-x-2"
                                         >
                                             {isCreating ? (
                                                 <>

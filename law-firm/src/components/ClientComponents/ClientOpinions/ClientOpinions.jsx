@@ -80,7 +80,7 @@ function ClientOpinions() {
             <div className="container mx-auto px-4 sm:px-6 lg:px-8">
                 {/* Header */}
                 <div className="max-w-3xl mx-auto mb-16 text-center">
-                    <div className="inline-flex items-center gap-2 px-4 py-2 bg-[var(--color-primary)]/10 text-[var(--color-primary)] rounded-full text-sm font-medium mb-6">
+                    <div className="inline-flex items-center gap-2 px-4 py-2 bg-[var(--color-primary)]/10 text-[var(--color-primary)] rounded-full text-lg font-medium mb-6">
                         <Quote size={18} />
                         {t("ClientOpinions.Our Clients' Opinions") || "Client Testimonials"}
                     </div>
@@ -89,7 +89,7 @@ function ClientOpinions() {
                     </h2>
                     <p className="text-lg text-gray-600 leading-relaxed">
                         {isRtl
-                            ? "انضم إلى المئات من العملاء الراضين الذين وثقوا بنا في قضاياهم القانونية"
+                            ? "انضم إلى المئات من العملاء الراضيبن الذين وثقوا بنا في قضاياهم القانونية"
                             : "Join hundreds of satisfied clients who have trusted us with their legal matters"
                         }
                     </p>

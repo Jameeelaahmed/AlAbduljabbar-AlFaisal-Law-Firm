@@ -21,13 +21,10 @@ export default function ConsultationDetailsPage() {
     const {
         data: requestData,
         isLoading,
-        error
     } = useConsultation(userConsultationId);
 
     const {
         data: previousNotes,
-        isLoading: isFetchingNotes,
-        error: notesError
     } = useNotes(null, userConsultationId);
 
     //TODO Mutations 
@@ -204,7 +201,7 @@ export default function ConsultationDetailsPage() {
                             {/* Status Action Buttons */}
                             <div className="grid grid-cols-1 sm:grid-cols-3 gap-2 mb-4">
                                 <button
-                                    onClick={() => contactConsultation(consultationId)}
+                                    onClick={() => contactConsultation(userConsultationId)}
                                     disabled={isContacting || requestData.status === 1}
                                     className={`inline-flex cursor-pointer justify-center items-center px-4 py-2 rounded-md text-sm font-medium
                                                 ${requestData.status === 1
@@ -216,7 +213,7 @@ export default function ConsultationDetailsPage() {
                                 </button>
 
                                 <button
-                                    onClick={() => resolveConsultation(consultationId)}
+                                    onClick={() => resolveConsultation(userConsultationId)}
                                     disabled={isResolving || requestData.status === 2}
                                     className={`inline-flex cursor-pointer justify-center items-center px-4 py-2 rounded-md text-sm font-medium
                                                 ${requestData.status === 2
@@ -228,7 +225,7 @@ export default function ConsultationDetailsPage() {
                                 </button>
 
                                 <button
-                                    onClick={() => rejectConsultation(consultationId)}
+                                    onClick={() => rejectConsultation(userConsultationId)}
                                     disabled={isRejecting || requestData.status === 3}
                                     className={`inline-flex cursor-pointer justify-center items-center px-4 py-2 rounded-md text-sm font-medium
                                                 ${requestData.status === 3

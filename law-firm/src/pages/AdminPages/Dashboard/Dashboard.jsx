@@ -12,7 +12,7 @@ import { Loading } from "../../../components/Common/Loading";
 function Dashboard() {
     const { t, i18n } = useTranslation();
     const isRtl = (i18n?.language || document.documentElement.dir) === "ar";
-    const { data: dashboardData, isLoading, isError } = useDashboard();
+    const { data: dashboardData, isLoading } = useDashboard();
 
     // Get branch name with localization
     const getBranchName = (branchId) => {
@@ -45,7 +45,7 @@ function Dashboard() {
     // Calculate branch statistics
     const branchStats = useMemo(() => {
         if (!dashboardData?.branchesRequestsAnalysis) return {};
-        
+
         return dashboardData.branchesRequestsAnalysis.reduce((acc, branch) => {
             acc[branch.branchId] = {
                 name: getBranchName(branch.branchId),
@@ -78,21 +78,21 @@ function Dashboard() {
 
             {/* Stats */}
             <div className={`grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-6`}>
-                <StatCard 
-                    label={t("Dashboard.Total Requests")} 
-                    value={dashboardData.totalRequests || 0} 
+                <StatCard
+                    label={t("Dashboard.Total Requests")}
+                    value={dashboardData.totalRequests || 0}
                 />
-                <StatCard 
-                    label={t("Dashboard.Active Requests")} 
-                    value={dashboardData.activeRequests || 0} 
+                <StatCard
+                    label={t("Dashboard.Active Requests")}
+                    value={dashboardData.activeRequests || 0}
                 />
-                <StatCard 
-                    label={t("Dashboard.Total Users")} 
-                    value={dashboardData.totalUsers || 0} 
+                <StatCard
+                    label={t("Dashboard.Total Users")}
+                    value={dashboardData.totalUsers || 0}
                 />
-                <StatCard 
-                    label={t("Dashboard.Customer Service")} 
-                    value={dashboardData.totalCustomerServices || 0} 
+                <StatCard
+                    label={t("Dashboard.Customer Service")}
+                    value={dashboardData.totalCustomerServices || 0}
                 />
             </div>
 
@@ -125,9 +125,9 @@ function Dashboard() {
                                             <td className="py-3 px-3 align-top">
                                                 <div className="flex items-center">
                                                     {request.userPhoto && (
-                                                        <img 
-                                                            src={request.userPhoto} 
-                                                            alt={request.userName} 
+                                                        <img
+                                                            src={request.userPhoto}
+                                                            alt={request.userName}
                                                             className="w-6 h-6 rounded-full mr-2"
                                                             onError={(e) => {
                                                                 e.target.onerror = null;
@@ -161,7 +161,7 @@ function Dashboard() {
                     <h3 className="font-medium mb-4">{t("Dashboard.Requests by Branch")}</h3>
                     <div className="space-y-4">
                         {dashboardData.branchesRequestsAnalysis?.map((branch) => (
-                            <BarRow 
+                            <BarRow
                                 key={branch.branchId}
                                 label={getBranchName(branch.branchId)}
                                 count={branch.totalRequests}
@@ -203,7 +203,7 @@ function StatCard({ label, value, icon: Icon }) {
 
 function BarRow({ label, count = 0, max = 1, color = "bg-emerald-500" }) {
     const pct = max > 0 ? Math.round((count / max) * 100) : 0;
-    
+
     return (
         <div>
             <div className="flex items-center justify-between text-sm text-gray-600 mb-1">
@@ -216,8 +216,8 @@ function BarRow({ label, count = 0, max = 1, color = "bg-emerald-500" }) {
                 </div>
             </div>
             <div className="w-full h-2.5 bg-gray-100 rounded-full overflow-hidden">
-                <div 
-                    className={`${color} h-full transition-all duration-500 ease-out`} 
+                <div
+                    className={`${color} h-full transition-all duration-500 ease-out`}
                     style={{ width: `${pct}%` }}
                 />
             </div>

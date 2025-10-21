@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import { Loading } from '../../Common/Loading';
 
-function GenericTable({ useDataHook, columns, actions, pageSize = 5, initialPage = 1, filters = {}, url = null }) {
+function GenericTable({ useDataHook, columns, actions, pageSize = 5, initialPage = 1, filters = {} }) {
     const [currentPage, setCurrentPage] = useState(initialPage);
     const [lastPageReached, setLastPageReached] = useState(false);
     const { t } = useTranslation();
@@ -98,7 +98,7 @@ function GenericTable({ useDataHook, columns, actions, pageSize = 5, initialPage
             {/* Pagination */}
             <div className="flex justify-between items-center mt-4 text-sm text-gray-600">
                 <div>
-                    عرض {indexOfFirstRecord + 1} إلى {indexOfLastRecord} من {indexOfFirstRecord + currentItemCount} سجل
+                    {t('pagination.showing')} {indexOfFirstRecord + 1} {t('pagination.to')} {indexOfLastRecord} {t('pagination.of')} {indexOfFirstRecord + currentItemCount} {t('pagination.records')}
                 </div>
                 <div className="flex gap-2">
                     <button
@@ -106,7 +106,7 @@ function GenericTable({ useDataHook, columns, actions, pageSize = 5, initialPage
                         disabled={currentPage === 1}
                         className="px-3 py-1 rounded-lg border cursor-pointer bg-white text-gray-700 hover:bg-gray-100 disabled:opacity-50"
                     >
-                        السابق
+                        {t('pagination.previous')}
                     </button>
                     <span className="px-3 py-1">{currentPage}</span>
                     <button
@@ -114,7 +114,7 @@ function GenericTable({ useDataHook, columns, actions, pageSize = 5, initialPage
                         disabled={lastPageReached || currentItemCount === 0}
                         className="px-3 py-1 rounded-lg cursor-pointer border bg-white text-gray-700 hover:bg-gray-100 disabled:opacity-50"
                     >
-                        التالي
+                        {t('pagination.next')}
                     </button>
                 </div>
             </div>

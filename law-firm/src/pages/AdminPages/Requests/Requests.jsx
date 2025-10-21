@@ -71,7 +71,7 @@ function Requests() {
                 ),
             },
         ],
-        [t] 
+        [t]
     );
 
     const tableActions = useMemo(
@@ -82,7 +82,7 @@ function Requests() {
                 className: "text-gray-500 hover:bg-gray-50",
             },
         ],
-        [t, navigate] 
+        [t, navigate]
     );
 
     return (
@@ -93,7 +93,7 @@ function Requests() {
             <div className="flex flex-wrap gap-2 sm:gap-3 mb-4 sm:mb-6">
                 <button
                     onClick={() => setStatusFilter("")}
-                    className={`px-3 py-2 sm:px-4  sm:py-2 border rounded-lg hover:bg-gray-100 cursor-pointer transition-all text-xs sm:text-sm md:text-base flex-shrink-0 ${statusFilter === ""
+                    className={`px-3 py-2 sm:px-4  sm:py-2 border rounded-lg hover:bg-gray-100 cursor-pointer transition-all text-xs sm:text-sm md:text-base shrink-0 ${statusFilter === ""
                         ? "bg-primary text-white border-primary shadow-md"
                         : "bg-white text-primary border-gray-400 hover:border-primary"
                         }`}
@@ -102,7 +102,7 @@ function Requests() {
                 </button>
                 <button
                     onClick={() => setStatusFilter("0")}
-                    className={`px-3 py-2 sm:px-4 sm:py-2 border rounded-lg hover:bg-gray-100 cursor-pointer transition-all text-xs sm:text-sm md:text-base flex-shrink-0 ${statusFilter === "0"
+                    className={`px-3 py-2 sm:px-4 sm:py-2 border rounded-lg hover:bg-gray-100 cursor-pointer transition-all text-xs sm:text-sm md:text-base shrink-0 ${statusFilter === "0"
                         ? "bg-primary text-white border-primary shadow-md"
                         : "bg-white text-primary border-gray-400 hover:border-primary"
                         }`}
@@ -111,7 +111,7 @@ function Requests() {
                 </button>
                 <button
                     onClick={() => setStatusFilter("2")}
-                    className={`px-3 py-2 sm:px-4 sm:py-2 border rounded-lg hover:bg-gray-100 cursor-pointer transition-all text-xs sm:text-sm md:text-base flex-shrink-0 ${statusFilter === "2"
+                    className={`px-3 py-2 sm:px-4 sm:py-2 border rounded-lg hover:bg-gray-100 cursor-pointer transition-all text-xs sm:text-sm md:text-base shrink-0 ${statusFilter === "2"
                         ? "bg-primary text-white border-primary shadow-md"
                         : "bg-white text-primary border-gray-400 hover:border-primary"
                         }`}
@@ -120,7 +120,7 @@ function Requests() {
                 </button>
                 <button
                     onClick={() => setStatusFilter("1")}
-                    className={`px-3 py-2 sm:px-4 sm:py-2 border rounded-lg hover:bg-gray-100 cursor-pointer transition-all text-xs sm:text-sm md:text-base flex-shrink-0 ${statusFilter === "1"
+                    className={`px-3 py-2 sm:px-4 sm:py-2 border rounded-lg hover:bg-gray-100 cursor-pointer transition-all text-xs sm:text-sm md:text-base shrink-0 ${statusFilter === "1"
                         ? "bg-primary text-white border-primary shadow-md"
                         : "bg-white text-primary border-gray-400 hover:border-primary"
                         }`}
@@ -129,7 +129,7 @@ function Requests() {
                 </button>
                 <button
                     onClick={() => setStatusFilter("3")}
-                    className={`px-3 py-2 sm:px-4 sm:py-2 border rounded-lg hover:bg-gray-100 cursor-pointer transition-all text-xs sm:text-sm md:text-base flex-shrink-0 ${statusFilter === "3"
+                    className={`px-3 py-2 sm:px-4 sm:py-2 border rounded-lg hover:bg-gray-100 cursor-pointer transition-all text-xs sm:text-sm md:text-base shrink-0 ${statusFilter === "3"
                         ? "bg-primary text-white border-primary shadow-md"
                         : "bg-white text-primary border-gray-400 hover:border-primary"
                         }`}

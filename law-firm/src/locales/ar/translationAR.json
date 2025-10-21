@@ -1,8 +1,8 @@
 {
-  "Saudi Arabia": "السعوديه",
+  "Saudi Arabia": "السعودية",
   "Egypt": "مصر",
   "Category must belong to at least one branch": "يجب أن تنتمي الفئة إلى فرع واحد على الأقل",
-  "RequestService": "اطلب خدمه",
+  "RequestService": "اطلب خدمة",
   "Send Request": "إرسال الطلب",
   "Sending...": "جاري الإرسال...",
   "title": "العنوان",
@@ -18,7 +18,7 @@
     "reports": "التقارير",
     "settings": "الإعدادات",
     "logout": "تسجيل الخروج",
-    "consultationTypes": "انواع الاستشارات",
+    "consultationTypes": "أنواع الاستشارات",
     "consultationsrequests": "طلبات الاستشارات"
   },
   "header": {
@@ -48,7 +48,7 @@
     "English name is required": "الاسم بالإنجليزية مطلوب",
     "Arabic name is required": "الاسم بالعربية مطلوب",
     "Branch selection is required": "اختيار الفرع مطلوب",
-    "Select Branch(es)": " اختر الفرع (الفروع)",
+    "Select Branch(es)": "اختر الفرع (الفروع)",
     "English description is required": " الوصف بالإنجليزية مطلوب",
     "Arabic description is required": "الوصف بالعربية مطلوب",
     "Category is required": "الفئة مطلوبة",
@@ -64,7 +64,13 @@
     "Clear": "مسح",
     "Change Category Name": "تغيير اسم الفئة",
     "Update Service": "تحديث الخدمة",
-    "Sub-services": "خدمات الفرعية"
+    "Sub-services": "الخدمات الفرعية",
+    "Services updated successfully": "تم تحديث الخدمات بنجاح",
+    "Service Name in English": "اسم الخدمة بالإنجليزية",
+    "Service Name in Arabic": "اسم الخدمة بالعربية",
+    "Service Name in English is required": "اسم الخدمة بالإنجليزية مطلوب",
+    "Service Name in Arabic is required": "اسم الخدمة بالعربية مطلوب",
+    "Loading...": "جاري التحميل..."
   },
   "Add Category": {
     "Category Name in English is required": "اسم الفئة بالإنجليزية مطلوب",
@@ -100,8 +106,8 @@
     "Management": "إدارة الطلبات",
     "Title": "العنوان",
     "Description": "الوصف",
-    "NoteAdded": "تم اضافة الملاحظه بنجاح",
-    "FailedNote": "حدث خطأ اثناء اضافة الملاحظه",
+    "NoteAdded": "تم إضافة الملاحظة بنجاح",
+    "FailedNote": "حدث خطأ أثناء إضافة الملاحظة",
     "Status": {
       "label": "الحالة",
       "Pending": "قيد الانتظار",
@@ -153,7 +159,7 @@
       "loading": "جاري التحميل...",
       "loadError": "حدث خطأ أثناء تحميل البيانات",
       "notFound": "لم يتم العثور على الطلب",
-      "noContent": "لا يوجد مواد لعرضها",
+      "noContent": "لا توجد مواد لعرضها",
       "requestRejectedSuccess": "تم رفض الطلب بنجاح",
       "requestContactedSuccess": "تم تحديد الطلب كمكتمل التواصل بنجاح",
       "requestResolvedSuccess": "تم حل الطلب بنجاح"
@@ -169,7 +175,7 @@
       "resolved": "تم الحل",
       "rejected": "مرفوض",
       "search": "بحث في الطلبات...",
-      "clearFilters": "مسح الفلترة"
+      "clearFilters": "مسح الفلاتر"
     }
   },
   "Consultations": {
@@ -187,7 +193,7 @@
     "Status": {
       "label": "الحالة",
       "Pending": "قيد المراجعة",
-      "Scheduled": "تم الجدولة",
+      "Scheduled": "تمت الجدولة",
       "Completed": "تمت",
       "Cancelled": "ملغاة"
     },
@@ -244,11 +250,13 @@
       "completed": "تمت",
       "cancelled": "ملغاة",
       "search": "بحث في الاستشارات...",
-      "clearFilters": "مسح الفلترة"
+      "clearFilters": "مسح الفلاتر"
     }
   },
   "Users": {
     "Users": "المستخدمين",
+    "Management": "إدارة المستخدمين",
+    "searchPlaceholder": "ابحث عن المستخدمين بالاسم، البريد الإلكتروني...",
     "User Created Successfully": "تم اضافة المستخدم بنجاح",
     "User Deleted successfully": "تم حذف المستخدم بنجاح",
     "Failed to delete user": "فشل حذف المستخدم",
@@ -353,7 +361,7 @@
     "security": "الأمان",
     "notifications": "الإشعارات",
     "billing": "الفوترة",
-    
+
     "companySummary": {
       "title": "ملخص الشركة",
       "yearsOfExperience": "سنوات الخبرة",
@@ -361,7 +369,7 @@
       "finishedCases": "قضايا منتهية",
       "successRate": "نسبة النجاح %"
     },
-    
+
     "journeyMilestones": {
       "title": "محطات الرحلة",
       "year": "السنة",
@@ -377,7 +385,7 @@
       "enterDescriptionEn": "أدخل الوصف بالإنجليزية",
       "enterDescriptionAr": "أدخل الوصف بالعربية"
     },
-    
+
     "coreValues": {
       "title": "القيم الأساسية",
       "value": "قيمة",
@@ -393,7 +401,7 @@
       "enterDescriptionEn": "أدخل الوصف بالإنجليزية",
       "enterDescriptionAr": "أدخل الوصف بالعربية"
     },
-    
+
     "baseOfOurSuccess": {
       "title": "أساس نجاحنا",
       "headlineEn": "العنوان (الإنجليزية)",
@@ -414,7 +422,7 @@
       "enterDescriptionEn": "أدخل الوصف بالإنجليزية",
       "enterDescriptionAr": "أدخل الوصف بالعربية"
     },
-    
+
     "lawyers": {
       "title": "المحامين",
       "addLawyer": "إضافة محامي",
@@ -444,7 +452,7 @@
       "enterDescriptionEn": "أدخل الوصف بالإنجليزية",
       "enterDescriptionAr": "أدخل الوصف بالعربية"
     },
-    
+
     "clientReviews": {
       "title": "آراء العملاء",
       "addReview": "إضافة رأي",
@@ -561,7 +569,7 @@
     "serverError": "حدث خطأ أثناء محاولة إرسال الرمز، حاول مجددًا لاحقًا",
     "networkError": "تعذر الاتصال بالخادم. تحقق من الاتصال بالإنترنت وحاول مرة أخرى"
   },
-  "passwordChanged": "تم تغير كلمة المرور بنجاح",
+  "passwordChanged": "تم تغيير كلمة المرور بنجاح",
   "Delete Service": "حذف الخدمة",
   "Item to delete": "العنصر المراد حذفه",
   "Irreversible Action": "إجراء لا رجعة فيه",
@@ -669,6 +677,14 @@
     "loading": "جاري تحميل الرسائل...",
     "error": "حدث خطأ في تحميل الرسائل"
   },
+  "pagination": {
+    "showing": "عرض",
+    "to": "إلى",
+    "of": "من",
+    "records": "سجل",
+    "previous": "السابق",
+    "next": "التالي"
+  },
   "Contact Our Legal Team": "اتصل بفريقنا القانوني",
   "We're here to help with your legal needs. Reach out to schedule a consultation with one of our experienced attorneys.": "نحن هنا لمساعدتك في احتياجاتك القانونية. تواصل معنا لتحديد موعد استشارة مع أحد محامينا ذوي الخبرة.",
   "Email": "البريد الإلكتروني",
@@ -690,5 +706,49 @@
   "Please enter a valid email": "يرجى إدخال بريد إلكتروني صالح",
   "Please enter a valid phone number": "يرجى إدخال رقم هاتف صالح",
   "Please enter a longer message": "يرجى إدخال رسالة أطول",
-  "Procedures": "الاجراءات"
+  "Procedures": "الإجراءات",
+  "Admin Panel": "لوحة الإدارة",
+  "Profile": "الملف الشخصي",
+  "Logout": "تسجيل الخروج",
+  "Are you sure you want to delete this user?": "هل أنت متأكد أنك تريد حذف هذا المستخدم؟",
+  "Delete User": "حذف المستخدم",
+  "Deleting...": "جاري الحذف...",
+  "Cancel": "إلغاء",
+  "Click to select image": "انقر لاختيار صورة",
+  "Supported formats: JPG, PNG, GIF. Max size: 5MB": "الصيغ المدعومة: JPG، PNG، GIF. الحد الأقصى للحجم: 5 ميجابايت",
+  "UpdateUser": "تحديث المستخدم",
+  "AddNewUser": "إضافة مستخدم جديد",
+  "Mobile Number": "رقم الجوال",
+  "WhatsApp Number": "رقم الواتساب",
+  "Role": "الدور",
+  "Member since": "عضو منذ",
+  "Footer": {
+    "BrandTitle": "العبدالجبار والفيصل",
+    "BrandSubtitle": "للمحاماة والاستشارات القانونية",
+    "Description": "شركة محاماة سعودية مصرية تقدم حلولاً قانونية متكاملة تجمع بين عراقة التراث وحداثة التطبيق",
+    "QuickLinks": "روابط سريعة",
+    "Contact": "معلومات الاتصال",
+    "ServicesTitle": "خدماتنا",
+    "RiyadhTitle": "الرياض، السعودية",
+    "RiyadhAddress": "العليا، الرياض - 12214",
+    "CairoTitle": "القاهرة، مصر",
+    "CairoAddress": "الزمالك، القاهرة - 11211",
+    "CompanyName": "شركة العبد الجبار والفيصل للمحاماة",
+    "Copyright": "كل الحقوق محفوظة.",
+    "PrivacyPolicy": "سياسة الخصوصية",
+    "TermsOfService": "شروط الخدمة",
+    "Sitemap": "خريطة الموقع",
+    "Social": {
+      "LinkedIn": "لينكدإن",
+      "Twitter": "تويتر",
+      "Facebook": "فيسبوك",
+      "Instagram": "إنستغرام"
+    },
+    "Services": {
+      "CommercialLaw": "القانون التجاري",
+      "RealEstateLaw": "القانون العقاري",
+      "CorporateLaw": "قانون الشركات",
+      "InternationalArbitration": "التحكيم الدولي"
+    }
+  }
 }

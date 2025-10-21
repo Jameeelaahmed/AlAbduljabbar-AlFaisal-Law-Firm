@@ -111,8 +111,8 @@ function Users() {
         <div className="min-h-screen p-4 sm:p-6 bg-gray-50 shadow-lg">
             {/* Header */}
             <Headline
-                headlineLabel="إدارة المستخدمين"
-                buttonLabel="إضافة مستخدم"
+                headlineLabel={t('Users.Management')}
+                buttonLabel={t('Users.Add User')}
                 buttonIcon="+"
                 handleOpenModal={openCreateUserModal}
             />
@@ -124,10 +124,10 @@ function Users() {
                     onChange={(e) => setRoleFilter(e.target.value)}
                     className="border border-gray-300 rounded-lg p-2 sm:p-3 cursor-pointer bg-white shadow-sm focus:ring-2 focus:ring-primary focus:border-primary transition-all text-sm sm:text-base w-full sm:w-auto min-w-[120px]"
                 >
-                    <option value="">الدور</option>
-                    <option value="Admin">مسؤول</option>
-                    <option value="CustomerService">دعم</option>
-                    <option value="User">عميل</option>
+                    <option value="">{t('Users.Role')}</option>
+                    <option value="Admin">{t('Users.Admin')}</option>
+                    <option value="CustomerService">{t('Users.Support')}</option>
+                    <option value="User">{t('Users.Client')}</option>
                 </select>
 
                 <select
@@ -135,14 +135,13 @@ function Users() {
                     onChange={(e) => setBranchFilter(e.target.value)}
                     className="border border-gray-300 rounded-lg p-2 sm:p-3 cursor-pointer bg-white shadow-sm focus:ring-2 focus:ring-primary focus:border-primary transition-all text-sm sm:text-base w-full sm:w-auto min-w-[120px]"
                 >
-                    <option value="">الفرع</option>
-                    <option value="1">مصر</option>
-                    <option value="2">السعودية</option>
+                    <option value="">{t('Dashboard.Branch')}</option>
+                    <option value="1">{t('Egypt')}</option>
+                    <option value="2">{t('Saudi Arabia')}</option>
                 </select>
-
                 <input
                     type="text"
-                    placeholder="ابحث عن المستخدمين بالاسم، البريد الإلكتروني..."
+                    placeholder={t('Users.searchPlaceholder')}
                     value={search}
                     onChange={(e) => setSearch(e.target.value)}
                     className="flex-1 border border-gray-300 rounded-lg p-2 sm:p-3 bg-white shadow-sm focus:ring-2 focus:ring-primary focus:border-primary transition-all text-sm sm:text-base placeholder:text-xs sm:placeholder:text-sm min-w-[250px] sm:min-w-[300px]"
@@ -167,7 +166,7 @@ function Users() {
             {/* create user modal  */}
             <Modal
                 ref={createUserRef}
-                title="إضافة مستخدم جديد"
+                title={t("AddNewUser")}
                 onClose={(e) => {
                     e?.stopPropagation?.();
                     closeCreateUserModal();
@@ -178,7 +177,7 @@ function Users() {
             {/* Edit User Modal */}
             <Modal
                 ref={editUserRef}
-                title="تعديل المستخدم"
+                title={t("UpdateUser")}
                 onClose={(e) => {
                     e?.stopPropagation?.();
                     closeEditUserModal();
