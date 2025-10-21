@@ -95,7 +95,7 @@ function CategoryItem({ category }) {
             setSelectedServiceId(null);
             closeDeleteService();
         } catch (err) {
-            console.error("Failed to delete category:", err);
+            console.error("Failed to delete service:", err);
         }
     }
 
@@ -321,7 +321,7 @@ function CategoryItem({ category }) {
                                         {data.description}
                                     </div>
                                 </div>
-                                <div className="flex-shrink-0 flex items-center gap-1 sm:gap-2 md:gap-2">
+                                <div className="flex shrink-0 items-center gap-1 sm:gap-2 md:gap-2">
                                     <button onClick={(e) => { openUpdateService(data.id); e.stopPropagation() }} className="p-1 sm:p-1.5 md:p-2 hover:bg-secondary/10 rounded-lg transition-all duration-200 cursor-pointer">
                                         <SquarePen className="w-3 h-3 sm:w-4 sm:h-4 md:w-4 md:h-4 text-primary hover:text-secondary" />
                                     </button>

@@ -10,27 +10,27 @@ function OurTeam() {
     let teamMembers = data?.lawyers || [];
 
     return (
-        <section className="py-20 bg-gradient-to-b from-[var(--color-bg)] to-white">
+        <section className="py-20 bg-linear-to-b from-bg to-white">
             <div className="container mx-auto px-4 sm:px-6 lg:px-8">
                 {/* Header */}
                 <div className="max-w-3xl mx-auto mb-16 text-center">
-                    <div className="inline-flex items-center gap-2 px-4 py-2 bg-[var(--color-primary)]/10 text-[var(--color-primary)] rounded-full text-sm font-medium mb-6">
+                    <div className="inline-flex items-center gap-2 px-4 py-2 bg-primary/10 text-primary rounded-full text-sm font-medium mb-6">
                         <Users size={18} />
                         {isRtl ? "فريقنا المحترف" : "Our Professional Team"}
                     </div>
 
-                    <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-[var(--color-text)] mb-4 leading-tight">
+                    <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-text mb-4 leading-tight">
                         {isRtl ? (
                             <>
                                 <span className="block">تعرف على</span>
-                                <span className="bg-gradient-to-r from-[var(--color-primary)] to-[var(--color-accent)] bg-clip-text text-transparent">
+                                <span className="bg-linear-to-r from-primary to-accent bg-clip-text text-transparent">
                                     فريقنا القانوني
                                 </span>
                             </>
                         ) : (
                             <>
                                 <span className="block">Meet Our</span>
-                                <span className="bg-gradient-to-r from-[var(--color-primary)] to-[var(--color-accent)] bg-clip-text text-transparent">
+                                <span className="bg-linear-to-r from-primary to-accent bg-clip-text text-transparent">
                                     Legal Team
                                 </span>
                             </>
@@ -44,7 +44,7 @@ function OurTeam() {
                         }
                     </p>
 
-                    <div className="w-20 h-1 bg-[var(--color-secondary)] mx-auto mt-6 rounded-full"></div>
+                    <div className="w-20 h-1 bg-secondary mx-auto mt-6 rounded-full"></div>
                 </div>
 
                 {/* Team Grid */}
@@ -52,13 +52,13 @@ function OurTeam() {
                     {teamMembers.map((member, index) => (
                         <div
                             key={member.id}
-                            className="group bg-white rounded-3xl shadow-lg hover:shadow-xl border border-[var(--color-secondary)]/10 p-6 transition-all duration-500 hover:-translate-y-2"
+                            className="group bg-white rounded-3xl shadow-lg hover:shadow-xl border border-secondary/10 p-6 transition-all duration-500 hover:-translate-y-2"
                             style={{ animationDelay: `${index * 150}ms` }}
                         >
                             {/* Image & Basic Info */}
                             <div className="text-center mb-6">
                                 <div className="relative inline-block mb-4">
-                                    <div className="w-32 h-32 rounded-full bg-gradient-to-br from-[var(--color-primary)] to-[var(--color-accent)] p-1 mx-auto">
+                                    <div className="w-32 h-32 rounded-full bg-linear-to-br from-primary to-accent p-1 mx-auto">
                                         {member.photoUrl ? (
                                             <img
                                                 src={member.photoUrl}
@@ -67,23 +67,35 @@ function OurTeam() {
                                             />
                                         ) : (
                                             <div className="w-full h-full rounded-full bg-white flex items-center justify-center">
-                                                <User size={48} className="text-[var(--color-primary)]" />
+                                                <User size={48} className="text-primary" />
                                             </div>
                                         )}
                                     </div>
                                     {/* Experience Badge */}
-                                    <div className="absolute -bottom-2 left-1/2 transform -translate-x-1/2 bg-[var(--color-secondary)] text-white px-3 py-1 rounded-full text-xs font-semibold shadow-lg">
-                                        {member.yearsOfExperience} {isRtl ? "سنوات" : "Years"}
+                                    <div className="absolute -bottom-2 left-1/2 transform -translate-x-1/2 bg-secondary text-white px-3 py-1 rounded-full text-xs font-semibold shadow-lg">
+                                        {member.yearsOfExperience}{" "}
+                                        {isRtl
+                                            ? member.yearsOfExperience === 1
+                                                ? "سنة"
+                                                : member.yearsOfExperience === 2
+                                                    ? "سنتان"
+                                                    : member.yearsOfExperience >= 3 && member.yearsOfExperience <= 10
+                                                        ? "سنوات"
+                                                        : "سنة"
+                                            : member.yearsOfExperience === 1
+                                                ? "Year"
+                                                : "Years"
+                                        }
                                     </div>
                                 </div>
 
-                                <h3 className="text-xl font-bold text-[var(--color-text)] mb-2">
+                                <h3 className="text-xl font-bold text-text mb-2">
                                     {isRtl ? member.nameAr : member.nameEn}
                                 </h3>
-                                <p className="text-[var(--color-primary)] font-semibold mb-1">
+                                <p className="text-primary font-semibold mb-1">
                                     {isRtl ? member.positionAr : member.positionEn}
                                 </p>
-                                <p className="text-[var(--color-secondary)] text-sm mb-4">
+                                <p className="text-secondary text-sm mb-4">
                                     {isRtl ? member.specializationAr : member.specializationEn}
                                 </p>
                             </div>
@@ -94,13 +106,13 @@ function OurTeam() {
                             </p>
 
                             {/* Social Links */}
-                            <div className="flex justify-center gap-3 pt-4 border-t border-[var(--color-secondary)]/20">
+                            <div className="flex justify-center gap-3 pt-4 border-t border-secondary/20">
                                 {member.linkedIn && (
                                     <a
                                         href={member.linkedIn}
                                         target="_blank"
                                         rel="noopener noreferrer"
-                                        className="w-10 h-10 bg-[var(--color-primary)]/10 hover:bg-[var(--color-primary)] text-[var(--color-primary)] hover:text-white rounded-full flex items-center justify-center transition-all duration-300 group/linkedin"
+                                        className="w-10 h-10 bg-primary/10 hover:bg-primary text-primary hover:text-white rounded-full flex items-center justify-center transition-all duration-300 group/linkedin"
                                     >
                                         <Linkedin size={18} className="group-hover/linkedin:scale-110 transition-transform" />
                                     </a>
@@ -108,7 +120,7 @@ function OurTeam() {
                                 {member.gmail && (
                                     <a
                                         href={`mailto:${member.gmail}`}
-                                        className="w-10 h-10 bg-[var(--color-accent)]/10 hover:bg-[var(--color-accent)] text-[var(--color-accent)] hover:text-white rounded-full flex items-center justify-center transition-all duration-300 group/email"
+                                        className="w-10 h-10 bg-accent/10 hover:bg-accent text-accent hover:text-white rounded-full flex items-center justify-center transition-all duration-300 group/email"
                                     >
                                         <Mail size={18} className="group-hover/email:scale-110 transition-transform" />
                                     </a>
@@ -127,11 +139,11 @@ function OurTeam() {
                         { icon: Users, number: "2", label: isRtl ? "دول" : "Countries" }
                     */}
                     {[]?.map((stat, index) => (
-                        <div key={index} className="text-center bg-white rounded-2xl p-6 shadow-sm border border-[var(--color-secondary)]/10">
-                            <div className="w-12 h-12 bg-[var(--color-primary)]/10 rounded-xl flex items-center justify-center mx-auto mb-3">
-                                <stat.icon size={24} className="text-[var(--color-primary)]" />
+                        <div key={index} className="text-center bg-white rounded-2xl p-6 shadow-sm border border-secondary/10">
+                            <div className="w-12 h-12 bg-primary/10 rounded-xl flex items-center justify-center mx-auto mb-3">
+                                <stat.icon size={24} className="text-primary" />
                             </div>
-                            <div className="text-2xl font-bold text-[var(--color-text)] mb-1">
+                            <div className="text-2xl font-bold text-text mb-1">
                                 {stat.number}
                             </div>
                             <div className="text-sm text-gray-600">

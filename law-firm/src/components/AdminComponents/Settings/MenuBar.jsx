@@ -1,4 +1,4 @@
-const MenuBar = ({ editor }) => {
+export const MenuBar = ({ editor }) => {
     if (!editor) return null;
 
     const buttonClass = "p-2 rounded hover:bg-gray-100 transition-colors";

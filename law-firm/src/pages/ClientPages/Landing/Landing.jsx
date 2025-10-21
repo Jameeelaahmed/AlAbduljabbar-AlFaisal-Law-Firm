@@ -7,11 +7,13 @@ import Footer from "../../../components/ClientComponents/Footer/Footer"
 import OurServices from "../../../components/ClientComponents/OurServices/OurServices"
 import OurTeam from "../../../components/ClientComponents/OurTeam/OurTeam"
 import { useHomePage } from "../../../hooks/useHomePage"
+import { useTranslation } from "react-i18next"
 
 function Landing() {
+    const { t } = useTranslation()
     const { data: homePageData, isLoading, error } = useHomePage();
 
-    if (isLoading) return <div>Loading...</div>;
+    if (isLoading) return <div>{t("Loading...")}</div>;
     if (error) return <div>Failed to load home page.</div>;
 
     const {

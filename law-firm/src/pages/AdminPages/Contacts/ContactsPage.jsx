@@ -79,7 +79,7 @@ export default function ContactsPage() {
                 {selectedMessage && (
                     <div className="p-6 w-full max-w-2xl">
                         <div className="bg-gray-50 p-4 rounded-lg max-h-[60vh] overflow-y-auto">
-                            <p className="whitespace-pre-wrap break-words">{selectedMessage}</p>
+                            <p className="whitespace-pre-wrap wrap-break-word">{selectedMessage}</p>
                         </div>
                     </div>
                 )}

@@ -112,7 +112,7 @@ function Sidebar() {
                                                     }`
                                                 }
                                             >
-                                                <CalendarCheck className="w-5 h-5 flex-shrink-0" />
+                                                <CalendarCheck className="w-5 h-5 shrink-0" />
                                                 {isSidebarOpen && <span className="text-sm font-medium">{t("sidebar.requests")}</span>}
                                             </NavLink>
                                         </li>
@@ -127,7 +127,7 @@ function Sidebar() {
                                                     }`
                                                 }
                                             >
-                                                <Share2 className="w-5 h-5 flex-shrink-0" />
+                                                <Share2 className="w-5 h-5 shrink-0" />
                                                 {isSidebarOpen && <span className="text-sm font-medium">{t("consultationTypes")}</span>}
                                             </NavLink>
                                         </li>
@@ -143,7 +143,7 @@ function Sidebar() {
                                                     }`
                                                 }
                                             >
-                                                <Handshake className="w-5 h-5 flex-shrink-0" />
+                                                <Handshake className="w-5 h-5 shrink-0" />
                                                 {isSidebarOpen && <span className="text-sm font-medium">{t("sidebar.consultationsrequests")}</span>}
                                             </NavLink>
                                         </li>
@@ -164,7 +164,7 @@ function Sidebar() {
                                                 }`
                                             }
                                         >
-                                            <LayoutDashboard className="w-5 h-5 flex-shrink-0" />
+                                            <LayoutDashboard className="w-5 h-5 shrink-0" />
                                             {isSidebarOpen && <span className="text-sm font-medium transition-all duration-300">{t("sidebar.dashboard")}</span>}
                                         </NavLink>
                                     </li>
@@ -180,7 +180,7 @@ function Sidebar() {
                                                 }`
                                             }
                                         >
-                                            <Scale className="w-5 h-5 flex-shrink-0" />
+                                            <Scale className="w-5 h-5 shrink-0" />
                                             {isSidebarOpen && <span className="text-sm font-medium">{t("sidebar.LawServices")}</span>}
                                         </NavLink>
                                     </li>
@@ -195,7 +195,7 @@ function Sidebar() {
                                                 }`
                                             }
                                         >
-                                            <Share2 className="w-5 h-5 flex-shrink-0" />
+                                            <Share2 className="w-5 h-5 shrink-0" />
                                             {isSidebarOpen && <span className="text-sm font-medium">{t("consultationTypes")}</span>}
                                         </NavLink>
                                     </li>
@@ -210,7 +210,7 @@ function Sidebar() {
                                                 }`
                                             }
                                         >
-                                            <CalendarCheck className="w-5 h-5 flex-shrink-0" />
+                                            <CalendarCheck className="w-5 h-5 shrink-0" />
                                             {isSidebarOpen && <span className="text-sm font-medium">{t("sidebar.requests")}</span>}
                                         </NavLink>
                                     </li>
@@ -226,7 +226,7 @@ function Sidebar() {
                                                 }`
                                             }
                                         >
-                                            <Handshake className="w-5 h-5 flex-shrink-0" />
+                                            <Handshake className="w-5 h-5 shrink-0" />
                                             {isSidebarOpen && <span className="text-sm font-medium transition-all duration-300">{t("sidebar.consultationsrequests")}</span>}
                                         </NavLink>
                                     </li>
@@ -241,7 +241,7 @@ function Sidebar() {
                                                 }`
                                             }
                                         >
-                                            <Users className="w-5 h-5 flex-shrink-0" />
+                                            <Users className="w-5 h-5 shrink-0" />
                                             {isSidebarOpen && <span className="text-sm font-medium">{t("sidebar.users")}</span>}
                                         </NavLink>
                                     </li>
@@ -256,7 +256,7 @@ function Sidebar() {
                                                 }`
                                             }
                                         >
-                                            <HelpCircle className="w-5 h-5 flex-shrink-0" />
+                                            <HelpCircle className="w-5 h-5 shrink-0" />
                                             {isSidebarOpen && <span className="text-sm font-medium">{t("faq")}</span>}
                                         </NavLink>
                                     </li>
@@ -271,7 +271,7 @@ function Sidebar() {
                                                 }`
                                             }
                                         >
-                                            <Headset className="w-5 h-5 flex-shrink-0" />
+                                            <Headset className="w-5 h-5 shrink-0" />
                                             {isSidebarOpen && <span className="text-sm font-medium">{t("Contacts.Management")}</span>}
                                         </NavLink>
                                     </li>
@@ -288,7 +288,7 @@ function Sidebar() {
                                                 }`
                                             }
                                         >
-                                            <Settings className="w-5 h-5 flex-shrink-0" />
+                                            <Settings className="w-5 h-5 shrink-0" />
                                             {isSidebarOpen && <span className="text-sm font-medium">{t("sidebar.settings")}</span>}
                                         </NavLink>
                                     </li>
@@ -299,7 +299,7 @@ function Sidebar() {
                 </div>
 
                 {/* Fixed Logout Button at Bottom */}
-                <div className="p-6 border-t border-white/20 bg-primary flex-shrink-0">
+                <div className="p-6 border-t border-white/20 bg-primary shrink-0">
                     <button
                         className={`cursor-pointer flex items-center gap-2 p-3 rounded-lg hover:bg-red-500/20 hover:text-red-300 transition-all w-full ${!isSidebarOpen ? "justify-center" : "text-left"
                             }`}
@@ -307,7 +307,7 @@ function Sidebar() {
                             logout();
                         }}
                     >
-                        <LogOut className="w-5 h-5 flex-shrink-0" />
+                        <LogOut className="w-5 h-5 shrink-0" />
                         {isSidebarOpen && <span className="text-sm font-medium">{t("sidebar.logout")}</span>}
                     </button>
                 </div>

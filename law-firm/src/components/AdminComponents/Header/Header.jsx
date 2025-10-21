@@ -5,8 +5,10 @@ import { useQueryClient } from "@tanstack/react-query";
 import { useAuthStore } from '../../../store/useAuthStore';
 import { useNavigate } from 'react-router-dom';
 import NotificationBell from '../../Common/NotificationBell';
+import { useTranslation } from 'react-i18next';
 function Header() {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
+    const { t } = useTranslation();
     const navigate = useNavigate();
     const queryClient = useQueryClient();
     const menuRef = useRef(null);
@@ -52,8 +54,8 @@ function Header() {
                             AJ
                         </div>
                         <div className="hidden sm:block">
-                            <h1 className="text-sm font-semibold text-gray-800">Admin Panel</h1>
-                            <p className="text-xs text-gray-500">Dashboard</p>
+                            <h1 className="text-sm font-semibold text-gray-800">{t("Admin Panel")}</h1>
+                            <p className="text-xs text-gray-500">{t("Dashboard")}</p>
                         </div>
                     </div>
 
@@ -98,7 +100,7 @@ function Header() {
                                         }}
                                         className="w-full text-left px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50 cursor-pointer transition-colors duration-150 flex items-center space-x-2"
                                     >
-                                        Profile
+                                        {t("Profile")}
                                     </button>
                                     <button
                                         onClick={() => {
@@ -107,14 +109,14 @@ function Header() {
                                         }}
                                         className="w-full text-left px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50 cursor-pointer transition-colors duration-150 flex items-center space-x-2"
                                     >
-                                        Settings
+                                        {t("Settings")}
                                     </button>
                                     <div className="border-t border-gray-100" />
                                     <button
                                         onClick={() => logout()}
                                         className="w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-red-50 cursor-pointer"
                                     >
-                                        Logout
+                                        {t("Logout")}
                                     </button>
                                 </div>
                             )}

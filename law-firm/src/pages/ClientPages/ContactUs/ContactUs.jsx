@@ -50,7 +50,7 @@ const ContactUs = () => {
     const isSubmitting = createContactMutation.isLoading;
 
     return (
-        <div className="min-h-screen bg-[#f4f5f3]">
+        <div className="min-h-screen bg-bg">
 
             {/* Hero Section */}
             <section className="bg-primary text-white pt-28 pb-16">
@@ -73,7 +73,7 @@ const ContactUs = () => {
 
                             <div className="grid gap-6 mb-6">
                                 <div className="flex items-start gap-4">
-                                    <div className="flex-shrink-0 bg-bg rounded-md p-2">
+                                    <div className="shrink-0 bg-bg rounded-md p-2">
                                         <Mail className="w-5 h-5 text-accent" />
                                     </div>
                                     <div>
@@ -92,7 +92,7 @@ const ContactUs = () => {
                                 </div>
 
                                 <div className="flex items-start gap-4">
-                                    <div className="flex-shrink-0 bg-bg rounded-md p-2">
+                                    <div className="shrink-0 bg-bg rounded-md p-2">
                                         <Phone className="w-5 h-5 text-secondary" />
                                     </div>
                                     <div>
@@ -111,7 +111,7 @@ const ContactUs = () => {
                                 </div>
 
                                 <div className="flex items-start gap-4">
-                                    <div className="flex-shrink-0 bg-[#eef6ff] rounded-md p-2">
+                                    <div className="shrink-0 bg-[#eef6ff] rounded-md p-2">
                                         <MapPin className="w-5 h-5 text-[#2563eb]" />
                                     </div>
                                     <div>

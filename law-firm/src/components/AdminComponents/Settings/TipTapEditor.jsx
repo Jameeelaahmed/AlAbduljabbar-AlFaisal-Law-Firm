@@ -1,16 +1,12 @@
-import React, { useState } from 'react';
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import { useFormik, FormikProvider } from 'formik';
 import { useEditor, EditorContent } from '@tiptap/react';
 import StarterKit from '@tiptap/starter-kit';
 import Underline from '@tiptap/extension-underline';
 import TextAlign from '@tiptap/extension-text-align';
 import Link from '@tiptap/extension-link';
 import CharacterCount from '@tiptap/extension-character-count';
-import { Upload, Plus, Trash2, Save, AlertCircle, CheckCircle } from 'lucide-react';
-
+import { useEffect } from 'react';
 // TiptapEditor Component
-const TiptapEditor = ({ content, onChange, placeholder, dir = 'ltr' }) => {
+const TiptapEditor = ({ content, onChange, dir = 'ltr' }) => {
     const editor = useEditor({
         extensions: [
             StarterKit,
@@ -29,7 +25,7 @@ const TiptapEditor = ({ content, onChange, placeholder, dir = 'ltr' }) => {
         },
     });
 
-    React.useEffect(() => {
+    useEffect(() => {
         if (editor && content !== editor.getHTML()) {
             editor.commands.setContent(content || '<p></p>');
         }
@@ -60,3 +56,5 @@ const TiptapEditor = ({ content, onChange, placeholder, dir = 'ltr' }) => {
         </div>
     );
 };
+
+export default TiptapEditor;

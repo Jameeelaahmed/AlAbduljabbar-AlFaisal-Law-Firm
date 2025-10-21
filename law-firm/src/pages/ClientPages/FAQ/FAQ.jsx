@@ -40,14 +40,14 @@ const FAQPage = () => {
         return (
             <div key={categoryIndex} className="bg-white rounded-2xl shadow-sm border border-text/20 overflow-hidden">
                 {/* Category Header */}
-                <div className="bg-gradient-to-r from-primary to-accent p-6">
+                <div className="bg-linear-to-r from-primary to-accent p-6">
                     <h2 className="text-xl font-semibold text-white">
                         {title}
                     </h2>
                 </div>
 
                 {/* Questions */}
-                <div className="divide-y divide-[#7a5a21]/10">
+                <div className="divide-y divide-secondary/10">
                     {faqsLoading ? (
                         <div className="px-6 py-6 text-gray-500">{t("Loading...")}</div>
                     ) : faqsError ? (
@@ -63,12 +63,12 @@ const FAQPage = () => {
                                 <div key={globalIndex} className="transition-all duration-200">
                                     <button
                                         onClick={() => toggleItem(globalIndex)}
-                                        className="w-full px-6 py-5 text-left flex justify-between items-center hover:bg-[#f4f5f3] transition-colors duration-200 group"
+                                        className="w-full px-6 py-5 text-left flex justify-between items-center hover:bg-bg transition-colors duration-200 group"
                                     >
-                                        <span className="font-medium text-[#1f1f1f] text-lg pr-4 group-hover:text-accent">
+                                        <span className="font-medium text-text text-lg pr-4 group-hover:text-accent">
                                             {item.question}
                                         </span>
-                                        <div className="flex-shrink-0 w-6 h-6 flex items-center justify-center bg-accent rounded-full text-white">
+                                        <div className="shrink-0 w-6 h-6 flex items-center justify-center bg-accent rounded-full text-white">
                                             {isOpen ? <ChevronUp className="w-4 h-4" /> : <ChevronDown className="w-4 h-4" />}
                                         </div>
                                     </button>
@@ -96,7 +96,7 @@ const FAQPage = () => {
     ));
 
     return (
-        <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100">
+        <div className="min-h-screen bg-linear-to-br from-gray-50 to-gray-100">
             {/* Hero header (same style as Contact Us hero) */}
             <section className="bg-primary text-white pt-28 pb-16">
                 <div className="container mx-auto px-4 text-center">
@@ -120,7 +120,7 @@ const FAQPage = () => {
                             placeholder={t("Search FAQs...")}
                             value={searchTerm}
                             onChange={(e) => setSearchTerm(e.target.value)}
-                            className="w-full pl-12 pr-4 py-4 border border-gray-200 rounded-xl bg-white text-[#1f1f1f] placeholder-gray-400 focus:ring-4 focus:ring-[#7a5a21]/20 focus:border-transparent transition-all"
+                            className="w-full pl-12 pr-4 py-4 border border-gray-200 rounded-xl bg-white text-text placeholder-gray-400 focus:ring-4 focus:ring-secondary/20 focus:border-transparent transition-all"
                         />
                     </div>
                 </div>

@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState } from 'react';
 import { User, Mail, Shield, Calendar, Phone, MessageSquare } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { useChangePassword } from '../../../hooks/useChangePassword';
@@ -30,21 +30,19 @@ export default function AdminProfile() {
                     <div className="flex space-x-1">
                         <button
                             onClick={() => setActiveTab('profile')}
-                            className={`flex-1 px-4 py-3 rounded-lg font-semibold transition-all duration-300 ${
-                                activeTab === 'profile'
-                                    ? 'bg-primary text-white shadow-lg'
-                                    : 'text-gray-600 hover:text-primary hover:bg-gray-50'
-                            }`}
+                            className={`flex-1 px-4 py-3 rounded-lg font-semibold transition-all duration-300 ${activeTab === 'profile'
+                                ? 'bg-primary text-white shadow-lg'
+                                : 'text-gray-600 hover:text-primary hover:bg-gray-50'
+                                }`}
                         >
                             {t('Settings.profile')}
                         </button>
                         <button
                             onClick={() => setActiveTab('security')}
-                            className={`flex-1 px-4 py-3 rounded-lg font-semibold transition-all duration-300 ${
-                                activeTab === 'security'
-                                    ? 'bg-primary text-white shadow-lg'
-                                    : 'text-gray-600 hover:text-primary hover:bg-gray-50'
-                            }`}
+                            className={`flex-1 px-4 py-3 rounded-lg font-semibold transition-all duration-300 ${activeTab === 'security'
+                                ? 'bg-primary text-white shadow-lg'
+                                : 'text-gray-600 hover:text-primary hover:bg-gray-50'
+                                }`}
                         >
                             {t('Settings.security')}
                         </button>
@@ -79,7 +77,7 @@ export default function AdminProfile() {
 
                             <div className="space-y-4">
                                 <div className="flex items-center gap-3 p-3 bg-gray-50 rounded-lg">
-                                    <Mail className="w-5 h-5 text-primary flex-shrink-0" />
+                                    <Mail className="w-5 h-5 text-primary shrink-0" />
                                     <div className="min-w-0">
                                         <p className="text-sm text-gray-600">Email</p>
                                         <p className="text-primary font-medium truncate">{user?.email}</p>
@@ -87,7 +85,7 @@ export default function AdminProfile() {
                                 </div>
 
                                 <div className="flex items-center gap-3 p-3 bg-gray-50 rounded-lg">
-                                    <Phone className="w-5 h-5 text-primary flex-shrink-0" />
+                                    <Phone className="w-5 h-5 text-primary shrink-0" />
                                     <div>
                                         <p className="text-sm text-gray-600">Mobile Number</p>
                                         <p className="text-primary font-medium">{user?.mobileNumber || 'Not provided'}</p>
@@ -95,7 +93,7 @@ export default function AdminProfile() {
                                 </div>
 
                                 <div className="flex items-center gap-3 p-3 bg-gray-50 rounded-lg">
-                                    <MessageSquare className="w-5 h-5 text-primary flex-shrink-0" />
+                                    <MessageSquare className="w-5 h-5 text-primary shrink-0" />
                                     <div>
                                         <p className="text-sm text-gray-600">WhatsApp Number</p>
                                         <p className="text-primary font-medium">{user?.whatsAppNumber || user?.mobileNumber || 'Not provided'}</p>
@@ -103,7 +101,7 @@ export default function AdminProfile() {
                                 </div>
 
                                 <div className="flex items-center gap-3 p-3 bg-gray-50 rounded-lg">
-                                    <Shield className="w-5 h-5 text-primary flex-shrink-0" />
+                                    <Shield className="w-5 h-5 text-primary shrink-0" />
                                     <div>
                                         <p className="text-sm text-gray-600">Role</p>
                                         <p className="text-primary font-medium capitalize">{user?.role?.toLowerCase()}</p>
@@ -112,7 +110,7 @@ export default function AdminProfile() {
 
                                 {user?.createdAt && (
                                     <div className="flex items-center gap-3 p-3 bg-gray-50 rounded-lg">
-                                        <Calendar className="w-5 h-5 text-primary flex-shrink-0" />
+                                        <Calendar className="w-5 h-5 text-primary shrink-0" />
                                         <div>
                                             <p className="text-sm text-gray-600">Member Since</p>
                                             <p className="text-primary font-medium">
@@ -128,8 +126,8 @@ export default function AdminProfile() {
 
                 {/* Security Tab Content */}
                 {activeTab === 'security' && (
-                    <Security 
-                        changePasswordMutation={changePasswordMutation} 
+                    <Security
+                        changePasswordMutation={changePasswordMutation}
                     />
                 )}
             </div>

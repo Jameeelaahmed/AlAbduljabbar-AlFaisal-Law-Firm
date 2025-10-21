@@ -1,10 +1,8 @@
-import React, { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
-import { useTranslation } from "react-i18next";
-import { Home, ArrowLeft, AlertTriangle, Shield, Lock, UserX } from "lucide-react";
+import { Home, ArrowLeft, Lock } from "lucide-react";
 
 export default function UnAuthorized() {
-    const { t } = useTranslation();
     const [displayedNumber, setDisplayedNumber] = useState("");
     const [displayedText, setDisplayedText] = useState("");
     const [isBlinking, setIsBlinking] = useState(true);
@@ -138,7 +136,7 @@ export default function UnAuthorized() {
                     </div>
 
                     {/* Unauthorized Text */}
-                    <div className="text-2xl md:text-3xl font-semibold text-primary mt-4 min-h-[2rem]">
+                    <div className="text-2xl md:text-3xl font-semibold text-primary mt-4 min-h-8">
                         {displayedText}
                     </div>
 

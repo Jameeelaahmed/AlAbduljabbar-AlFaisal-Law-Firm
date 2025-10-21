@@ -140,7 +140,7 @@ export default function LawServicesManyCategories() {
                                     {currentCategory?.description}
                                 </p>
                             </div>
-                            <div className="ltr:bg-gradient-to-r rtl:bg-gradient-to-l from-primary to-accent text-white px-4 py-3 rounded-xl shadow-lg">
+                            <div className="ltr:bg-linear-to-r rtl:bg-linear-to-l from-primary to-accent text-white px-4 py-3 rounded-xl shadow-lg">
                                 <span className="font-bold text-lg">{filteredServices.length}</span>
                                 <span className="text-sm font-medium ltr:ml-1 rtl:mr-1">{t("services available")}</span>
                             </div>
@@ -149,9 +149,9 @@ export default function LawServicesManyCategories() {
                 </div>
 
                 <div className="flex flex-col lg:flex-row gap-8">
-                    <div className="lg:w-96 flex-shrink-0"> {/* Increased width */}
+                    <div className="lg:w-96 shrink-0"> {/* Increased width */}
                         <div className="bg-white rounded-2xl shadow-xl border border-gray-200 sticky top-8 overflow-hidden">
-                            <div className="p-6 border-b border-gray-200 bg-gradient-to-r from-primary to-accent text-white">
+                            <div className="p-6 border-b border-gray-200 bg-linear-to-r from-primary to-accent text-white">
                                 <h3 className="font-bold text-lg flex items-center gap-3 mb-2">
                                     <Menu className="w-5 h-5" />
                                     {t("Practice Areas")} ({visibleCategories.length})
@@ -176,7 +176,7 @@ export default function LawServicesManyCategories() {
                                             key={category.id}
                                             onClick={() => setActiveCategory(category.id)}
                                             className={`p-3 rounded-xl cursor-pointer transition-all duration-200 group ltr:text-left rtl:text-right ${activeCategory === category.id
-                                                ? 'ltr:bg-gradient-to-r rtl:bg-gradient-to-l from-primary to-accent text-white shadow-lg'
+                                                ? 'ltr:bg-linear-to-r rtl:bg-linear-to-l from-primary to-accent text-white shadow-lg'
                                                 : 'text-gray-700 hover:bg-gray-50 hover:shadow-md border border-transparent hover:border-gray-200'
                                                 }`}
                                         >

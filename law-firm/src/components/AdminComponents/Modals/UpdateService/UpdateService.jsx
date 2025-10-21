@@ -55,7 +55,7 @@ function UpdateService({ selectedServiceId, onClose, setSelectedServiceId }) {
                             <div className="flex gap-2">
                                 <div className="space-y-2 w-1/2">
                                     <label htmlFor="nameEn" className="flex items-center gap-2 text-sm font-semibold text-primary">
-                                        {t("Services.Category Name in English")}
+                                        {t("Services.Service Name in English")}
                                     </label>
                                     <Field name="nameEn">
                                         {({ field }) => (
@@ -69,7 +69,7 @@ function UpdateService({ selectedServiceId, onClose, setSelectedServiceId }) {
                                                 }}
                                                 className={`w-full px-4 py-3 border rounded-lg focus:outline-none focus:ring-2 transition-all duration-300 ${errors.nameEn && touched.nameEn ? "border-red-300 focus:ring-red-200 bg-red-50" : "border-gray-300 focus:ring-primary focus:border-primary"
                                                     }`}
-                                                placeholder={t("Add Category.Category Name in English is required")}
+                                                placeholder={t("Services.Service Name in English is required")}
                                                 dir="ltr"
                                                 disabled={isSubmitting}
                                             />
@@ -81,7 +81,7 @@ function UpdateService({ selectedServiceId, onClose, setSelectedServiceId }) {
                                 {/* Arabic Name */}
                                 <div className="space-y-2 w-1/2">
                                     <label htmlFor="nameAr" className="flex items-center gap-2 text-sm font-semibold text-primary">
-                                        {t("Services.Category Name in Arabic")}
+                                        {t("Services.Service Name in Arabic")}
                                     </label>
                                     <div className="relative">
                                         <Field name="nameAr">
@@ -96,7 +96,7 @@ function UpdateService({ selectedServiceId, onClose, setSelectedServiceId }) {
                                                     }}
                                                     className={`w-full px-4 py-3 border rounded-lg focus:outline-none focus:ring-2 transition-all duration-300 ${errors.nameAr && touched.nameAr ? "border-red-300 focus:ring-red-200 bg-red-50" : "border-gray-300 focus:ring-primary focus:border-primary"
                                                         }`}
-                                                    placeholder={t("Add Category.Category Name in Arabic is required")}
+                                                    placeholder={t("Services.Service Name in Arabic is required")}
                                                     dir="rtl"
                                                     disabled={isSubmitting}
                                                 />

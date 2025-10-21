@@ -22,7 +22,7 @@ export default function DeleteUser({ userId, username, onClose }) {
     return (
         <div className="p-4">
             <p className="mb-4 text-gray-700">
-                هل أنت متأكد أنك تريد حذف المستخدم <span className="text-red-500 font-semibold">{username}</span>؟ لا يمكن التراجع عن هذا الإجراء.
+                {t("Are you sure you want to delete this user?")} <span className="text-red-500 font-semibold">{username}</span>{t("This action cannot be undone.")}.
             </p>
 
             <div className="flex gap-2">
@@ -31,13 +31,13 @@ export default function DeleteUser({ userId, username, onClose }) {
                     disabled={isLoading}
                     className={`cursor-pointer px-4 py-2 rounded-lg font-semibold text-white transition-all duration-300 ${isLoading ? "bg-gray-400 cursor-not-allowed" : "bg-red-600 hover:bg-red-700"}`}
                 >
-                    {isLoading ? "جارٍ الحذف..." : "حذف المستخدم"}
+                    {isLoading ? t("Deleting...") : "حذف المستخدم"}
                 </button>
                 <button
                     onClick={onClose}
                     className="cursor-pointer px-4 py-2 rounded-lg font-semibold text-gray-700 border hover:bg-gray-100 transition-all duration-300"
                 >
-                    إلغاء
+                    {("Cancel")}
                 </button>
             </div>
         </div>
