@@ -1,11 +1,13 @@
 import React, { useMemo, useCallback, useState } from 'react'
 import { FileText, Plus, X } from 'lucide-react'
 import { useTranslation } from 'react-i18next'
+import { useNavigate } from 'react-router-dom';
 
 export default function Requests({ requests = [] }) {
     const [selectedStatuses, setSelectedStatuses] = useState([]);
     const { t } = useTranslation();
     const allStatusCases = useMemo(() => [0, 1, 2, 3], []);
+    const navigate = useNavigate();
 
     // Memoized filtered requests - recalculates only when dependencies change
     const filteredRequests = useMemo(() => {
@@ -52,7 +54,7 @@ export default function Requests({ requests = [] }) {
     }, []);
 
     const handleRequestClick = useCallback((requestId) => {
-        window.location.href = `/requests/${requestId}`;
+        navigate(`/profile/myRequestDetails/${requestId}`);
     }, []);
 
     return (

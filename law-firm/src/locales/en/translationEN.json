@@ -467,6 +467,10 @@
     "Current Services": "Current Services",
     "Clients": "Clients"
   },
+  "Common": {
+    "notProvided": "Not provided",
+    "notSpecified": "Not specified"
+  },
   "common": {
     "addBase": "Add Base",
     "saveAllChanges": "Save All Changes",
@@ -664,6 +668,38 @@
     "loadError": "Error loading data"
   },
   "Selected consultation type:": "Selected consultation type:",
+  "ClientRequests": {
+    "requestedBy": "Requested by",
+    "notes": "Notes",
+    "note": "note",
+    "notes_plural": "notes",
+    "requestDetails": "Request Details",
+    "backToRequests": "Back to My Requests",
+    "requestedOn": "Requested on",
+    "requestType": "Request Type",
+    "description": "Description",
+    "adminNote": "Admin Note",
+    "attachments": {
+      "title": "Attachments",
+      "noAttachments": "No attachments available",
+      "download": "Download"
+    },
+    "activity": "Activity",
+    "statusUpdated": "Status updated to",
+    "requestCreated": "Request created",
+    "notesSection": "Previous Notes",
+    "notesPlural": "Notes",
+    "noNotesYet": "No notes yet",
+    "noNotesDescription": "There are no notes for this request yet.",
+    "anonymous": "Anonymous",
+    "status": {
+      "pending": "Pending",
+      "contacted": "Contacted",
+      "resolved": "Resolved",
+      "rejected": "Rejected",
+      "unknown": "Unknown"
+    }
+  },
   "Contacts": {
     "Management": "Contact Messages",
     "email": "Email",
