@@ -7,6 +7,7 @@ function OurServices() {
     const { data: categories = [], isLoading } = useAllCategories();
     const { i18n } = useTranslation?.() ?? { t: (s) => s, i18n: { language: "ar" } };
     const isRtl = (i18n?.language || document.documentElement.dir) === "ar";
+    const { t } = useTranslation()
     if (isLoading) {
         return (
             <section className="py-16 bg-gradient-to-br from-gray-50 to-white">
@@ -188,7 +189,7 @@ function OurServices() {
                         to="/servicespage"
                         className="inline-flex items-center space-x-3 px-8 py-4 bg-gradient-to-r from-primary to-accent hover:from-accent hover:to-primary text-white font-bold rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105"
                     >
-                        <span>View All Services</span>
+                        <span>{t("View All Services")}</span>
                         <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
                         </svg>

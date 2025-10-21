@@ -27,7 +27,6 @@ export const ClientReviewsSection = ({ formik }) => {
                             <button
                                 onClick={() =>
                                     push({
-                                        id: Date.now(),
                                         nameEn: '',
                                         nameAr: '',
                                         clientOfEn: '',

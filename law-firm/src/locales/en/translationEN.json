@@ -263,7 +263,8 @@
   "OurCompany": {
     "about our company": "about our company",
     "visit": "Visit Us",
-    "Directions": "Directions"
+    "Directions": "Directions",
+    "Description": "Our mission is to provide unparalleled legal services, build trust, and achieve the best outcomes for our clients. Our vision is to be a leading law firm known for commitment, excellence, and client satisfaction."
   },
   "ClientOpinions": {
     "Our Clients' Opinions": "our clients' opinions"
@@ -408,32 +409,31 @@
 
     "lawyers": {
       "title": "Lawyers",
-      "addLawyer": "Add Lawyer",
+      "addLawyer": "Add lawyer",
       "lawyer": "Lawyer",
-      "nameEn": "Name (English)",
-      "nameAr": "Name (Arabic)",
-      "positionEn": "Position (English)",
-      "positionAr": "Position (Arabic)",
-      "specializationEn": "Specialization (English)",
-      "specializationAr": "Specialization (Arabic)",
-      "yearsOfExperience": "Years of Experience",
-      "linkedIn": "LinkedIn Profile",
-      "gmail": "Gmail",
-      "descriptionEn": "Description (English)",
-      "descriptionAr": "Description (Arabic)",
       "photo": "Photo",
-      "uploadPhoto": "Upload Photo",
-      "enterNameEn": "Enter name in English",
-      "enterNameAr": "Enter name in Arabic",
-      "enterPositionEn": "Enter position in English",
-      "enterPositionAr": "Enter position in Arabic",
-      "enterSpecializationEn": "Enter specialization in English",
-      "enterSpecializationAr": "Enter specialization in Arabic",
-      "enterYearsOfExperience": "Enter years of experience",
-      "enterLinkedIn": "Enter LinkedIn profile URL",
-      "enterGmail": "Enter Gmail address",
-      "enterDescriptionEn": "Enter description in English",
-      "enterDescriptionAr": "Enter description in Arabic"
+      "nameEn": "Name (EN)",
+      "nameEnPlaceholder": "e.g., Ahmed Ali",
+      "nameAr": "Name (AR)",
+      "nameArPlaceholder": "e.g., أحمد علي",
+      "positionEn": "Position (EN)",
+      "positionEnPlaceholder": "e.g., Senior Lawyer",
+      "positionAr": "Position (AR)",
+      "positionArPlaceholder": "مثال: محامٍ أول",
+      "specializationEn": "Specialization (EN)",
+      "specializationEnPlaceholder": "e.g., Commercial Law",
+      "specializationAr": "Specialization (AR)",
+      "specializationArPlaceholder": "مثال: القانون التجاري",
+      "yearsOfExperience": "Years of experience",
+      "yearsOfExperiencePlaceholder": "e.g., 5",
+      "linkedIn": "LinkedIn",
+      "linkedInPlaceholder": "e.g., https://linkedin.com/in/username",
+      "gmail": "Email",
+      "gmailPlaceholder": "e.g., name@example.com",
+      "descriptionEn": "Description (EN)",
+      "descriptionEnPlaceholder": "Write a brief about the lawyer in English...",
+      "descriptionAr": "Description (AR)",
+      "descriptionArPlaceholder": "اكتب نبذة عن المحامي باللغة العربية..."
     },
 
     "clientReviews": {
@@ -480,6 +480,7 @@
     "notSpecified": "Not specified"
   },
   "common": {
+    "url": "URL",
     "addBase": "Add Base",
     "saveAllChanges": "Save All Changes",
     "remove": "Remove",
