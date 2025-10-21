@@ -21,7 +21,7 @@ function LoginForm() {
                         </p>
                     </div>
                 )}
-                
+
                 <Formik
                     initialValues={{ email: '', password: '' }}
                     validationSchema={Yup.object({
@@ -68,6 +68,7 @@ function LoginForm() {
                                     <Field name="password">
                                         {({ field }) => (
                                             <input
+                                                id="password"
                                                 {...field}
                                                 type={showPassword ? 'text' : 'password'}
                                                 className={`w-full pl-4 pr-12 py-3 border rounded-lg focus:outline-none focus:ring-2 transition-all duration-300 ${errors.password && touched.password
@@ -76,7 +77,6 @@ function LoginForm() {
                                                     }`}
                                                 placeholder="أدخل كلمة مرور"
                                                 dir="ltr"
-                                                style={{ WebkitTextSecurity: showPassword ? 'none' : 'disc' }}
                                             />
                                         )}
                                     </Field>
