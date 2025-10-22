@@ -93,7 +93,6 @@ export const fetchRequestsByBranch = async ({ queryKey }) => {
 export const getRequestById = async (requestId) => {
     if (!requestId) throw new Error('Request ID is required');
     const { data } = await api.get(`/api/UserService/GetById/${requestId}`);
-    console.log("data",data)
     if (!data?.isSuccess) {
         throw new Error(data?.error?.description || "Failed to fetch request details");
     }

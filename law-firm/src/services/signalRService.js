@@ -17,18 +17,14 @@ class SignalRService {
   // Initialize or reuse the SignalR connection
   async start(accessToken) {
     if (this.connection && this.connection.state === signalR.HubConnectionState.Connected) {
-      console.log('[SignalR] Already connected');
       return this.connection;
     }
 
     if (this.connectionPromise) {
-      console.log('[SignalR] Reusing existing connection promise');
       return this.connectionPromise;
     }
 
     this.connectionPromise = new Promise((resolve, reject) => {
-      console.log('[SignalR] Creating new connection to:', this.hubUrl);
-
       this.connection = new signalR.HubConnectionBuilder()
         .withUrl(this.hubUrl, {
           accessTokenFactory: () => accessToken,
@@ -55,31 +51,26 @@ class SignalRService {
 
       // User notifications (Notify)
       this.connection.on('Notify', (notificationJson) => {
-        console.log('[SignalR] Received user notification:', notificationJson);
         this._processNotification(notificationJson, false);
       });
 
       // Staff notifications (NotifyStaff)
       this.connection.on('NotifyStaff', (notificationJson) => {
-        console.log('[SignalR] Received staff notification:', notificationJson);
         this._processNotification(notificationJson, true);
       });
 
       // Group message (optional)
       this.connection.on('ReceiveMessage', (user, message) => {
-        console.log('[SignalR] Group message received:', { user, message });
       });
-      
+
       // ---- Start connection ----
       this.connection
         .start()
         .then(() => {
-          console.log('[SignalR] Connected successfully');
           resolve(this.connection);
         })
         .catch((err) => {
           console.error('[SignalR] Connection error:', err);
-          this.connectionPromise = null;
           reject(err);
         });
     });
@@ -94,9 +85,6 @@ class SignalRService {
         typeof notificationJson === 'string'
           ? JSON.parse(notificationJson)
           : notificationJson;
-
-      console.log('[SignalR] Processing notification:', notification);
-
       const {
         Id,
         Title,
@@ -121,13 +109,10 @@ class SignalRService {
 
       // Show context-based message
       if (formatted.userServiceId) {
-        console.log(`[SignalR] Service request notification (ID: ${formatted.userServiceId})`);
         this._showToast({ ...formatted, message: `تم تقديم طلب خدمة جديد (رقم: ${formatted.userServiceId})` });
       } else if (formatted.userConsultationId) {
-        console.log(`[SignalR] Consultation notification (ID: ${formatted.userConsultationId})`);
         this._showToast({ ...formatted, message: `تم تقديم طلب استشارة جديد (رقم: ${formatted.userConsultationId})` });
       } else if (formatted.noteId) {
-        console.log(`[SignalR] Note notification (ID: ${formatted.noteId})`);
         this._showToast({ ...formatted, message: 'تم إضافة ملاحظة جديدة لطلبك' });
       } else {
         this._showToast(formatted);
@@ -167,7 +152,6 @@ class SignalRService {
       await this.connection.stop();
       this.connection = null;
       this.connectionPromise = null;
-      console.log('[SignalR] Disconnected');
     }
   }
 }

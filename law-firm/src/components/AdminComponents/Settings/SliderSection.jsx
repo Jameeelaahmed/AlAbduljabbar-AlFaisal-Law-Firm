@@ -10,15 +10,15 @@ import { Loading } from '../../Common/Loading';
 
 const SliderSection = () => {
   const { t } = useTranslation();
-  const { 
-    sliders, 
-    isLoading, 
-    createSlider, 
-    updateSlider, 
-    deleteSlider, 
-    fetchSliderById 
+  const {
+    sliders,
+    isLoading,
+    createSlider,
+    updateSlider,
+    deleteSlider,
+    fetchSliderById
   } = useSliders();
-  
+
   const [editingId, setEditingId] = useState(null);
   const [imageFile, setImageFile] = useState(null);
   const [imagePreview, setImagePreview] = useState('');
@@ -46,13 +46,12 @@ const SliderSection = () => {
     onSubmit: async (values, { resetForm }) => {
       try {
         setIsSubmitting(true);
-        
+
         // If there's a new image file, upload it first
         if (imageFile) {
           try {
             // uploadImage now returns the full URL directly
             values.imageUrl = await uploadImage(imageFile, 'slider');
-            console.log('Image uploaded successfully:', values.imageUrl);
           } catch (error) {
             console.error('Error uploading image:', error);
             toast.error(error.message || t('error.imageUploadFailed'));
@@ -63,8 +62,6 @@ const SliderSection = () => {
           toast.error(t('validation.imageRequired'));
           return;
         }
-
-        console.log('Submitting slider data:', values);
 
         if (editingId) {
           await updateSlider.mutateAsync({ id: editingId, ...values });
@@ -91,10 +88,10 @@ const SliderSection = () => {
     try {
       setIsLoadingSlider(true);
       setEditingId(slider.id);
-      
+
       // Fetch the latest slider data
       const sliderData = await fetchSliderById(slider.id);
-      
+
       formik.setValues({
         titleEn: sliderData.titleEn || '',
         titleAr: sliderData.titleAr || '',
@@ -103,7 +100,7 @@ const SliderSection = () => {
         order: sliderData.order || 1,
         imageUrl: sliderData.imageUrl || ''
       });
-      
+
       if (sliderData.imageUrl) {
         setImagePreview(sliderData.imageUrl);
       }
@@ -145,7 +142,6 @@ const SliderSection = () => {
   if (isLoading || isLoadingSlider) {
     return <Loading />;
   }
-  console.log("sliders",sliders)
   return (
     <div className="space-y-6">
       <div className="bg-white p-6 rounded-lg shadow">

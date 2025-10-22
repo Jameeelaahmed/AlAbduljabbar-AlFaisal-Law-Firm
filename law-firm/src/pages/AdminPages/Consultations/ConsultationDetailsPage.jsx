@@ -16,7 +16,6 @@ export default function ConsultationDetailsPage() {
     const { t } = useTranslation();
     const { consultationId: userConsultationId } = useParams();
     const navigate = useNavigate();
-    console.log("ConsultationId", userConsultationId)
     // Fetch request data
     const {
         data: requestData,

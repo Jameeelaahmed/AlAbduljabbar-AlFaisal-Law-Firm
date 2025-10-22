@@ -25,8 +25,6 @@ export const useAutoLogout = () => {
             return;
         }
 
-        console.log(`⏱ Auto logout scheduled in ${(timeLeft / 1000 / 60).toFixed(1)} minutes`);
-
         // ✅ schedule logout only once
         timerRef.current = setTimeout(() => {
             if (!logoutCalledRef.current) {

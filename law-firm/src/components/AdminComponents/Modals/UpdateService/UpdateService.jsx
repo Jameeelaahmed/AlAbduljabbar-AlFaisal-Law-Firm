@@ -6,10 +6,8 @@ import { useGetServiceForUpdate, useUpdateService } from "../../../../hooks/useS
 
 function UpdateService({ selectedServiceId, onClose, setSelectedServiceId }) {
     const { t } = useTranslation();
-
     const { data: serviceInitialData } = useGetServiceForUpdate(selectedServiceId)
     const { mutateAsync: updateService, isLoading: isUpdating } = useUpdateService(selectedServiceId);
-    console.log(serviceInitialData);
 
     return (
         <div className="flex items-center justify-center p-4" onClick={(e) => e.stopPropagation()}>
@@ -38,7 +36,6 @@ function UpdateService({ selectedServiceId, onClose, setSelectedServiceId }) {
                             setSelectedServiceId(null)
                             onClose();
                         } catch (err) {
-                            console.log(values.categoryId);
                             onClose()
                         } finally {
                             setSubmitting(false);

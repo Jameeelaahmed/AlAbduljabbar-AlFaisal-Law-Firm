@@ -7,7 +7,6 @@ import { getHomePageData } from "../api/landing";
 export const useSliders = () => {
     const { i18n } = useTranslation()
     const currentLang = i18n.language || localStorage.getItem('selectedLanguage') || 'ar'
-    console.log("currentLang",currentLang)
     return useQuery({
         queryKey: ['sliders', currentLang],
         queryFn: fetchSliders,

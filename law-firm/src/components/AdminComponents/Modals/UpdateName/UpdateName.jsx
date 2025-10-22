@@ -5,7 +5,7 @@ import * as Yup from "yup";
 import { toast } from "react-toastify";
 import { useUpdateCategory } from "../../../../hooks/useCategories";
 import { useGetCategoryForUpdate } from "../../../../hooks/useCategories";
-function UpdateName({ categoryId, onSuccess }) {
+function UpdateName({ categoryId, onSuccess, onClose }) {
     const { t } = useTranslation();
     const { mutateAsync: updateCategory, isLoading: isUpdating } = useUpdateCategory();
 
@@ -32,10 +32,8 @@ function UpdateName({ categoryId, onSuccess }) {
                                 NameAr: values.nameAr,
                                 branchId: data?.branchId,
                             };
-
                             await updateCategory({ id: categoryId, data: payload });
-
-                            toast.success(t("Services.Category updated successfully"));
+                            onClose();
                             if (typeof onSuccess === "function") onSuccess();
                         } catch (err) {
                             toast.error(err?.response?.data?.message || t("Services.Failed to update category"));

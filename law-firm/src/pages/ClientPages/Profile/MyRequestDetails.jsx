@@ -22,8 +22,6 @@ export default function MyRequestDetails() {
     const { t } = useTranslation();
     const { requestId } = useParams();
     const { data: request, isLoading, error } = useRequest(requestId);
-
-    console.log(request)
     // Fetch previous notes
     const {
         data: previousNotes,

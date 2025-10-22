@@ -21,7 +21,6 @@ export default function Profile() {
         pageIndex: 1,
         pageSize: 5
     });
-    console.log("user", user)
     if (isLoading) {
         return <Loading />
     }

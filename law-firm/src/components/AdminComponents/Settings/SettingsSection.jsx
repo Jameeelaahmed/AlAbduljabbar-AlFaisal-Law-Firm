@@ -2,7 +2,6 @@ import { useState } from "react";
 import { TiptapEditor } from "./TipTapEditor"
 
 export default function SettingsSection({ section, onChange }) {
-    console.log(section)
     const [contentAr, setContentAr] = useState(section?.content.ar || "");
     const [contentEn, setContentEn] = useState(section?.content.en || "");
 
