@@ -33,7 +33,7 @@ function LoginForm() {
                     })}
                     onSubmit={(values) => loginMutation.mutate(values)}
                 >
-                    {({ isSubmitting, errors, touched, values, handleChange, handleBlur }) => (
+                    {({ isSubmitting, errors, touched }) => (
                         <Form className="space-y-3">
                             {/* Email */}
                             <div className="space-y-2">
@@ -65,25 +65,26 @@ function LoginForm() {
                                     كلمة المرور
                                 </label>
                                 <div className="relative">
-                                    <input
-                                        id="password"
-                                        name="password"
-                                        type={showPassword ? 'text' : 'password'}
-                                        value={values.password}
-                                        onChange={handleChange}
-                                        onBlur={handleBlur}
-                                        className={`w-full pl-4 pr-12 py-3 border rounded-lg focus:outline-none focus:ring-2 transition-all duration-300 text-gray-900 placeholder-gray-400 bg-white ${errors.password && touched.password
-                                            ? 'border-red-300 focus:ring-red-200 bg-red-50'
-                                            : 'border-gray-300 focus:ring-primary focus:border-primary'
-                                            }`}
-                                        placeholder="أدخل كلمة المرور"
-                                        dir="ltr"
-                                        autoComplete="current-password"
-                                    />
+                                    <Field name="password">
+                                        {({ field }) => (
+                                            <input
+                                                id="password"
+                                                {...field}
+                                                type={showPassword ? 'text' : 'password'}
+                                                className={`w-full pl-4 pr-12 py-3 border rounded-lg focus:outline-none focus:ring-2 transition-all duration-300 ${errors.password && touched.password
+                                                    ? 'border-red-300 focus:ring-red-200 bg-red-50'
+                                                    : 'border-gray-300 focus:ring-primary focus:border-primary'
+                                                    }`}
+                                                placeholder="أدخل كلمة مرور"
+                                                dir="ltr"
+                                            />
+                                        )}
+                                    </Field>
                                     <button
                                         type="button"
                                         onClick={() => setShowPassword(!showPassword)}
-                                        className="cursor-pointer absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-primary transition-colors"
+                                        className="cursor-pointer absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-primary transition-colors pointer-events-auto z-10 p-1 touch-manipulation"
+                                        aria-label={showPassword ? "إخفاء كلمة المرور" : "إظهار كلمة المرور"}
                                     >
                                         {showPassword ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
                                     </button>

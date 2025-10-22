@@ -81,7 +81,7 @@ function RegisterForm() {
                         }
                     }}
                 >
-                    {({ isSubmitting, errors, touched, values, handleChange, handleBlur }) => (
+                    {({ isSubmitting, errors, touched }) => (
                         <Form className="space-y-3">
                             {/* First Name and Last Name Row */}
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -118,15 +118,13 @@ function RegisterForm() {
                                         {({ field }) => (
                                             <input
                                                 {...field}
-                                                id="fullNameAr"
                                                 type="text"
-                                                className={`w-full px-4 py-3 border rounded-lg focus:outline-none focus:ring-2 transition-all duration-300 text-gray-900 placeholder-gray-400 bg-white ${errors.fullNameAr && touched.fullNameAr
+                                                className={`w-full px-4 py-3 border rounded-lg focus:outline-none focus:ring-2 transition-all duration-300 ${errors.fullNameAr && touched.fullNameAr
                                                     ? 'border-red-300 focus:ring-red-200 bg-red-50'
                                                     : 'border-gray-300 focus:ring-primary focus:border-primary'
                                                     }`}
                                                 placeholder="أدخل اسمك بالكامل باللغة العربيه"
                                                 dir="auto"
-                                                autoComplete="name"
                                             />
                                         )}
                                     </Field>
@@ -145,15 +143,13 @@ function RegisterForm() {
                                         {({ field }) => (
                                             <input
                                                 {...field}
-                                                id="mobileNumber"
                                                 type="text"
-                                                className={`w-full px-4 py-3 border rounded-lg focus:outline-none focus:ring-2 transition-all duration-300 text-gray-900 placeholder-gray-400 bg-white ${errors.mobileNumber && touched.mobileNumber
+                                                className={`w-full px-4 py-3 border rounded-lg focus:outline-none focus:ring-2 transition-all duration-300 ${errors.mobileNumber && touched.mobileNumber
                                                     ? 'border-red-300 focus:ring-red-200 bg-red-50'
                                                     : 'border-gray-300 focus:ring-primary focus:border-primary'
                                                     }`}
                                                 placeholder="أدخل رقم هاتفك المحمول"
                                                 dir="auto"
-                                                autoComplete="tel"
                                             />
                                         )}
                                     </Field>
@@ -169,12 +165,10 @@ function RegisterForm() {
                                         {({ field }) => (
                                             <input
                                                 {...field}
-                                                id="whatsAppNumber"
                                                 type="text"
-                                                className={`w-full px-4 py-3 border rounded-lg focus:outline-none focus:ring-2 transition-all duration-300 text-gray-900 placeholder-gray-400 bg-white border-gray-300 focus:ring-primary focus:border-primary`}
+                                                className={`w-full px-4 py-3 border rounded-lg focus:outline-none focus:ring-2 transition-all duration-300 border-gray-300 focus:ring-primary focus:border-primary `}
                                                 placeholder="أدخل رقم الواتس اب"
                                                 dir="auto"
-                                                autoComplete="tel"
                                             />
                                         )}
                                     </Field>
@@ -192,15 +186,13 @@ function RegisterForm() {
                                     {({ field }) => (
                                         <input
                                             {...field}
-                                            id="email"
                                             type="email"
-                                            className={`w-full px-4 py-3 border rounded-lg focus:outline-none focus:ring-2 transition-all duration-300 text-gray-900 placeholder-gray-400 bg-white ${errors.email && touched.email
+                                            className={`w-full px-4 py-3 border rounded-lg focus:outline-none focus:ring-2 transition-all duration-300 ${errors.email && touched.email
                                                 ? 'border-red-300 focus:ring-red-200 bg-red-50'
                                                 : 'border-gray-300 focus:ring-primary focus:border-primary'
                                                 }`}
                                             placeholder="example@email.com"
                                             dir="ltr"
-                                            autoComplete="email"
                                         />
                                     )}
                                 </Field>
@@ -213,25 +205,27 @@ function RegisterForm() {
                                     <Lock className="w-4 h-4 text-secondary" /> كلمة المرور
                                 </label>
                                 <div className="relative">
-                                    <input
-                                        id="password"
-                                        name="password"
-                                        type={showPassword ? 'text' : 'password'}
-                                        value={values.password}
-                                        onChange={handleChange}
-                                        onBlur={handleBlur}
-                                        className={`w-full pl-4 pr-12 py-3 border rounded-lg focus:outline-none focus:ring-2 transition-all duration-300 text-gray-900 placeholder-gray-400 bg-white ${errors.password && touched.password
-                                            ? 'border-red-300 focus:ring-red-200 bg-red-50'
-                                            : 'border-gray-300 focus:ring-primary focus:border-primary'
-                                            }`}
-                                        placeholder="أدخل كلمة مرور قوية"
-                                        dir="ltr"
-                                        autoComplete="new-password"
-                                    />
+                                    <Field name="password">
+                                        {({ field }) => (
+                                            <input
+                                                {...field}
+                                                id="password"
+                                                type={showPassword ? 'text' : 'password'}
+                                                className={`w-full pl-4 pr-12 py-3 border rounded-lg focus:outline-none focus:ring-2 transition-all duration-300 text-gray-900 placeholder-gray-400 bg-white ${errors.password && touched.password
+                                                    ? 'border-red-300 focus:ring-red-200 bg-red-50'
+                                                    : 'border-gray-300 focus:ring-primary focus:border-primary'
+                                                    }`}
+                                                placeholder="أدخل كلمة مرور قوية"
+                                                dir="ltr"
+                                                autoComplete="new-password"
+                                            />
+                                        )}
+                                    </Field>
                                     <button
                                         type="button"
                                         onClick={() => setShowPassword(!showPassword)}
-                                        className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-primary transition-colors"
+                                        className="cursor-pointer absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-primary transition-colors pointer-events-auto z-10 p-1 touch-manipulation"
+                                        aria-label={showPassword ? "إخفاء كلمة المرور" : "إظهار كلمة المرور"}
                                     >
                                         {showPassword ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
                                     </button>
@@ -248,25 +242,27 @@ function RegisterForm() {
                                     <Lock className="w-4 h-4 text-secondary" /> تأكيد كلمة المرور
                                 </label>
                                 <div className="relative">
-                                    <input
-                                        id="confirmPassword"
-                                        name="confirmPassword"
-                                        type={showConfirmPassword ? 'text' : 'password'}
-                                        value={values.confirmPassword}
-                                        onChange={handleChange}
-                                        onBlur={handleBlur}
-                                        className={`w-full pl-4 pr-12 py-3 border rounded-lg focus:outline-none focus:ring-2 transition-all duration-300 text-gray-900 placeholder-gray-400 bg-white ${errors.confirmPassword && touched.confirmPassword
-                                            ? 'border-red-300 focus:ring-red-200 bg-red-50'
-                                            : 'border-gray-300 focus:ring-primary focus:border-primary'
-                                            }`}
-                                        placeholder="أعد إدخال كلمة المرور"
-                                        dir="ltr"
-                                        autoComplete="new-password"
-                                    />
+                                    <Field name="confirmPassword">
+                                        {({ field }) => (
+                                            <input
+                                                {...field}
+                                                id="confirmPassword"
+                                                type={showConfirmPassword ? 'text' : 'password'}
+                                                className={`w-full pl-4 pr-12 py-3 border rounded-lg focus:outline-none focus:ring-2 transition-all duration-300 text-gray-900 placeholder-gray-400 bg-white ${errors.confirmPassword && touched.confirmPassword
+                                                    ? 'border-red-300 focus:ring-red-200 bg-red-50'
+                                                    : 'border-gray-300 focus:ring-primary focus:border-primary'
+                                                    }`}
+                                                placeholder="أعد إدخال كلمة المرور"
+                                                dir="ltr"
+                                                autoComplete="new-password"
+                                            />
+                                        )}
+                                    </Field>
                                     <button
                                         type="button"
                                         onClick={() => setShowConfirmPassword(!showConfirmPassword)}
-                                        className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600 transition-colors"
+                                        className="cursor-pointer absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600 transition-colors pointer-events-auto z-10 p-1 touch-manipulation"
+                                        aria-label={showConfirmPassword ? "إخفاء كلمة المرور" : "إظهار كلمة المرور"}
                                     >
                                         {showConfirmPassword ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
                                     </button>
