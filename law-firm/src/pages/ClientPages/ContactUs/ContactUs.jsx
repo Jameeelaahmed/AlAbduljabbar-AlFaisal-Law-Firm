@@ -177,7 +177,7 @@ const ContactUs = () => {
                                     <Form className="space-y-6">
                                         <div>
                                             <label htmlFor="email" className="block text-sm font-medium text-primary mb-2">
-                                                {t("Email Address *")}
+                                                {t("Email Address")}
                                             </label>
                                             <Field name="email">
                                                 {({ field }) => (
@@ -195,7 +195,7 @@ const ContactUs = () => {
 
                                         <div>
                                             <label htmlFor="phoneNumber" className="block text-sm font-medium text-primary mb-2">
-                                                {t("Phone Number *")}
+                                                {t("Phone Number")}
                                             </label>
                                             <Field name="phoneNumber">
                                                 {({ field }) => (
@@ -213,7 +213,7 @@ const ContactUs = () => {
 
                                         <div>
                                             <label htmlFor="message" className="block text-sm font-medium text-primary mb-2">
-                                                {t("Your Message *")}
+                                                {t("Your Message")}
                                             </label>
                                             <Field name="message">
                                                 {({ field }) => (
