@@ -4,7 +4,7 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "vite",
+    "dev": "vite --host",
     "build": "vite build",
     "lint": "eslint .",
     "preview": "vite preview"
@@ -33,6 +33,7 @@
     "react-dom": "^19.1.1",
     "react-hot-toast": "^2.6.0",
     "react-i18next": "^16.0.0",
+    "react-loader-spinner": "^7.0.3",
     "react-router-dom": "^7.9.3",
     "react-toastify": "^11.0.5",
     "swiper": "^12.0.2",
