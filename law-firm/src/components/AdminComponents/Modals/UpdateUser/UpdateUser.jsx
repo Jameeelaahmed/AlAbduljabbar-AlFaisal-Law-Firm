@@ -35,7 +35,6 @@ function UpdateUser({ userId, onSuccess, onFailure }) {
                     onSubmit={async (values, { setSubmitting }) => {
                         setSubmitting(true);
                         try {
-                            console.log(userId, values);
                             await updateUser({ id: userId, data: values });
                             toast.success(t("Users.User updated successfully"));
                             onSuccess?.();
@@ -43,7 +42,6 @@ function UpdateUser({ userId, onSuccess, onFailure }) {
                             toast.error(err?.response?.data?.message || t("Users.Failed to update user"));
                             console.error("Update user failed:", err);
                             onFailure?.();
-
                         } finally {
                             setSubmitting(false);
                         }

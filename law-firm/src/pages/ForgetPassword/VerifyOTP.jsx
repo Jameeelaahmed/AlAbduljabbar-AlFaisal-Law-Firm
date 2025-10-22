@@ -15,7 +15,6 @@ export default function VerifyOTP() {
     const [timeLeft, setTimeLeft] = useState(120);
     const [errorMessage, setErrorMessage] = useState('');
     const forgetPasswordEmail = localStorage.getItem("forgotPasswordEmail");
-    console.log(forgetPasswordEmail)
 
     // Countdown timer
     useEffect(() => {
@@ -107,7 +106,6 @@ export default function VerifyOTP() {
         // Clear error message
         setErrorMessage('');
         // You might want to call the forgot password API again here
-        console.log('Resending OTP...');
     };
 
     return (

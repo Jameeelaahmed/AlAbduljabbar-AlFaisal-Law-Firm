@@ -4,12 +4,9 @@ import LoginForm from '../../../components/AuthComponents/LoginForm/LoginForm';
 import authImg from '../../../assets/AuthPics/auth.jpg'
 // libs
 import { useState } from "react";
-import { useLocation } from 'react-router-dom';
 
 function LoginRegisterPage() {
     const [useAuthToggle, setUseAuthToggle] = useState('login');
-    const location = useLocation().pathname;
-    console.log(location)
     function handleAuthToggle(state) {
         if (state === 'login') { setUseAuthToggle('login') }
         else { setUseAuthToggle('signUp') }

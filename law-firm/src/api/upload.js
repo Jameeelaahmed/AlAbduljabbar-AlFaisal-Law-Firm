@@ -21,19 +21,17 @@ export const uploadImage = async (file, folderName = 'images') => {
         if (response.data.isSuccess) {
             // Ensure we return the full URL
             const imageUrl = response.data.data?.url || '';
-            
+
             // If the URL is already a full URL, return it as is
             if (imageUrl.startsWith('http')) {
                 return imageUrl;
             }
-            
+
             // Otherwise, construct the full URL using the base URL from the axios instance
             const baseUrl = api.defaults.baseURL || window.location.origin;
-            const fullUrl = imageUrl.startsWith('/') 
+            const fullUrl = imageUrl.startsWith('/')
                 ? `${baseUrl}${imageUrl}`
                 : `${baseUrl}/${imageUrl}`;
-                
-            console.log('Uploaded image URL:', fullUrl);
             return fullUrl;
         } else {
             throw new Error(response.data.error?.description || 'Upload failed');
@@ -52,7 +50,7 @@ export const uploadImage = async (file, folderName = 'images') => {
  */
 export const uploadMultipleImages = async (files, folderName = 'images') => {
     const formData = new FormData();
-    
+
     // Append all files to FormData
     files.forEach((file) => {
         formData.append('files', file);

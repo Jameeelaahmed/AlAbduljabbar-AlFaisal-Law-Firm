@@ -6,8 +6,6 @@ export default function UserOnlyGuard({ children }) {
     const location = useLocation();
     const { data: userData, isLoading } = useUserInfo();
     const user = userData;
-    console.log(userData);
-
     if (isLoading) {
         return (
             <Loading />

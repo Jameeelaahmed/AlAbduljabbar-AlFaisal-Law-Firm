@@ -9,7 +9,7 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 function LoginForm() {
     const loginMutation = useLogin();
-    const [showPassword, setShowPassword] = useState(false);
+    const [showPassword, setShowPassword] = useState(true);
 
     return (
         <div className="flex items-center justify-center p-4">

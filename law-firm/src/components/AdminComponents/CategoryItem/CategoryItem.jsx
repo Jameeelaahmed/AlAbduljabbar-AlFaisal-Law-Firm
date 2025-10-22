@@ -164,7 +164,7 @@ function CategoryItem({ category }) {
                         <SquarePen size={16} />
                     </div>
                     <Modal ref={changeNameRef} title={t("Services.Change Category Name")} onClose={(e) => { handleCloseUpdateCategoryName(); e.stopPropagation() }}>
-                        <UpdateName categoryId={category.id} />
+                        <UpdateName categoryId={category.id} onClose={(e) => { handleCloseUpdateCategoryName(); e.stopPropagation() }} />
                     </Modal>
                     <span
                         className={`text-xs sm:text-sm md:text-sm transition-colors ${isExpanded ? "text-white/80" : "text-secondary group-hover:text-accent"

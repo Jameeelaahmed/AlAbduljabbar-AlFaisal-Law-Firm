@@ -1,17 +1,23 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { MapPin, Phone, Mail, Scale, ArrowRight, Facebook, Twitter, Linkedin, Instagram } from "lucide-react";
+import { MapPin, Phone, Mail, Scale, ArrowRight, Facebook, Linkedin, Instagram } from "lucide-react"; // removed Twitter
 import { useTranslation } from "react-i18next";
+
+// X brand icon (SVG)
+const XIcon = ({ size = 18, className = "" }) => (
+    <svg viewBox="0 0 24 24" width={size} height={size} className={className} fill="currentColor" aria-hidden="true">
+        <path d="M18.244 2H22L14.5 10.615 23 22h-6.756l-5.085-6.3L6.99 22H2l8.322-9.556L2 2h6.756l4.708 5.84L18.244 2Zm-2.756 18.222h2.192L8.064 3.698H5.872l9.616 16.524Z" />
+    </svg>
+);
 
 function Footer() {
     const { t, i18n } = useTranslation();
     const isRtl = (i18n?.language || document.documentElement.dir) === "ar";
 
     const socialLinks = [
-        { icon: Linkedin, href: "#", label: t("Footer.Social.LinkedIn") },
-        { icon: Twitter, href: "#", label: t("Footer.Social.Twitter") },
-        { icon: Facebook, href: "#", label: t("Footer.Social.Facebook") },
-        { icon: Instagram, href: "#", label: t("Footer.Social.Instagram") }
+        { icon: XIcon, href: "https://x.com/AbdGbarAlfaisal", label: t("Footer.Social.X", { defaultValue: "X" }) }, // replaced Twitter with X
+        { icon: Facebook, href: "https://www.facebook.com/profile.php?id=61578300513084&sk=photos", label: t("Footer.Social.Facebook") },
+        { icon: Instagram, href: "https://www.instagram.com/alabdalgabar.alfaisallawfirm?igsh=MXhmN2Y0b3lkM2Qzeg==", label: t("Footer.Social.Instagram") }
     ];
 
     const quickLinks = [
@@ -60,6 +66,8 @@ function Footer() {
                                     href={social.href}
                                     className="w-10 h-10 bg-white border border-secondary/20 rounded-lg flex items-center justify-center text-gray-600 hover:bg-primary hover:text-white hover:border-primary transition-all duration-300 group shadow-sm"
                                     aria-label={social.label}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
                                 >
                                     <social.icon size={18} className="group-hover:scale-110 transition-transform" />
                                 </a>

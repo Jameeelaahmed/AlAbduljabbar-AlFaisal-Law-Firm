@@ -29,7 +29,6 @@ export const logoutUser = async () => {
 };
 
 export const forgotPassword = async (email) => {
-    console.log(email)
     try {
         const response = await api.post(`/api/Auth/ForgotPassword/?Email=${email}`);
 

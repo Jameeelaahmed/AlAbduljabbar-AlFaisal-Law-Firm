@@ -1,12 +1,11 @@
 import api from "./axiosInstance"
 export const getAllUserConsultations = async ({ queryKey }) => {
-    const [_key, { pageIndex = 1, pageSize = 5, status= null }] = queryKey
+    const [_key, { pageIndex = 1, pageSize = 5, status = null }] = queryKey
 
     const { data: response } = await api.get("/api/UserConsultations/All", {
-        params: { pageIndex, pageSize , status},
+        params: { pageIndex, pageSize, status },
     });
 
-    console.log(response);
     if (!response?.isSuccess) {
         throw new Error(response?.error?.description || "Failed to fetch s");
     }
@@ -27,7 +26,7 @@ export const createConsutationsTypes = async (data) => {
     return res.data.data;
 }
 export const updateConsutationsTypes = async (id, data) => {
-    console.log("update", id, data);
+    console.("update", id, data);
     const res = await api.put(`/api/Consultations/Update/${id}`, data);
     return res.data.data;
 }
@@ -63,10 +62,10 @@ export const getConsultationById = async (consultationId) => {
 
 export const createConsultationRequest = async (data) => {
     const res = await api.post(`/api/UserConsultations/Request`, data);
-    
+
     // Notifications are handled automatically by the backend NotificationService
     // The backend will call NotifyStaff method which sends notifications to Admin and CustomerService users
-    
+
     return res.data.data;
 }
 

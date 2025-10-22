@@ -70,7 +70,6 @@ export default function LawServicesManyCategories() {
     }, [services, activeCategory, searchTerm, visibleCategoryIds]);
 
     const currentCategory = allCategories.find(c => c.id === activeCategory);
-    console.log("currentCategory", currentCategory)
     return (
         <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100">
             {/* Header (match Contact Us hero style) */}
