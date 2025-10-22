@@ -52,6 +52,7 @@ export const useGetCategoryByBranchId = (branchId, options = {}) => {
 // 🔹 Create Category
 export const useCreateCategory = () => {
     const queryClient = useQueryClient();
+    const { t } = useTranslation();
 
     return useMutation({
         mutationFn: categoryApi.createCategory,
@@ -66,18 +67,14 @@ export const useCreateCategory = () => {
 
             return { previousCategories };
         },
-        onError: (err, newCategory, context) => {
+        onError: (_err, _newCategory, context) => {
             if (context?.previousCategories) {
                 queryClient.setQueryData(["allCategories"], context.previousCategories);
             }
-            toast.error(
-                err.response?.data?.message ||
-                `Something went wrong — couldn't create ${newCategory.name || "category"
-                }!`
-            );
+            toast.error(t("Categories.CreateError"));
         },
         onSuccess: () => {
-            toast.success("✅ Category created successfully!");
+            toast.success(t("Categories.CreateSuccess"));
         },
         onSettled: () => {
             queryClient.invalidateQueries(["allCategories"]);
@@ -88,16 +85,15 @@ export const useCreateCategory = () => {
 // 🔹 Update Category
 export const useUpdateCategory = () => {
     const queryClient = useQueryClient();
+    const { t } = useTranslation();
+
     return useMutation({
         mutationFn: ({ id, data }) => categoryApi.updateCategory(id, data),
-        onError: (err) => {
-            toast.error(
-                err.response?.data?.message ||
-                `Something went wrong — couldn't update this category!`
-            );
+        onError: () => {
+            toast.error(t("Categories.UpdateError"));
         },
         onSuccess: () => {
-            toast.success("📝 Category updated successfully!");
+            toast.success(t("Categories.UpdateSuccess"));
             queryClient.invalidateQueries(["allCategories"]);
         },
     });
@@ -106,6 +102,7 @@ export const useUpdateCategory = () => {
 // 🔹 Delete Category
 export const useDeleteCategory = () => {
     const queryClient = useQueryClient();
+    const { t } = useTranslation();
 
     return useMutation({
         mutationFn: (id) => categoryApi.deleteCategory(id),
@@ -119,16 +116,15 @@ export const useDeleteCategory = () => {
             return { previousCategories };
         },
 
-        onError: (err, _, context) => {
-            queryClient.setQueryData(["allCategories"], context.previousCategories);
-            toast.error(
-                err.response?.data?.message ||
-                `Something went wrong — couldn't delete this category!`
-            );
+        onError: (_err, _id, context) => {
+            if (context?.previousCategories) {
+                queryClient.setQueryData(["allCategories"], context.previousCategories);
+            }
+            toast.error(t("Categories.DeleteError"));
         },
 
         onSuccess: () => {
-            toast.success("🗑️ Category deleted successfully!");
+            toast.success(t("Categories.DeleteSuccess"));
         },
 
         onSettled: () => {

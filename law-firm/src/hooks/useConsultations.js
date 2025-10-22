@@ -17,6 +17,7 @@ export function useConsultations({ pageIndex = 1, pageSize = 5, status = null } 
 
 export const useCreateConsultationRequest = () => {
     const queryClient = useQueryClient();
+    const { t } = useTranslation();
 
     return useMutation({
         mutationFn: consultationsApi.createConsultationRequest,
@@ -37,12 +38,13 @@ export const useCreateConsultationRequest = () => {
             if (context?.previousRequests) {
                 queryClient.setQueryData(["consultations"], context.previousRequests);
             }
+            toast.error(t("Consultations.CreateError"));
             console.error("Error creating consultation:", error);
         },
 
         onSuccess: () => {
             queryClient.invalidateQueries(["consultations"]);
-            toast.success("Consultation Request Sent Successfully")
+            toast.success(t("Consultations.CreateSuccess"));
         },
 
         onSettled: () => {
@@ -54,6 +56,7 @@ export const useCreateConsultationRequest = () => {
 // **** CONSULTATION TYPES ****
 export const useCreateConsultationType = () => {
     const queryClient = useQueryClient();
+    const { t } = useTranslation();
 
     return useMutation({
         mutationFn: consultationsApi.createConsutationsTypes,
@@ -72,14 +75,10 @@ export const useCreateConsultationType = () => {
             if (context?.previousConsultationTypes) {
                 queryClient.setQueryData(["allConsultationsTypes"], context.previousConsultationTypes);
             }
-            toast.error(
-                err.response?.data?.message ||
-                `Something went wrong — couldn't create ${newConsultationType.name || "category"
-                }!`
-            );
+            toast.error(t("Consultations.Types.CreateError"));
         },
         onSuccess: () => {
-            toast.success("✅ Consultation Type created successfully!");
+            toast.success(t("Consultations.Types.CreateSuccess"));
         },
         onSettled: () => {
             queryClient.invalidateQueries(["allConsultationsTypes"]);
@@ -89,16 +88,15 @@ export const useCreateConsultationType = () => {
 
 export const useUpdateConsultaionType = () => {
     const queryClient = useQueryClient();
+    const { t } = useTranslation();
+
     return useMutation({
         mutationFn: ({ id, data }) => consultationsApi.updateConsutationsTypes(id, data),
         onError: (err) => {
-            toast.error(
-                err.response?.data?.message ||
-                `Something went wrong — couldn't update this consultation type!`
-            );
+            toast.error(t("Consultations.Types.UpdateError"));
         },
         onSuccess: () => {
-            toast.success("📝 Consultation Type updated successfully!");
+            toast.success(t("Consultations.Types.UpdateSuccess"));
             queryClient.invalidateQueries(["allConsultationsTypes"]);
         },
     });
@@ -125,6 +123,7 @@ export const useGetAllConsultationTypes = () => {
 
 export const useDeleteConsultationTypes = () => {
     const queryClient = useQueryClient();
+    const { t } = useTranslation();
 
     return useMutation({
         mutationFn: (id) => consultationsApi.deleteConsutationsTypes(id),
@@ -140,14 +139,11 @@ export const useDeleteConsultationTypes = () => {
 
         onError: (err, _, context) => {
             queryClient.setQueryData(["allConsultationsTypes"], context.previousConsultationTypes);
-            toast.error(
-                err.response?.data?.message ||
-                `Something went wrong — couldn't delete this consultation types!`
-            );
+            toast.error(t("Consultations.Types.DeleteError"));
         },
 
         onSuccess: () => {
-            toast.success("🗑️ Consultation Types deleted successfully!");
+            toast.success(t("Consultations.Types.DeleteSuccess"));
         },
 
         onSettled: () => {

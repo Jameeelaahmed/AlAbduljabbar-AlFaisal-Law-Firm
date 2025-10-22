@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { ChevronDown, ChevronUp, Search } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { useGetFaqByFaqCategoryId, useFaqCategory } from '../../../hooks/useFAQ';
+import { Link } from 'react-router-dom';
 
 const FAQPage = () => {
     const [openItems, setOpenItems] = useState(new Set());
@@ -139,12 +140,10 @@ const FAQPage = () => {
                         {t("Can't find the answer you're looking for? Please reach out to our friendly support team.")}
                     </p>
                     <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                        <button className="bg-primary text-white px-8 py-3 rounded-xl font-semibold hover:bg-accent transition-colors duration-200 shadow-sm">
+
+                        <Link to="/contactus" className="border border-secondary text-secondary px-8 py-3 rounded-xl font-semibold hover:bg-secondary hover:text-white transition-all duration-200">
                             {t("Contact Support")}
-                        </button>
-                        <button className="border border-secondary text-secondary px-8 py-3 rounded-xl font-semibold hover:bg-secondary hover:text-white transition-all duration-200">
-                            {t("Send Email")}
-                        </button>
+                        </Link>
                     </div>
                 </div>
             </div>

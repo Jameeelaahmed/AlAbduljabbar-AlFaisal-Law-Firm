@@ -73,12 +73,13 @@ export function useRequest(requestId) {
 // Hook for creating a new request
 export function useCreateRequest() {
     const queryClient = useQueryClient();
+    const { t } = useTranslation();
 
     return useMutation({
         mutationFn: createRequest,
         onSuccess: () => {
             queryClient.invalidateQueries(["requests"]);
-            toast.success("✅ Request created successfully!");
+            toast.success(t("Requests.CreateSuccess"));
         },
     });
 }
@@ -86,12 +87,14 @@ export function useCreateRequest() {
 // Hook for updating a request
 export function useUpdateRequest() {
     const queryClient = useQueryClient();
+    const { t } = useTranslation();
 
     return useMutation({
         mutationFn: updateRequest,
         onSuccess: (data, variables) => {
             queryClient.invalidateQueries(["requests"]);
             queryClient.invalidateQueries(["request", variables.id]);
+            toast.success(t("Requests.UpdateSuccess"));
         },
     });
 }
@@ -108,11 +111,13 @@ export function useGetRequestForUpdate(requestId) {
 // Hook for deleting a request
 export function useDeleteRequest() {
     const queryClient = useQueryClient();
+    const { t } = useTranslation();
 
     return useMutation({
         mutationFn: deleteRequest,
         onSuccess: () => {
             queryClient.invalidateQueries(["requests"]);
+            toast.success(t("Requests.DeleteSuccess"));
         },
     });
 }
@@ -121,6 +126,7 @@ export function useDeleteRequest() {
 export function useRejectRequest() {
     const queryClient = useQueryClient();
     const { t } = useTranslation();
+
     return useMutation({
         mutationFn: rejectRequest,
         onSuccess: (data, variables) => {
@@ -135,6 +141,7 @@ export function useRejectRequest() {
 export function useResolveRequest() {
     const queryClient = useQueryClient();
     const { t } = useTranslation();
+
     return useMutation({
         mutationFn: resolveRequest,
         onSuccess: (data, variables) => {
@@ -149,6 +156,7 @@ export function useResolveRequest() {
 export function useContactRequest() {
     const queryClient = useQueryClient();
     const { t } = useTranslation();
+
     return useMutation({
         mutationFn: contactRequest,
         onSuccess: (data, variables) => {
@@ -162,12 +170,14 @@ export function useContactRequest() {
 // Hook for adding notes to a request
 export function useAddRequestNote() {
     const queryClient = useQueryClient();
+    const { t } = useTranslation();
 
     return useMutation({
         mutationFn: addRequestNote,
         onSuccess: (data, variables) => {
             queryClient.invalidateQueries(["request", variables.requestId]);
             queryClient.invalidateQueries(["request", variables.requestId, "timeline"]);
+            toast.success(t("Requests.NoteAddedSuccess"));
         },
     });
 }

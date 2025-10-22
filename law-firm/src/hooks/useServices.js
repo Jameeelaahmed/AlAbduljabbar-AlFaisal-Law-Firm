@@ -1,7 +1,6 @@
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import * as serviceApi from "../api/services";
 import { toast } from "react-toastify";
-
 import { useTranslation } from "react-i18next";
 
 // 🔹 Get All Services
@@ -26,6 +25,7 @@ export const useServiceById = (id) => {
         retry: 3
     });
 }
+
 // 🔹 Get For Update Service By Id
 export const useGetServiceForUpdate = (id) => {
     const { i18n } = useTranslation() // read language at render time
@@ -38,9 +38,7 @@ export const useGetServiceForUpdate = (id) => {
 }
 
 // Get Service By Category Id 
-
 export const useGetServicesByCategoryId = (id) => {
-
     const { i18n } = useTranslation() // read language at render time
     const currentLang = i18n.language || localStorage.getItem('selectedLanguage') || 'ar'
     return useQuery({
@@ -53,6 +51,7 @@ export const useGetServicesByCategoryId = (id) => {
 // 🔹 Create Service
 export const useCreateService = () => {
     const queryClient = useQueryClient();
+    const { t } = useTranslation();
 
     return useMutation({
         mutationFn: serviceApi.createService,
@@ -71,14 +70,10 @@ export const useCreateService = () => {
             if (context?.previousServices) {
                 queryClient.setQueryData(["allServices"], context.previousServices);
             }
-            toast.error(
-                err.response?.data?.message ||
-                `Something went wrong — couldn't create ${newService.name || "service"
-                }!`
-            );
+            toast.error(t("Services.CreateError"));
         },
         onSuccess: () => {
-            toast.success("✅ Service created successfully!");
+            toast.success(t("Services.CreateSuccess"));
         },
         onSettled: () => {
             queryClient.invalidateQueries(["allServices"]);
@@ -89,24 +84,24 @@ export const useCreateService = () => {
 // 🔹 Update Service
 export const useUpdateService = () => {
     const queryClient = useQueryClient();
+    const { t } = useTranslation();
+
     return useMutation({
         mutationFn: ({ id, data }) => serviceApi.updateService(id, data),
         onError: (err) => {
-            toast.error(
-                err.response?.data?.message ||
-                `Something went wrong — couldn't update this service!`
-            );
+            toast.error(t("Services.UpdateError"));
         },
         onSuccess: () => {
-            toast.success("📝 Service updated successfully!");
+            toast.success(t("Services.UpdateSuccess"));
             queryClient.invalidateQueries(["allServices"]);
         },
     });
 };
 
-// 🔹 Delete Category
+// 🔹 Delete Service
 export const useDeleteService = () => {
     const queryClient = useQueryClient();
+    const { t } = useTranslation();
 
     return useMutation({
         mutationFn: (id) => serviceApi.deleteService(id),
@@ -122,14 +117,11 @@ export const useDeleteService = () => {
 
         onError: (err, _, context) => {
             queryClient.setQueryData(["allServices"], context.previousServices);
-            toast.error(
-                err.response?.data?.message ||
-                `Something went wrong — couldn't delete this service!`
-            );
+            toast.error(t("Services.DeleteError"));
         },
 
         onSuccess: () => {
-            toast.success("🗑️ Service deleted successfully!");
+            toast.success(t("Services.DeleteSuccess"));
         },
 
         onSettled: () => {

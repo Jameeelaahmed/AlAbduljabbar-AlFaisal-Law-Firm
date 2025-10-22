@@ -3,6 +3,7 @@ import * as userApi from "../api/user";
 import { toast } from "react-toastify";
 import { fetchUsers } from "../api/user";
 import { useTranslation } from "react-i18next";
+
 // 🔹 Get Paginated Users
 export const useUsers = ({
     searchTerm = "",
@@ -39,6 +40,7 @@ export const useGetUserForUpdate = (id) =>
 export const useCreateUser = () => {
     const queryClient = useQueryClient();
     const { t } = useTranslation();
+
     return useMutation({
         mutationFn: userApi.createUser,
         onMutate: async (newUser) => {
@@ -57,12 +59,11 @@ export const useCreateUser = () => {
                 queryClient.setQueryData(["users"], context.previousUsers);
             }
             toast.error(
-                err.response?.data?.message ||
-                `Something went wrong — couldn't create ${newUser.fullName || "user"}!`
+                err.response?.data?.message || t("Users.CreateError")
             );
         },
         onSuccess: () => {
-            toast.success(t());
+            toast.success(t("Users.CreateSuccess"));
         },
         onSettled: () => {
             queryClient.invalidateQueries(["users"]);
@@ -79,12 +80,11 @@ export const useUpdateUser = () => {
         mutationFn: ({ id, data }) => userApi.updateUser({ id, data }),
         onError: (err) => {
             toast.error(
-                err.response?.data?.message ||
-                `Something went wrong — couldn't update this user!`
+                err.response?.data?.message || t("Users.UpdateError")
             );
         },
         onSuccess: () => {
-            toast.success(t("Users.User updated successfully"));
+            toast.success(t("Users.UpdateSuccess"));
             queryClient.invalidateQueries(["users"]);
         },
     });
@@ -115,13 +115,12 @@ export const useDeleteUser = () => {
                 queryClient.setQueryData(["users"], context.previousUsers);
             }
             toast.error(
-                err.response?.data?.message ||
-                `Something went wrong — couldn't delete this user!`
+                err.response?.data?.message || t("Users.DeleteError")
             );
         },
 
         onSuccess: () => {
-            toast.success(t("Users.Are you sure you want to delete this user?"));
+            toast.success(t("Users.DeleteSuccess"));
         },
 
         onSettled: () => {
