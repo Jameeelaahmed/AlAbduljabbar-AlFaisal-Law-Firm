@@ -384,13 +384,15 @@
     "security": "الأمان",
     "notifications": "الإشعارات",
     "billing": "الفوترة",
-
+    "MyRequests": "خدماتي",
+    "newRequest": "خدمه جديدة",
+    "total": "الاجمالي",
     "companySummary": {
       "title": "ملخص الشركة",
       "yearsOfExperience": "سنوات الخبرة",
       "satisfiedClients": "عملاء راضون",
       "finishedCases": "قضايا منتهية",
-      "successRate": "نسبة النجاح %"
+      "successRate": "نسبة النجاح "
     },
 
     "journeyMilestones": {

@@ -3,15 +3,7 @@ import { Users, Award, TrendingUp, Scale, HeartHandshake } from "lucide-react";
 import { Link } from "react-router-dom";
 import { useHomePage } from "../../../hooks/useHomePage";
 
-function OurCompany() {
-    const { data } = useHomePage();
-
-    // Safe access with defaults
-    const entity = data?.entitySettings ?? {};
-    const milestones = entity?.journeyMilestones ?? [];
-    const coreValues = entity?.coreValues ?? [];
-    const summary = entity?.companySummary ?? {};
-
+function OurCompany({ milestones, coreValues, summary }) {
     // Map string icon names to actual components
     const ICON_MAP = {
         users: Users,

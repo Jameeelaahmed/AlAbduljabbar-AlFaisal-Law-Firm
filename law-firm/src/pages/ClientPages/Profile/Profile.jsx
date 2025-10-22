@@ -14,14 +14,14 @@ export default function Profile() {
     const navigate = useNavigate();
     const changePasswordMutation = useChangePassword();
     const [activeTab, setActiveTab] = useState('profile');
-
+    const { data: user, isLoading } = useUserInfo();
     const isNotClient = user?.role !== "User";
     const { data: requests } = useRequestsByUserId({
         userId: user?.id,
         pageIndex: 1,
         pageSize: 5
     });
-
+    console.log("user", user)
     if (isLoading) {
         return <Loading />
     }
@@ -32,7 +32,6 @@ export default function Profile() {
                     {/* Header */}
                     <div className="mt-20 mb-4 bg-white rounded-2xl shadow-lg border border-gray-200 p-6">
                         <h1 className="text-3xl font-bold text-primary">{t('Settings.title')}</h1>
-                        <p className="text-gray-600 mt-2">{t("Settings.subTitle")}</p>
                     </div>
 
                     {/* Tabs */}
@@ -155,40 +154,40 @@ export default function Profile() {
 
                                             <div className="space-y-4">
                                                 <div className="flex items-center gap-3 p-3 bg-gray-50 rounded-lg">
-                                                    <Mail className="w-5 h-5 text-primary" />
-                                                    <div>
+                                                    <Mail className="w-5 h-5 text-primary shrink-0" />
+                                                    <div className="min-w-0">
                                                         <p className="text-sm text-gray-600">{t("Email")}</p>
-                                                        <p className="text-primary font-medium">{user.email}</p>
+                                                        <p className="text-primary font-medium truncate">{user.email}</p>
                                                     </div>
                                                 </div>
 
                                                 <div className="flex items-center gap-3 p-3 bg-gray-50 rounded-lg">
-                                                    <MessageSquare className="w-5 h-5 text-primary flex-shrink-0" />
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-primary shrink-0">
+                                                        <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z" />
+                                                    </svg>
+                                                    <div>
+                                                        <p className="text-sm text-gray-600">{t("Mobile Number")}</p>
+                                                        <p className="text-primary font-medium">{user.mobileNumber || 'Not provided'}</p>
+                                                    </div>
+                                                </div>
+
+                                                <div className="flex items-center gap-3 p-3 bg-gray-50 rounded-lg">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-primary shrink-0">
+                                                        <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z" />
+                                                    </svg>
+                                                    <div>
+                                                        <p className="text-sm text-gray-600">{t("WhatsApp Number")}</p>
+                                                        <p className="text-primary font-medium">{user.whatsAppNumber || user.mobileNumber || 'Not provided'}</p>
+                                                    </div>
+                                                </div>
+
+                                                <div className="flex items-center gap-3 p-3 bg-gray-50 rounded-lg">
+                                                    <Shield className="w-5 h-5 text-primary shrink-0" />
                                                     <div>
                                                         <p className="text-sm text-gray-600">{t("Role")}</p>
-                                                        <p className="text-primary font-medium">{user.lastRole}</p>
+                                                        <p className="text-primary font-medium capitalize">{user.role?.toLowerCase()}</p>
                                                     </div>
                                                 </div>
-
-                                                <div className="flex items-center gap-3 p-3 bg-gray-50 rounded-lg">
-                                                    <Shield className="w-5 h-5 text-primary flex-shrink-0" />
-                                                    <div>
-                                                        <p className="text-sm text-gray-600">{t("Member since")}</p>
-                                                        <p className="text-primary font-medium">{user.joinDate}</p>
-                                                    </div>
-                                                </div>
-
-                                                {user?.createdAt && (
-                                                    <div className="flex items-center gap-3 p-3 bg-gray-50 rounded-lg">
-                                                        <Calendar className="w-5 h-5 text-primary flex-shrink-0" />
-                                                        <div>
-                                                            <p className="text-sm text-gray-600">Member Since</p>
-                                                            <p className="text-primary font-medium">
-                                                                {new Date(user.createdAt).toLocaleDateString()}
-                                                            </p>
-                                                        </div>
-                                                    </div>
-                                                )}
                                             </div>
                                         </div>
                                     </div>
@@ -200,7 +199,6 @@ export default function Profile() {
                                             <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-6">
                                                 <div>
                                                     <h2 className="text-2xl font-bold text-primary">{t("Settings.MyRequests")}</h2>
-                                                    <p className="text-gray-600 mt-1">{t("Settings.MyRequestsSubTitle")}</p>
                                                 </div>
                                                 {requests && requests?.data.length > 0 ? (
                                                     <button

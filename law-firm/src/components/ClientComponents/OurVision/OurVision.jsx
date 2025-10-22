@@ -2,12 +2,9 @@ import { useTranslation } from "react-i18next";
 import { Target, Award } from "lucide-react";
 import { useHomePage } from "../../../hooks/useHomePage";
 
-function OurVision() {
+function OurVision({ baseOfSuccess }) {
     const { i18n } = useTranslation?.() ?? { t: (s) => s, i18n: { language: "ar" } };
     const isRtl = String(i18n?.language || document.documentElement.dir || "ar").toLowerCase().startsWith("ar");
-    const { data } = useHomePage();
-
-    const baseOfSuccess = data?.entitySettings?.baseOfOurSuccess ?? [];
 
     // Map string icon names to components
     const ICON_MAP = {

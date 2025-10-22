@@ -3,11 +3,9 @@ import { useTranslation } from "react-i18next";
 import { Users, Linkedin, Mail, Award, Briefcase, User } from "lucide-react";
 import { useHomePage } from "../../../hooks/useHomePage";
 
-function OurTeam() {
+function OurTeam({ teamMembers }) {
     const { i18n } = useTranslation?.() ?? { t: (s) => s, i18n: { language: "ar" } };
     const isRtl = (i18n?.language || document.documentElement.dir) === "ar";
-    const { data: data } = useHomePage();
-    let teamMembers = data?.lawyers || [];
 
     return (
         <section className="py-20 bg-linear-to-b from-bg to-white">

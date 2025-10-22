@@ -8,25 +8,9 @@ import "swiper/css";
 import "swiper/css/pagination";
 import "swiper/css/navigation";
 
-function ClientOpinions() {
+function ClientOpinions({ clientReviews }) {
     const { t, i18n } = useTranslation?.() ?? { t: (s) => s, i18n: { language: "ar" } };
     const isRtl = (i18n?.language || document.documentElement.dir) === "ar";
-    const { data, isLoading, isError } = useHomePage();
-
-    // helper to find reviews regardless of server shape
-    const extractClientReviews = (payload) => {
-        if (!payload) return [];
-        const candidates = [
-            payload?.entitySettings?.clientReviews,
-            payload?.data?.entitySettings?.clientReviews,
-            payload?.result?.entitySettings?.clientReviews,
-            payload?.clientReviews
-        ];
-        for (const c of candidates) if (Array.isArray(c)) return c;
-        return [];
-    };
-
-    const clientReviews = extractClientReviews(data);
 
     // Prefer AR when RTL, EN otherwise; fallback to generic field if provided
     const pickLang = (obj, arKey, enKey, fallbackKey) =>
@@ -55,32 +39,6 @@ function ClientOpinions() {
             text,
         };
     });
-
-    // Loading / error / empty states
-    if (isLoading) {
-        return (
-            <section className="py-20">
-                <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-                    <div className="text-center text-gray-500">{t('Loading') || 'Loading...'}</div>
-                </div>
-            </section>
-        );
-    }
-
-    if (isError) {
-        return (
-            <section className="py-20">
-                <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-                    <div className="text-center text-red-500">{t('Error') || 'Failed to load reviews.'}</div>
-                </div>
-            </section>
-        );
-    }
-
-    if (!opinions.length) {
-        return null;
-    }
-
     // Header
     return (
         <section className="py-20 bg-linear-to-b from-bg to-white/50">
