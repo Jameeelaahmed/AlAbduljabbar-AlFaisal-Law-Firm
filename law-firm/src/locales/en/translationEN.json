@@ -37,6 +37,12 @@
     "Logout": "Logout"
   },
   "Services": {
+    "CreateSuccess": "Service created successfully",
+    "CreateError": "Couldn't create service",
+    "UpdateSuccess": "Service updated successfully",
+    "UpdateError": "Couldn't update service",
+    "DeleteSuccess": "Service deleted successfully",
+    "DeleteError": "Couldn't delete service",
     "Service Management": "Service Management",
     "Add New Category": "Add New Category",
     "Submit Category": "Submit Category",
@@ -81,6 +87,10 @@
     "Deleting...": "Deleting..."
   },
   "Requests": {
+    "CreateSuccess": "Request created successfully",
+    "UpdateSuccess": "Request updated successfully",
+    "DeleteSuccess": "Request deleted successfully",
+    "NoteAddedSuccess": "Note added successfully",
     "RequestDetails": "Request Details",
     "RequestList": "Request List",
     "RequestID": "Request ID",
@@ -155,6 +165,16 @@
     }
   },
   "Consultations": {
+    "CreateSuccess": "Consultation request sent successfully",
+    "CreateError": "Couldn't send consultation request",
+    "Types": {
+      "CreateSuccess": "Consultation type created successfully",
+      "CreateError": "Couldn't create consultation type",
+      "UpdateSuccess": "Consultation type updated successfully",
+      "UpdateError": "Couldn't update consultation type",
+      "DeleteSuccess": "Consultation type deleted successfully",
+      "DeleteError": "Couldn't delete consultation type"
+    },
     "ConsultationDetails": "Consultation Details",
     "ConsultationList": "Consultation List",
     "ConsultationID": "Consultation ID",
@@ -230,6 +250,12 @@
     }
   },
   "Users": {
+    "CreateSuccess": "User created successfully",
+    "CreateError": "Couldn't create user",
+    "UpdateSuccess": "User updated successfully",
+    "UpdateError": "Couldn't update user",
+    "DeleteSuccess": "User deleted successfully",
+    "DeleteError": "Couldn't delete user",
     "Users": "Users",
     "Management": "User Management",
     "searchPlaceholder": "Search users by name or email...",
@@ -799,5 +825,24 @@
   "Still have questions?": "Still have questions?",
   "Contact Support": "Contact Support",
   "Can't find the answer you're looking for? Please reach out to our friendly support team.": "Can't find the answer you're looking for? Please reach out to our friendly support team.",
-  "Find quick answers to common questions about our platform, features, and services.": "Find quick answers to common questions about our platform, features, and services."
+  "Find quick answers to common questions about our platform, features, and services.": "Find quick answers to common questions about our platform, features, and services.",
+  "Categories": {
+    "CreateSuccess": "Category created successfully.",
+    "CreateError": "Couldn't create the category.",
+    "UpdateSuccess": "Category updated successfully.",
+    "UpdateError": "Couldn't update the category.",
+    "DeleteSuccess": "Category deleted successfully.",
+    "DeleteError": "Couldn't delete the category."
+  },
+  "FormSentSuccess": "Your form sent successfully",
+  "FAQ": {
+    "CreateSuccess": "FAQ saved successfully",
+    "UpdateSuccess": "FAQ updated successfully",
+    "DeleteSuccess": "FAQ deleted successfully",
+    "Category": {
+      "CreateSuccess": "FAQ Category saved successfully",
+      "UpdateSuccess": "FAQ Category updated successfully",
+      "DeleteSuccess": "FAQ Category deleted successfully"
+    }
+  }
 }

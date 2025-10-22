@@ -38,6 +38,12 @@
     "Logout": "تسجيل الخروج"
   },
   "Services": {
+    "CreateSuccess": "تم إنشاء الخدمة بنجاح",
+    "CreateError": "تعذر إنشاء الخدمة",
+    "UpdateSuccess": "تم تحديث الخدمة بنجاح",
+    "UpdateError": "تعذر تحديث الخدمة",
+    "DeleteSuccess": "تم حذف الخدمة بنجاح",
+    "DeleteError": "تعذر حذف الخدمة",
     "Service Management": "إدارة الخدمات",
     "Add New Category": "إضافة فئة جديدة",
     "Submit Category": "إرسال الفئة",
@@ -226,6 +232,16 @@
       "cancelConsultation": "إلغاء",
       "updating": "جاري التحديث..."
     },
+    "CreateSuccess": "تم إرسال طلب الاستشارة بنجاح",
+    "CreateError": "تعذر إرسال طلب الاستشارة",
+    "Types": {
+      "CreateSuccess": "تم إنشاء نوع الاستشارة بنجاح",
+      "CreateError": "تعذر إنشاء نوع الاستشارة",
+      "UpdateSuccess": "تم تحديث نوع الاستشارة بنجاح",
+      "UpdateError": "تعذر تحديث نوع الاستشارة",
+      "DeleteSuccess": "تم حذف نوع الاستشارة بنجاح",
+      "DeleteError": "تعذر حذف نوع الاستشارة"
+    },
     "Messages": {
       "updateSuccess": "تم تحديث الاستشارة بنجاح",
       "updateError": "حدث خطأ أثناء تحديث الاستشارة",
@@ -254,6 +270,12 @@
     }
   },
   "Users": {
+    "CreateSuccess": "تم إنشاء المستخدم بنجاح",
+    "CreateError": "تعذر إنشاء المستخدم",
+    "UpdateSuccess": "تم تحديث المستخدم بنجاح",
+    "UpdateError": "تعذر تحديث المستخدم",
+    "DeleteSuccess": "تم حذف المستخدم بنجاح",
+    "DeleteError": "تعذر حذف المستخدم",
     "Users": "المستخدمين",
     "Management": "إدارة المستخدمين",
     "searchPlaceholder": "ابحث عن المستخدمين بالاسم، البريد الإلكتروني...",
@@ -755,5 +777,24 @@
   "Still have questions?": "لا تزال لديك أسئلة؟",
   "Contact Support": "اتصل بالدعم",
   "Can't find the answer you're looking for? Please reach out to our friendly support team.": "لا يمكنك العثور على الإجابة التي تبحث عنها؟ يرجى التواصل مع فريق الدعم الودود لدينا.",
-  "Find quick answers to common questions about our platform, features, and services.": "اعثر على إجابات سريعة للأسئلة الشائعة حول منصتنا وميزاتها وخدماتنا."
+  "Find quick answers to common questions about our platform, features, and services.": "اعثر على إجابات سريعة للأسئلة الشائعة حول منصتنا وميزاتها وخدماتنا.",
+  "Categories": {
+    "CreateSuccess": "تم إنشاء الفئة بنجاح.",
+    "CreateError": "تعذر إنشاء الفئة.",
+    "UpdateSuccess": "تم تحديث الفئة بنجاح.",
+    "UpdateError": "تعذر تحديث الفئة.",
+    "DeleteSuccess": "تم حذف الفئة بنجاح.",
+    "DeleteError": "تعذر حذف الفئة."
+  },
+  "FormSentSuccess": "تم إرسال الرسالة بنجاح",
+  "FAQ": {
+    "CreateSuccess": "تم حفظ السؤال الشائع بنجاح",
+    "UpdateSuccess": "تم تحديث السؤال الشائع بنجاح",
+    "DeleteSuccess": "تم حذف السؤال الشائع بنجاح",
+    "Category": {
+      "CreateSuccess": "تم حفظ فئة الأسئلة الشائعة بنجاح",
+      "UpdateSuccess": "تم تحديث فئة الأسئلة الشائعة بنجاح",
+      "DeleteSuccess": "تم حذف فئة الأسئلة الشائعة بنجاح"
+    }
+  }
 }

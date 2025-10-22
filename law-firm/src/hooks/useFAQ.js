@@ -16,6 +16,7 @@ import {
 } from '../api/faq' // adjust the path to match your project
 import { toast } from 'react-toastify'
 import { useTranslation } from 'react-i18next'
+
 // helper to get readable error message
 const getErrorMessage = (error) => {
     return error?.response?.data?.message || error?.message || 'An unexpected error occurred'
@@ -23,7 +24,7 @@ const getErrorMessage = (error) => {
 
 // ✅ Fetch all FAQs
 export const useFaqs = () => {
-    const { i18n } = useTranslation() // read language at render time
+    const { i18n } = useTranslation()
     const currentLang = i18n.language || localStorage.getItem('selectedLanguage') || 'ar'
 
     return useQuery({
@@ -38,13 +39,13 @@ export const useFaqs = () => {
 
 // ✅ Fetch FAQ by ID
 export const useFaqById = (id) => {
-    const { i18n } = useTranslation() // read language at render time
+    const { i18n } = useTranslation()
     const currentLang = i18n.language || localStorage.getItem('selectedLanguage') || 'ar'
 
     return useQuery({
         queryKey: ['faq', id, currentLang],
         queryFn: () => getFaqById(id),
-        enabled: !!id, // only fetch if id exists
+        enabled: !!id,
         onError: (err) => {
             toast.error(getErrorMessage(err))
         },
@@ -53,28 +54,29 @@ export const useFaqById = (id) => {
 
 // ✅ Fetch FAQ by Faq Category ID
 export const useGetFaqByFaqCategoryId = (id) => {
-    const { i18n } = useTranslation() // read language at render time
+    const { i18n } = useTranslation()
     const currentLang = i18n.language || localStorage.getItem('selectedLanguage') || 'ar'
 
     return useQuery({
         queryKey: ['faq', id, currentLang],
         queryFn: () => getFaqByFaqCategoryId(id),
-        enabled: !!id, // only fetch if id exists
+        enabled: !!id,
         onError: (err) => {
             toast.error(getErrorMessage(err))
         },
     })
 }
 
-
 // ✅ Create FAQ
 export const useCreateFaq = () => {
     const queryClient = useQueryClient()
+    const { t } = useTranslation()
+
     return useMutation({
         mutationFn: createFaq,
         onSuccess: () => {
             queryClient.invalidateQueries(['faqs'])
-            toast.success('FAQ saved successfully')
+            toast.success(t('FAQ.CreateSuccess'))
         },
         onError: (err) => {
             toast.error(getErrorMessage(err))
@@ -84,7 +86,7 @@ export const useCreateFaq = () => {
 
 // ✅ Fetch FAQ for update
 export const useFaqForUpdate = (id) => {
-    const { i18n } = useTranslation() // read language at render time
+    const { i18n } = useTranslation()
     const currentLang = i18n.language || localStorage.getItem('selectedLanguage') || 'ar'
 
     return useQuery({
@@ -96,14 +98,17 @@ export const useFaqForUpdate = (id) => {
         },
     })
 }
+
 // ✅ Update FAQ
 export const useUpdateFaq = () => {
     const queryClient = useQueryClient()
+    const { t } = useTranslation()
+
     return useMutation({
         mutationFn: ({ id, data }) => updateFaq(id, data),
         onSuccess: () => {
             queryClient.invalidateQueries(['faqs'])
-            toast.success('FAQ updated successfully')
+            toast.success(t('FAQ.UpdateSuccess'))
         },
         onError: (err) => {
             toast.error(getErrorMessage(err))
@@ -114,11 +119,13 @@ export const useUpdateFaq = () => {
 // ✅ Delete FAQ
 export const useDeleteFaq = () => {
     const queryClient = useQueryClient()
+    const { t } = useTranslation()
+
     return useMutation({
         mutationFn: deleteFaq,
         onSuccess: () => {
             queryClient.invalidateQueries(['faqs'])
-            toast.success('FAQ deleted')
+            toast.success(t('FAQ.DeleteSuccess'))
         },
         onError: (err) => {
             toast.error(getErrorMessage(err))
@@ -137,17 +144,17 @@ export const useTestFaqCulture = () => {
     })
 }
 
-
-
 // *** FAQ Categories
 
 export const useCreateFaqCategory = () => {
     const queryClient = useQueryClient()
+    const { t } = useTranslation()
+
     return useMutation({
         mutationFn: createFaqCategory,
         onSuccess: () => {
             queryClient.invalidateQueries(['faqCategory'])
-            toast.success('FAQ Category saved successfully')
+            toast.success(t('FAQ.Category.CreateSuccess'))
         },
         onError: (err) => {
             toast.error(getErrorMessage(err))
@@ -155,9 +162,9 @@ export const useCreateFaqCategory = () => {
     })
 }
 
-// ✅ Fetch all FAQs
+// ✅ Fetch all FAQ Categories
 export const useFaqCategory = () => {
-    const { i18n } = useTranslation() // read language at render time
+    const { i18n } = useTranslation()
     const currentLang = i18n.language || localStorage.getItem('selectedLanguage') || 'ar'
 
     return useQuery({
@@ -170,15 +177,16 @@ export const useFaqCategory = () => {
     })
 }
 
-
-// ✅ Delete FAQ
+// ✅ Delete FAQ Category
 export const useDeleteFaqCategory = () => {
     const queryClient = useQueryClient()
+    const { t } = useTranslation()
+
     return useMutation({
         mutationFn: deleteFaqCategory,
         onSuccess: () => {
             queryClient.invalidateQueries(['faqCategory'])
-            toast.success('FAQ Category deleted successfuly')
+            toast.success(t('FAQ.Category.DeleteSuccess'))
         },
         onError: (err) => {
             toast.error(getErrorMessage(err))
@@ -186,11 +194,11 @@ export const useDeleteFaqCategory = () => {
     })
 }
 
-
-// ✅ Fetch FAQ for update
+// ✅ Fetch FAQ Category for update
 export const useFaqForUpdateFaqCategory = (id) => {
-    const { i18n } = useTranslation() // read language at render time
+    const { i18n } = useTranslation()
     const currentLang = i18n.language || localStorage.getItem('selectedLanguage') || 'ar'
+
     return useQuery({
         queryKey: ["faqCategoryForUpdate", id, currentLang],
         queryFn: () => getFaqCategoryForUpdate(id),
@@ -198,14 +206,16 @@ export const useFaqForUpdateFaqCategory = (id) => {
     });
 }
 
-// ✅ Update FAQ
+// ✅ Update FAQ Category
 export const useUpdateFaqCategory = () => {
     const queryClient = useQueryClient()
+    const { t } = useTranslation()
+
     return useMutation({
         mutationFn: ({ id, data }) => updateFaqCategory(id, data),
         onSuccess: () => {
-            queryClient.invalidateQueries(['faqs'])
-            toast.success('FAQ Category updated successfully')
+            queryClient.invalidateQueries(['faqCategory'])
+            toast.success(t('FAQ.Category.UpdateSuccess'))
         },
         onError: (err) => {
             toast.error(getErrorMessage(err))
