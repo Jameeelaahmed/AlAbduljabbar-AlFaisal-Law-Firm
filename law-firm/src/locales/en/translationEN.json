@@ -371,7 +371,9 @@
     "security": "Security",
     "notifications": "Notifications",
     "billing": "Billing",
-
+    "MyRequests": "My Services",
+    "newRequest": "New Service",
+    "total":"Total",
     "companySummary": {
       "title": "Company Summary",
       "yearsOfExperience": "Years of Experience",

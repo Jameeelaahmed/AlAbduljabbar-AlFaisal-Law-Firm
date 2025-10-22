@@ -3,24 +3,26 @@ import OurCompany from "../../../components/ClientComponents/OurCompany/OurCompa
 import ClientOpinions from '../../../components/ClientComponents/ClientOpinions/ClientOpinions'
 import OurVision from "../../../components/ClientComponents/OurVision/OurVision"
 import OurOffices from '../../../components/ClientComponents/OurOffices/OurOffices'
-import Footer from "../../../components/ClientComponents/Footer/Footer"
 import OurServices from "../../../components/ClientComponents/OurServices/OurServices"
 import OurTeam from "../../../components/ClientComponents/OurTeam/OurTeam"
 import { useHomePage } from "../../../hooks/useHomePage"
 import { useTranslation } from "react-i18next"
+import Loading from "../../../components/Common/Loading"
 
 function Landing() {
     const { t } = useTranslation()
     const { data: homePageData, isLoading, error } = useHomePage();
 
-    if (isLoading) return <div>{t("Loading...")}</div>;
-    if (error) return <div>Failed to load home page.</div>;
+    if (isLoading) return <Loading />
+
+    //! No need
+    // if (error) return <div>Failed to load home page.</div>;
 
     const {
         entitySettings,
         lawyers,
         clientReviews,
-    } = homePageData?.data || {};
+    } = homePageData || {};
 
     return (
         <>
@@ -33,7 +35,7 @@ function Landing() {
             <OurVision baseOfSuccess={entitySettings?.baseOfOurSuccess} />
             <OurServices />
             <ClientOpinions clientReviews={clientReviews} />
-            <OurTeam lawyers={lawyers} />
+            <OurTeam teamMembers={lawyers} />
             <OurOffices />
         </>
     )

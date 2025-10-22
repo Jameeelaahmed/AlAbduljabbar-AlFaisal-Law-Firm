@@ -7,26 +7,28 @@ import { getFileTypeAndName, handleDownload } from '../../../utils/documents';
 
 // Helper function to get status label with translation
 const getStatusLabel = (status, t) => {
-  const statusMap = {
-    0: t('ClientRequests.status.pending'),
-    1: t('ClientRequests.status.contacted'),
-    2: t('ClientRequests.status.resolved'),
-    3: t('ClientRequests.status.rejected'),
-  };
-  return statusMap[status] || t('ClientRequests.status.unknown');
+    const statusMap = {
+        0: t('ClientRequests.status.pending'),
+        1: t('ClientRequests.status.contacted'),
+        2: t('ClientRequests.status.resolved'),
+        3: t('ClientRequests.status.rejected'),
+    };
+    return statusMap[status] || t('ClientRequests.status.unknown');
 };
+/* HTML: <div class="loader"></div> */
+
 
 export default function MyRequestDetails() {
     const { t } = useTranslation();
     const { requestId } = useParams();
     const { data: request, isLoading, error } = useRequest(requestId);
-    
+
     console.log(request)
     // Fetch previous notes
-    const { 
-        data: previousNotes, 
-        isLoading: isFetchingNotes, 
-        error: notesError 
+    const {
+        data: previousNotes,
+        isLoading: isFetchingNotes,
+        error: notesError
     } = useNotes(requestId, null); // null for consultationId as it's not needed here
 
     // Get document attachments
@@ -98,8 +100,8 @@ export default function MyRequestDetails() {
             {/* Header with back button and request info */}
             <div className="mb-10">
                 <div className="flex items-center justify-between mb-4">
-                    <Link 
-                        to="/profile/requests" 
+                    <Link
+                        to="/profile/requests"
                         className="inline-flex items-center text-primary hover:text-primary-dark"
                     >
                         <ArrowLeft className="w-4 h-4 mr-1" />
@@ -181,12 +183,12 @@ export default function MyRequestDetails() {
                 {/* Documents Section */}
                 <div className="bg-white rounded-xl shadow-sm p-6 mb-10 border border-gray-100">
                     <h3 className="text-lg font-medium text-gray-900 mb-3">
-                        {t('ClientRequests.attachments.title')} 
+                        {t('ClientRequests.attachments.title')}
                         {attachments.length > 0 && (
                             <span className="text-sm text-gray-500 ml-2">({attachments.length})</span>
                         )}
                     </h3>
-                    
+
                     {attachments.length === 0 ? (
                         <div className="text-center py-6 border-2 border-dashed border-gray-200 rounded-lg">
                             <FileText className="h-10 w-10 text-gray-300 mx-auto mb-2" />
@@ -259,8 +261,8 @@ export default function MyRequestDetails() {
                     ) : (
                         <div className="space-y-5">
                             {previousNotes.data.map((note) => (
-                                <div 
-                                    key={note.id} 
+                                <div
+                                    key={note.id}
                                     className="p-4 bg-gray-50 rounded-lg border border-gray-100 hover:border-gray-200 transition-colors"
                                 >
                                     <div className="flex items-start gap-3">
