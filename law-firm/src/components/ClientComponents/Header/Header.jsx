@@ -151,9 +151,9 @@ function Header() {
                     <div className='relative cursor-pointer hover:scale-105 transition-transform duration-300' onClick={openLogo1DropDown}>
                         <div className={`inline-flex flex-col justify-center items-center p-3 xl:p-4 backdrop-blur-xl shadow-2xl rtl:rounded-tl-3xl rtl:rounded-bl-3xl ltr:rounded-tr-3xl ltr:rounded-br-3xl border-primary border-3 min-h-[120px] xl:min-h-[140px] gap-0.5`}>
                             <img className='w-[45px] xl:w-[55px]' src='logo1.png' alt="logo1" />
-                            <p className='font-bold text-base xl:text-lg text-white whitespace-nowrap'>العبد الجبار</p>
-                            <span className='text-white text-xs xl:text-sm whitespace-nowrap'>محامون و مستشاورن</span>
-                            <span className='text-[#f7c630] text-xs xl:text-sm font-bold whitespace-nowrap'>اضغط لرؤية بيانات الشركه</span>
+                            <p className='font-bold text-base xl:text-lg text-white whitespace-nowrap'>{t("logo1Title")}</p>
+                            <span className='text-white text-xs xl:text-sm whitespace-nowrap'>{t("logoSubtitle")}</span>
+                            <span className='text-[#f7c630] text-xs xl:text-sm font-bold whitespace-nowrap'>{t("logoAction")}</span>
                         </div>
                         {isLogo1DropDown && (
                             <>
@@ -169,10 +169,10 @@ function Header() {
                             scale-y-100 opacity-100
                             flex flex-col text-sm
                             `}>
-                                    <p className='font-bold text-center text-xl text-secondary mb-2'>المكتب الرئيسي</p>
+                                    <p className='font-bold text-center text-xl text-secondary mb-2'>{t("mainOfficeTitle")}</p>
                                     <div className="flex items-start gap-2 mb-2">
                                         <MapPin size={16} className="text-secondary mt-1 shrink-0" />
-                                        <p className="leading-tight">السعوديه - الرياض - حي المروج - مركز الحياة سنتر - مبني B- الدور الاول - مكتب 5</p>
+                                        <p className="leading-tight">{t("mainOfficeAddress")}</p>
                                     </div>
                                     <div className="flex items-center gap-2 mb-2">
                                         <Phone size={16} className="text-secondary shrink-0" />
@@ -327,21 +327,6 @@ function Header() {
                                                                 {currentLang === "ar" ? "العربية" : "English"}
                                                             </span>
                                                         </div>
-                                                        {/* <button
-                                                    className={`relative w-12 h-6 cursor-pointer rounded-full transition-colors duration-200 focus:outline-none ${currentLang === "ar"
-                                                        ? "bg-primary"
-                                                        : "bg-secondary"
-                                                        }`}
-                                                    onClick={() => handleLanguageChange(currentLang === "ar" ? "en" : "ar")}
-                                                    aria-label="Toggle language"
-                                                >
-                                                    <span
-                                                        className={`absolute top-0.5 left-0.5 w-5 h-5 rounded-full bg-white shadow transition-transform duration-200 ${currentLang === "ar"
-                                                            ? "translate-x-6"
-                                                            : "translate-x-0"
-                                                            }`}
-                                                    />
-                                                </button> */}
                                                     </div>
 
                                                     {/* Divider */}
@@ -374,7 +359,7 @@ function Header() {
                                     <NavLink
                                         to="/login"
                                         className={({ isActive }) =>
-                                            `pt-3 pb-3 pr-6 pl-6 rounded-full font-bold transition-all
+                                            `pt-3 pb-3 pr-3 pl-3 rounded-full font-bold transition-all mr-2 ml-2
                                      ${headerActive ? "hover:bg-secondary hover:text-white" : "hover:bg-primary hover:text-white"}
                                      ${isActive ? (headerActive ? "bg-secondary text-white" : "bg-primary text-white") : "text-primary"}`
                                         }
@@ -395,9 +380,9 @@ function Header() {
                     <div className='relative cursor-pointer hover:scale-105 transition-transform duration-300' onClick={openLogo2DropDown}>
                         <div className={`inline-flex flex-col justify-center items-center p-3 xl:p-4 backdrop-blur-xl shadow-2xl rtl:rounded-tr-3xl rtl:rounded-br-3xl ltr:rounded-tl-3xl ltr:rounded-bl-3xl border-primary border-3 min-h-[120px] xl:min-h-[140px] gap-0.5`}>
                             <img className='w-[45px] xl:w-[55px]' src="Logo2.png" alt="logo2" />
-                            <p className='font-bold text-base xl:text-lg text-white whitespace-nowrap'>العبد الجبار و الفيصل</p>
-                            <span className='text-white text-xs xl:text-sm whitespace-nowrap'>محامون و مستشاورن</span>
-                            <span className='text-[#f7c630] text-xs xl:text-sm font-bold whitespace-nowrap'>اضغط لرؤية بيانات الشركه</span>
+                            <p className='font-bold text-base xl:text-lg text-white whitespace-nowrap'>{t("logo2Title")}</p>
+                            <span className='text-white text-xs xl:text-sm whitespace-nowrap'>{t("logoSubtitle")}</span>
+                            <span className='text-[#f7c630] text-xs xl:text-sm font-bold whitespace-nowrap'>{t("logoAction")}</span>
                         </div>
                         {isLogo2DropDown && (
                             <>
@@ -415,7 +400,7 @@ function Header() {
                             `}>
                                     <div className="flex items-start gap-2 mb-2">
                                         <MapPin size={16} className="text-secondary mt-1 shrink-0" />
-                                        <p className="leading-tight">مصر - القاهره 20 شاراع الطيران - الدور الاول - شقه 2</p>
+                                        <p className="leading-tight">{t("secondaryOfficeAddress")}</p>
                                     </div>
                                     <div className="flex items-center gap-2 mb-2">
                                         <svg width={16} height={16} viewBox="0 0 24 24" fill="currentColor" className="text-secondary">
@@ -507,6 +492,7 @@ function Header() {
                             </NavLink>
                         </li>
                     </ul>
+                    {/* Language Toggle */}
 
                     {/* Mobile Auth Section */}
                     <div div className='mt-6 pt-4 border-t border-gray-200' >
@@ -523,9 +509,8 @@ function Header() {
                                     <User size={18} />
                                     <span>{t("landing.Profile")}</span>
                                 </Link>
-
-                                {/* Language Toggle */}
                                 <button
+                                    onClick={() => handleLanguageChange(currentLang === "ar" ? "en" : "ar")}
                                     className='flex items-center cursor-pointer justify-center gap-2 py-3 px-4 bg-blue-100 text-blue-700 rounded hover:bg-blue-200 transition-all'
                                 >
                                     <Globe size={18} />
@@ -545,11 +530,18 @@ function Header() {
                                 </button>
                             </div>
                         ) : (
-                            <div className='text-center'>
+                            <div className='flex flex-col items-center gap-3'>
+                                <button
+                                    onClick={() => handleLanguageChange(currentLang === "ar" ? "en" : "ar")}
+                                    className='flex items-center w-full cursor-pointer justify-center gap-2 py-3 px-4 bg-blue-100 text-blue-700 rounded hover:bg-blue-200 transition-all'
+                                >
+                                    <Globe size={18} />
+                                    <span>{currentLang === 'en' ? 'العربية' : 'English'}</span>
+                                </button>
                                 <Link
                                     to='login'
                                     onClick={toggleMobileMenu}
-                                    className='inline-block py-3 px-6 bg-primary text-white rounded hover:bg-primary-dark transition-all font-bold'
+                                    className='inline-block w-full text-ce py-3 px-6 bg-primary text-white rounded hover:bg-primary-dark transition-all font-bold'
                                 >
                                     {t("landing.Login")}
                                 </Link>
@@ -565,7 +557,7 @@ function Header() {
             >
                 <img src={logo1} alt="logo1" className="w-10 h-10 object-contain" />
                 <p className="text-primary font-bold text-base sm:text-lg text-center leading-tight">
-                    مكتب العبد الجبار و الفيصل
+                    {t("Office")}
                 </p>
                 <img src={logo2} alt="logo2" className="w-10 h-10 object-contain" />
 

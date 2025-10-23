@@ -8,6 +8,14 @@
   "title": "Title",
   "selectservice": "Select Service",
   "description": "Description",
+  "Office": "AlAbduljabbar & AlFaisal",
+  "logo1Title": "Al Abduljabbar",
+  "logo2Title": "AlAbduljabbar & AlFaisal",
+  "logoSubtitle": "Lawyers and Consultants",
+  "logoAction": "Click to view company details",
+  "mainOfficeTitle": "Main Office",
+  "mainOfficeAddress": "Saudi Arabia - Riyadh - Al Muruj District - Al Hayat Center - Building B - First Floor - Office 5",
+  "secondaryOfficeAddress": "Egypt - Cairo, 20 Al Tayaran Street - First Floor - Apartment 2",
   "sidebar": {
     "title": "Abdul Jabbar & Al-Faisal",
     "subtitle": "Control Panel",
@@ -373,7 +381,7 @@
     "billing": "Billing",
     "MyRequests": "My Services",
     "newRequest": "New Service",
-    "total":"Total",
+    "total": "Total",
     "companySummary": {
       "title": "Company Summary",
       "yearsOfExperience": "Years of Experience",
