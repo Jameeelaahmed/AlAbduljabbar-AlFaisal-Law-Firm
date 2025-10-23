@@ -26,7 +26,6 @@ export const createConsutationsTypes = async (data) => {
     return res.data.data;
 }
 export const updateConsutationsTypes = async (id, data) => {
-    console.("update", id, data);
     const res = await api.put(`/api/Consultations/Update/${id}`, data);
     return res.data.data;
 }
