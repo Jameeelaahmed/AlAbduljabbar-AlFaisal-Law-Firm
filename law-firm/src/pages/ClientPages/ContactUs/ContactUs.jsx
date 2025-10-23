@@ -137,16 +137,16 @@ const ContactUs = () => {
                                 </div>
                                 <div className="mt-3 space-y-2 text-gray-600 text-sm">
                                     <div className="flex justify-between">
-                                        <span>Monday - Friday</span>
-                                        <span>9:00 AM - 6:00 PM</span>
+                                        <span>{t("Monday - Friday")}</span>
+                                        <span>{t("9:00 AM - 6:00 PM")}</span>
                                     </div>
                                     <div className="flex justify-between">
-                                        <span>Saturday</span>
-                                        <span>10:00 AM - 2:00 PM</span>
+                                        <span>{t("Saturday")}</span>
+                                        <span>{t("10:00 AM - 2:00 PM")}</span>
                                     </div>
                                     <div className="flex justify-between">
-                                        <span>Sunday</span>
-                                        <span>Closed</span>
+                                        <span>{t("Sunday")}</span>
+                                        <span>{t("Closed")}</span>
                                     </div>
                                 </div>
                             </div>
@@ -186,7 +186,7 @@ const ContactUs = () => {
                                                         type="email"
                                                         id="email"
                                                         className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-accent focus:border-transparent transition-all"
-                                                        placeholder="your.email@example.com"
+                                                        placeholder={t("your.email@example.com")}
                                                     />
                                                 )}
                                             </Field>
@@ -222,7 +222,7 @@ const ContactUs = () => {
                                                         id="message"
                                                         rows="6"
                                                         className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-accent focus:border-transparent transition-all resize-vertical"
-                                                        placeholder="Please describe your legal issue or inquiry..."
+                                                        placeholder={t("Please describe your legal issue or inquiry...")}
                                                     />
                                                 )}
                                             </Field>
