@@ -25,9 +25,6 @@ function Hero() {
                 backgroundSize: '40px 40px'
             }}></div>
 
-
-
-
             {/* Full Width Swiper Slider Content - Fully Responsive */}
             <div className="w-full h-screen relative z-20 flex items-center pt-16 lg:pt-0">
                 {loading ? (
