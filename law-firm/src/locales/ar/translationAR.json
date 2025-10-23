@@ -387,6 +387,9 @@
     "MyRequests": "خدماتي",
     "newRequest": "خدمه جديدة",
     "total": "الاجمالي",
+    "noRequests": "ليس لديك طلبات بعد",
+    "noRequestsSubtitle": "لا يوجد طلبات لعرضها",
+    "createYourFirstRequest": "إنشاء طلبك الأول",
     "companySummary": {
       "title": "ملخص الشركة",
       "yearsOfExperience": "سنوات الخبرة",
@@ -445,7 +448,10 @@
       "enterTitleEn": "أدخل العنوان بالإنجليزية",
       "enterTitleAr": "أدخل العنوان بالعربية",
       "enterDescriptionEn": "أدخل الوصف بالإنجليزية",
-      "enterDescriptionAr": "أدخل الوصف بالعربية"
+      "enterDescriptionAr": "أدخل الوصف بالعربية",
+      "noRequests": "ليس لديك طلبات بعد",
+      "noRequestsSubtitle": "لا يوجد طلبات لعرضها",
+    "createYourFirstRequest": "إنشاء طلبك الأول"
     },
 
     "lawyers": {
