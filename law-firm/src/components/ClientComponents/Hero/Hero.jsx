@@ -1,4 +1,3 @@
-import { useState, useEffect, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Scale } from 'lucide-react';
 import { Swiper, SwiperSlide } from 'swiper/react';
@@ -8,68 +7,12 @@ import 'swiper/css/pagination';
 import 'swiper/css/navigation';
 import 'swiper/css/effect-fade';
 import { Link } from 'react-router-dom';
-import { MapPin, Phone, Mail } from 'lucide-react';
 import { useSliders } from '../../../hooks/useHomePage';
 
 function Hero() {
     const { t, i18n } = useTranslation();
     const isRtl = i18n?.language === 'ar';
-    const [isLogo1DropDown, setIsLogo1DropDown] = useState(false);
-    const [isLogo2DropDown, setIsLogo2DropDown] = useState(false);
-
-    // add refs to detect outside clicks
-    const logo1Ref = useRef(null);
-    const logo2Ref = useRef(null);
-
-    // Fetch sliders using React Query
     const { data: sliders = [], isLoading: loading } = useSliders();
-
-    //logo1 drop down 
-    const openLogo1DropDown = () => {
-        setIsLogo1DropDown(prev => !prev);
-    };
-
-    const closeLogo1DropDown = () => {
-        setIsLogo1DropDown(false);
-    };
-
-    //logo2 drop down 
-    const openLogo2DropDown = () => {
-        setIsLogo2DropDown(prev => !prev);
-    };
-
-    const closeLogo2DropDown = () => {
-        setIsLogo2DropDown(false);
-    };
-
-    // close dropdowns on outside click or on scroll
-    useEffect(() => {
-        const handler = (e) => {
-            const target = e.target;
-            if (logo1Ref.current && !logo1Ref.current.contains(target)) {
-                setIsLogo1DropDown(false);
-            }
-            if (logo2Ref.current && !logo2Ref.current.contains(target)) {
-                setIsLogo2DropDown(false);
-            }
-        };
-
-        const onScroll = () => {
-            setIsLogo1DropDown(false);
-            setIsLogo2DropDown(false);
-        };
-
-        // pointerdown covers mouse/touch/pen; also listen to touchstart for older devices
-        document.addEventListener('pointerdown', handler);
-        document.addEventListener('touchstart', handler);
-        window.addEventListener('scroll', onScroll, { passive: true });
-
-        return () => {
-            document.removeEventListener('pointerdown', handler);
-            document.removeEventListener('touchstart', handler);
-            window.removeEventListener('scroll', onScroll);
-        };
-    }, []);
 
     return (
         <div className="min-h-screen relative flex items-center justify-center bg-primary overflow-hidden">
@@ -82,100 +25,8 @@ function Hero() {
                 backgroundSize: '40px 40px'
             }}></div>
 
-            {/* Logo Section - Hidden on sm and md, visible on lg+ */}
-            <div
-                ref={logo1Ref}
-                className="hidden lg:block absolute top-0 rtl:right-0 ltr:left-0 z-40"
-            >
-                <div className='relative cursor-pointer hover:scale-105 transition-transform duration-300' onClick={openLogo1DropDown}>
-                    <div className={`flex flex-col justify-center items-center p-4 backdrop-blur-xl shadow-2xl rtl:rounded-tl-3xl rtl:rounded-bl-3xl ltr:rounded-tr-3xl ltr:rounded-br-3xl border-primary border-3`}>
-                        <img className='w-[55px]' src='logo1.png' alt="logo1" />
-                        <p className='font-bold text-lg text-white'>العبد الجبار</p>
-                        <span className='text-white text-sm'>محامون و مستشاورن</span>
-                        <span className='text-[#f7c630] text-sm font-bold'>اضغط لرؤية بيانات الشركه</span>
-                    </div>
-                    {isLogo1DropDown && (
-                        <>
-                            <div
-                                className="fixed inset-0 z-30"
-                                onClick={(e) => {
-                                    e.stopPropagation();
-                                    closeLogo1DropDown();
-                                }}
-                            ></div>
-                            <div className={`absolute rtl:right-2 ltr:left-2 mt-5 w-66 backdrop-blur-xl shadow-2xl rounded-lg border border-primary p-3 z-50 text-white
-                            transform transition-transform duration-300 ease-in-out origin-top
-                            scale-y-100 opacity-100
-                            flex flex-col text-sm
-                            `}>
-                                <p className='font-bold text-center text-xl text-secondary mb-2'>المكتب الرئيسي</p>
-                                <div className="flex items-start gap-2 mb-2">
-                                    <MapPin size={16} className="text-secondary mt-1 flex-shrink-0" />
-                                    <p className="leading-tight">السعوديه - الرياض - حي المروج - مركز الحياة سنتر - مبني B- الدور الاول - مكتب 5</p>
-                                </div>
-                                <div className="flex items-center gap-2 mb-2">
-                                    <Phone size={16} className="text-secondary flex-shrink-0" />
-                                    <span>+0996 505 120 293</span>
-                                </div>
-                                <div className="flex items-center gap-2 hover:text-secondary transition-all">
-                                    <Mail size={16} className="text-secondary flex-shrink-0" />
-                                    <a href='mailto:khedaib@malathegypt.com' className="break-all">khedaib@malathegypt.com</a>
-                                </div>
-                            </div>
-                        </>
-                    )}
-                </div>
-            </div>
 
-            {/* The other Logo - Hidden on sm and md, visible on lg+ */}
-            <div
-                ref={logo2Ref}
-                className="hidden lg:block absolute top-0 rtl:left-0 ltr:right-0 z-40"
-            >
-                <div className='relative cursor-pointer hover:scale-105 transition-transform duration-300' onClick={openLogo2DropDown}>
-                    <div className={`flex flex-col justify-center items-center p-4 backdrop-blur-xl shadow-2xl rtl:rounded-tr-3xl rtl:rounded-br-3xl ltr:rounded-tl-3xl ltr:rounded-bl-3xl border-primary border-3`}>
-                        <img className='w-[55px]' src="Logo2.png" alt="logo2" />
-                        <p className='font-bold text-lg text-white'>العبد الجبار و الفيصل</p>
-                        <span className='text-white text-sm'>محامون و مستشاورن</span>
-                        <span className='text-[#f7c630] text-sm font-bold'>اضغط لرؤية بيانات الشركه</span>
-                    </div>
-                    {isLogo2DropDown && (
-                        <>
-                            <div
-                                className="fixed inset-0 z-30"
-                                onClick={(e) => {
-                                    e.stopPropagation();
-                                    closeLogo2DropDown();
-                                }}
-                            ></div>
-                            <div className={`absolute top-full ltr:right-0 rtl:left-0 mt-2 w-64 max-w-[calc(100vw-2rem)] backdrop-blur-xl shadow-2xl rounded-lg border border-primary p-3 z-50 text-white
-                            transform transition-transform duration-300 ease-in-out origin-top
-                            scale-y-100 opacity-100
-                            flex flex-col text-sm
-                            `}>
-                                <div className="flex items-start gap-2 mb-2">
-                                    <MapPin size={16} className="text-secondary mt-1 flex-shrink-0" />
-                                    <p className="leading-tight">مصر - القاهره 20 شاراع الطيران - الدور الاول - شقه 2</p>
-                                </div>
-                                <div className="flex items-center gap-2 mb-2">
-                                    <svg width={16} height={16} viewBox="0 0 24 24" fill="currentColor" className="text-secondary">
-                                        <path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z" />
-                                    </svg>
-                                    <span>0222604857</span>
-                                </div>
-                                <div className="flex items-center gap-2 mb-2">
-                                    <Phone size={16} className="text-secondary flex-shrink-0" />
-                                    <span>01044947784 - 01005842307</span>
-                                </div>
-                                <div className="flex items-center gap-2 hover:text-secondary transition-all">
-                                    <Mail size={16} className="text-secondary flex-shrink-0" />
-                                    <a href='mailto:aziz.nasr11@gmail.com' className="break-all">aziz.nasr11@gmail.com</a>
-                                </div>
-                            </div>
-                        </>
-                    )}
-                </div>
-            </div>
+
 
             {/* Full Width Swiper Slider Content - Fully Responsive */}
             <div className="w-full h-screen relative z-20 flex items-center pt-16 lg:pt-0">
