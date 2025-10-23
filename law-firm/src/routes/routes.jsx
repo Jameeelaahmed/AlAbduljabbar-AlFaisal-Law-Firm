@@ -40,7 +40,7 @@ const LawServicesPage = lazy(() => import("../pages/ClientPages/ServicesPage/Ser
 const FAQPage = lazy(() => import("../pages/ClientPages/FAQ/FAQ"));
 const ContactUs = lazy(() => import("../pages/ClientPages/ContactUs/ContactUs"));
 const AdminContacts = lazy(() => import("../pages/AdminPages/Contacts/ContactsPage"));
-const LoadingPage = lazy(() => import("../pages/LoadingPage/LoadingPage"));
+import LoadingPage from "../pages/LoadingPage/LoadingPage";
 
 
 
