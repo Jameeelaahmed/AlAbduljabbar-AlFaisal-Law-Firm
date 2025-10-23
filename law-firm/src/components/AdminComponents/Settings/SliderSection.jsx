@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { useTranslation } from 'react-i18next';
@@ -24,12 +24,38 @@ const SliderSection = () => {
   const [imagePreview, setImagePreview] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isLoadingSlider, setIsLoadingSlider] = useState(false);
+  const MAX_TITLE_LEN = 44;
+  const MAX_DESC_LEN = 90;
 
   const validationSchema = Yup.object({
-    titleEn: Yup.string().required(t('validation.required')),
-    titleAr: Yup.string().required(t('validation.required')),
-    descriptionEn: Yup.string().required(t('validation.required')),
-    descriptionAr: Yup.string().required(t('validation.required')),
+    titleEn: Yup.string()
+      .trim()
+      .max(
+        MAX_TITLE_LEN,
+        t('validation.maxChars', { count: MAX_TITLE_LEN, defaultValue: `Maximum ${MAX_TITLE_LEN} characters` })
+      )
+      .required(t('validation.required')),
+    titleAr: Yup.string()
+      .trim()
+      .max(
+        MAX_TITLE_LEN,
+        t('validation.maxChars', { count: MAX_TITLE_LEN, defaultValue: `الحد الأقصى ${MAX_TITLE_LEN} حرفًا` })
+      )
+      .required(t('validation.required')),
+    descriptionEn: Yup.string()
+      .trim()
+      .max(
+        MAX_DESC_LEN,
+        t('validation.maxChars', { count: MAX_DESC_LEN, defaultValue: `Maximum ${MAX_DESC_LEN} characters` })
+      )
+      .required(t('validation.required')),
+    descriptionAr: Yup.string()
+      .trim()
+      .max(
+        MAX_DESC_LEN,
+        t('validation.maxChars', { count: MAX_DESC_LEN, defaultValue: `الحد الأقصى ${MAX_DESC_LEN} حرفًا` })
+      )
+      .required(t('validation.required')),
     order: Yup.number().required(t('validation.required')).positive(t('validation.positive')),
   });
 
@@ -158,6 +184,7 @@ const SliderSection = () => {
                 value={formik.values.titleEn}
                 onChange={formik.handleChange}
                 onBlur={formik.handleBlur}
+                maxLength={MAX_TITLE_LEN}
                 className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-primary-500 focus:border-primary-500"
               />
               {formik.touched.titleEn && formik.errors.titleEn && (
@@ -176,6 +203,7 @@ const SliderSection = () => {
                 onChange={formik.handleChange}
                 onBlur={formik.handleBlur}
                 dir="rtl"
+                maxLength={MAX_TITLE_LEN}
                 className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-primary-500 focus:border-primary-500"
               />
               {formik.touched.titleAr && formik.errors.titleAr && (
@@ -193,6 +221,7 @@ const SliderSection = () => {
                 onChange={formik.handleChange}
                 onBlur={formik.handleBlur}
                 rows={3}
+                maxLength={MAX_DESC_LEN}
                 className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-primary-500 focus:border-primary-500"
               />
               {formik.touched.descriptionEn && formik.errors.descriptionEn && (
@@ -211,6 +240,7 @@ const SliderSection = () => {
                 onBlur={formik.handleBlur}
                 dir="rtl"
                 rows={3}
+                maxLength={MAX_DESC_LEN}
                 className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-primary-500 focus:border-primary-500"
               />
               {formik.touched.descriptionAr && formik.errors.descriptionAr && (
