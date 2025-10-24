@@ -359,7 +359,7 @@ function Header() {
                                     <NavLink
                                         to="/login"
                                         className={({ isActive }) =>
-                                            `pt-3 pb-3 pr-3 pl-3 rounded-full font-bold transition-all mr-2 ml-2
+                                            `pt-3 pb-3 pr-3 pl-3 text-center rounded-full font-bold transition-all mr-2 ml-2
                                      ${headerActive ? "hover:bg-secondary hover:text-white" : "hover:bg-primary hover:text-white"}
                                      ${isActive ? (headerActive ? "bg-secondary text-white" : "bg-primary text-white") : "text-primary"}`
                                         }
