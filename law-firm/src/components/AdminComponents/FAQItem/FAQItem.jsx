@@ -174,7 +174,7 @@ function FAQItem({ faqCategoryData }) {
                                 <button
                                     onClick={(e) => { e.stopPropagation(); openEdit(data.id); }}
                                     aria-label="Edit FAQ"
-                                    className="p-2 rounded-lg transition-colors duration-150 hover:bg-white/20"
+                                    className="p-2 cursor-pointer rounded-lg transition-colors duration-150 hover:bg-white/20"
                                 >
                                     <SquarePen className="w-4 h-4 text-primary" />
                                 </button>
@@ -182,7 +182,7 @@ function FAQItem({ faqCategoryData }) {
                                 <button
                                     onClick={(e) => { e.stopPropagation(); openDelete(data.id); }}
                                     aria-label="Delete FAQ"
-                                    className="p-2 rounded-lg transition-colors duration-150 hover:bg-red-50"
+                                    className="p-2 rounded-lg cursor-pointer transition-colors duration-150 hover:bg-red-50"
                                 >
                                     <Trash className="w-4 h-4 text-denied" />
                                 </button>

@@ -541,7 +541,7 @@ function Header() {
                                 <Link
                                     to='login'
                                     onClick={toggleMobileMenu}
-                                    className='inline-block w-full text-ce py-3 px-6 bg-primary text-white rounded hover:bg-primary-dark transition-all font-bold'
+                                    className='inline-block w-full text-center py-3 px-6 bg-primary text-white rounded hover:bg-primary-dark transition-all font-bold'
                                 >
                                     {t("landing.Login")}
                                 </Link>

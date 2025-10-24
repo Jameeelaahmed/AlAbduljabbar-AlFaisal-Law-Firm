@@ -5,11 +5,14 @@ import { useTranslation } from "react-i18next";
 import { useCreateRequest } from "../../../../hooks/useRequests";
 import { useAllServices } from "../../../../hooks/useServices";
 import { useMemo } from "react";
+import { useAuthStore } from "../../../../store/useAuthStore";
 
 function RequestService({ onClose, service }) {
     const { data: services = [] } = useAllServices();
     const createRequest = useCreateRequest();
     const { t } = useTranslation();
+    const { isAuthenticated } = useAuthStore();
+
     const validationSchema = Yup.object({
         title: Yup.string().trim().required(t("Title is required")).min(3, t("Too short")),
         description: Yup.string().trim().required("Description is required").min(5, "Too short"),
@@ -33,6 +36,15 @@ function RequestService({ onClose, service }) {
     }, [service, t]);
 
     const handleSubmit = async (values, { resetForm, setSubmitting }) => {
+        if (!isAuthenticated) {
+            toast.error(t("You must be logged in to request service"), {
+                position: "top-center",
+                autoClose: 4000,
+            });
+            resetForm();
+            onClose();
+            return;
+        }
         try {
             // Build payload with photo1url..photo4url as strings
             const payload = {
@@ -90,7 +102,7 @@ function RequestService({ onClose, service }) {
                     <div className="flex items-start justify-between gap-4">
                         <div>
                             <h3 className="text-lg font-semibold text-gray-900 flex items-center gap-3">
-                                <span className="inline-block text-2xl text-[#003a42]">📄</span>
+                                <span className="inline-block text-2xl text-primary">📄</span>
                                 <span>{t("Request")} {service?.serviceName}</span>
                             </h3>
                             <p className="text-xs text-gray-500 mt-1">{t("RequestService")}</p>
@@ -223,7 +235,7 @@ function RequestService({ onClose, service }) {
                                     return (
                                         <div key={idx} className="flex items-center justify-between bg-accent/50 border border-primary/200 rounded-lg p-3 transition-shadow hover:shadow-sm">
                                             <div className="flex items-center gap-3 min-w-0">
-                                                <div className="flex-shrink-0 w-8 h-8 bg-white rounded border flex items-center justify-center">
+                                                <div className="shrink-0 w-8 h-8 bg-white rounded border flex items-center justify-center">
                                                     <svg className="w-4 h-4 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
                                                     </svg>
@@ -242,7 +254,7 @@ function RequestService({ onClose, service }) {
                                                     copy.splice(idx, 1);
                                                     setFieldValue("files", copy);
                                                 }}
-                                                className="flex-shrink-0 cursor-pointer text-red-600 hover:text-red-800 hover:bg-red-50 p-2 rounded-full transition-colors"
+                                                className="shrink-0 cursor-pointer text-red-600 hover:text-red-800 hover:bg-red-50 p-2 rounded-full transition-colors"
                                                 title={t("Remove")}
                                             >
                                                 <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -267,7 +279,7 @@ function RequestService({ onClose, service }) {
                                     {...field}
                                     id="description"
                                     rows={4}
-                                    placeholder="Describe your request"
+                                    placeholder={t("Describe your request")}
                                     className={`w-full px-4 py-3 border rounded-lg focus:outline-none focus:ring-2 transition-all duration-300 resize-none ${errors.description && touched.description
                                         ? "border-red-300 focus:ring-red-200 bg-red-50"
                                         : "border-gray-300 focus:ring-primary focus:border-primary bg-white"

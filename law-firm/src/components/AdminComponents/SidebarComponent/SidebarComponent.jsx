@@ -15,7 +15,8 @@ import {
     CalendarCheck,
     HelpCircle,
     Handshake,
-    Share2
+    Share2,
+    Menu
 } from "lucide-react";
 import { NavLink } from "react-router-dom";
 function Sidebar() {
@@ -31,10 +32,18 @@ function Sidebar() {
         }
         return true;
     });
+    const [showSidebarIcon, setShowSidebarIcon] = useState(() => {
+        if (typeof window !== 'undefined') {
+            return window.innerWidth < 1024;
+        }
+        return false;
+    });
+
     useEffect(() => {
         const handleResize = () => {
             const isLargeScreen = window.innerWidth >= 1024;
             setIsSidebarOpen(isLargeScreen);
+            setShowSidebarIcon(window.innerWidth < 1024);
         };
 
         window.addEventListener('resize', handleResize);
@@ -45,17 +54,35 @@ function Sidebar() {
         setIsSidebarOpen(!isSidebarOpen);
     }
 
+    // Helper to close sidebar on navigation for md/sm screens
+    const handleNavClick = () => {
+        if (window.innerWidth < 1024) {
+            setIsSidebarOpen(false);
+        }
+    };
+
     return (
         <>
+            {/* Sidebar Trigger Icon for md and smaller screens */}
+            {showSidebarIcon && !isSidebarOpen && (
+                <button
+                    className="fixed top-4 ltr:left-4 rtl:right-4 z-50 bg-primary text-white p-2 rounded-full shadow-lg lg:hidden"
+                    onClick={handletoggleSidebar}
+                    aria-label="Open sidebar"
+                >
+                    <Menu className="w-6 h-6" />
+                </button>
+            )}
+
             {/* Overlay for small and medium screens */}
-            {isSidebarOpen && (
+            {isSidebarOpen && showSidebarIcon && (
                 <div
                     className="fixed inset-0 bg-black/50 z-30 block lg:hidden"
                     onClick={handletoggleSidebar}
                 />
             )}
 
-            {/* Sidebar */}
+            {/* Sidebar - only visible on large screens or when opened via icon */}
             <div
                 className={`
     bg-primary text-gray-200 min-h-screen flex flex-col
@@ -63,6 +90,8 @@ function Sidebar() {
     ${isSidebarOpen ? "w-64" : "w-20"}
     ${isSidebarOpen ? "fixed lg:sticky" : "sticky"} 
     top-0 ltr:left-0 rtl:right-0 h-screen z-40  
+    ${showSidebarIcon ? (isSidebarOpen ? "block" : "hidden") : "block"}
+    lg:block
 `}
             >
                 {/* Header and Navigation Container */}
@@ -104,6 +133,7 @@ function Sidebar() {
                                         <li>
                                             <NavLink
                                                 to="/admin/requests"
+                                                onClick={handleNavClick}
                                                 className={({ isActive }) =>
                                                     `flex items-center gap-3 p-3 rounded-xl transition-all cursor-pointer ${!isSidebarOpen ? "justify-center" : ""
                                                     } ${isActive
@@ -119,6 +149,7 @@ function Sidebar() {
                                         <li>
                                             <NavLink
                                                 to="/admin/consultationTypes"
+                                                onClick={handleNavClick}
                                                 className={({ isActive }) =>
                                                     `flex items-center gap-3 p-3 rounded-xl transition-all cursor-pointer ${!isSidebarOpen ? "justify-center" : ""
                                                     } ${isActive
@@ -135,6 +166,7 @@ function Sidebar() {
                                             <NavLink
                                                 to="/admin/law-consultations"
                                                 end
+                                                onClick={handleNavClick}
                                                 className={({ isActive }) =>
                                                     `flex items-center gap-3 p-3 rounded-xl transition-all cursor-pointer ${!isSidebarOpen ? "justify-center" : ""
                                                     } ${isActive
@@ -156,6 +188,7 @@ function Sidebar() {
                                         <NavLink
                                             to=""
                                             end
+                                            onClick={handleNavClick}
                                             className={({ isActive }) =>
                                                 `flex items-center gap-3 p-3 rounded-xl transition-all cursor-pointer ${!isSidebarOpen ? "justify-center" : ""
                                                 } ${isActive
@@ -172,6 +205,7 @@ function Sidebar() {
                                     <li>
                                         <NavLink
                                             to="services"
+                                            onClick={handleNavClick}
                                             className={({ isActive }) =>
                                                 `flex items-center gap-3 p-3 rounded-xl transition-all cursor-pointer ${!isSidebarOpen ? "justify-center" : ""
                                                 } ${isActive
@@ -187,6 +221,7 @@ function Sidebar() {
                                     <li>
                                         <NavLink
                                             to="consultationTypes"
+                                            onClick={handleNavClick}
                                             className={({ isActive }) =>
                                                 `flex items-center gap-3 p-3 rounded-xl transition-all cursor-pointer ${!isSidebarOpen ? "justify-center" : ""
                                                 } ${isActive
@@ -202,6 +237,7 @@ function Sidebar() {
                                     <li>
                                         <NavLink
                                             to="/admin/requests"
+                                            onClick={handleNavClick}
                                             className={({ isActive }) =>
                                                 `flex items-center gap-3 p-3 rounded-xl transition-all cursor-pointer ${!isSidebarOpen ? "justify-center" : ""
                                                 } ${isActive
@@ -218,6 +254,7 @@ function Sidebar() {
                                         <NavLink
                                             to="/admin/law-consultations"
                                             end
+                                            onClick={handleNavClick}
                                             className={({ isActive }) =>
                                                 `flex items-center gap-3 p-3 rounded-xl transition-all cursor-pointer ${!isSidebarOpen ? "justify-center" : ""
                                                 } ${isActive
@@ -233,6 +270,7 @@ function Sidebar() {
                                     <li>
                                         <NavLink
                                             to="/admin/users"
+                                            onClick={handleNavClick}
                                             className={({ isActive }) =>
                                                 `flex items-center gap-3 p-3 rounded-xl transition-all cursor-pointer ${!isSidebarOpen ? "justify-center" : ""
                                                 } ${isActive
@@ -248,6 +286,7 @@ function Sidebar() {
                                     <li>
                                         <NavLink
                                             to="/admin/faq"
+                                            onClick={handleNavClick}
                                             className={({ isActive }) =>
                                                 `flex items-center gap-3 p-3 rounded-xl transition-all cursor-pointer ${!isSidebarOpen ? "justify-center" : ""
                                                 } ${isActive
@@ -263,6 +302,7 @@ function Sidebar() {
                                     <li>
                                         <NavLink
                                             to="/admin/contacts"
+                                            onClick={handleNavClick}
                                             className={({ isActive }) =>
                                                 `flex items-center gap-3 p-3 rounded-xl transition-all cursor-pointer ${!isSidebarOpen ? "justify-center" : ""
                                                 } ${isActive
@@ -280,6 +320,7 @@ function Sidebar() {
                                     <li>
                                         <NavLink
                                             to="/admin/settings"
+                                            onClick={handleNavClick}
                                             className={({ isActive }) =>
                                                 `flex items-center gap-3 p-3 rounded-xl transition-all cursor-pointer ${!isSidebarOpen ? "justify-center" : ""
                                                 } ${isActive

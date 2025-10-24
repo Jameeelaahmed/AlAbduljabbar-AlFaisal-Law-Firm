@@ -148,15 +148,15 @@ function CategoryItem({ category }) {
         <div className="group">
             {/* Category Header */}
             <div
-                className={`flex justify-between items-center p-3 sm:p-4 md:p-6 cursor-pointer transition-all duration-300 ${isExpanded ? "bg-primary text-white" : "hover:text-accent"
+                className={`flex flex-col sm:flex-row sm:justify-between sm:items-center gap-3 sm:gap-0 p-3 sm:p-4 md:p-6 cursor-pointer transition-all duration-300 ${isExpanded ? "bg-primary text-white" : "hover:text-accent"
                     }`}
                 onClick={() => setIsExpanded(!isExpanded)}
             >
                 {/* Left: Name + Subtext */}
-                <div className="flex flex-col gap-1">
+                <div className="flex flex-col gap-1 min-w-0">
                     <div className="flex gap-2 p-1.5 sm:p-2 rounded hover:bg-primary hover:text-white transition-all sm:flex-col md:flex-col lg:flex-row sm:items-start md:items-start lg:items-center" onClick={(e) => { handleOpenUpdateCategoryName(); e.stopPropagation() }}>
                         <p
-                            className={`font-semibold text-sm sm:text-base md:text-lg lg:text-xl leading-tight transition-colors ${isExpanded ? "text-white" : "group-hover:text-accent"
+                            className={`font-semibold text-sm sm:text-base md:text-lg lg:text-xl leading-tight transition-colors truncate ${isExpanded ? "text-white" : "group-hover:text-accent"
                                 }`}
                         >
                             {category.name}
@@ -175,12 +175,11 @@ function CategoryItem({ category }) {
                 </div>
 
                 {/* Right: Toggles + Actions */}
-                <div className="flex justify-around gap-2 sm:gap-3 md:gap-4 lg:gap-6 items-center">
+                <div className="flex flex-wrap justify-around gap-2 sm:gap-3 md:gap-4 lg:gap-6 items-center mt-2 sm:mt-0">
                     {/* Egypt Toggle */}
-                    <div className="flex items-center gap-2">
+                    <div className="flex items-center gap-2 min-w-[90px] px-1 sm:px-0 min-h-[40px]">
                         <span
-                            className={`text-xs sm:text-sm md:text-base font-medium transition-colors ${isExpanded ? "text-white" : "group-hover:text-accent"
-                                }`}
+                            className={`text-xs sm:text-sm md:text-base font-medium transition-colors ${isExpanded ? "text-white" : "group-hover:text-accent"}`}
                         >
                             {t("Egypt")}
                         </span>
@@ -191,7 +190,7 @@ function CategoryItem({ category }) {
                                 e.stopPropagation();
                                 if (!isUpdating) handleToggleBranch(1);
                             }}
-                            className={`relative inline-flex items-center w-10 h-5 sm:w-10 sm:h-6 md:w-12 md:h-7 rounded-full cursor-pointer transition-colors duration-200 ${isEgyptToggled
+                            className={`relative inline-flex items-center w-11 h-6 sm:w-12 sm:h-7 rounded-full cursor-pointer transition-colors duration-200 ${isEgyptToggled
                                 ? isExpanded
                                     ? "bg-secondary"
                                     : "bg-primary"
@@ -201,8 +200,8 @@ function CategoryItem({ category }) {
                                 } ${isUpdating ? "opacity-50 cursor-not-allowed" : ""}`}
                         >
                             <span
-                                className={`absolute ltr:left-1 rtl:right-1 top-1 h-3.5 w-3.5 sm:h-4 sm:w-4 md:h-5 md:w-5 rounded-full bg-white border-2 border-white shadow-md transform transition-transform duration-200 ${isEgyptToggled
-                                    ? "ltr:translate-x-3 sm:ltr:translate-x-4 md:ltr:translate-x-5 rtl:-translate-x-3 sm:rtl:-translate-x-4 md:rtl:-translate-x-5"
+                                className={`absolute ltr:left-1 rtl:right-1 top-1 h-4 w-4 sm:h-5 sm:w-5 rounded-full bg-white border-2 border-white shadow-md transform transition-transform duration-200 ${isEgyptToggled
+                                    ? "ltr:translate-x-5 rtl:-translate-x-5"
                                     : "ltr:translate-x-0 rtl:translate-x-0"
                                     }`}
                             />
@@ -210,10 +209,9 @@ function CategoryItem({ category }) {
                     </div>
 
                     {/* Saudi Arabia Toggle */}
-                    <div className="flex items-center gap-2">
+                    <div className="flex items-center gap-2 min-w-[120px] px-1 sm:px-0 min-h-[40px]">
                         <span
-                            className={`text-xs sm:text-sm md:text-base font-medium transition-colors ${isExpanded ? "text-white" : "group-hover:text-accent"
-                                }`}
+                            className={`text-xs sm:text-sm md:text-base font-medium transition-colors ${isExpanded ? "text-white" : "group-hover:text-accent"}`}
                         >
                             {t("Saudi Arabia")}
                         </span>
@@ -224,7 +222,7 @@ function CategoryItem({ category }) {
                                 e.stopPropagation();
                                 if (!isUpdating) handleToggleBranch(2);
                             }}
-                            className={`relative inline-flex items-center w-10 h-5 sm:w-10 sm:h-6 md:w-12 md:h-7 rounded-full cursor-pointer transition-colors duration-200 ${isSaudiToggled
+                            className={`relative inline-flex items-center w-11 h-6 sm:w-12 sm:h-7 rounded-full cursor-pointer transition-colors duration-200 ${isSaudiToggled
                                 ? isExpanded
                                     ? "bg-secondary"
                                     : "bg-primary"
@@ -234,8 +232,8 @@ function CategoryItem({ category }) {
                                 } ${isUpdating ? "opacity-50 cursor-not-allowed" : ""}`}
                         >
                             <span
-                                className={`absolute ltr:left-1 rtl:right-1 top-1 h-3.5 w-3.5 sm:h-4 sm:w-4 md:h-5 md:w-5 rounded-full bg-white border-2 border-white shadow-md transform transition-transform duration-200 ${isSaudiToggled
-                                    ? "ltr:translate-x-3 sm:ltr:translate-x-4 md:ltr:translate-x-5 rtl:-translate-x-3 sm:rtl:-translate-x-4 md:rtl:-translate-x-5"
+                                className={`absolute ltr:left-1 rtl:right-1 top-1 h-4 w-4 sm:h-5 sm:w-5 rounded-full bg-white border-2 border-white shadow-md transform transition-transform duration-200 ${isSaudiToggled
+                                    ? "ltr:translate-x-5 rtl:-translate-x-5"
                                     : "ltr:translate-x-0 rtl:translate-x-0"
                                     }`}
                             />
@@ -243,9 +241,9 @@ function CategoryItem({ category }) {
                     </div>
 
                     {/* Action Icons */}
-                    <div className="flex items-center gap-1 sm:gap-2 md:gap-3">
+                    <div className="flex flex-wrap items-center gap-1 sm:gap-2 md:gap-3 mt-2 sm:mt-0">
                         <button
-                            className={`p-1 sm:p-1.5 md:p-2 cursor-pointer rounded-lg transition-all duration-200 ${isExpanded ? "hover:bg-white/20" : "hover:bg-secondary/10 group-hover:hover:bg-white/20 cursor-pointer"
+                            className={`p-1 sm:p-1.5 md:p-2 cursor-pointer rounded-lg transition-all duration-200 ${isExpanded ? "hover:bg-white/20" : "hover:bg-secondary/10 group-hover:hover:bg-white/20"
                                 }`}
                         >
                             <Plus
@@ -266,7 +264,7 @@ function CategoryItem({ category }) {
                                 openDeleteModal();
                                 e.stopPropagation();
                             }}
-                            className={`p-1 sm:p-1.5 md:p-2 rounded-lg transition-all duration-200 ${isExpanded ? "hover:bg-white/20" : "hover:bg-red-50 group-hover:hover:bg-white/20 cursor-pointer"
+                            className={`p-1 sm:p-1.5 cursor-pointer md:p-2 rounded-lg transition-all duration-200 ${isExpanded ? "hover:bg-white/20" : "hover:bg-red-50 group-hover:hover:bg-white/20 "
                                 }`}
                         >
                             <Trash
@@ -294,7 +292,7 @@ function CategoryItem({ category }) {
 
                         {/* Expand Icon */}
                         <ChevronDown
-                            className={`w-4 h-4 sm:w-5 sm:h-5 md:w-5 md:h-5 lg:w-6 lg:h-6 transition-all duration-300 ${isExpanded ? "rotate-180 text-white" : "text-primary group-hover:text-accent"
+                            className={`w-4 h-4 sm:w-5 sm:h-5 md:w-5 cursor-pointer md:h-5 lg:w-6 lg:h-6 transition-all duration-300 ${isExpanded ? "rotate-180 text-white" : "text-primary group-hover:text-accent"
                                 }`}
                         />
                     </div>
