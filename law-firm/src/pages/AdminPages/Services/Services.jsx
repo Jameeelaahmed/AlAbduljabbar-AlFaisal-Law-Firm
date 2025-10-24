@@ -21,7 +21,7 @@ function Services() {
         categoryModalRef.current.close();
     }
 
-    const { data: categoriesResponse , isLoading } = useAllCategories();
+    const { data: categoriesResponse, isLoading } = useAllCategories();
 
     const categories = categoriesResponse || [];
 
@@ -108,46 +108,65 @@ function Services() {
             </Modal>
 
             {/* Filters: category, branch, search */}
-            <div className="flex flex-wrap gap-3 items-center my-4">
-                <select
-                    value={selectedCategoryFilter}
-                    onChange={(e) => setSelectedCategoryFilter(e.target.value)}
-                    className="border rounded px-3 py-2 bg-white"
-                >
-                    <option value="">{t("Services.All Categories")}</option>
-                    {categoryOptions.map(opt => (
-                        <option key={opt} value={opt}>{opt}</option>
-                    ))}
-                </select>
+            <div className="flex flex-col gap-4 sm:flex-row sm:items-end my-4 bg-white p-4 rounded shadow-sm ">
+                <div className="flex flex-col flex-1 min-w-[180px]">
+                    <label htmlFor="category-filter" className="text-base font-medium mb-2">
+                        {t("Services.Category")}
+                    </label>
+                    <select
+                        id="category-filter"
+                        value={selectedCategoryFilter}
+                        onChange={(e) => setSelectedCategoryFilter(e.target.value)}
+                        className="border border-gray-300 rounded-lg px-4 py-3 bg-white text-base focus:outline-none focus:ring-2 focus:ring-primary transition"
+                    >
+                        <option value="">{t("Services.All Categories")}</option>
+                        {categoryOptions.map(opt => (
+                            <option key={opt} value={opt}>{opt}</option>
+                        ))}
+                    </select>
+                </div>
 
-                <select
-                    value={selectedBranchFilter}
-                    onChange={(e) => setSelectedBranchFilter(e.target.value)}
-                    className="border rounded px-3 py-2 bg-white"
-                >
-                    <option value="">{t("Services.All Branches")}</option>
-                    {branchOptions.map(opt => (
-                        <option key={opt} value={opt}>{opt}</option>
-                    ))}
-                </select>
+                <div className="flex flex-col flex-1 min-w-[180px]">
+                    <label htmlFor="branch-filter" className="text-base font-medium mb-2">
+                        {t("Services.Branch")}
+                    </label>
+                    <select
+                        id="branch-filter"
+                        value={selectedBranchFilter}
+                        onChange={(e) => setSelectedBranchFilter(e.target.value)}
+                        className="border border-gray-300 rounded-lg px-4 py-3 bg-white text-base focus:outline-none focus:ring-2 focus:ring-primary transition"
+                    >
+                        <option value="">{t("Services.All Branches")}</option>
+                        {branchOptions.map(opt => (
+                            <option key={opt} value={opt}>{opt}</option>
+                        ))}
+                    </select>
+                </div>
 
-                <input
-                    type="search"
-                    value={search}
-                    onChange={(e) => setSearch(e.target.value)}
-                    placeholder={t("Services.Search by name or description")}
-                    className="border rounded px-3 py-2 flex-1 min-w-[200px]"
-                />
-
-                <button
-                    onClick={() => { setSearch(""); setSelectedCategoryFilter(""); setSelectedBranchFilter(""); }}
-                    className="ml-2 cursor-pointer px-3 py-2 border rounded bg-gray-100"
-                    title={t("Services.Clear filters")}
-                >
-                    {t("Services.Clear")}
-                </button>
+                <div className="flex flex-col flex-1 min-w-[200px]">
+                    <label htmlFor="service-search" className="text-base font-medium mb-2">
+                        {t("Services.Search")}
+                    </label>
+                    <div className="flex">
+                        <input
+                            id="service-search"
+                            type="search"
+                            value={search}
+                            onChange={(e) => setSearch(e.target.value)}
+                            placeholder={t("Services.Search by name or description")}
+                            className="border border-gray-300 rounded-l-lg px-4 py-3 bg-white text-base flex-1 focus:outline-none focus:ring-2 focus:ring-primary transition"
+                        />
+                        <button
+                            onClick={() => { setSearch(""); setSelectedCategoryFilter(""); setSelectedBranchFilter(""); }}
+                            className="px-4 py-3 border border-gray-300 border-l-0 rounded-r-lg bg-gray-100 hover:bg-gray-200 text-base font-medium transition"
+                            title={t("Services.Clear filters")}
+                            type="button"
+                        >
+                            {t("Services.Clear")}
+                        </button>
+                    </div>
+                </div>
             </div>
-
             <ul className='bg-bg shadow rounded'>
                 {
                     filteredCategories.map((category) => (

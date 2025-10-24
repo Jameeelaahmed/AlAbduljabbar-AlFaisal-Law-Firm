@@ -3,6 +3,8 @@ import { Check, BookOpen, ArrowLeft, ArrowRight } from 'lucide-react';
 import { useAllCategories } from '../../../hooks/useCategories';
 import { useGetAllConsultationTypes, useCreateConsultationRequest } from '../../../hooks/useConsultations';
 import { useTranslation } from 'react-i18next';
+import { useAuthStore } from '../../../store/useAuthStore';
+import { toast } from 'react-toastify';
 
 const ConsultationTypesGrid = memo(function ConsultationTypesGrid({ types, onSelect }) {
     const { t } = useTranslation();
@@ -104,10 +106,12 @@ const ConsultationPage = () => {
         description: '',
         categoryId: ''
     });
-    const { t } = useTranslation();
+    const { t, i18n } = useTranslation();
+    const isRtl = i18n.language === 'ar';
     const { data: categoriesData } = useAllCategories();
     const { data: consultationTypes } = useGetAllConsultationTypes();
     const { mutate: createConsultation, isLoading: isCreating } = useCreateConsultationRequest();
+    const { isAuthenticated } = useAuthStore();
 
     const [activeStep, setActiveStep] = useState(0);
 
@@ -147,6 +151,15 @@ const ConsultationPage = () => {
             consultationID: Number(formData.consultationType),
             categoryID: Number(formData.categoryId)
         };
+
+        if (!isAuthenticated) {
+            toast.error(t("You must be logged in to send a consultation."), {
+                position: "top-center",
+                autoClose: 4000,
+            });
+            return;
+        }
+
         createConsultation(payload, {
             onSuccess: () => {
                 setFormData({
@@ -175,44 +188,42 @@ const ConsultationPage = () => {
             default: return false;
         }
     }, [activeStep, formData]);
-
     return (
         <div className="min-h-screen bg-linear-to-br from-gray-50 to-gray-100">
-            {/* Hero header (same style as Contact Us hero) */}
-            <section className="bg-primary text-white pt-28 pb-16">
+            {/* Hero header */}
+            <section className="bg-primary text-white pt-20 pb-10 sm:pt-28 sm:pb-16">
                 <div className="container mx-auto px-4 text-center">
-                    <h1 className="text-4xl md:text-5xl font-bold mb-4">
+                    <h1 className="text-2xl sm:text-4xl md:text-5xl font-bold mb-4">
                         {t("Legal Consultation Request")}
                     </h1>
-                    <p className="text-xl max-w-2xl mx-auto">
+                    <p className="text-base sm:text-xl max-w-2xl mx-auto">
                         {t("Begin your legal journey with our expert team. Select your consultation type and provide case details below.")}
                     </p>
                 </div>
             </section>
 
-            <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+            <div className="max-w-6xl mx-auto px-2 sm:px-4 md:px-6 lg:px-8 py-6 sm:py-12">
                 {/* Step Indicator */}
                 <StepIndicator steps={steps} currentStep={activeStep} />
                 <div className="bg-white rounded-2xl shadow-xl overflow-hidden border border-primary/10">
                     {/* Step 1: Consultation Type Selection */}
                     {activeStep === 0 && (
-                        <div className="p-10">
-                            <div className="mb-8">
-                                <h2 className="text-3xl font-serif font-bold text-primary mb-3">{t("Select Consultation Type")}</h2>
-                                <p className="text-text/70 text-lg">{t("Choose the type of consultation that best fits your needs")}</p>
+                        <div className="p-4 sm:p-8 md:p-10">
+                            <div className="mb-6 sm:mb-8">
+                                <h2 className="text-xl sm:text-3xl font-serif font-bold text-primary mb-2 sm:mb-3">{t("Select Consultation Type")}</h2>
+                                <p className="text-text/70 text-base sm:text-lg">{t("Choose the type of consultation that best fits your needs")}</p>
                             </div>
-
                             <ConsultationTypesGrid types={consultationTypes} onSelect={handleConsultationTypeSelect} />
                         </div>
                     )}
 
                     {/* Step 2 & 3: Form Inputs */}
                     {(activeStep === 1 || activeStep === 2) && (
-                        <form onSubmit={handleSubmit} className="p-10">
+                        <form onSubmit={handleSubmit} className="p-4 sm:p-8 md:p-10">
                             {/* Selected Consultation Type Display */}
                             {formData.consultationType && (
-                                <div className="mb-8 p-6 ltr:bg-linear-to-r rtl:bg-linear-to-l from-accent/5 to-accent/10 rounded-xl border border-accent/20">
-                                    <div className="flex items-center space-x-3">
+                                <div className="mb-6 sm:mb-8 p-4 sm:p-6 ltr:bg-linear-to-r rtl:bg-linear-to-l from-accent/5 to-accent/10 rounded-xl border border-accent/20">
+                                    <div className="flex flex-col sm:flex-row items-center sm:space-x-3 space-y-2 sm:space-y-0">
                                         <div className="w-8 h-8 rounded-full bg-accent/20 flex items-center justify-center">
                                             <Check className="w-4 h-4 text-accent" />
                                         </div>
@@ -225,13 +236,13 @@ const ConsultationPage = () => {
                                 </div>
                             )}
 
-                            <div className="space-y-10">
+                            <div className="space-y-8 sm:space-y-10">
                                 {/* Law Type Selection */}
                                 {activeStep >= 1 && (
                                     <div>
-                                        <div className="mb-8">
-                                            <h2 className="text-3xl font-serif font-bold text-primary mb-3">{t("Area of Law")}</h2>
-                                            <p className="text-text/70 text-lg">{t("Select the legal area that matches your case")}</p>
+                                        <div className="mb-6 sm:mb-8">
+                                            <h2 className="text-xl sm:text-3xl font-serif font-bold text-primary mb-2 sm:mb-3">{t("Area of Law")}</h2>
+                                            <p className="text-text/70 text-base sm:text-lg">{t("Select the legal area that matches your case")}</p>
                                         </div>
                                         <CategoriesGrid
                                             categories={categoriesData}
@@ -243,13 +254,12 @@ const ConsultationPage = () => {
 
                                 {/* Case Details */}
                                 {activeStep >= 2 && (
-                                    <div className="space-y-8">
+                                    <div className="space-y-6 sm:space-y-8">
                                         <div>
-                                            <h2 className="text-3xl font-serif font-bold text-primary mb-8">{t("Case Details")}</h2>
-
-                                            <div className="space-y-6">
+                                            <h2 className="text-xl sm:text-3xl font-serif font-bold text-primary mb-4 sm:mb-8">{t("Case Details")}</h2>
+                                            <div className="space-y-4 sm:space-y-6">
                                                 <div>
-                                                    <label htmlFor="title" className="block text-lg font-semibold text-primary mb-3">
+                                                    <label htmlFor="title" className="block text-base sm:text-lg font-semibold text-primary mb-2 sm:mb-3">
                                                         {t("Case Title *")}
                                                     </label>
                                                     <input
@@ -260,25 +270,24 @@ const ConsultationPage = () => {
                                                         onChange={handleChange}
                                                         required
                                                         placeholder={t("e.g., Employment Contract Dispute")}
-                                                        className="w-full px-4 py-4 border-2 border-text/10 rounded-xl focus:border-accent focus:ring-4 focus:ring-accent/10 transition-all duration-200 text-lg"
+                                                        className="w-full px-3 py-3 sm:px-4 sm:py-4 border-2 border-text/10 rounded-xl focus:border-accent focus:ring-4 focus:ring-accent/10 transition-all duration-200 text-base sm:text-lg"
                                                     />
                                                 </div>
-
                                                 <div>
-                                                    <label htmlFor="description" className="block text-lg font-semibold text-primary mb-3">
+                                                    <label htmlFor="description" className="block text-base sm:text-lg font-semibold text-primary mb-2 sm:mb-3">
                                                         {t("Case Description *")}
                                                     </label>
                                                     <textarea
                                                         id="description"
                                                         name="description"
-                                                        rows={6}
+                                                        rows={4}
                                                         value={formData.description}
                                                         onChange={handleChange}
                                                         required
                                                         placeholder={t("Please describe your legal situation in detail...")}
-                                                        className="w-full px-4 py-4 border-2 border-text/10 rounded-xl focus:border-accent focus:ring-4 focus:ring-accent/10 transition-all duration-200 resize-none text-lg leading-relaxed"
+                                                        className="w-full px-3 py-3 sm:px-4 sm:py-4 border-2 border-text/10 rounded-xl focus:border-accent focus:ring-4 focus:ring-accent/10 transition-all duration-200 resize-none text-base sm:text-lg leading-relaxed"
                                                     />
-                                                    <p className="text-sm text-text/60 mt-2">
+                                                    <p className="text-xs sm:text-sm text-text/60 mt-1 sm:mt-2">
                                                         {t("Please include relevant dates, parties involved, and specific legal concerns")}
                                                     </p>
                                                 </div>
@@ -288,14 +297,14 @@ const ConsultationPage = () => {
                                 )}
 
                                 {/* Navigation Buttons */}
-                                <div className="flex justify-between items-center pt-8 border-t border-primary/10">
+                                <div className="flex flex-col sm:flex-row justify-between items-center pt-6 sm:pt-8 border-t border-primary/10 gap-4">
                                     {activeStep > 0 && (
                                         <button
                                             type="button"
                                             onClick={goBack}
-                                            className="px-8 py-4 border-2 border-primary text-primary rounded-xl hover:bg-primary hover:text-white transition-all duration-200 font-semibold text-lg flex items-center space-x-2"
+                                            className="w-full sm:w-auto px-6 py-3 sm:px-8 sm:py-4 border-2 border-primary text-primary rounded-xl hover:bg-primary hover:text-white transition-all duration-200 font-semibold text-base sm:text-lg flex items-center justify-center space-x-2"
                                         >
-                                            <ArrowLeft className="w-5 h-5" />
+                                            {isRtl ? <ArrowRight className="w-5 h-5" /> : <ArrowLeft className="w-5 h-5" />}
                                             <span>{t("Back")}</span>
                                         </button>
                                     )}
@@ -305,16 +314,16 @@ const ConsultationPage = () => {
                                             type="button"
                                             onClick={goNext}
                                             disabled={!isStepValid}
-                                            className="px-10 py-4 bg-accent text-white rounded-xl hover:bg-accent/90 transition-all duration-200 font-semibold text-lg shadow-lg disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none transform hover:scale-105 ltr:ml-auto rtl:mr-auto flex items-center space-x-2"
+                                            className="w-full sm:w-auto px-8 py-3 sm:px-10 sm:py-4 bg-accent text-white rounded-xl hover:bg-accent/90 transition-all duration-200 font-semibold text-base sm:text-lg shadow-lg disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none transform hover:scale-105 ltr:ml-auto rtl:mr-auto flex items-center justify-center space-x-2"
                                         >
                                             <span>{t("Continue")}</span>
-                                            <ArrowRight className="w-5 h-5" />
+                                            {isRtl ? <ArrowLeft className="w-5 h-5" /> : <ArrowRight className="w-5 h-5" />}
                                         </button>
                                     ) : (
                                         <button
                                             type="submit"
                                             disabled={isCreating || !isStepValid}
-                                            className="px-12 py-4 ltr:bg-linear-to-r rtl:bg-linear-to-l from-accent to-accent/90 text-white rounded-xl hover:from-accent/90 hover:to-accent/80 transition-all duration-200 font-semibold text-lg shadow-lg disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none transform hover:scale-105 ltr:ml-auto rtl:mr-auto flex items-center space-x-2"
+                                            className="w-full sm:w-auto px-10 py-3 sm:px-12 sm:py-4 ltr:bg-linear-to-r rtl:bg-linear-to-l from-accent to-accent/90 text-white rounded-xl hover:from-accent/90 hover:to-accent/80 transition-all duration-200 font-semibold text-base sm:text-lg shadow-lg disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none transform hover:scale-105 ltr:ml-auto rtl:mr-auto flex items-center justify-center space-x-2"
                                         >
                                             {isCreating ? (
                                                 <>
@@ -324,7 +333,7 @@ const ConsultationPage = () => {
                                             ) : (
                                                 <>
                                                     <span>{t('Submit Request')}</span>
-                                                    <ArrowRight className="w-5 h-5" />
+                                                    {isRtl ? <ArrowLeft className="w-5 h-5" /> : <ArrowRight className="w-5 h-5" />}
                                                 </>
                                             )}
                                         </button>

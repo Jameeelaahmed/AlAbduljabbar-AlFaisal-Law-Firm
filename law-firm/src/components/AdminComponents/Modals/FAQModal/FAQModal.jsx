@@ -70,13 +70,13 @@ function FAQModal({ onClose, faqId = null, faqCategoryId }) {
                         onClick={(e) => e.stopPropagation()}
                     >
                         <div>
-                            <label className="text-sm font-semibold text-primary">Question (EN)</label>
+                            <label className="text-sm font-semibold text-primary">{t("Question (EN)")}</label>
                             <Field name="questionEn">
                                 {({ field }) => (
                                     <input
                                         {...field}
                                         type="text"
-                                        placeholder="Question in English"
+                                        placeholder={"Question in English"}
                                         dir="ltr"
                                         disabled={isSubmitting}
                                         className={`w-full px-4 py-3 border rounded-lg focus:outline-none focus:ring-2 transition-all duration-300 ${errors.questionEn && touched.questionEn ? "border-red-300 focus:ring-red-200 bg-red-50" : "border-gray-300 focus:ring-primary focus:border-primary"}`}
@@ -87,7 +87,7 @@ function FAQModal({ onClose, faqId = null, faqCategoryId }) {
                         </div>
 
                         <div>
-                            <label className="text-sm font-semibold text-primary">Question (AR)</label>
+                            <label className="text-sm font-semibold text-primary">{t("Question (AR)")}</label>
                             <Field name="questionAr">
                                 {({ field }) => (
                                     <input
@@ -104,7 +104,7 @@ function FAQModal({ onClose, faqId = null, faqCategoryId }) {
                         </div>
 
                         <div>
-                            <label className="text-sm font-semibold text-primary">Answer (EN)</label>
+                            <label className="text-sm font-semibold text-primary">{t("Answer (EN)")}</label>
                             <Field name="answerEn">
                                 {({ field }) => (
                                     <textarea
@@ -121,7 +121,7 @@ function FAQModal({ onClose, faqId = null, faqCategoryId }) {
                         </div>
 
                         <div>
-                            <label className="text-sm font-semibold text-primary">Answer (AR)</label>
+                            <label className="text-sm font-semibold text-primary">{t("Answer (AR)")}</label>
                             <Field name="answerAr">
                                 {({ field }) => (
                                     <textarea
