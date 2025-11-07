@@ -73,24 +73,24 @@ function Users() {
     }
 
     const tableColumns = [
-        { key: "fullName", header: "اسم المستخدم" },
-        { key: "email", header: "البريد الإلكتروني" },
+        { key: "fullName", header: t("username") },
+        { key: "email", header: t("Email") },
         {
             key: "role",
-            header: "الدور",
+            header: t("role"),
             render: (role) => (
                 <span className="px-3 py-1 rounded-full text-sm font-medium bg-secondary/10 text-secondary">
                     {role}
                 </span>
             ),
         },
-        { key: "mobileNumber", header: "رقم الجوال" },
-        { key: "whatsappNumber", header: "رقم الواتساب" },
+        { key: "mobileNumber", header: t("Phone Number") },
+        { key: "whatsappNumber", header: t("Whatsapp Number") },
     ];
 
     const tableActions = [
         {
-            label: "تعديل",
+            label: t("Edit"),
             onClick: (user, e) => {
                 e?.stopPropagation?.();
                 openEditUserModal(user);
@@ -98,7 +98,7 @@ function Users() {
             className: "text-gray-500 hover:bg-blue-50",
         },
         {
-            label: "حذف",
+            label: t("Delete.Delete"),
             onClick: (user, e) => {
                 e?.stopPropagation?.();
                 openDeleteUserModal(user);

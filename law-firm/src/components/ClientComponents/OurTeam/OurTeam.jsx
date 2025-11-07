@@ -1,7 +1,6 @@
 import React from "react";
 import { useTranslation } from "react-i18next";
 import { Users, Linkedin, Mail, Award, Briefcase, User } from "lucide-react";
-import { useHomePage } from "../../../hooks/useHomePage";
 
 function OurTeam({ teamMembers }) {
     const { i18n } = useTranslation?.() ?? { t: (s) => s, i18n: { language: "ar" } };
@@ -70,7 +69,7 @@ function OurTeam({ teamMembers }) {
                                         )}
                                     </div>
                                     {/* Experience Badge */}
-                                    <div className="absolute -bottom-2 left-1/2 transform -translate-x-1/2 bg-secondary text-white px-3 py-1 rounded-full text-xs font-semibold shadow-lg">
+                                    {/* <div className="absolute -bottom-2 left-1/2 transform -translate-x-1/2 bg-secondary text-white px-3 py-1 rounded-full text-xs font-semibold shadow-lg">
                                         {member.yearsOfExperience}{" "}
                                         {isRtl
                                             ? member.yearsOfExperience === 1
@@ -84,7 +83,7 @@ function OurTeam({ teamMembers }) {
                                                 ? "Year"
                                                 : "Years"
                                         }
-                                    </div>
+                                    </div> */}
                                 </div>
 
                                 <h3 className="text-xl font-bold text-text mb-2">

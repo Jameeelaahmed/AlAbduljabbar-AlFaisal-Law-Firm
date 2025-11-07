@@ -150,7 +150,7 @@ function RequestsDetails() {
         );
     }
     return (
-        <div className="min-h-screen bg-gray-50 p-4 sm:p-6" dir="rtl">
+        <div className="min-h-screen bg-gray-50 p-4 sm:p-6">
             <div className="max-w-7xl mx-auto mb-4 sm:mb-6">
                 <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-4 sm:mb-6">
                     <div>

@@ -11,7 +11,7 @@
   "Office": " العبد الجبار و الفيصل",
   "logo1Title": "العبد الجبار",
   "logo2Title": " العبد الجبار و الفيصل",
-  "logoSubtitle": "محامون و مستشاورن",
+  "logoSubtitle": "محامون و مستشارون",
   "logoAction": "اضغط لرؤية بيانات الشركه",
   "mainOfficeTitle": "المكتب الرئيسي",
   "mainOfficeAddress": "السعوديه - الرياض - حي المروج - مركز الحياة سنتر - مبني B- الدور الاول - مكتب 5",
@@ -53,6 +53,8 @@
     "UpdateSuccess": "تم تحديث الخدمة بنجاح",
     "UpdateError": "تعذر تحديث الخدمة",
     "DeleteSuccess": "تم حذف الخدمة بنجاح",
+    "Branch":"الفرع",
+    "Search":"بحث",
     "DeleteError": "تعذر حذف الخدمة",
     "Service Management": "إدارة الخدمات",
     "Add New Category": "إضافة فئة جديدة",
@@ -238,6 +240,9 @@
       "cancel": "إلغاء",
       "back": "العودة",
       "addNote": "أضف ملاحظة",
+      "markContacted": "تم التواصل",
+      "resolve":"تم الحل",
+      "reject":"رفض",
       "schedule": "جدولة",
       "complete": "تمت",
       "cancelConsultation": "إلغاء",
@@ -280,6 +285,9 @@
       "clearFilters": "مسح الفلاتر"
     }
   },
+  "Update Faq Category": "تحديث فئة الأسئلة الشائعة",
+  "Delete Faq Category": "حذف فئة الأسئلة الشائعة",
+  "Edit FAQ": "تعديل السؤال الشائع",
   "Users": {
     "CreateSuccess": "تم إنشاء المستخدم بنجاح",
     "CreateError": "تعذر إنشاء المستخدم",
@@ -297,6 +305,11 @@
     "Failed to update user": "فشل تحديث المستخدم",
     "Add User": "إضافة مستخدم",
     "Edit User": "تعديل المستخدم",
+    "Password": "كلمة المرور",
+    "Confirm Password": "تأكيد كلمة المرور",
+    "Branch": "الفرع",
+    "Saudi Arabia Branch": "الفرع السعودي",
+    "Egypt Branch": "الفرع المصري",
     "Delete User": "حذف المستخدم",
     "Submitting...": "جاري الإرسال...",
     "Save": "حفظ",
@@ -773,7 +786,6 @@
   "Send Message": "إرسال الرسالة",
   "Get In Touch": "تواصل معنا",
   "Send Us a Message": "أرسل لنا رسالة",
-  "your.email@example.com": "بريدك الإلكتروني",
   "Please describe your legal issue or inquiry...": "يرجى وصف مشكلتك أو استفسارك القانوني...",
   "Please enter a valid email": "يرجى إدخال بريد إلكتروني صالح",
   "Please enter a valid phone number": "يرجى إدخال رقم هاتف صالح",
@@ -848,5 +860,9 @@
       "UpdateSuccess": "تم تحديث فئة الأسئلة الشائعة بنجاح",
       "DeleteSuccess": "تم حذف فئة الأسئلة الشائعة بنجاح"
     }
-  }
+  },
+  "username": "إسم المستخدم",
+  "role":"الدور",
+  "Whatsapp Number":"رقم الواتساب",
+  "Edit":"تعديل"
 }

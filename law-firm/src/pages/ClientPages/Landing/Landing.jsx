@@ -6,12 +6,10 @@ import OurOffices from '../../../components/ClientComponents/OurOffices/OurOffic
 import OurServices from "../../../components/ClientComponents/OurServices/OurServices"
 import OurTeam from "../../../components/ClientComponents/OurTeam/OurTeam"
 import { useHomePage } from "../../../hooks/useHomePage"
-import { useTranslation } from "react-i18next"
 import Loading from "../../../components/Common/Loading"
 
 function Landing() {
-    const { t } = useTranslation()
-    const { data: homePageData, isLoading, error } = useHomePage();
+    const { data: homePageData, isLoading } = useHomePage();
 
     if (isLoading) return <Loading />
 
@@ -32,11 +30,11 @@ function Landing() {
                 milestones={entitySettings?.journeyMilestones}
                 coreValues={entitySettings?.coreValues}
             />
+            <OurTeam teamMembers={lawyers} />
             <OurVision baseOfSuccess={entitySettings?.baseOfOurSuccess} />
             <OurServices />
             <ClientOpinions clientReviews={clientReviews} />
-            <OurTeam teamMembers={lawyers} />
-            <OurOffices />
+            {/* <OurOffices /> */}
         </>
     )
 }

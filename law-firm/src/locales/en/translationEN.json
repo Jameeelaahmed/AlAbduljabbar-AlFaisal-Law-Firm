@@ -38,7 +38,7 @@
     "OurLawServices": "Our Law Services",
     "AboutUs": "About Us",
     "ContactUs": "Contact Us",
-    "FAQ": "Frequently Asked Questions",
+    "FAQ": "FAQ",
     "Login": "Login",
     "Hello": "Hello, ",
     "Profile": "Profile",
@@ -51,6 +51,8 @@
     "UpdateError": "Couldn't update service",
     "DeleteSuccess": "Service deleted successfully",
     "DeleteError": "Couldn't delete service",
+    "Branch": "Branch",
+    "Search":"Search",
     "Service Management": "Service Management",
     "Add New Category": "Add New Category",
     "Submit Category": "Submit Category",
@@ -142,6 +144,10 @@
       "updateStatus": "Update Status",
       "saveChanges": "Save Changes",
       "saving": "Saving...",
+      "addNote":"Add Note",
+      "markContacted": "Contacted",
+      "resolve": "Resolve",
+      "reject":"Reject",
       "cancel": "Cancel",
       "back": "Back"
     },
@@ -225,6 +231,7 @@
       "cancel": "Cancel",
       "back": "Back",
       "addNote": "Add Note",
+      "markContacted": "Contacted",
       "schedule": "Schedule",
       "complete": "Mark as Completed",
       "cancelConsultation": "Cancel Consultation",
@@ -257,6 +264,9 @@
       "clearFilters": "Clear Filters"
     }
   },
+  "Update Faq Category":"Update Faq Category",
+  "Delete Faq Category":"Delete Faq Category",
+  "Edit FAQ": "Edit FAQ",
   "Users": {
     "CreateSuccess": "User created successfully",
     "CreateError": "Couldn't create user",
@@ -272,6 +282,11 @@
     "User updated successfully": "User updated successfully",
     "Failed to update user": "Failed to update user",
     "Add User": "Add User",
+    "Password": "Password",
+    "Confirm Password": "Confirm Password",
+    "Branch": "Branch",
+    "Saudi Arabia Branch": "Saudi Arabia Branch",
+    "Egypt Branch": "Egypt Branch",
     "Edit User": "Edit User",
     "Delete User": "Delete User",
     "Submitting...": "Submitting...",
@@ -869,5 +884,12 @@
       "UpdateSuccess": "FAQ Category updated successfully",
       "DeleteSuccess": "FAQ Category deleted successfully"
     }
-  }
+  },
+  "Get expert advice for your legal matters": "Get expert advice for your legal matters",
+  "Choose the type of consultation that best fits your needs": "Choose the type of consultation that best fits your needs",
+  "Please describe your legal issue or inquiry...": "Please describe your legal issue or inquiry...",
+  "Edit": "Edit",
+  "username": "Username",
+  "role":"Role",
+  "Whatsapp Number":"Whatsapp Number"
 }

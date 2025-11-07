@@ -48,9 +48,9 @@ function GenericTable({ useDataHook, columns, actions, pageSize = 5, initialPage
                 <thead>
                     <tr className="bg-gray-100">
                         {columns.map((col) => (
-                            <th key={col.key} className="p-3 text-primary">{col.header}</th>
+                            <th key={col.key} className="p-3 text-center text-primary">{col.header}</th>
                         ))}
-                        {actions && <th className="p-3 text-primary">{t("Procedures")}</th>}
+                        {actions && <th className="p-3 text-center text-primary">{t("Procedures")}</th>}
                     </tr>
                 </thead>
                 <tbody>
@@ -67,12 +67,12 @@ function GenericTable({ useDataHook, columns, actions, pageSize = 5, initialPage
                                 className="border-b border-gray-300 hover:bg-gray-50 transition cursor-pointer"
                             >
                                 {columns.map((col) => (
-                                    <td key={col.key} className="p-3">
+                                    <td key={col.key} className="p-3 text-center">
                                         {col.render ? col.render(item[col.key], item) : item[col.key]}
                                     </td>
                                 ))}
                                 {actions && (
-                                    <td className="p-3 flex gap-2">
+                                    <td className="p-3 flex justify-center gap-2">
                                         {actions.map((action, i) => (
                                             <button
                                                 key={i}
