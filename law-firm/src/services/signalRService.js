@@ -6,16 +6,20 @@ class SignalRService {
     this.connection = null;
     this.connectionPromise = null;
     this.hubUrl = import.meta.env.VITE_SIGNALR_URL;
+    this.isConfigured = Boolean(this.hubUrl);
     this.listeners = new Set();
 
-    if (!this.hubUrl) {
-      console.error('SignalR URL is not configured. Please set VITE_SIGNALR_URL in your environment variables.');
-      throw new Error('SignalR URL is not configured');
+    if (!this.isConfigured) {
+      console.warn('SignalR URL is not configured. Realtime notifications are disabled until VITE_SIGNALR_URL is set.');
     }
   }
 
   // Initialize or reuse the SignalR connection
   async start(accessToken) {
+    if (!this.isConfigured) {
+      return null;
+    }
+
     if (this.connection && this.connection.state === signalR.HubConnectionState.Connected) {
       return this.connection;
     }

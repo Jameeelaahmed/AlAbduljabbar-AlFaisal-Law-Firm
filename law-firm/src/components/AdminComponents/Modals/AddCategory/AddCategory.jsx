@@ -10,15 +10,12 @@ import { useCreateCategory } from '../../../../hooks/useCategories';
 function AddCategory({ onClose }) {
     const { t } = useTranslation();
     const [selectedBranches, setSelectedBranches] = useState({
-        egypt: false,
-        saudi: false
+        saudi: true,
     });
 
-    const getBranchId = (egypt, saudi) => {
-        if (egypt && saudi) return 3; // Both branches
-        if (egypt && !saudi) return 1; // Egypt only
-        if (!egypt && saudi) return 2; // Saudi only
-        return 3; // Default to both if none selected
+    const getBranchId = (saudi) => {
+        if (saudi) return 2;
+        return 3;
     };
 
     const handleToggleChange = (branch, setFieldValue) => {
@@ -26,9 +23,13 @@ function AddCategory({ onClose }) {
             ...selectedBranches,
             [branch]: !selectedBranches[branch]
         };
+
+        if (!newSelection.saudi) {
+            newSelection.saudi = true;
+        }
         setSelectedBranches(newSelection);
 
-        const branchId = getBranchId(newSelection.egypt, newSelection.saudi);
+        const branchId = getBranchId(newSelection.saudi);
         setFieldValue('branchId', branchId);
     };
 
@@ -46,8 +47,7 @@ function AddCategory({ onClose }) {
         } finally {
             setSubmitting(false);
             setSelectedBranches({
-                egypt: false,
-                saudi: false
+                saudi: true,
             })
         }
     };
@@ -56,7 +56,7 @@ function AddCategory({ onClose }) {
         <div className="flex items-center justify-center p-4">
             <div className="w-full max-w-md">
                 <Formik
-                    initialValues={{ nameEn: '', nameAr: '', branchId: 0 }}
+                    initialValues={{ nameEn: '', nameAr: '', branchId: 2 }}
                     validationSchema={Yup.object({
                         nameEn: Yup.string().min(3).required(t('Services.English name is required')),
                         nameAr: Yup.string().min(3).required(t('Services.Arabic name is required')),
@@ -120,7 +120,7 @@ function AddCategory({ onClose }) {
                                     {t("Services.Select Branch(es)")}
                                 </label>
                                 <div className="flex justify-around gap-2 md:gap-4 lg:gap-6 items-center">
-                                    {/* Egypt Toggle */}
+                                    {/* Egypt branch toggle is temporarily hidden from the admin UI.
                                     <div className="flex items-center gap-2">
                                         <span className={`text-sm md:text-base font-medium transition-colors`}>{t("Egypt")}</span>
                                         <label
@@ -141,6 +141,7 @@ function AddCategory({ onClose }) {
                                             ></span>
                                         </label>
                                     </div>
+                                    */}
 
                                     {/* Saudi Arabia Toggle */}
                                     <div className="flex items-center gap-2">

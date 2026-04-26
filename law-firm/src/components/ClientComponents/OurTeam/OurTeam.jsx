@@ -2,9 +2,10 @@ import React from "react";
 import { useTranslation } from "react-i18next";
 import { Users, Linkedin, Mail, Award, Briefcase, User } from "lucide-react";
 
-function OurTeam({ teamMembers }) {
+function OurTeam({ teamMembers = [] }) {
     const { i18n } = useTranslation?.() ?? { t: (s) => s, i18n: { language: "ar" } };
     const isRtl = (i18n?.language || document.documentElement.dir) === "ar";
+    const safeTeamMembers = Array.isArray(teamMembers) ? teamMembers : [];
 
     return (
         <section className="py-20 bg-linear-to-b from-bg to-white">
@@ -36,8 +37,8 @@ function OurTeam({ teamMembers }) {
 
                     <p className="text-lg text-gray-600 leading-relaxed max-w-2xl mx-auto">
                         {isRtl
-                            ? "فريق من المحامين المتخصصين ذوي الخبرة الواسعة في مختلف المجالات القانونية بين السعودية ومصر"
-                            : "A team of specialized lawyers with extensive experience in various legal fields across Saudi Arabia and Egypt"
+                            ? "فريق من المحامين المتخصصين ذوي الخبرة الواسعة في مختلف المجالات القانونية في المملكة العربية السعودية"
+                            : "A team of specialized lawyers with extensive experience in various legal fields across Saudi Arabia"
                         }
                     </p>
 
@@ -46,7 +47,7 @@ function OurTeam({ teamMembers }) {
 
                 {/* Team Grid */}
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-7xl mx-auto">
-                    {teamMembers.map((member, index) => (
+                    {safeTeamMembers.map((member, index) => (
                         <div
                             key={member.id}
                             className="group bg-white rounded-3xl shadow-lg hover:shadow-xl border border-secondary/10 p-6 transition-all duration-500 hover:-translate-y-2"

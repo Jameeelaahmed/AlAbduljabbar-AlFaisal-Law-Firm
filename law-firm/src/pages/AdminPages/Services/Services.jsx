@@ -36,7 +36,7 @@ function Services() {
         [categories]
     );
 
-    // normalize branch values to 'egypt' | 'saudi' | 'both' | other string
+    // normalize branch values to saudi/both/other while keeping legacy ids compatible
     const normalizeBranch = (raw) => {
         if (raw == null) return null;
 
@@ -51,14 +51,14 @@ function Services() {
         if (Array.isArray(val)) {
             const s = val.map(v => String(v)).join(",");
             if (s.includes("1") && s.includes("2")) return "both";
-            if (s.includes("1")) return "egypt";
+            if (s.includes("1")) return "saudi";
             if (s.includes("2")) return "saudi";
             return s;
         }
 
         const s = String(val).trim().toLowerCase();
 
-        if (s === "1" || s === "egypt") return "egypt";
+        if (s === "1" || s === "egypt") return "saudi";
         if (s === "2" || s === "saudi") return "saudi";
         if (s === "3" || s === "both" || s === "1,2" || s === "2,1") return "both";
 
@@ -66,14 +66,14 @@ function Services() {
         return s || null;
     };
 
-    // make branches static: "egypt", "saudi" (All is represented by empty string)
-    const branchOptions = ["egypt", "saudi"];
+    // keep branch filter Saudi-only in UI
+    const branchOptions = ["saudi"];
 
-    // when filtering by branch, treat "both" as matching either egypt or saudi
+    // when filtering by branch, treat "both" as matching saudi
     const matchesBranchFilter = (branchFilter, branchValue) => {
         if (!branchFilter) return true; // 'All' selected
         if (!branchValue) return false;
-        if (branchValue === "both") return branchFilter === "egypt" || branchFilter === "saudi";
+        if (branchValue === "both") return branchFilter === "saudi";
         return branchValue === branchFilter;
     };
 

@@ -11,7 +11,7 @@ import RequestService from '../../../components/ClientComponents/Modals/RequestS
 export default function LawServicesManyCategories() {
     const { t } = useTranslation();
     const { data: allCategories = [] } = useAllCategories();
-    const [branch, setBranch] = useState(1);
+    const [branch, setBranch] = useState(2);
     const [activeCategory, setActiveCategory] = useState(null);
     const [searchTerm, setSearchTerm] = useState('');
     const { data: services = [] } = useGetServicesByCategoryId(activeCategory);
@@ -122,7 +122,9 @@ export default function LawServicesManyCategories() {
                                     onChange={(e) => handleBranchChange(Number(e.target.value))}
                                     className="px-4 py-2 rounded-lg border-0 bg-white shadow-sm focus:ring-2 focus:ring-secondary focus:border-transparent font-medium"
                                 >
+                                    {/* Egypt branch option is temporarily hidden.
                                     <option value={1}>{t("Cairo")}</option>
+                                    */}
                                     <option value={2}>{t("Saudi Arabia")}</option>
                                 </select>
                             </div>
@@ -183,7 +185,7 @@ export default function LawServicesManyCategories() {
                                                     ? 'text-secondary'
                                                     : 'text-accent'
                                                     }`}>
-                                                    {category.branchId === 3 ? t('Both') : branch === 1 ? t('Cairo') : t('KSA')}
+                                                    {category.branchId === 3 ? t('Both') : t('KSA')}
                                                 </span>
                                                 <span className={`text-xs px-1.5 py-0.5 rounded-full ${activeCategory === category.id
                                                     ? 'bg-white/20 text-white'

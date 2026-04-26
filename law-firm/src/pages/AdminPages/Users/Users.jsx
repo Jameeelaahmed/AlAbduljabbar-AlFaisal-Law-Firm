@@ -136,8 +136,10 @@ function Users() {
                     className="border border-gray-300 rounded-lg p-2 sm:p-3 cursor-pointer bg-white shadow-sm focus:ring-2 focus:ring-primary focus:border-primary transition-all text-sm sm:text-base w-full sm:w-auto min-w-[120px]"
                 >
                     <option value="">{t('Dashboard.Branch')}</option>
-                    <option value="1">{t('Egypt')}</option>
                     <option value="2">{t('Saudi Arabia')}</option>
+                    {/* Egypt branch filter is temporarily hidden.
+                    <option value="1">{t('Egypt')}</option>
+                    */}
                 </select>
                 <input
                     type="text"

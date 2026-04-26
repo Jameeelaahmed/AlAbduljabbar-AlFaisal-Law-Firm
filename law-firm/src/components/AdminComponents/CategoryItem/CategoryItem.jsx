@@ -29,8 +29,7 @@ function CategoryItem({ category }) {
     const { data: servicesData } = useGetServicesByCategoryId(category.id);
     const [selectedServiceId, setSelectedServiceId] = useState(null);
 
-    const isEgyptToggled = category.branchId === 3 || category.branchId === 1;
-    const isSaudiToggled = category.branchId === 3 || category.branchId === 2;
+    const isSaudiToggled = category.branchId === 2;
 
 
     // --- Add Service Handlers ---
@@ -107,40 +106,18 @@ function CategoryItem({ category }) {
 
 
     function handleToggleBranch(branch) {
-        // current on/off state
-        const isEgyptOn = category.branchId === 3 || category.branchId === 1;
-        const isSaudiOn = category.branchId === 3 || category.branchId === 2;
-
-        // Prevent turning off the last enabled branch
-        if (branch === 1 && isEgyptOn && !isSaudiOn) {
-            toast.error(t("Category must belong to at least one branch"));
-            return;
-        }
-        if (branch === 2 && isSaudiOn && !isEgyptOn) {
-            toast.error(t("Category must belong to at least one branch"));
+        if (branch !== 2) {
             return;
         }
 
-        let newBranchId = category.branchId;
-
-        if (branch === 1) {
-            // Toggle Egypt
-            if (category.branchId === 1) newBranchId = 2; // Egypt off → only Saudi
-            else if (category.branchId === 2) newBranchId = 3; // Egypt on → both
-            else if (category.branchId === 3) newBranchId = 2; // both → off Egypt
-        } else if (branch === 2) {
-            // Toggle Saudi
-            if (category.branchId === 2) newBranchId = 1; // Saudi off → only Egypt
-            else if (category.branchId === 1) newBranchId = 3; // Saudi on → both
-            else if (category.branchId === 3) newBranchId = 1; // both → off Saudi
+        if (category.branchId === 2) {
+            toast.error(t("Category must belong to at least one branch"));
+            return;
         }
-
-        // Prevent invalid case (both off)
-        if (newBranchId === 0) return;
 
         updateCategory({
             id: category.id,
-            data: buildUpdatePayload(newBranchId),
+            data: buildUpdatePayload(2),
         });
     }
 
@@ -176,7 +153,7 @@ function CategoryItem({ category }) {
 
                 {/* Right: Toggles + Actions */}
                 <div className="flex flex-wrap justify-around gap-2 sm:gap-3 md:gap-4 lg:gap-6 items-center mt-2 sm:mt-0">
-                    {/* Egypt Toggle */}
+                    {/* Egypt toggle is temporarily hidden from the admin UI.
                     <div className="flex items-center gap-2 min-w-[90px] px-1 sm:px-0 min-h-[40px]">
                         <span
                             className={`text-xs sm:text-sm md:text-base font-medium transition-colors ${isExpanded ? "text-white" : "group-hover:text-accent"}`}
@@ -207,6 +184,7 @@ function CategoryItem({ category }) {
                             />
                         </label>
                     </div>
+                    */}
 
                     {/* Saudi Arabia Toggle */}
                     <div className="flex items-center gap-2 min-w-[120px] px-1 sm:px-0 min-h-[40px]">

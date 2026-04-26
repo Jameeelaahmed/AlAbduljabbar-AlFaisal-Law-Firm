@@ -2,7 +2,6 @@ import Hero from "../../../components/ClientComponents/Hero/Hero"
 import OurCompany from "../../../components/ClientComponents/OurCompany/OurCompany"
 import ClientOpinions from '../../../components/ClientComponents/ClientOpinions/ClientOpinions'
 import OurVision from "../../../components/ClientComponents/OurVision/OurVision"
-import OurOffices from '../../../components/ClientComponents/OurOffices/OurOffices'
 import OurServices from "../../../components/ClientComponents/OurServices/OurServices"
 import OurTeam from "../../../components/ClientComponents/OurTeam/OurTeam"
 import { useHomePage } from "../../../hooks/useHomePage"

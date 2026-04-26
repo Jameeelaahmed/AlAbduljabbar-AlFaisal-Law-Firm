@@ -21,15 +21,11 @@ function RequestService({ onClose, service }) {
         branchId: Yup.string().required(t("Please select a branch")),
     });
 
-    // Derive available branches based on the service.branchId rule:
-    // 1 -> only Cairo, 2 -> only Riyadh, 3 -> both
+    // Keep service requests targeted to Saudi branch.
     const availableBranches = useMemo(() => {
         const code = Number(service?.branchId ?? service?.branch ?? 0);
         const branches = [];
-        if (code === 1) branches.push({ id: "1", name: t("Cairo Office") ?? "Cairo" });
-        else if (code === 2) branches.push({ id: "2", name: t("El Reyad Office") ?? "Riyadh" });
-        else if (code === 3) {
-            branches.push({ id: "1", name: t("Cairo Office") ?? "Cairo" });
+        if (code === 1 || code === 2 || code === 3) {
             branches.push({ id: "2", name: t("El Reyad Office") ?? "Riyadh" });
         }
         return branches;
@@ -55,7 +51,7 @@ function RequestService({ onClose, service }) {
                 photo2url: "",
                 photo3url: "",
                 photo4url: "",
-                branchId: values.branchId || (service?.branchId ?? ""),
+                branchId: values.branchId || "2",
             };
 
             if (Array.isArray(values.files)) {

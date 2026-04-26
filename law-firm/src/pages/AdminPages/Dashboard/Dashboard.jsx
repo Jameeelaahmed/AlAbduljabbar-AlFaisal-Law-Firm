@@ -17,9 +17,9 @@ function Dashboard() {
     // Get branch name with localization
     const getBranchName = (branchId) => {
         const branches = {
-            1: isRtl ? "مصر" : "Egypt",
+            1: isRtl ? "المملكة العربية السعودية" : "Saudi Arabia",
             2: isRtl ? "المملكة العربية السعودية" : "Saudi Arabia",
-            3: isRtl ? "كلاهما" : "Both"
+            3: isRtl ? "المملكة العربية السعودية" : "Saudi Arabia"
         };
         return branches[branchId] || branchId;
     };
@@ -58,7 +58,9 @@ function Dashboard() {
     // Get total requests across all branches
     const totalRequests = useMemo(() => {
         if (!dashboardData?.branchesRequestsAnalysis) return 0;
-        return dashboardData.branchesRequestsAnalysis.reduce((sum, branch) => sum + branch.totalRequests, 0);
+        return dashboardData.branchesRequestsAnalysis
+            .filter((branch) => branch.branchId !== 1)
+            .reduce((sum, branch) => sum + branch.totalRequests, 0);
     }, [dashboardData]);
 
     const containerAlign = isRtl ? "text-right" : "text-left";
@@ -160,16 +162,18 @@ function Dashboard() {
                 <div className="bg-white shadow rounded p-4">
                     <h3 className="font-medium mb-4">{t("Dashboard.Requests by Branch")}</h3>
                     <div className="space-y-4">
-                        {dashboardData.branchesRequestsAnalysis?.map((branch) => (
+                        {dashboardData.branchesRequestsAnalysis
+                            ?.filter((branch) => branch.branchId !== 1)
+                            .map((branch) => (
                             <BarRow
                                 key={branch.branchId}
                                 label={getBranchName(branch.branchId)}
                                 count={branch.totalRequests}
                                 max={totalRequests}
-                                color={branch.branchId === 1 ? 'bg-emerald-700' : branch.branchId === 2 ? 'bg-amber-700' : 'bg-slate-400'}
+                                color={branch.branchId === 2 ? 'bg-amber-700' : 'bg-slate-400'}
                             />
                         ))}
-                        {(!dashboardData.branchesRequestsAnalysis || dashboardData.branchesRequestsAnalysis.length === 0) && (
+                        {(!dashboardData.branchesRequestsAnalysis || dashboardData.branchesRequestsAnalysis.filter((branch) => branch.branchId !== 1).length === 0) && (
                             <div className="text-center py-4 text-gray-500">
                                 {t("No branch data available")}
                             </div>

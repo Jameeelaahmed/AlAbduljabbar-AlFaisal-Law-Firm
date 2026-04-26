@@ -136,7 +136,7 @@ function Hero() {
                                 </div>
 
                                 <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl 2xl:text-7xl font-bold leading-tight text-white drop-shadow-2xl px-2 sm:px-0">
-                                    {isRtl ? "العبدالجبار والفيصل" : "AlAbduljabbar & AlFaisal"}
+                                    {isRtl ? "العبدالجبار" : "AlAbduljabbar & AlFaisal"}
                                 </h1>
 
                                 <div className={`flex ${isRtl ? 'lg:justify-end' : 'lg:justify-start'} justify-center`}>
@@ -145,8 +145,8 @@ function Hero() {
 
                                 <p className="text-base sm:text-lg md:text-xl lg:text-2xl xl:text-3xl text-white/95 leading-relaxed font-light tracking-wide drop-shadow-lg px-2 sm:px-0">
                                     {isRtl
-                                        ? "شركة محاماة سعودية مصرية - خبرة تمتد 6 اعوام في تقديم الحلول القانونية"
-                                        : "Saudi-Egyptian Law Firm - 6 Years of Excellence in Legal Solutions"
+                                        ? "شركة محاماة سعودية - خبرة تمتد 6 اعوام في تقديم الحلول القانونية"
+                                        : "Saudi Law Firm - 6 Years of Excellence in Legal Solutions"
                                     }
                                 </p>
 

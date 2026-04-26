@@ -79,10 +79,12 @@ const ContactUs = () => {
                                     <div>
                                         <div className="text-lg font-bold text-gray-700">{t("Email")}</div>
                                         <div className="mt-1 text-gray-600 text-sm space-y-1">
+                                            {/* Egypt office mail is temporarily hidden.
                                             <div>
                                                 <div className="font-semibold">{t("Cairo Office Mail")}</div>
                                                 <a href='mailto:aziz.nasr11@gmail.com'>aziz.nasr11@gmail.com</a>
                                             </div>
+                                            */}
                                             <div>
                                                 <div className="font-semibold">{t("El Reyad Office Mail")}</div>
                                                 <a href='mailto:khedaib@malathegypt.com'>khedaib@malathegypt.com</a>
@@ -98,10 +100,12 @@ const ContactUs = () => {
                                     <div>
                                         <div className="text-lg font-bold text-gray-700">{t("Phone Number")}</div>
                                         <div className="mt-1 text-gray-600 text-sm space-y-1">
+                                            {/* Egypt office phone is temporarily hidden.
                                             <div>
                                                 <div className="font-semibold">{t("Cairo Office Number")}</div>
                                                 <div>01044947784 - 01005842307</div>
                                             </div>
+                                            */}
                                             <div>
                                                 <div className="font-semibold">{t("Saudi Office Number")}</div>
                                                 <div>+0996 505 120 293</div>
@@ -117,10 +121,12 @@ const ContactUs = () => {
                                     <div>
                                         <div className="text-lg font-bold text-gray-700">{t("Address")}</div>
                                         <div className="mt-1 text-gray-600 text-sm space-y-3">
+                                            {/* Egypt office address is temporarily hidden.
                                             <div>
                                                 <div className="font-semibold">{t("Cairo Address")}</div>
                                                 <div>{isRtl ? "مصر - القاهره 20 شاراع الطيران - الدور الاول - شقه 2" : "Egypt - Cairo, 20 Al Tayaran St - 1st floor - Apt 2"}</div>
                                             </div>
+                                            */}
                                             <div>
                                                 <div className="font-semibold">{t("El Reyad Address")}</div>
                                                 <div>{isRtl ? "السعوديه - الرياض - حي المروج - مركز الحياة سنتر - مبني B- الدور الاول - مكتب 5" : "Saudi Arabia - Riyadh - Al Muruj - Hayat Center - Building B - 1st floor - Office 5"}</div>

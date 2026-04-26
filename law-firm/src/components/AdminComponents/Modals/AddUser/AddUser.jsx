@@ -22,7 +22,7 @@ export default function AddUser({ onSuccess, onFailure }) {
                         role: "Admin",
                         mobileNumber: "",
                         whatsAppNumber: "",
-                        branchId: 1,
+                        branchId: 2,
                     }}
                     validationSchema={Yup.object({
                         fullNameEn: Yup.string().min(3).required(t("English name is required")),
@@ -84,8 +84,10 @@ export default function AddUser({ onSuccess, onFailure }) {
                                             }`}
                                         disabled={isSubmitting || isLoading}
                                     >
-                                        <option value="1">{t("Users.Saudi Arabia Branch")}</option>
-                                        <option value="2">{t("Users.Egypt Branch")}</option>
+                                        <option value="2">{t("Users.Saudi Arabia Branch")}</option>
+                                        {/* Egypt branch option is temporarily hidden.
+                                        <option value="1">{t("Users.Egypt Branch")}</option>
+                                        */}
                                     </Field>
                                     <ErrorMessage name="branchId" component="div" className="text-red-500 text-xs mt-1 font-medium" />
                                 </div>

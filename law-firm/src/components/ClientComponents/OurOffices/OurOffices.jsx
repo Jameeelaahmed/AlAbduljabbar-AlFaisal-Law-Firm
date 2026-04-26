@@ -1,6 +1,6 @@
 import React from "react";
 import { useTranslation } from "react-i18next";
-import { MapPin, Phone, Mail, Building } from "lucide-react";
+import { MapPin, Phone, Mail } from "lucide-react";
 import { Link } from "react-router-dom";
 
 function OurOffices() {
@@ -18,20 +18,21 @@ function OurOffices() {
                 : "Saudi Arabia - Riyadh - Al Muruj - Hayat Center - Building B - 1st floor - Office 5",
             phone: "+0996 505 120 293",
             mobile: null,
-            email: "khedaib@malathegypt.com",
+            email: "info@alfaisallaw.sa",
         },
-        {
-            id: "cairo",
-            title: isRtl ? "القاهرة، مصر" : "Cairo, Egypt",
-            line1: isRtl ? "القاهرة، مصر" : "Cairo, Egypt",
-            postal: "11211",
-            address: isRtl
-                ? "مصر - القاهره 20 شاراع الطيران - الدور الاول - شقه 2"
-                : "Egypt - Cairo, 20 Al Tayaran St - 1st floor - Apt 2",
-            phone: "0222604857",
-            mobile: "01044947784 - 01005842307",
-            email: "aziz.nasr11@gmail.com",
-        },
+        // Egypt office is temporarily hidden from the website.
+        // {
+        //     id: "cairo",
+        //     title: isRtl ? "القاهرة، مصر" : "Cairo, Egypt",
+        //     line1: isRtl ? "القاهرة، مصر" : "Cairo, Egypt",
+        //     postal: "11211",
+        //     address: isRtl
+        //         ? "مصر - القاهره 20 شاراع الطيران - الدور الاول - شقه 2"
+        //         : "Egypt - Cairo, 20 Al Tayaran St - 1st floor - Apt 2",
+        //     phone: "0222604857",
+        //     mobile: "01044947784 - 01005842307",
+        //     email: "aziz.nasr11@gmail.com",
+        // },
     ];
 
     return (
@@ -50,7 +51,7 @@ function OurOffices() {
 
                 {/* Locations Grid */}
                 <div className="max-w-5xl mx-auto">
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div className="grid grid-cols-1 gap-6">
                         {locations.map((loc) => (
                             <div
                                 key={loc.id}

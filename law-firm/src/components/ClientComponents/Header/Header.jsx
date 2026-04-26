@@ -359,7 +359,7 @@ function Header() {
                     </div>
                 </div>
 
-                {/* Logo Section 2 - Right/Left depending on direction */}
+                {/* Logo Section 2 - Right/Left depending on direction 
                 <div
                     ref={logo2Ref}
                     className={`hidden lg:block z-40 ${isScrolled ? 'lg:hidden' : ''} ${location !== '/' ? 'lg:hidden' : ''}`}
@@ -407,7 +407,7 @@ function Header() {
                             </>
                         )}
                     </div>
-                </div>
+                </div> */}
             </div>
 
             {/* Mobile Slide Menu */}

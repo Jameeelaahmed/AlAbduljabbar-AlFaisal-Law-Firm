@@ -27,7 +27,7 @@ function LoginRegisterPage() {
                             <h2 className="text-2xl font-bold text-primary mb-2">إنشاء حساب جديد</h2>
                         }
 
-                        <p className="text-secondary text-sm">انضم إلى مكتب العبدالجبار والفيصل للمحاماة</p>
+                        <p className="text-secondary text-sm">انضم إلى مكتب العبدالجبار للمحاماة</p>
                     </div>
                     <div className="flex justify-center gap-8 text-primary mb-6">
                         <div

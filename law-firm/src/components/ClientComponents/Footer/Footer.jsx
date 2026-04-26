@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { MapPin, Phone, Mail, Scale, ArrowRight, Facebook, Linkedin, Instagram } from "lucide-react"; // removed Twitter
+import { MapPin, Phone, Mail, Scale, ArrowRight, Facebook, Instagram } from "lucide-react"; // removed Twitter
 import { useTranslation } from "react-i18next";
 
 // X brand icon (SVG)
@@ -143,7 +143,7 @@ function Footer() {
                                 </div>
                             </div>
 
-                            {/* Cairo Office */}
+                            {/* Egypt office is temporarily hidden from the website.
                             <div className="bg-white rounded-lg p-4 border border-secondary/10 shadow-sm">
                                 <div className="flex items-start gap-3">
                                     <MapPin size={16} className="text-accent mt-1 shrink-0" />
@@ -160,6 +160,7 @@ function Footer() {
                                     </div>
                                 </div>
                             </div>
+                            */}
 
                             {/* Contact Methods */}
                             <div className="space-y-3">
@@ -177,6 +178,7 @@ function Footer() {
                                         </div>
                                     </a>
 
+                                    {/* Egypt office mail is temporarily hidden.
                                     <a
                                         href="mailto:khedaib@malathegypt.com"
                                         className="flex items-center gap-3 text-gray-600 hover:text-primary transition-colors duration-300 group ml-11"
@@ -186,6 +188,7 @@ function Footer() {
                                             <div>khedaib@malathegypt.com</div>
                                         </div>
                                     </a>
+                                    */}
                                 </div>
 
                                 <div className="space-y-2">
@@ -202,6 +205,7 @@ function Footer() {
                                         </div>
                                     </a>
 
+                                    {/* Egypt office phone is temporarily hidden.
                                     <a
                                         href="tel:+0996505120293"
                                         className="flex items-center gap-3 text-gray-600 hover:text-accent transition-colors duration-300 group ml-11"
@@ -211,6 +215,7 @@ function Footer() {
                                             <div>+0996 505 120 293</div>
                                         </div>
                                     </a>
+                                    */}
                                 </div>
                             </div>
                         </div>

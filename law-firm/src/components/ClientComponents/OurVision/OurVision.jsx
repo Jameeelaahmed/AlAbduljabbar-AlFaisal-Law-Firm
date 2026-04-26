@@ -1,10 +1,11 @@
 import { useTranslation } from "react-i18next";
 import { Target, Award } from "lucide-react";
-import { useHomePage } from "../../../hooks/useHomePage";
 
-function OurVision({ baseOfSuccess }) {
+function OurVision({ baseOfSuccess = {} }) {
     const { i18n } = useTranslation?.() ?? { t: (s) => s, i18n: { language: "ar" } };
     const isRtl = String(i18n?.language || document.documentElement.dir || "ar").toLowerCase().startsWith("ar");
+    const safeBaseOfSuccess = baseOfSuccess && typeof baseOfSuccess === "object" ? baseOfSuccess : {};
+    const safeBases = Array.isArray(safeBaseOfSuccess.bases) ? safeBaseOfSuccess.bases : [];
 
     // Map string icon names to components
     const ICON_MAP = {
@@ -22,7 +23,9 @@ function OurVision({ baseOfSuccess }) {
                 <div className="max-w-3xl mx-auto mb-16 text-center">
                     <div className="inline-flex items-center gap-2 px-4 py-2 bg-primary/10 text-primary rounded-full text-lg font-medium mb-6">
                         <Target size={18} />
-                        {isRtl ? baseOfSuccess.headlineAr : baseOfSuccess.headlineEn}
+                        {isRtl
+                            ? (safeBaseOfSuccess.headlineAr || "رؤيتنا ورسالتنا")
+                            : (safeBaseOfSuccess.headlineEn || "Our Vision & Mission")}
                     </div>
                     <h2 className="text-3xl md:text-4xl font-bold text-text mb-4">
                         {isRtl ? "أسس نجاحنا" : "Foundations of Our Success"}
@@ -37,7 +40,7 @@ function OurVision({ baseOfSuccess }) {
 
                 {/* Mission & Vision Cards */}
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 max-w-6xl mx-auto mb-16">
-                    {baseOfSuccess.bases.map((item, index) => {
+                    {safeBases.map((item, index) => {
                         const isEven = index % 2 === 0;
                         const order = String(index + 1).padStart(2, "0");
                         let IconComp = item?.icon;
