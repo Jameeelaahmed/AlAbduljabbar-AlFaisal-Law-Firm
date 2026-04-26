@@ -102,7 +102,7 @@ function Sidebar() {
                             }`}
                     >
                         <div>
-                            {isSidebarOpen && <p className="text-lg font-bold">عبد الجبار والفيصل</p>}
+                            {isSidebarOpen && <p className="text-lg font-bold">عبد الجبار </p>}
                             {isSidebarOpen && <small className="text-gray-400">{t('sidebar.subtitle')}</small>}
                         </div>
 

@@ -546,7 +546,7 @@ function Header() {
                 <p className="text-primary font-bold text-base sm:text-lg text-center leading-tight">
                     {t("Office")}
                 </p>
-                <img src={logo2} alt="logo2" className="w-10 h-10 object-contain" />
+                {/*<img src={logo2} alt="logo2" className="w-10 h-10 object-contain" />*/}
 
                 {/* Mobile Menu Button */}
                 <button
