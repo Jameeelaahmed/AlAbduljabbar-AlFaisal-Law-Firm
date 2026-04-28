@@ -30,7 +30,7 @@ function ConsultationTypes() {
         <div className="min-h-screen p-4 sm:p-6 bg-gray-50 shadow-lg">
             <Headline headlineLabel={t("consultationTypes")} buttonLabel={t("addType")} buttonIcon="+" handleOpenModal={() => openAddType()} />
             <Modal ref={addTypeRef} title={t("Add Consultation Type")} onClose={() => closeAddType()}>
-                <AddTypeModal />
+                <AddTypeModal onClose={() => closeAddType()} />
             </Modal>
             {consultationTypes?.map((type) => (
                 <ConsultationTypeItems key={type.id} type={type} />

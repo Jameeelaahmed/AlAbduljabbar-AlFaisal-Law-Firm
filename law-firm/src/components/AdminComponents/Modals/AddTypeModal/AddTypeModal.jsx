@@ -41,7 +41,9 @@ function AddTypeModal({ onClose, typeId, typeName, isFetching, fetchError }) {
             } else {
                 await callMutate(createMutation, values);
             }
-            onClose();
+            if (typeof onClose === "function") {
+                onClose();
+            }
         } catch (err) {
             // minimal error handling: surface message to form-level error
             setErrors({ submit: err?.message || "Failed" });
