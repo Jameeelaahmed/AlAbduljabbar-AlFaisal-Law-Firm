@@ -2,6 +2,7 @@ import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import * as serviceApi from "../api/services";
 import { toast } from "react-toastify";
 import { useTranslation } from "react-i18next";
+import { getErrorMessage } from "../api/apiError";
 
 // 🔹 Get All Services
 export const useAllServices = () => {
@@ -70,7 +71,7 @@ export const useCreateService = () => {
             if (context?.previousServices) {
                 queryClient.setQueryData(["allServices"], context.previousServices);
             }
-            toast.error(t("Services.CreateError"));
+            toast.error(getErrorMessage(err, t("Services.CreateError")));
         },
         onSuccess: () => {
             toast.success(t("Services.CreateSuccess"));
@@ -89,7 +90,7 @@ export const useUpdateService = () => {
     return useMutation({
         mutationFn: ({ id, data }) => serviceApi.updateService(id, data),
         onError: (err) => {
-            toast.error(t("Services.UpdateError"));
+            toast.error(getErrorMessage(err, t("Services.UpdateError")));
         },
         onSuccess: () => {
             toast.success(t("Services.UpdateSuccess"));
@@ -117,7 +118,7 @@ export const useDeleteService = () => {
 
         onError: (err, _, context) => {
             queryClient.setQueryData(["allServices"], context.previousServices);
-            toast.error(t("Services.DeleteError"));
+            toast.error(getErrorMessage(err, t("Services.DeleteError")));
         },
 
         onSuccess: () => {

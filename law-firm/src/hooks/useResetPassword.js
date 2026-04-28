@@ -3,6 +3,7 @@ import { resetPassword } from "../api/auth";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { useTranslation } from "react-i18next";
+import { getErrorMessage } from "../api/apiError";
 
 export const useResetPassword = () => {
     const navigate = useNavigate();
@@ -24,6 +25,7 @@ export const useResetPassword = () => {
 
         onError: (err) => {
             console.error("⚠️ Password reset request error:", err);
+            toast.error(getErrorMessage(err, t("ForgetPassword.passwordChangeError")));
         },
     });
 };

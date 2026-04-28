@@ -3,6 +3,7 @@ import { verifyOTP } from "../api/auth";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { useTranslation } from "react-i18next";
+import { getErrorMessage } from "../api/apiError";
 
 export const useVerifyOTP = () => {
     const navigate = useNavigate();
@@ -29,6 +30,7 @@ export const useVerifyOTP = () => {
 
         onError: (err) => {
             console.error("⚠️ OTP verification request error:", err);
+            toast.error(getErrorMessage(err, t("ForgetPassword.invalidCode")));
         },
     });
 };

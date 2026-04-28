@@ -1,16 +1,14 @@
 import { useQuery, useQueryClient, useMutation } from "@tanstack/react-query";
-import { getAllUserConsultations } from "../api/consultations";
 import { toast } from "react-toastify";
 import { useTranslation } from "react-i18next";
 import * as consultationsApi from '../api/consultations'
-import { getConsultationById } from "../api/consultations";
-import { rejectConsultation, contactConsultation, resolveConsultation } from "../api/consultations";
+import { getErrorMessage } from "../api/apiError";
 
 
 export function useConsultations({ pageIndex = 1, pageSize = 5, status = null } = {}) {
     return useQuery({
         queryKey: ["consultations", { pageIndex, pageSize, status }],
-        queryFn: getAllUserConsultations,
+        queryFn: consultationsApi.getAllUserConsultations,
         keepPreviousData: true,
     });
 }
@@ -38,7 +36,7 @@ export const useCreateConsultationRequest = () => {
             if (context?.previousRequests) {
                 queryClient.setQueryData(["consultations"], context.previousRequests);
             }
-            toast.error(t("Consultations.CreateError"));
+            toast.error(getErrorMessage(error, t("Consultations.CreateError")));
             console.error("Error creating consultation:", error);
         },
 
@@ -75,7 +73,7 @@ export const useCreateConsultationType = () => {
             if (context?.previousConsultationTypes) {
                 queryClient.setQueryData(["allConsultationsTypes"], context.previousConsultationTypes);
             }
-            toast.error(t("Consultations.Types.CreateError"));
+            toast.error(getErrorMessage(err, t("Consultations.Types.CreateError")));
         },
         onSuccess: () => {
             toast.success(t("Consultations.Types.CreateSuccess"));
@@ -93,7 +91,7 @@ export const useUpdateConsultaionType = () => {
     return useMutation({
         mutationFn: ({ id, data }) => consultationsApi.updateConsutationsTypes(id, data),
         onError: (err) => {
-            toast.error(t("Consultations.Types.UpdateError"));
+            toast.error(getErrorMessage(err, t("Consultations.Types.UpdateError")));
         },
         onSuccess: () => {
             toast.success(t("Consultations.Types.UpdateSuccess"));
@@ -139,7 +137,7 @@ export const useDeleteConsultationTypes = () => {
 
         onError: (err, _, context) => {
             queryClient.setQueryData(["allConsultationsTypes"], context.previousConsultationTypes);
-            toast.error(t("Consultations.Types.DeleteError"));
+            toast.error(getErrorMessage(err, t("Consultations.Types.DeleteError")));
         },
 
         onSuccess: () => {
@@ -155,7 +153,7 @@ export const useDeleteConsultationTypes = () => {
 export function useConsultation(consultationId) {
     return useQuery({
         queryKey: ["consultation", consultationId],
-        queryFn: () => getConsultationById(consultationId),
+        queryFn: () => consultationsApi.getConsultationById(consultationId),
         enabled: !!consultationId,
     });
 }
@@ -165,11 +163,14 @@ export function useRejectConsultation() {
     const { t } = useTranslation();
 
     return useMutation({
-        mutationFn: rejectConsultation,
+        mutationFn: consultationsApi.rejectConsultation,
         onSuccess: (data, variables) => {
             queryClient.invalidateQueries(["requests"]);
             queryClient.invalidateQueries(["request", variables]);
             toast.success(t("Consultations.Messages.requestRejectedSuccess"));
+        },
+        onError: (err) => {
+            toast.error(getErrorMessage(err, t("Consultations.Messages.requestRejectedError")));
         },
     });
 }
@@ -180,11 +181,14 @@ export function useResolveConsultation() {
     const { t } = useTranslation();
 
     return useMutation({
-        mutationFn: resolveConsultation,
+        mutationFn: consultationsApi.resolveConsultation,
         onSuccess: (data, variables) => {
             queryClient.invalidateQueries(["requests"]);
             queryClient.invalidateQueries(["request", variables]);
             toast.success(t("Consultations.Messages.requestResolvedSuccess"));
+        },
+        onError: (err) => {
+            toast.error(getErrorMessage(err, t("Consultations.Messages.requestResolvedError")));
         },
     });
 }
@@ -195,11 +199,14 @@ export function useContactConsultation() {
     const { t } = useTranslation();
 
     return useMutation({
-        mutationFn: contactConsultation,
+        mutationFn: consultationsApi.contactConsultation,
         onSuccess: (data, variables) => {
             queryClient.invalidateQueries(["requests"]);
             queryClient.invalidateQueries(["request", variables]);
             toast.success(t("Consultations.Messages.requestContactedSuccess"));
+        },
+        onError: (err) => {
+            toast.error(getErrorMessage(err, t("Consultations.Messages.requestContactedError")));
         },
     });
 }

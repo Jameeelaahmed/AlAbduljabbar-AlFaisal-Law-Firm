@@ -2,6 +2,7 @@ import { useMutation } from "@tanstack/react-query";
 import { changePassword } from "../api/auth";
 import { toast } from "react-toastify";
 import { useTranslation } from "react-i18next";
+import { getErrorMessage } from "../api/apiError";
 
 export const useChangePassword = () => {
     const { t } = useTranslation();
@@ -20,7 +21,7 @@ export const useChangePassword = () => {
 
         onError: (err) => {
             console.error("⚠️ Password change request error:", err);
-            const errorMessage = err?.response?.data?.error?.description || err?.message || t('Settings.passwordChangeError');
+            const errorMessage = getErrorMessage(err, t('Settings.passwordChangeError'));
             toast.error(errorMessage);
         },
     });

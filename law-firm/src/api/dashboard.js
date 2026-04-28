@@ -1,8 +1,12 @@
 import api from './axiosInstance';
+import { ensureSuccess, normalizeApiError } from './apiError';
 
 export const getDashboardData = async () => {
-    const { data:response } = await api.get('/api/Dashborad/Summary');
-    if (!response.isSuccess) throw new Error('Failed to fetch data');
-    
-    return response.data;
+    try {
+        const { data: payload } = await api.get('/api/Dashborad/Summary');
+        ensureSuccess(payload, 'Failed to fetch dashboard data');
+        return payload.data;
+    } catch (error) {
+        throw normalizeApiError(error, 'Failed to fetch dashboard data');
+    }
 };

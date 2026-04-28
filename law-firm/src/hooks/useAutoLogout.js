@@ -3,7 +3,7 @@ import { useEffect, useRef } from "react";
 import { useAuthStore } from "../store/useAuthStore";
 
 export const useAutoLogout = () => {
-    const refreshTokenExpiration = useAuthStore((s) => s.user?.refreshTokenExpiration);
+    const refreshTokenExpiration = useAuthStore((s) => s.refreshTokenExpiration);
     const logout = useAuthStore((s) => s.logout);
 
     const logoutCalledRef = useRef(false);

@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { useAuthStore } from "../store/useAuthStore";
 import { useTranslation } from "react-i18next";
 import { toast } from "react-toastify";
+import { getErrorMessage } from "../api/apiError";
 
 export const useLogin = () => {
     const queryClient = useQueryClient();
@@ -56,17 +57,12 @@ export const useLogin = () => {
         onError: (err) => {
             console.error("⚠️ Login request error:", err);
             
-            const status = err.response?.status;
-            let errorMessage;
-            
-            if (status === 500) {
-                errorMessage = t('auth.serverError');
-            } else if (status === 400 || status === 401 || status === 404) {
-                errorMessage = t('auth.invalidCredentials');
-            } else {
-                errorMessage = t('auth.invalidCredentials');
-            }
-            
+            const status = err?.status || err.response?.status;
+            const fallbackMessage = status === 400 || status === 401
+                ? t('auth.invalidCredentials')
+                : t('auth.serverError');
+
+            const errorMessage = getErrorMessage(err, fallbackMessage);
             toast.error(errorMessage);
             err.message = errorMessage;
         },

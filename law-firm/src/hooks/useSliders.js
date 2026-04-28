@@ -2,6 +2,8 @@ import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import api from '../api/axiosInstance';
 import { useTranslation } from "react-i18next";
 import { fetchSliders } from '../api/landing';
+import { toast } from 'react-toastify';
+import { getErrorMessage } from '../api/apiError';
 
 export const useSliders = () => {
   const queryClient = useQueryClient();
@@ -52,6 +54,9 @@ export const useSliders = () => {
     onSuccess: () => {
       queryClient.invalidateQueries(['sliders']);
     },
+    onError: (err) => {
+      toast.error(getErrorMessage(err, 'Failed to create slider'));
+    },
   });
 
   // Update slider
@@ -87,6 +92,9 @@ export const useSliders = () => {
     onSuccess: () => {
       queryClient.invalidateQueries(['sliders']);
     },
+    onError: (err) => {
+      toast.error(getErrorMessage(err, 'Failed to update slider'));
+    },
   });
 
   // Delete slider
@@ -97,6 +105,9 @@ export const useSliders = () => {
     },
     onSuccess: () => {
       queryClient.invalidateQueries(['sliders']);
+    },
+    onError: (err) => {
+      toast.error(getErrorMessage(err, 'Failed to delete slider'));
     },
   });
 

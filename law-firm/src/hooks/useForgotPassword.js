@@ -3,6 +3,7 @@ import { forgotPassword } from "../api/auth";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { useTranslation } from "react-i18next";
+import { getErrorMessage } from "../api/apiError";
 
 export const useForgotPassword = () => {
     const navigate = useNavigate();
@@ -17,10 +18,7 @@ export const useForgotPassword = () => {
         },
 
         onError: (err) => {
-            const message =
-                err?.message ||
-                err?.error?.description ||
-                t("ForgetPassword.serverError");
+            const message = getErrorMessage(err, t("ForgetPassword.serverError"));
             toast.error(message);
             console.error("⚠️ Forgot password request error:", err);
         },

@@ -1,105 +1,128 @@
-// src/api/axiosInstance.js
 import axios from "axios";
 import { useAuthStore } from "../store/useAuthStore";
 
 const api = axios.create({
-    baseURL: import.meta.env.VITE_API_BASE_URL,
-    headers: {
-        'Content-Type': 'application/json',
-    },
-    withCredentials: true,
+baseURL: import.meta.env.VITE_API_BASE_URL,
+headers: {
+"Content-Type": "application/json",
+},
+withCredentials: true,
 });
 
 let isRefreshing = false;
 let failedQueue = [];
 
 const processQueue = (error, token = null) => {
-    failedQueue.forEach(({ resolve, reject }) => {
-        if (error) reject(error);
-        else resolve(token);
-    });
-    failedQueue = [];
+failedQueue.forEach(({ resolve, reject }) => {
+if (error) reject(error);
+else resolve(token);
+});
+failedQueue = [];
 };
 
-// 🔹 Request interceptor
+const isRefreshEndpoint = (url = "") => String(url).includes("/api/Auth/RefreshToken");
+
 api.interceptors.request.use(
-    (config) => {
-        const token = useAuthStore.getState().token; 
-        if (token) {
-            config.headers.Authorization = `Bearer ${token}`;
-        }
+(config) => {
+const accessToken = useAuthStore.getState().accessToken;
+if (accessToken) {
+config.headers.Authorization = "Bearer " + accessToken;
+}
 
-        // 🔸 Auto set language header (optional)
-        try {
-            const savedLang =
-                typeof window !== "undefined"
-                    ? localStorage.getItem("selectedLanguage")
-                    : null;
-            const lang =
-                savedLang
-            config.headers["Accept-Language"] = lang;
-        } catch {
-            // ignore if server-side or inaccessible
-        }
+try {
+const savedLang =
+typeof window !== "undefined"
+? localStorage.getItem("selectedLanguage")
+: null;
 
-        return config;
-    },
-    (error) => Promise.reject(error)
+config.headers["Accept-Language"] = savedLang || "ar";
+} catch {
+config.headers["Accept-Language"] = "ar";
+}
+
+return config;
+},
+(error) => Promise.reject(error)
 );
 
-// 🔹 Response interceptor (handles refresh token logic)
 api.interceptors.response.use(
-    (response) => response,
-    async (error) => {
-        const originalRequest = error.config;
+(response) => response,
+async (error) => {
+const originalRequest = error?.config || {};
 
-        // skip if no response, not 401, or already retried
-        if (!error.response || error.response.status !== 401 || originalRequest._retry)
-            return Promise.reject(error);
+if (!error?.response || error.response.status !== 401 || originalRequest._retry) {
+return Promise.reject(error);
+}
 
-        originalRequest._retry = true;
+if (isRefreshEndpoint(originalRequest.url)) {
+await useAuthStore.getState().logout();
+if (typeof window !== "undefined") window.location.href = "/login";
+return Promise.reject(error);
+}
 
-        if (isRefreshing) {
-            // Wait for refresh to complete
-            return new Promise((resolve, reject) => {
-                failedQueue.push({ resolve, reject });
-            })
-                .then((newToken) => {
-                    originalRequest.headers.Authorization = `Bearer ${newToken}`;
-                    return api(originalRequest);
-                })
-                .catch((err) => Promise.reject(err));
-        }
+originalRequest._retry = true;
 
-        isRefreshing = true;
+if (isRefreshing) {
+return new Promise((resolve, reject) => {
+failedQueue.push({ resolve, reject });
+})
+.then((newToken) => {
+originalRequest.headers = originalRequest.headers || {};
+originalRequest.headers.Authorization = "Bearer " + newToken;
+return api(originalRequest);
+})
+.catch((err) => Promise.reject(err));
+}
 
-        try {
-            // 🔹 Call refresh endpoint
-            const { data } = await api.post("/api/Auth/RefreshToken", {});
-            const newAccessToken = data?.token || data?.accessToken;
-            const currentUser = useAuthStore.getState().user;
+isRefreshing = true;
 
-            if (!newAccessToken) throw new Error("No new access token received");
+try {
+const refreshUrl =
+String(import.meta.env.VITE_API_BASE_URL || "").replace(/\/+$/, "") +
+"/api/Auth/RefreshToken";
 
-            // 🔹 Update Zustand store (auto syncs to sessionStorage)
-            useAuthStore.getState().login(newAccessToken, currentUser);
+const { data } = await axios.post(
+refreshUrl,
+{},
+{
+withCredentials: true,
+headers: { "Content-Type": "application/json" },
+}
+);
 
-            // Process queued requests
-            processQueue(null, newAccessToken);
+const payload = data?.data || data;
+const newAccessToken = payload?.token || payload?.accessToken;
 
-            // Retry the original request with the new token
-            originalRequest.headers.Authorization = `Bearer ${newAccessToken}`;
-            return api(originalRequest);
-        } catch (refreshError) {
-            console.error("🔴 Refresh token failed:", refreshError);
-            processQueue(refreshError, null);
-            useAuthStore.getState().logout();
-            window.location.href = "/login";
-            return Promise.reject(refreshError);
-        } finally {
-            isRefreshing = false;
-        }
-    }
+if (!newAccessToken) {
+throw new Error("No new access token received");
+}
+
+const { user: currentUser, refreshTokenExpiration } = useAuthStore.getState();
+
+useAuthStore.getState().login(newAccessToken, {
+...(currentUser || {}),
+refreshTokenExpiration:
+payload?.refreshTokenExpiration || refreshTokenExpiration || null,
+branchId:
+payload?.branchId !== undefined
+? payload.branchId
+: currentUser?.branchId,
+});
+
+processQueue(null, newAccessToken);
+
+originalRequest.headers = originalRequest.headers || {};
+originalRequest.headers.Authorization = "Bearer " + newAccessToken;
+return api(originalRequest);
+} catch (refreshError) {
+processQueue(refreshError, null);
+await useAuthStore.getState().logout();
+if (typeof window !== "undefined") window.location.href = "/login";
+return Promise.reject(refreshError);
+} finally {
+isRefreshing = false;
+}
+}
 );
 
 export default api;

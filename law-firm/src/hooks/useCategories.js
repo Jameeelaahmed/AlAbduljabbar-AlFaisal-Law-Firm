@@ -2,6 +2,7 @@ import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import * as categoryApi from "../api/category";
 import { toast } from "react-toastify";
 import { useTranslation } from "react-i18next";
+import { getErrorMessage } from "../api/apiError";
 // 🔹 Get All Categories
 export const useAllCategories = () => {
     const { i18n } = useTranslation() // read language at render time
@@ -71,7 +72,7 @@ export const useCreateCategory = () => {
             if (context?.previousCategories) {
                 queryClient.setQueryData(["allCategories"], context.previousCategories);
             }
-            toast.error(t("Categories.CreateError"));
+            toast.error(getErrorMessage(_err, t("Categories.CreateError")));
         },
         onSuccess: () => {
             toast.success(t("Categories.CreateSuccess"));
@@ -89,8 +90,8 @@ export const useUpdateCategory = () => {
 
     return useMutation({
         mutationFn: ({ id, data }) => categoryApi.updateCategory(id, data),
-        onError: () => {
-            toast.error(t("Categories.UpdateError"));
+        onError: (err) => {
+            toast.error(getErrorMessage(err, t("Categories.UpdateError")));
         },
         onSuccess: () => {
             toast.success(t("Categories.UpdateSuccess"));
@@ -120,7 +121,7 @@ export const useDeleteCategory = () => {
             if (context?.previousCategories) {
                 queryClient.setQueryData(["allCategories"], context.previousCategories);
             }
-            toast.error(t("Categories.DeleteError"));
+            toast.error(getErrorMessage(_err, t("Categories.DeleteError")));
         },
 
         onSuccess: () => {

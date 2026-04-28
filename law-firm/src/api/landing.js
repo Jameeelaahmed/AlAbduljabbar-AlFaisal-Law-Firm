@@ -1,18 +1,24 @@
 import api from '../api/axiosInstance'
+import { ensureSuccess, normalizeApiError } from './apiError'
 
 export const fetchSliders = async () => {
-    const response = await api.get('/api/Sliders/all');
-    // Sort by order
-    const sortedData = response.data.data.sort((a, b) => a.order - b.order);
-    return sortedData;
+    try {
+        const { data: payload } = await api.get('/api/Sliders/all');
+        ensureSuccess(payload, 'Failed to fetch sliders');
+        // Sort by order
+        const sortedData = payload.data.sort((a, b) => a.order - b.order);
+        return sortedData;
+    } catch (error) {
+        throw normalizeApiError(error, 'Failed to fetch sliders');
+    }
 };
 
 export const getHomePageData = async () => {
-    const { data: response } = await api.get("/api/Homepage");
-
-    if (!response.isSuccess) {
-        throw new Error(response?.error?.description || "Failed to add note");
+    try {
+        const { data: payload } = await api.get("/api/Homepage");
+        ensureSuccess(payload, "Failed to fetch homepage data");
+        return payload.data;
+    } catch (error) {
+        throw normalizeApiError(error, "Failed to fetch homepage data");
     }
-
-    return response.data;
 }

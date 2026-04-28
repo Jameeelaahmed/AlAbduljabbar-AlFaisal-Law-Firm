@@ -1,4 +1,5 @@
 import api from "./axiosInstance";
+import { ensureSuccess, normalizeApiError } from "./apiError";
 
 /**
  * Upload an image file to the server
@@ -18,6 +19,7 @@ export const uploadImage = async (file, folderName = 'images') => {
         });
 
         // API returns: { isSuccess: true, data: { url: "string" }, error: {...}, status: 1 }
+        ensureSuccess(response.data, 'Upload failed');
         if (response.data.isSuccess) {
             // Ensure we return the full URL
             const imageUrl = response.data.data?.url || '';
@@ -38,7 +40,7 @@ export const uploadImage = async (file, folderName = 'images') => {
         }
     } catch (error) {
         console.error('Error uploading image:', error);
-        throw error;
+        throw normalizeApiError(error, 'Upload failed');
     }
 };
 
@@ -56,17 +58,18 @@ export const uploadMultipleImages = async (files, folderName = 'images') => {
         formData.append('files', file);
     });
 
-    const response = await api.post(`/api/General/UploadMultipleImages?FolderName=${folderName}`, formData, {
-        headers: {
-            'Content-Type': 'multipart/form-data',
-        },
-    });
+    try {
+        const response = await api.post(`/api/General/UploadMultipleImages?FolderName=${folderName}`, formData, {
+            headers: {
+                'Content-Type': 'multipart/form-data',
+            },
+        });
 
-    // API returns: { isSuccess: true, data: { urls: [...] }, error: {...}, status: 1 }
-    if (response.data.isSuccess) {
+        // API returns: { isSuccess: true, data: { urls: [...] }, error: {...}, status: 1 }
+        ensureSuccess(response.data, 'Upload failed');
         return response.data.data;
-    } else {
-        throw new Error(response.data.error?.description || 'Upload failed');
+    } catch (error) {
+        throw normalizeApiError(error, 'Upload failed');
     }
 };
 
@@ -76,9 +79,13 @@ export const uploadMultipleImages = async (files, folderName = 'images') => {
  * @returns {Promise<void>}
  */
 export const deleteImage = async (imageUrl) => {
-    const response = await api.delete('/api/Upload/Image', {
-        data: { imageUrl }
-    });
-
-    return response.data;
+    try {
+        const { data: payload } = await api.delete('/api/Upload/Image', {
+            data: { imageUrl }
+        });
+        ensureSuccess(payload, 'Failed to delete image');
+        return payload;
+    } catch (error) {
+        throw normalizeApiError(error, 'Failed to delete image');
+    }
 };

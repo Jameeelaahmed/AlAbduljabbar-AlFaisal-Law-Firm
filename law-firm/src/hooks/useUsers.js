@@ -3,6 +3,7 @@ import * as userApi from "../api/user";
 import { toast } from "react-toastify";
 import { fetchUsers } from "../api/user";
 import { useTranslation } from "react-i18next";
+import { getErrorMessage } from "../api/apiError";
 
 // 🔹 Get Paginated Users
 export const useUsers = ({
@@ -47,10 +48,13 @@ export const useCreateUser = () => {
             await queryClient.cancelQueries(["users"]);
             const previousUsers = queryClient.getQueryData(["users"]);
 
-            queryClient.setQueryData(["users"], (old = { data: [] }) => ({
-                ...old,
-                data: [...(old.data || []), { ...newUser, id: Date.now(), isTemp: true }],
-            }));
+            queryClient.setQueryData(["users"], (old) => {
+                const existing = old || { data: [] };
+                return {
+                    ...existing,
+                    data: [...(existing.data || []), { ...newUser, id: Date.now(), isTemp: true }],
+                };
+            });
 
             return { previousUsers };
         },
@@ -58,9 +62,7 @@ export const useCreateUser = () => {
             if (context?.previousUsers) {
                 queryClient.setQueryData(["users"], context.previousUsers);
             }
-            toast.error(
-                err.response?.data?.message || t("Users.CreateError")
-            );
+            toast.error(getErrorMessage(err, t("Users.CreateError")));
         },
         onSuccess: () => {
             toast.success(t("Users.CreateSuccess"));
@@ -79,9 +81,7 @@ export const useUpdateUser = () => {
     return useMutation({
         mutationFn: ({ id, data }) => userApi.updateUser({ id, data }),
         onError: (err) => {
-            toast.error(
-                err.response?.data?.message || t("Users.UpdateError")
-            );
+            toast.error(getErrorMessage(err, t("Users.UpdateError")));
         },
         onSuccess: () => {
             toast.success(t("Users.UpdateSuccess"));
@@ -114,9 +114,7 @@ export const useDeleteUser = () => {
             if (context?.previousUsers) {
                 queryClient.setQueryData(["users"], context.previousUsers);
             }
-            toast.error(
-                err.response?.data?.message || t("Users.DeleteError")
-            );
+            toast.error(getErrorMessage(err, t("Users.DeleteError")));
         },
 
         onSuccess: () => {
