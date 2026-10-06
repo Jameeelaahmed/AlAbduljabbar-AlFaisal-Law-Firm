@@ -31,11 +31,11 @@ function OurCompany({ milestones, coreValues, summary }) {
                         {isRtl ? "رحلتنا" : "Our Journey"}
                     </div>
                     <h1 className="text-4xl md:text-5xl font-bold text-text mb-6">
-                        {isRtl ? "شركة المحاماة: قصة تمتد 6 اعوام" : "The Law Firm: A 6-Years Journey"}
+                        {isRtl ? "مكتبنا : قصة تمتد 8 اعوام" : "The Law Firm: A 8-Years Journey"}
                     </h1>
                     <p className="text-lg text-gray-600 leading-relaxed max-w-3xl mx-auto">
                         {isRtl
-                            ? "من مكتب صغير إلى شركة محاماة رائدة، نحن نسير برؤية واضحة ورسالة ثابتة لخدمة العدالة"
+                            ? "رائدة لأي اعمال المحاماة، نحن نسير برؤية واضحة ورسالة ثابتة لخدمة العدالة"
                             : "From a small office to a leading law firm, we walk with clear vision and steadfast mission to serve justice"}
                     </p>
                 </div>

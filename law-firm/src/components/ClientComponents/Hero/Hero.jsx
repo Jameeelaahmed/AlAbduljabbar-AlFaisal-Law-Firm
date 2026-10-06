@@ -145,8 +145,8 @@ function Hero() {
 
                                 <p className="text-base sm:text-lg md:text-xl lg:text-2xl xl:text-3xl text-white/95 leading-relaxed font-light tracking-wide drop-shadow-lg px-2 sm:px-0">
                                     {isRtl
-                                        ? "شركة محاماة سعودية - خبرة تمتد 6 اعوام في تقديم الحلول القانونية"
-                                        : "Saudi Law Firm - 6 Years of Excellence in Legal Solutions"
+                                        ? "مكتب محاماة سعودي - خبرة تمتد 8 اعوام في تقديم الحلول القانونية"
+                                        : "Saudi Law Firm - 8 Years of Excellence in Legal Solutions"
                                     }
                                 </p>
 
