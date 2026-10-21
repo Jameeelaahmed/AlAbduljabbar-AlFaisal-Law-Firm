@@ -188,9 +188,9 @@ function Header() {
                 </div>
 
                 {/* Main Header Navigation - Center */}
-                <div className={`flex-1 flex justify-center ${!headerActive ? 'mt-6 sm:mt-8 md:mt-10 lg:mt-12' : ''} transition-all z-50`}>
+                <div className={`flex justify-center ${headerActive ? 'w-full' : ''} ${!headerActive ? 'mt-6 sm:mt-8 md:mt-10 lg:mt-12' : ''} transition-all z-50`}>
                     <div className={`${!isScrolled && location === '/' ? 'max-w-[768px] xl:max-w-[992px]' : 'w-full'} ${headerActive && "shadow-2xl"}`}>
-                        <ul className={`hidden lg:flex justify-around bg-white ${!headerActive && "rounded-full"} pr-2 pl-2 lg:pr-3 lg:pl-3 xl:pr-4 xl:pl-4 pt-2 pb-2 items-center text-xs lg:text-sm xl:text-base`}>
+                        <ul className={`hidden lg:flex justify-around bg-white ${!headerActive && "ltr:rounded-l-full rtl:rounded-r-full"} pr-2 pl-2 lg:pr-3 lg:pl-3 xl:pr-4 xl:pl-4 pt-2 pb-2 items-center text-xs lg:text-sm xl:text-base`}>
                             <li>
                                 <NavLink
                                     to="/"
