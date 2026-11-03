@@ -5,6 +5,7 @@ import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 // import { useAutoLogout } from "./hooks/useAutoLogout";
 import { NotificationProvider } from "./contexts/NotificationContext";
+import TopLoadingBar from "./components/Common/TopLoadingBar";
 
 function App() {
   // useHydrateAuth();
@@ -12,6 +13,7 @@ function App() {
 
   return (
     <NotificationProvider>
+      <TopLoadingBar />
       <RoutesPages />
       <ToastContainer
         position="top-right"
